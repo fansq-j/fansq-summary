@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.StaffMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.StaffDO">
+    <id column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="STAFF_CODE" jdbcType="VARCHAR" property="staffCode"/>
+    <result column="STAFF_ACCOUNT" jdbcType="VARCHAR" property="staffAccount"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="STAFF_TYPE" jdbcType="VARCHAR" property="staffType"/>
+    <result column="STAFF_NAME" jdbcType="VARCHAR" property="staffName"/>
+    <result column="STAFF_DESC" jdbcType="VARCHAR" property="staffDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="SALESSTAFF_CODE" jdbcType="VARCHAR" property="salesstaffCode"/>
+    <result column="COMMON_REGION_ID" jdbcType="BIGINT" property="commonRegionId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          STAFF_ID, 
+          PARTY_ID, 
+          STAFF_CODE, 
+          STAFF_ACCOUNT, 
+          ORG_ID, 
+          STAFF_TYPE, 
+          STAFF_NAME, 
+          STAFF_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          SALESSTAFF_CODE, 
+          COMMON_REGION_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PARTY_ID, 
+          STAFF_CODE, 
+          STAFF_ACCOUNT, 
+          ORG_ID, 
+          STAFF_TYPE, 
+          STAFF_NAME, 
+          STAFF_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          SALESSTAFF_CODE, 
+          COMMON_REGION_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="staffId != null ">
+        STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="staffCode != null and staffCode != ''">
+        and STAFF_CODE = #{staffCode, jdbcType=VARCHAR }
+      </if>
+      <if test="staffAccount != null and staffAccount != ''">
+        and STAFF_ACCOUNT = #{staffAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="staffType != null and staffType != ''">
+        and STAFF_TYPE = #{staffType, jdbcType=VARCHAR }
+      </if>
+      <if test="staffName != null and staffName != ''">
+        and STAFF_NAME = #{staffName, jdbcType=VARCHAR }
+      </if>
+      <if test="staffDesc != null and staffDesc != ''">
+        and STAFF_DESC = #{staffDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="salesstaffCode != null and salesstaffCode != ''">
+        and SALESSTAFF_CODE = #{salesstaffCode, jdbcType=VARCHAR }
+      </if>
+      <if test="commonRegionId != null ">
+        and COMMON_REGION_ID = #{commonRegionId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.StaffDO" resultType="java.lang.Integer">
+      select count(*) from STAFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from STAFF
+        where 
+           STAFF_ID = #{staffId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  STAFF 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="staffId">
+      insert into  STAFF ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{partyId,jdbcType=BIGINT}, 
+        #{staffCode,jdbcType=VARCHAR}, 
+        #{staffAccount,jdbcType=VARCHAR}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{staffType,jdbcType=VARCHAR}, 
+        #{staffName,jdbcType=VARCHAR}, 
+        #{staffDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{salesstaffCode,jdbcType=VARCHAR}, 
+        #{commonRegionId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  STAFF ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{staffId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{staffCode,jdbcType=VARCHAR}, 
+        #{staffAccount,jdbcType=VARCHAR}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{staffType,jdbcType=VARCHAR}, 
+        #{staffName,jdbcType=VARCHAR}, 
+        #{staffDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{salesstaffCode,jdbcType=VARCHAR}, 
+        #{commonRegionId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from STAFF  
+        where
+           STAFF_ID = #{staffId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from STAFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  STAFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="staffCode != null">
+         STAFF_CODE = #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staffAccount != null">
+         STAFF_ACCOUNT = #{staffAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="staffType != null">
+         STAFF_TYPE = #{staffType,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null">
+         STAFF_NAME = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffDesc != null">
+         STAFF_DESC = #{staffDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="salesstaffCode != null">
+         SALESSTAFF_CODE = #{salesstaffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="commonRegionId != null">
+         COMMON_REGION_ID = #{commonRegionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           STAFF_ID = #{staffId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update STAFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.staffCode != null">
+        STAFF_CODE = #{record.staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffAccount != null">
+        STAFF_ACCOUNT = #{record.staffAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.staffType != null">
+        STAFF_TYPE = #{record.staffType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffName != null">
+        STAFF_NAME = #{record.staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffDesc != null">
+        STAFF_DESC = #{record.staffDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesstaffCode != null">
+        SALESSTAFF_CODE = #{record.salesstaffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commonRegionId != null">
+        COMMON_REGION_ID = #{record.commonRegionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.staffId != null ">
+        STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.staffCode != null and condition.staffCode != ''">
+        and STAFF_CODE = #{condition.staffCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.staffAccount != null and condition.staffAccount != ''">
+        and STAFF_ACCOUNT = #{condition.staffAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.staffType != null and condition.staffType != ''">
+        and STAFF_TYPE = #{condition.staffType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.staffName != null and condition.staffName != ''">
+        and STAFF_NAME = #{condition.staffName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.staffDesc != null and condition.staffDesc != ''">
+        and STAFF_DESC = #{condition.staffDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.salesstaffCode != null and condition.salesstaffCode != ''">
+        and SALESSTAFF_CODE = #{condition.salesstaffCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.commonRegionId != null ">
+        and COMMON_REGION_ID = #{condition.commonRegionId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

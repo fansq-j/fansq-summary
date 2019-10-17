@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktResTypeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktResTypeDO">
+    <id column="MKT_RES_TYPE_ID" jdbcType="INTEGER" property="mktResTypeId"/>
+    <result column="MKT_RES_TYPE_NBR" jdbcType="VARCHAR" property="mktResTypeNbr"/>
+    <result column="MKT_RES_TYPE_NAME" jdbcType="VARCHAR" property="mktResTypeName"/>
+    <result column="MKT_RES_TYPE_DESC" jdbcType="VARCHAR" property="mktResTypeDesc"/>
+    <result column="ORDERED_FLAG" jdbcType="VARCHAR" property="orderedFlag"/>
+    <result column="PAR_TYPE_ID" jdbcType="INTEGER" property="parTypeId"/>
+    <result column="MANAGE_REGION_ID" jdbcType="BIGINT" property="manageRegionId"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MKT_RES_TYPE_ID, 
+          MKT_RES_TYPE_NBR, 
+          MKT_RES_TYPE_NAME, 
+          MKT_RES_TYPE_DESC, 
+          ORDERED_FLAG, 
+          PAR_TYPE_ID, 
+          MANAGE_REGION_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MKT_RES_TYPE_NBR, 
+          MKT_RES_TYPE_NAME, 
+          MKT_RES_TYPE_DESC, 
+          ORDERED_FLAG, 
+          PAR_TYPE_ID, 
+          MANAGE_REGION_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="mktResTypeId != null ">
+        MKT_RES_TYPE_ID = #{mktResTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="mktResTypeNbr != null and mktResTypeNbr != ''">
+        and MKT_RES_TYPE_NBR = #{mktResTypeNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="mktResTypeName != null and mktResTypeName != ''">
+        and MKT_RES_TYPE_NAME = #{mktResTypeName, jdbcType=VARCHAR }
+      </if>
+      <if test="mktResTypeDesc != null and mktResTypeDesc != ''">
+        and MKT_RES_TYPE_DESC = #{mktResTypeDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="orderedFlag != null and orderedFlag != ''">
+        and ORDERED_FLAG = #{orderedFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="parTypeId != null ">
+        and PAR_TYPE_ID = #{parTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="manageRegionId != null ">
+        and MANAGE_REGION_ID = #{manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktResTypeDO" resultType="java.lang.Integer">
+      select count(*) from MKT_RES_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_RES_TYPE
+        where 
+           MKT_RES_TYPE_ID = #{mktResTypeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_RES_TYPE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="mktResTypeId">
+      insert into  MKT_RES_TYPE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{mktResTypeNbr,jdbcType=VARCHAR}, 
+        #{mktResTypeName,jdbcType=VARCHAR}, 
+        #{mktResTypeDesc,jdbcType=VARCHAR}, 
+        #{orderedFlag,jdbcType=VARCHAR}, 
+        #{parTypeId,jdbcType=INTEGER}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_RES_TYPE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{mktResTypeId,jdbcType=INTEGER}, 
+        #{mktResTypeNbr,jdbcType=VARCHAR}, 
+        #{mktResTypeName,jdbcType=VARCHAR}, 
+        #{mktResTypeDesc,jdbcType=VARCHAR}, 
+        #{orderedFlag,jdbcType=VARCHAR}, 
+        #{parTypeId,jdbcType=INTEGER}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_RES_TYPE  
+        where
+           MKT_RES_TYPE_ID = #{mktResTypeId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_RES_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_RES_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="mktResTypeNbr != null">
+         MKT_RES_TYPE_NBR = #{mktResTypeNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="mktResTypeName != null">
+         MKT_RES_TYPE_NAME = #{mktResTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="mktResTypeDesc != null">
+         MKT_RES_TYPE_DESC = #{mktResTypeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="orderedFlag != null">
+         ORDERED_FLAG = #{orderedFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="parTypeId != null">
+         PAR_TYPE_ID = #{parTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="manageRegionId != null">
+         MANAGE_REGION_ID = #{manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           MKT_RES_TYPE_ID = #{mktResTypeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_RES_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.mktResTypeId != null">
+        MKT_RES_TYPE_ID = #{record.mktResTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mktResTypeNbr != null">
+        MKT_RES_TYPE_NBR = #{record.mktResTypeNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktResTypeName != null">
+        MKT_RES_TYPE_NAME = #{record.mktResTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktResTypeDesc != null">
+        MKT_RES_TYPE_DESC = #{record.mktResTypeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderedFlag != null">
+        ORDERED_FLAG = #{record.orderedFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parTypeId != null">
+        PAR_TYPE_ID = #{record.parTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.manageRegionId != null">
+        MANAGE_REGION_ID = #{record.manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.mktResTypeId != null ">
+        MKT_RES_TYPE_ID = #{condition.mktResTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.mktResTypeNbr != null and condition.mktResTypeNbr != ''">
+        and MKT_RES_TYPE_NBR = #{condition.mktResTypeNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktResTypeName != null and condition.mktResTypeName != ''">
+        and MKT_RES_TYPE_NAME = #{condition.mktResTypeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktResTypeDesc != null and condition.mktResTypeDesc != ''">
+        and MKT_RES_TYPE_DESC = #{condition.mktResTypeDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orderedFlag != null and condition.orderedFlag != ''">
+        and ORDERED_FLAG = #{condition.orderedFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parTypeId != null ">
+        and PAR_TYPE_ID = #{condition.parTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.manageRegionId != null ">
+        and MANAGE_REGION_ID = #{condition.manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

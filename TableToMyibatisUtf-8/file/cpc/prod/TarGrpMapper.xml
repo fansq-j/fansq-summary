@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TarGrpMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TarGrpDO">
+    <id column="TAR_GRP_ID" jdbcType="BIGINT" property="tarGrpId"/>
+    <result column="TAR_GRP_NAME" jdbcType="VARCHAR" property="tarGrpName"/>
+    <result column="TAR_GRP_DESC" jdbcType="VARCHAR" property="tarGrpDesc"/>
+    <result column="TAR_GRP_TYPE" jdbcType="VARCHAR" property="tarGrpType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TAR_GRP_ID, 
+          TAR_GRP_NAME, 
+          TAR_GRP_DESC, 
+          TAR_GRP_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TAR_GRP_NAME, 
+          TAR_GRP_DESC, 
+          TAR_GRP_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="tarGrpId != null ">
+        TAR_GRP_ID = #{tarGrpId, jdbcType=BIGINT }
+      </if>
+      <if test="tarGrpName != null and tarGrpName != ''">
+        and TAR_GRP_NAME = #{tarGrpName, jdbcType=VARCHAR }
+      </if>
+      <if test="tarGrpDesc != null and tarGrpDesc != ''">
+        and TAR_GRP_DESC = #{tarGrpDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="tarGrpType != null and tarGrpType != ''">
+        and TAR_GRP_TYPE = #{tarGrpType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TarGrpDO" resultType="java.lang.Integer">
+      select count(*) from TAR_GRP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TAR_GRP
+        where 
+           TAR_GRP_ID = #{tarGrpId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TAR_GRP 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="tarGrpId">
+      insert into  TAR_GRP ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{tarGrpName,jdbcType=VARCHAR}, 
+        #{tarGrpDesc,jdbcType=VARCHAR}, 
+        #{tarGrpType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TAR_GRP ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{tarGrpId,jdbcType=BIGINT}, 
+        #{tarGrpName,jdbcType=VARCHAR}, 
+        #{tarGrpDesc,jdbcType=VARCHAR}, 
+        #{tarGrpType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TAR_GRP  
+        where
+           TAR_GRP_ID = #{tarGrpId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TAR_GRP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TAR_GRP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="tarGrpName != null">
+         TAR_GRP_NAME = #{tarGrpName,jdbcType=VARCHAR},
+      </if>
+      <if test="tarGrpDesc != null">
+         TAR_GRP_DESC = #{tarGrpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tarGrpType != null">
+         TAR_GRP_TYPE = #{tarGrpType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           TAR_GRP_ID = #{tarGrpId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TAR_GRP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.tarGrpId != null">
+        TAR_GRP_ID = #{record.tarGrpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tarGrpName != null">
+        TAR_GRP_NAME = #{record.tarGrpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tarGrpDesc != null">
+        TAR_GRP_DESC = #{record.tarGrpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tarGrpType != null">
+        TAR_GRP_TYPE = #{record.tarGrpType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.tarGrpId != null ">
+        TAR_GRP_ID = #{condition.tarGrpId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tarGrpName != null and condition.tarGrpName != ''">
+        and TAR_GRP_NAME = #{condition.tarGrpName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.tarGrpDesc != null and condition.tarGrpDesc != ''">
+        and TAR_GRP_DESC = #{condition.tarGrpDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.tarGrpType != null and condition.tarGrpType != ''">
+        and TAR_GRP_TYPE = #{condition.tarGrpType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

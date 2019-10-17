@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.DiscountTargetObjectMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.DiscountTargetObjectDO">
+    <id column="DISCOUNT_TARGET_OBJECT_ID" jdbcType="INTEGER" property="discountTargetObjectId"/>
+    <result column="DISCOUNT_EXPRESS_ID" jdbcType="INTEGER" property="discountExpressId"/>
+    <result column="REPATITION_TYPE_ID" jdbcType="INTEGER" property="repatitionTypeId"/>
+    <result column="PRICING_REF_OBJECT_ID" jdbcType="INTEGER" property="pricingRefObjectId"/>
+    <result column="APPLY_UP_LIMIT_ID" jdbcType="INTEGER" property="applyUpLimitId"/>
+    <result column="APPLY_PRIORITY" jdbcType="INTEGER" property="applyPriority"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          DISCOUNT_TARGET_OBJECT_ID, 
+          DISCOUNT_EXPRESS_ID, 
+          REPATITION_TYPE_ID, 
+          PRICING_REF_OBJECT_ID, 
+          APPLY_UP_LIMIT_ID, 
+          APPLY_PRIORITY, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          DISCOUNT_EXPRESS_ID, 
+          REPATITION_TYPE_ID, 
+          PRICING_REF_OBJECT_ID, 
+          APPLY_UP_LIMIT_ID, 
+          APPLY_PRIORITY, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="discountTargetObjectId != null ">
+        DISCOUNT_TARGET_OBJECT_ID = #{discountTargetObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="discountExpressId != null ">
+        and DISCOUNT_EXPRESS_ID = #{discountExpressId, jdbcType=INTEGER }
+      </if>
+      <if test="repatitionTypeId != null ">
+        and REPATITION_TYPE_ID = #{repatitionTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="applyUpLimitId != null ">
+        and APPLY_UP_LIMIT_ID = #{applyUpLimitId, jdbcType=INTEGER }
+      </if>
+      <if test="applyPriority != null ">
+        and APPLY_PRIORITY = #{applyPriority, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.DiscountTargetObjectDO" resultType="java.lang.Integer">
+      select count(*) from DISCOUNT_TARGET_OBJECT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from DISCOUNT_TARGET_OBJECT
+        where 
+           DISCOUNT_TARGET_OBJECT_ID = #{discountTargetObjectId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DISCOUNT_TARGET_OBJECT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="discountTargetObjectId">
+      insert into  DISCOUNT_TARGET_OBJECT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{discountExpressId,jdbcType=INTEGER}, 
+        #{repatitionTypeId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{applyUpLimitId,jdbcType=INTEGER}, 
+        #{applyPriority,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  DISCOUNT_TARGET_OBJECT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{discountTargetObjectId,jdbcType=INTEGER}, 
+        #{discountExpressId,jdbcType=INTEGER}, 
+        #{repatitionTypeId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{applyUpLimitId,jdbcType=INTEGER}, 
+        #{applyPriority,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from DISCOUNT_TARGET_OBJECT  
+        where
+           DISCOUNT_TARGET_OBJECT_ID = #{discountTargetObjectId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from DISCOUNT_TARGET_OBJECT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  DISCOUNT_TARGET_OBJECT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="discountExpressId != null">
+         DISCOUNT_EXPRESS_ID = #{discountExpressId,jdbcType=INTEGER},
+      </if>
+      <if test="repatitionTypeId != null">
+         REPATITION_TYPE_ID = #{repatitionTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="pricingRefObjectId != null">
+         PRICING_REF_OBJECT_ID = #{pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="applyUpLimitId != null">
+         APPLY_UP_LIMIT_ID = #{applyUpLimitId,jdbcType=INTEGER},
+      </if>
+      <if test="applyPriority != null">
+         APPLY_PRIORITY = #{applyPriority,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           DISCOUNT_TARGET_OBJECT_ID = #{discountTargetObjectId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update DISCOUNT_TARGET_OBJECT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.discountTargetObjectId != null">
+        DISCOUNT_TARGET_OBJECT_ID = #{record.discountTargetObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountExpressId != null">
+        DISCOUNT_EXPRESS_ID = #{record.discountExpressId,jdbcType=INTEGER},
+      </if>
+      <if test="record.repatitionTypeId != null">
+        REPATITION_TYPE_ID = #{record.repatitionTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingRefObjectId != null">
+        PRICING_REF_OBJECT_ID = #{record.pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyUpLimitId != null">
+        APPLY_UP_LIMIT_ID = #{record.applyUpLimitId,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyPriority != null">
+        APPLY_PRIORITY = #{record.applyPriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.discountTargetObjectId != null ">
+        DISCOUNT_TARGET_OBJECT_ID = #{condition.discountTargetObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.discountExpressId != null ">
+        and DISCOUNT_EXPRESS_ID = #{condition.discountExpressId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.repatitionTypeId != null ">
+        and REPATITION_TYPE_ID = #{condition.repatitionTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{condition.pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.applyUpLimitId != null ">
+        and APPLY_UP_LIMIT_ID = #{condition.applyUpLimitId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.applyPriority != null ">
+        and APPLY_PRIORITY = #{condition.applyPriority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

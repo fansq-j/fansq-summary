@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdProdInstStateMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdProdInstStateDO">
+    <result column="PROD_INST_STATE_ID" jdbcType="BIGINT" property="prodInstStateId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="STOP_TYPE" jdbcType="VARCHAR" property="stopType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STOP_DIRECTION" jdbcType="VARCHAR" property="stopDirection"/>
+    <result column="STOP_REASON" jdbcType="VARCHAR" property="stopReason"/>
+    <result column="EVENT_DATE" jdbcType="TIMESTAMP" property="eventDate"/>
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PROD_INST_STATE_ID, 
+          PROD_INST_ID, 
+          STOP_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STOP_DIRECTION, 
+          STOP_REASON, 
+          EVENT_DATE, 
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROD_INST_STATE_ID, 
+          PROD_INST_ID, 
+          STOP_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STOP_DIRECTION, 
+          STOP_REASON, 
+          EVENT_DATE, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="prodInstStateId != null ">
+        PROD_INST_STATE_ID = #{prodInstStateId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="stopType != null and stopType != ''">
+        and STOP_TYPE = #{stopType, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="stopDirection != null and stopDirection != ''">
+        and STOP_DIRECTION = #{stopDirection, jdbcType=VARCHAR }
+      </if>
+      <if test="stopReason != null and stopReason != ''">
+        and STOP_REASON = #{stopReason, jdbcType=VARCHAR }
+      </if>
+      <if test="eventDate != null ">
+        and EVENT_DATE = #{eventDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="rowId != null ">
+        and ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdProdInstStateDO" resultType="java.lang.Integer">
+      select count(*) from ORD_PROD_INST_STATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_PROD_INST_STATE
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_PROD_INST_STATE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_PROD_INST_STATE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{prodInstStateId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{stopType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{stopDirection,jdbcType=VARCHAR}, 
+        #{stopReason,jdbcType=VARCHAR}, 
+        #{eventDate,jdbcType=TIMESTAMP}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_PROD_INST_STATE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{prodInstStateId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{stopType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{stopDirection,jdbcType=VARCHAR}, 
+        #{stopReason,jdbcType=VARCHAR}, 
+        #{eventDate,jdbcType=TIMESTAMP}, 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_PROD_INST_STATE  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_PROD_INST_STATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_PROD_INST_STATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="prodInstStateId != null">
+         PROD_INST_STATE_ID = #{prodInstStateId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="stopType != null">
+         STOP_TYPE = #{stopType,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopDirection != null">
+         STOP_DIRECTION = #{stopDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="stopReason != null">
+         STOP_REASON = #{stopReason,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDate != null">
+         EVENT_DATE = #{eventDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_PROD_INST_STATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.prodInstStateId != null">
+        PROD_INST_STATE_ID = #{record.prodInstStateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.stopType != null">
+        STOP_TYPE = #{record.stopType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stopDirection != null">
+        STOP_DIRECTION = #{record.stopDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stopReason != null">
+        STOP_REASON = #{record.stopReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventDate != null">
+        EVENT_DATE = #{record.eventDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.prodInstStateId != null ">
+        PROD_INST_STATE_ID = #{condition.prodInstStateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.stopType != null and condition.stopType != ''">
+        and STOP_TYPE = #{condition.stopType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.stopDirection != null and condition.stopDirection != ''">
+        and STOP_DIRECTION = #{condition.stopDirection, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.stopReason != null and condition.stopReason != ''">
+        and STOP_REASON = #{condition.stopReason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventDate != null ">
+        and EVENT_DATE = #{condition.eventDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.rowId != null ">
+        and ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

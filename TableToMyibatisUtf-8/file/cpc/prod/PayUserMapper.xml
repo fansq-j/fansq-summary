@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PayUserMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PayUserDO">
+    <id column="PAY_USER_ID" jdbcType="INTEGER" property="payUserId"/>
+    <result column="SIGN_TYPE_ID" jdbcType="INTEGER" property="signTypeId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="PAY_USER_NAME" jdbcType="VARCHAR" property="payUserName"/>
+    <result column="TOKEN" jdbcType="VARCHAR" property="token"/>
+    <result column="PRIVATE_KEY" jdbcType="CLOB" property="privateKey"/>
+    <result column="PUBLIC_KEY" jdbcType="CLOB" property="publicKey"/>
+    <result column="PAGE_TRANSITIONS" jdbcType="VARCHAR" property="pageTransitions"/>
+    <result column="CALL_BACK_INFO" jdbcType="VARCHAR" property="callBackInfo"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PAY_USER_ID, 
+          SIGN_TYPE_ID, 
+          ORG_ID, 
+          PAY_USER_NAME, 
+          TOKEN, 
+          PRIVATE_KEY, 
+          PUBLIC_KEY, 
+          PAGE_TRANSITIONS, 
+          CALL_BACK_INFO, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SIGN_TYPE_ID, 
+          ORG_ID, 
+          PAY_USER_NAME, 
+          TOKEN, 
+          PRIVATE_KEY, 
+          PUBLIC_KEY, 
+          PAGE_TRANSITIONS, 
+          CALL_BACK_INFO, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="payUserId != null ">
+        PAY_USER_ID = #{payUserId, jdbcType=INTEGER }
+      </if>
+      <if test="signTypeId != null ">
+        and SIGN_TYPE_ID = #{signTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="payUserName != null and payUserName != ''">
+        and PAY_USER_NAME = #{payUserName, jdbcType=VARCHAR }
+      </if>
+      <if test="token != null and token != ''">
+        and TOKEN = #{token, jdbcType=VARCHAR }
+      </if>
+      <if test="privateKey != null and privateKey != ''">
+        and PRIVATE_KEY = #{privateKey, jdbcType=CLOB }
+      </if>
+      <if test="publicKey != null and publicKey != ''">
+        and PUBLIC_KEY = #{publicKey, jdbcType=CLOB }
+      </if>
+      <if test="pageTransitions != null and pageTransitions != ''">
+        and PAGE_TRANSITIONS = #{pageTransitions, jdbcType=VARCHAR }
+      </if>
+      <if test="callBackInfo != null and callBackInfo != ''">
+        and CALL_BACK_INFO = #{callBackInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PayUserDO" resultType="java.lang.Integer">
+      select count(*) from PAY_USER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PAY_USER
+        where 
+           PAY_USER_ID = #{payUserId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PAY_USER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="payUserId">
+      insert into  PAY_USER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{signTypeId,jdbcType=INTEGER}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{payUserName,jdbcType=VARCHAR}, 
+        #{token,jdbcType=VARCHAR}, 
+        #{privateKey,jdbcType=CLOB}, 
+        #{publicKey,jdbcType=CLOB}, 
+        #{pageTransitions,jdbcType=VARCHAR}, 
+        #{callBackInfo,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PAY_USER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{payUserId,jdbcType=INTEGER}, 
+        #{signTypeId,jdbcType=INTEGER}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{payUserName,jdbcType=VARCHAR}, 
+        #{token,jdbcType=VARCHAR}, 
+        #{privateKey,jdbcType=CLOB}, 
+        #{publicKey,jdbcType=CLOB}, 
+        #{pageTransitions,jdbcType=VARCHAR}, 
+        #{callBackInfo,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PAY_USER  
+        where
+           PAY_USER_ID = #{payUserId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PAY_USER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PAY_USER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="signTypeId != null">
+         SIGN_TYPE_ID = #{signTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="payUserName != null">
+         PAY_USER_NAME = #{payUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+         TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="privateKey != null">
+         PRIVATE_KEY = #{privateKey,jdbcType=CLOB},
+      </if>
+      <if test="publicKey != null">
+         PUBLIC_KEY = #{publicKey,jdbcType=CLOB},
+      </if>
+      <if test="pageTransitions != null">
+         PAGE_TRANSITIONS = #{pageTransitions,jdbcType=VARCHAR},
+      </if>
+      <if test="callBackInfo != null">
+         CALL_BACK_INFO = #{callBackInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PAY_USER_ID = #{payUserId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PAY_USER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.payUserId != null">
+        PAY_USER_ID = #{record.payUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.signTypeId != null">
+        SIGN_TYPE_ID = #{record.signTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.payUserName != null">
+        PAY_USER_NAME = #{record.payUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.token != null">
+        TOKEN = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privateKey != null">
+        PRIVATE_KEY = #{record.privateKey,jdbcType=CLOB},
+      </if>
+      <if test="record.publicKey != null">
+        PUBLIC_KEY = #{record.publicKey,jdbcType=CLOB},
+      </if>
+      <if test="record.pageTransitions != null">
+        PAGE_TRANSITIONS = #{record.pageTransitions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callBackInfo != null">
+        CALL_BACK_INFO = #{record.callBackInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.payUserId != null ">
+        PAY_USER_ID = #{condition.payUserId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.signTypeId != null ">
+        and SIGN_TYPE_ID = #{condition.signTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payUserName != null and condition.payUserName != ''">
+        and PAY_USER_NAME = #{condition.payUserName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.token != null and condition.token != ''">
+        and TOKEN = #{condition.token, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.privateKey != null and condition.privateKey != ''">
+        and PRIVATE_KEY = #{condition.privateKey, jdbcType=CLOB }
+      </if>
+      <if test="condition.publicKey != null and condition.publicKey != ''">
+        and PUBLIC_KEY = #{condition.publicKey, jdbcType=CLOB }
+      </if>
+      <if test="condition.pageTransitions != null and condition.pageTransitions != ''">
+        and PAGE_TRANSITIONS = #{condition.pageTransitions, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.callBackInfo != null and condition.callBackInfo != ''">
+        and CALL_BACK_INFO = #{condition.callBackInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

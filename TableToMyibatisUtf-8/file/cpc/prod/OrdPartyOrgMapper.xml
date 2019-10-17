@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdPartyOrgMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdPartyOrgDO">
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="ORG_TYPE" jdbcType="VARCHAR" property="orgType"/>
+    <result column="ORG_PROPERTY" jdbcType="VARCHAR" property="orgProperty"/>
+    <result column="ORG_INTRO" jdbcType="VARCHAR" property="orgIntro"/>
+    <result column="ORG_SCALE" jdbcType="VARCHAR" property="orgScale"/>
+    <result column="ORG_ASSETS" jdbcType="VARCHAR" property="orgAssets"/>
+    <result column="PRINCIPAL" jdbcType="VARCHAR" property="principal"/>
+    <result column="HQ_ADDR" jdbcType="VARCHAR" property="hqAddr"/>
+    <result column="CUST_BULID_DATE" jdbcType="TIMESTAMP" property="custBulidDate"/>
+    <result column="BULID_NAME" jdbcType="VARCHAR" property="bulidName"/>
+    <result column="BULID_ATTR" jdbcType="VARCHAR" property="bulidAttr"/>
+    <result column="ORG_HOMEPAGE" jdbcType="VARCHAR" property="orgHomepage"/>
+    <result column="ORG_ADDR" jdbcType="VARCHAR" property="orgAddr"/>
+    <result column="SPECIAL_AREA_ID" jdbcType="INTEGER" property="specialAreaId"/>
+    <result column="LEGAL_REPR" jdbcType="VARCHAR" property="legalRepr"/>
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ORG_ID, 
+          ORG_NAME, 
+          PARTY_ID, 
+          ORG_TYPE, 
+          ORG_PROPERTY, 
+          ORG_INTRO, 
+          ORG_SCALE, 
+          ORG_ASSETS, 
+          PRINCIPAL, 
+          HQ_ADDR, 
+          CUST_BULID_DATE, 
+          BULID_NAME, 
+          BULID_ATTR, 
+          ORG_HOMEPAGE, 
+          ORG_ADDR, 
+          SPECIAL_AREA_ID, 
+          LEGAL_REPR, 
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ORG_ID, 
+          ORG_NAME, 
+          PARTY_ID, 
+          ORG_TYPE, 
+          ORG_PROPERTY, 
+          ORG_INTRO, 
+          ORG_SCALE, 
+          ORG_ASSETS, 
+          PRINCIPAL, 
+          HQ_ADDR, 
+          CUST_BULID_DATE, 
+          BULID_NAME, 
+          BULID_ATTR, 
+          ORG_HOMEPAGE, 
+          ORG_ADDR, 
+          SPECIAL_AREA_ID, 
+          LEGAL_REPR, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="orgId != null ">
+        ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="orgName != null and orgName != ''">
+        and ORG_NAME = #{orgName, jdbcType=VARCHAR }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="orgType != null and orgType != ''">
+        and ORG_TYPE = #{orgType, jdbcType=VARCHAR }
+      </if>
+      <if test="orgProperty != null and orgProperty != ''">
+        and ORG_PROPERTY = #{orgProperty, jdbcType=VARCHAR }
+      </if>
+      <if test="orgIntro != null and orgIntro != ''">
+        and ORG_INTRO = #{orgIntro, jdbcType=VARCHAR }
+      </if>
+      <if test="orgScale != null and orgScale != ''">
+        and ORG_SCALE = #{orgScale, jdbcType=VARCHAR }
+      </if>
+      <if test="orgAssets != null and orgAssets != ''">
+        and ORG_ASSETS = #{orgAssets, jdbcType=VARCHAR }
+      </if>
+      <if test="principal != null and principal != ''">
+        and PRINCIPAL = #{principal, jdbcType=VARCHAR }
+      </if>
+      <if test="hqAddr != null and hqAddr != ''">
+        and HQ_ADDR = #{hqAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="custBulidDate != null ">
+        and CUST_BULID_DATE = #{custBulidDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="bulidName != null and bulidName != ''">
+        and BULID_NAME = #{bulidName, jdbcType=VARCHAR }
+      </if>
+      <if test="bulidAttr != null and bulidAttr != ''">
+        and BULID_ATTR = #{bulidAttr, jdbcType=VARCHAR }
+      </if>
+      <if test="orgHomepage != null and orgHomepage != ''">
+        and ORG_HOMEPAGE = #{orgHomepage, jdbcType=VARCHAR }
+      </if>
+      <if test="orgAddr != null and orgAddr != ''">
+        and ORG_ADDR = #{orgAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="specialAreaId != null ">
+        and SPECIAL_AREA_ID = #{specialAreaId, jdbcType=INTEGER }
+      </if>
+      <if test="legalRepr != null and legalRepr != ''">
+        and LEGAL_REPR = #{legalRepr, jdbcType=VARCHAR }
+      </if>
+      <if test="rowId != null ">
+        and ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdPartyOrgDO" resultType="java.lang.Integer">
+      select count(*) from ORD_PARTY_ORG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_PARTY_ORG
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_PARTY_ORG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_PARTY_ORG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{orgId,jdbcType=BIGINT}, 
+        #{orgName,jdbcType=VARCHAR}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{orgType,jdbcType=VARCHAR}, 
+        #{orgProperty,jdbcType=VARCHAR}, 
+        #{orgIntro,jdbcType=VARCHAR}, 
+        #{orgScale,jdbcType=VARCHAR}, 
+        #{orgAssets,jdbcType=VARCHAR}, 
+        #{principal,jdbcType=VARCHAR}, 
+        #{hqAddr,jdbcType=VARCHAR}, 
+        #{custBulidDate,jdbcType=TIMESTAMP}, 
+        #{bulidName,jdbcType=VARCHAR}, 
+        #{bulidAttr,jdbcType=VARCHAR}, 
+        #{orgHomepage,jdbcType=VARCHAR}, 
+        #{orgAddr,jdbcType=VARCHAR}, 
+        #{specialAreaId,jdbcType=INTEGER}, 
+        #{legalRepr,jdbcType=VARCHAR}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_PARTY_ORG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{orgId,jdbcType=BIGINT}, 
+        #{orgName,jdbcType=VARCHAR}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{orgType,jdbcType=VARCHAR}, 
+        #{orgProperty,jdbcType=VARCHAR}, 
+        #{orgIntro,jdbcType=VARCHAR}, 
+        #{orgScale,jdbcType=VARCHAR}, 
+        #{orgAssets,jdbcType=VARCHAR}, 
+        #{principal,jdbcType=VARCHAR}, 
+        #{hqAddr,jdbcType=VARCHAR}, 
+        #{custBulidDate,jdbcType=TIMESTAMP}, 
+        #{bulidName,jdbcType=VARCHAR}, 
+        #{bulidAttr,jdbcType=VARCHAR}, 
+        #{orgHomepage,jdbcType=VARCHAR}, 
+        #{orgAddr,jdbcType=VARCHAR}, 
+        #{specialAreaId,jdbcType=INTEGER}, 
+        #{legalRepr,jdbcType=VARCHAR}, 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_PARTY_ORG  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_PARTY_ORG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_PARTY_ORG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null">
+         ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="orgType != null">
+         ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProperty != null">
+         ORG_PROPERTY = #{orgProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIntro != null">
+         ORG_INTRO = #{orgIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="orgScale != null">
+         ORG_SCALE = #{orgScale,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAssets != null">
+         ORG_ASSETS = #{orgAssets,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null">
+         PRINCIPAL = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="hqAddr != null">
+         HQ_ADDR = #{hqAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="custBulidDate != null">
+         CUST_BULID_DATE = #{custBulidDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bulidName != null">
+         BULID_NAME = #{bulidName,jdbcType=VARCHAR},
+      </if>
+      <if test="bulidAttr != null">
+         BULID_ATTR = #{bulidAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="orgHomepage != null">
+         ORG_HOMEPAGE = #{orgHomepage,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddr != null">
+         ORG_ADDR = #{orgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="specialAreaId != null">
+         SPECIAL_AREA_ID = #{specialAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="legalRepr != null">
+         LEGAL_REPR = #{legalRepr,jdbcType=VARCHAR},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_PARTY_ORG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgName != null">
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgType != null">
+        ORG_TYPE = #{record.orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgProperty != null">
+        ORG_PROPERTY = #{record.orgProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgIntro != null">
+        ORG_INTRO = #{record.orgIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgScale != null">
+        ORG_SCALE = #{record.orgScale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAssets != null">
+        ORG_ASSETS = #{record.orgAssets,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principal != null">
+        PRINCIPAL = #{record.principal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hqAddr != null">
+        HQ_ADDR = #{record.hqAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custBulidDate != null">
+        CUST_BULID_DATE = #{record.custBulidDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bulidName != null">
+        BULID_NAME = #{record.bulidName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bulidAttr != null">
+        BULID_ATTR = #{record.bulidAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgHomepage != null">
+        ORG_HOMEPAGE = #{record.orgHomepage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAddr != null">
+        ORG_ADDR = #{record.orgAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialAreaId != null">
+        SPECIAL_AREA_ID = #{record.specialAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.legalRepr != null">
+        LEGAL_REPR = #{record.legalRepr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.orgId != null ">
+        ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgName != null and condition.orgName != ''">
+        and ORG_NAME = #{condition.orgName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgType != null and condition.orgType != ''">
+        and ORG_TYPE = #{condition.orgType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgProperty != null and condition.orgProperty != ''">
+        and ORG_PROPERTY = #{condition.orgProperty, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgIntro != null and condition.orgIntro != ''">
+        and ORG_INTRO = #{condition.orgIntro, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgScale != null and condition.orgScale != ''">
+        and ORG_SCALE = #{condition.orgScale, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgAssets != null and condition.orgAssets != ''">
+        and ORG_ASSETS = #{condition.orgAssets, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.principal != null and condition.principal != ''">
+        and PRINCIPAL = #{condition.principal, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.hqAddr != null and condition.hqAddr != ''">
+        and HQ_ADDR = #{condition.hqAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custBulidDate != null ">
+        and CUST_BULID_DATE = #{condition.custBulidDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.bulidName != null and condition.bulidName != ''">
+        and BULID_NAME = #{condition.bulidName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bulidAttr != null and condition.bulidAttr != ''">
+        and BULID_ATTR = #{condition.bulidAttr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgHomepage != null and condition.orgHomepage != ''">
+        and ORG_HOMEPAGE = #{condition.orgHomepage, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgAddr != null and condition.orgAddr != ''">
+        and ORG_ADDR = #{condition.orgAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.specialAreaId != null ">
+        and SPECIAL_AREA_ID = #{condition.specialAreaId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.legalRepr != null and condition.legalRepr != ''">
+        and LEGAL_REPR = #{condition.legalRepr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.rowId != null ">
+        and ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

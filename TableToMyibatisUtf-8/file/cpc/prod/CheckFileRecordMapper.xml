@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CheckFileRecordMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CheckFileRecordDO">
+    <id column="RECORD_ID" jdbcType="BIGINT" property="recordId"/>
+    <result column="FILE_ID" jdbcType="INTEGER" property="fileId"/>
+    <result column="PAY_TYPE_ID" jdbcType="INTEGER" property="payTypeId"/>
+    <result column="OBJ_TYPE" jdbcType="INTEGER" property="objType"/>
+    <result column="OBJ_ID" jdbcType="INTEGER" property="objId"/>
+    <result column="CHECK_DATE" jdbcType="TIMESTAMP" property="checkDate"/>
+    <result column="PAY_SERIAL_ID" jdbcType="VARCHAR" property="paySerialId"/>
+    <result column="PAY_SERIAL_NBR" jdbcType="VARCHAR" property="paySerialNbr"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="PAY_DATE" jdbcType="TIMESTAMP" property="payDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STAFF_ID" jdbcType="INTEGER" property="staffId"/>
+    <result column="COMMODITY_NAME" jdbcType="VARCHAR" property="commodityName"/>
+    <result column="COMMODITY_DESC" jdbcType="VARCHAR" property="commodityDesc"/>
+    <result column="ACCOUNT_ID" jdbcType="BIGINT" property="accountId"/>
+    <result column="CUSTOMER_ACCOUNT" jdbcType="VARCHAR" property="customerAccount"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RECORD_ID, 
+          FILE_ID, 
+          PAY_TYPE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          CHECK_DATE, 
+          PAY_SERIAL_ID, 
+          PAY_SERIAL_NBR, 
+          AMOUNT, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          PAY_DATE, 
+          STATUS_DATE, 
+          STAFF_ID, 
+          COMMODITY_NAME, 
+          COMMODITY_DESC, 
+          ACCOUNT_ID, 
+          CUSTOMER_ACCOUNT, 
+          REGION_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          FILE_ID, 
+          PAY_TYPE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          CHECK_DATE, 
+          PAY_SERIAL_ID, 
+          PAY_SERIAL_NBR, 
+          AMOUNT, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          PAY_DATE, 
+          STATUS_DATE, 
+          STAFF_ID, 
+          COMMODITY_NAME, 
+          COMMODITY_DESC, 
+          ACCOUNT_ID, 
+          CUSTOMER_ACCOUNT, 
+          REGION_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="recordId != null ">
+        RECORD_ID = #{recordId, jdbcType=BIGINT }
+      </if>
+      <if test="fileId != null ">
+        and FILE_ID = #{fileId, jdbcType=INTEGER }
+      </if>
+      <if test="payTypeId != null ">
+        and PAY_TYPE_ID = #{payTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null ">
+        and OBJ_TYPE = #{objType, jdbcType=INTEGER }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=INTEGER }
+      </if>
+      <if test="checkDate != null ">
+        and CHECK_DATE = #{checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="paySerialId != null and paySerialId != ''">
+        and PAY_SERIAL_ID = #{paySerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="paySerialNbr != null and paySerialNbr != ''">
+        and PAY_SERIAL_NBR = #{paySerialNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="payDate != null ">
+        and PAY_DATE = #{payDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=INTEGER }
+      </if>
+      <if test="commodityName != null and commodityName != ''">
+        and COMMODITY_NAME = #{commodityName, jdbcType=VARCHAR }
+      </if>
+      <if test="commodityDesc != null and commodityDesc != ''">
+        and COMMODITY_DESC = #{commodityDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="accountId != null ">
+        and ACCOUNT_ID = #{accountId, jdbcType=BIGINT }
+      </if>
+      <if test="customerAccount != null and customerAccount != ''">
+        and CUSTOMER_ACCOUNT = #{customerAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CheckFileRecordDO" resultType="java.lang.Integer">
+      select count(*) from CHECK_FILE_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CHECK_FILE_RECORD
+        where 
+           RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CHECK_FILE_RECORD 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="recordId">
+      insert into  CHECK_FILE_RECORD ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{fileId,jdbcType=INTEGER}, 
+        #{payTypeId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{paySerialId,jdbcType=VARCHAR}, 
+        #{paySerialNbr,jdbcType=VARCHAR}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{payDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{staffId,jdbcType=INTEGER}, 
+        #{commodityName,jdbcType=VARCHAR}, 
+        #{commodityDesc,jdbcType=VARCHAR}, 
+        #{accountId,jdbcType=BIGINT}, 
+        #{customerAccount,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CHECK_FILE_RECORD ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{recordId,jdbcType=BIGINT}, 
+        #{fileId,jdbcType=INTEGER}, 
+        #{payTypeId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{paySerialId,jdbcType=VARCHAR}, 
+        #{paySerialNbr,jdbcType=VARCHAR}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{payDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{staffId,jdbcType=INTEGER}, 
+        #{commodityName,jdbcType=VARCHAR}, 
+        #{commodityDesc,jdbcType=VARCHAR}, 
+        #{accountId,jdbcType=BIGINT}, 
+        #{customerAccount,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CHECK_FILE_RECORD  
+        where
+           RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CHECK_FILE_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CHECK_FILE_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="fileId != null">
+         FILE_ID = #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="payTypeId != null">
+         PAY_TYPE_ID = #{payTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=INTEGER},
+      </if>
+      <if test="checkDate != null">
+         CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paySerialId != null">
+         PAY_SERIAL_ID = #{paySerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="paySerialNbr != null">
+         PAY_SERIAL_NBR = #{paySerialNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payDate != null">
+         PAY_DATE = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityName != null">
+         COMMODITY_NAME = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityDesc != null">
+         COMMODITY_DESC = #{commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+         ACCOUNT_ID = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="customerAccount != null">
+         CUSTOMER_ACCOUNT = #{customerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CHECK_FILE_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.recordId != null">
+        RECORD_ID = #{record.recordId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fileId != null">
+        FILE_ID = #{record.fileId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payTypeId != null">
+        PAY_TYPE_ID = #{record.payTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=INTEGER},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkDate != null">
+        CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paySerialId != null">
+        PAY_SERIAL_ID = #{record.paySerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paySerialNbr != null">
+        PAY_SERIAL_NBR = #{record.paySerialNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payDate != null">
+        PAY_DATE = #{record.payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityName != null">
+        COMMODITY_NAME = #{record.commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityDesc != null">
+        COMMODITY_DESC = #{record.commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountId != null">
+        ACCOUNT_ID = #{record.accountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerAccount != null">
+        CUSTOMER_ACCOUNT = #{record.customerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.recordId != null ">
+        RECORD_ID = #{condition.recordId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.fileId != null ">
+        and FILE_ID = #{condition.fileId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payTypeId != null ">
+        and PAY_TYPE_ID = #{condition.payTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null ">
+        and OBJ_TYPE = #{condition.objType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.checkDate != null ">
+        and CHECK_DATE = #{condition.checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.paySerialId != null and condition.paySerialId != ''">
+        and PAY_SERIAL_ID = #{condition.paySerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paySerialNbr != null and condition.paySerialNbr != ''">
+        and PAY_SERIAL_NBR = #{condition.paySerialNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.payDate != null ">
+        and PAY_DATE = #{condition.payDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.commodityName != null and condition.commodityName != ''">
+        and COMMODITY_NAME = #{condition.commodityName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.commodityDesc != null and condition.commodityDesc != ''">
+        and COMMODITY_DESC = #{condition.commodityDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.accountId != null ">
+        and ACCOUNT_ID = #{condition.accountId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.customerAccount != null and condition.customerAccount != ''">
+        and CUSTOMER_ACCOUNT = #{condition.customerAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

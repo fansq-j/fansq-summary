@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SysColumnMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SysColumnDO">
+    <id column="COL_ID" jdbcType="BIGINT" property="colId"/>
+    <result column="TAB_ID" jdbcType="BIGINT" property="tabId"/>
+    <result column="COL_NAME" jdbcType="VARCHAR" property="colName"/>
+    <result column="COL_TYPE" jdbcType="VARCHAR" property="colType"/>
+    <result column="COL_DESC" jdbcType="VARCHAR" property="colDesc"/>
+    <result column="COL_LENGHT" jdbcType="BIGINT" property="colLenght"/>
+    <result column="COL_NULLABLE" jdbcType="INTEGER" property="colNullable"/>
+    <result column="COL_FOREIGN_KEY" jdbcType="INTEGER" property="colForeignKey"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          COL_ID, 
+          TAB_ID, 
+          COL_NAME, 
+          COL_TYPE, 
+          COL_DESC, 
+          COL_LENGHT, 
+          COL_NULLABLE, 
+          COL_FOREIGN_KEY, 
+          VER_NUM, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TAB_ID, 
+          COL_NAME, 
+          COL_TYPE, 
+          COL_DESC, 
+          COL_LENGHT, 
+          COL_NULLABLE, 
+          COL_FOREIGN_KEY, 
+          VER_NUM, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="colId != null ">
+        COL_ID = #{colId, jdbcType=BIGINT }
+      </if>
+      <if test="tabId != null ">
+        and TAB_ID = #{tabId, jdbcType=BIGINT }
+      </if>
+      <if test="colName != null and colName != ''">
+        and COL_NAME = #{colName, jdbcType=VARCHAR }
+      </if>
+      <if test="colType != null and colType != ''">
+        and COL_TYPE = #{colType, jdbcType=VARCHAR }
+      </if>
+      <if test="colDesc != null and colDesc != ''">
+        and COL_DESC = #{colDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="colLenght != null ">
+        and COL_LENGHT = #{colLenght, jdbcType=BIGINT }
+      </if>
+      <if test="colNullable != null ">
+        and COL_NULLABLE = #{colNullable, jdbcType=INTEGER }
+      </if>
+      <if test="colForeignKey != null ">
+        and COL_FOREIGN_KEY = #{colForeignKey, jdbcType=INTEGER }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SysColumnDO" resultType="java.lang.Integer">
+      select count(*) from SYS_COLUMN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SYS_COLUMN
+        where 
+           COL_ID = #{colId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SYS_COLUMN 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="colId">
+      insert into  SYS_COLUMN ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{tabId,jdbcType=BIGINT}, 
+        #{colName,jdbcType=VARCHAR}, 
+        #{colType,jdbcType=VARCHAR}, 
+        #{colDesc,jdbcType=VARCHAR}, 
+        #{colLenght,jdbcType=BIGINT}, 
+        #{colNullable,jdbcType=INTEGER}, 
+        #{colForeignKey,jdbcType=INTEGER}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SYS_COLUMN ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{colId,jdbcType=BIGINT}, 
+        #{tabId,jdbcType=BIGINT}, 
+        #{colName,jdbcType=VARCHAR}, 
+        #{colType,jdbcType=VARCHAR}, 
+        #{colDesc,jdbcType=VARCHAR}, 
+        #{colLenght,jdbcType=BIGINT}, 
+        #{colNullable,jdbcType=INTEGER}, 
+        #{colForeignKey,jdbcType=INTEGER}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SYS_COLUMN  
+        where
+           COL_ID = #{colId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SYS_COLUMN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SYS_COLUMN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="tabId != null">
+         TAB_ID = #{tabId,jdbcType=BIGINT},
+      </if>
+      <if test="colName != null">
+         COL_NAME = #{colName,jdbcType=VARCHAR},
+      </if>
+      <if test="colType != null">
+         COL_TYPE = #{colType,jdbcType=VARCHAR},
+      </if>
+      <if test="colDesc != null">
+         COL_DESC = #{colDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="colLenght != null">
+         COL_LENGHT = #{colLenght,jdbcType=BIGINT},
+      </if>
+      <if test="colNullable != null">
+         COL_NULLABLE = #{colNullable,jdbcType=INTEGER},
+      </if>
+      <if test="colForeignKey != null">
+         COL_FOREIGN_KEY = #{colForeignKey,jdbcType=INTEGER},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           COL_ID = #{colId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SYS_COLUMN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.colId != null">
+        COL_ID = #{record.colId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tabId != null">
+        TAB_ID = #{record.tabId,jdbcType=BIGINT},
+      </if>
+      <if test="record.colName != null">
+        COL_NAME = #{record.colName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.colType != null">
+        COL_TYPE = #{record.colType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.colDesc != null">
+        COL_DESC = #{record.colDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.colLenght != null">
+        COL_LENGHT = #{record.colLenght,jdbcType=BIGINT},
+      </if>
+      <if test="record.colNullable != null">
+        COL_NULLABLE = #{record.colNullable,jdbcType=INTEGER},
+      </if>
+      <if test="record.colForeignKey != null">
+        COL_FOREIGN_KEY = #{record.colForeignKey,jdbcType=INTEGER},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.colId != null ">
+        COL_ID = #{condition.colId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tabId != null ">
+        and TAB_ID = #{condition.tabId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.colName != null and condition.colName != ''">
+        and COL_NAME = #{condition.colName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.colType != null and condition.colType != ''">
+        and COL_TYPE = #{condition.colType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.colDesc != null and condition.colDesc != ''">
+        and COL_DESC = #{condition.colDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.colLenght != null ">
+        and COL_LENGHT = #{condition.colLenght, jdbcType=BIGINT }
+      </if>
+      <if test="condition.colNullable != null ">
+        and COL_NULLABLE = #{condition.colNullable, jdbcType=INTEGER }
+      </if>
+      <if test="condition.colForeignKey != null ">
+        and COL_FOREIGN_KEY = #{condition.colForeignKey, jdbcType=INTEGER }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

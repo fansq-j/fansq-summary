@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AcctItemGroupMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AcctItemGroupDO">
+    <id column="ACCT_ITEM_GROUP_ID" jdbcType="INTEGER" property="acctItemGroupId"/>
+    <result column="ACCT_ITEM_GROUP_NAME" jdbcType="VARCHAR" property="acctItemGroupName"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="IF_INCLUDE" jdbcType="INTEGER" property="ifInclude"/>
+    <result column="PARENT_ITEM_GROUP_ID" jdbcType="INTEGER" property="parentItemGroupId"/>
+    <result column="GROUP_TYPE" jdbcType="INTEGER" property="groupType"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCT_ITEM_GROUP_ID, 
+          ACCT_ITEM_GROUP_NAME, 
+          PRIORITY, 
+          IF_INCLUDE, 
+          PARENT_ITEM_GROUP_ID, 
+          GROUP_TYPE, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_ITEM_GROUP_NAME, 
+          PRIORITY, 
+          IF_INCLUDE, 
+          PARENT_ITEM_GROUP_ID, 
+          GROUP_TYPE, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="acctItemGroupId != null ">
+        ACCT_ITEM_GROUP_ID = #{acctItemGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="acctItemGroupName != null and acctItemGroupName != ''">
+        and ACCT_ITEM_GROUP_NAME = #{acctItemGroupName, jdbcType=VARCHAR }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="ifInclude != null ">
+        and IF_INCLUDE = #{ifInclude, jdbcType=INTEGER }
+      </if>
+      <if test="parentItemGroupId != null ">
+        and PARENT_ITEM_GROUP_ID = #{parentItemGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="groupType != null ">
+        and GROUP_TYPE = #{groupType, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AcctItemGroupDO" resultType="java.lang.Integer">
+      select count(*) from ACCT_ITEM_GROUP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCT_ITEM_GROUP
+        where 
+           ACCT_ITEM_GROUP_ID = #{acctItemGroupId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCT_ITEM_GROUP 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="acctItemGroupId">
+      insert into  ACCT_ITEM_GROUP ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctItemGroupName,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{ifInclude,jdbcType=INTEGER}, 
+        #{parentItemGroupId,jdbcType=INTEGER}, 
+        #{groupType,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCT_ITEM_GROUP ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{acctItemGroupId,jdbcType=INTEGER}, 
+        #{acctItemGroupName,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{ifInclude,jdbcType=INTEGER}, 
+        #{parentItemGroupId,jdbcType=INTEGER}, 
+        #{groupType,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCT_ITEM_GROUP  
+        where
+           ACCT_ITEM_GROUP_ID = #{acctItemGroupId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCT_ITEM_GROUP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCT_ITEM_GROUP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctItemGroupName != null">
+         ACCT_ITEM_GROUP_NAME = #{acctItemGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="ifInclude != null">
+         IF_INCLUDE = #{ifInclude,jdbcType=INTEGER},
+      </if>
+      <if test="parentItemGroupId != null">
+         PARENT_ITEM_GROUP_ID = #{parentItemGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupType != null">
+         GROUP_TYPE = #{groupType,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ACCT_ITEM_GROUP_ID = #{acctItemGroupId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCT_ITEM_GROUP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.acctItemGroupId != null">
+        ACCT_ITEM_GROUP_ID = #{record.acctItemGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctItemGroupName != null">
+        ACCT_ITEM_GROUP_NAME = #{record.acctItemGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifInclude != null">
+        IF_INCLUDE = #{record.ifInclude,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentItemGroupId != null">
+        PARENT_ITEM_GROUP_ID = #{record.parentItemGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupType != null">
+        GROUP_TYPE = #{record.groupType,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.acctItemGroupId != null ">
+        ACCT_ITEM_GROUP_ID = #{condition.acctItemGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctItemGroupName != null and condition.acctItemGroupName != ''">
+        and ACCT_ITEM_GROUP_NAME = #{condition.acctItemGroupName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifInclude != null ">
+        and IF_INCLUDE = #{condition.ifInclude, jdbcType=INTEGER }
+      </if>
+      <if test="condition.parentItemGroupId != null ">
+        and PARENT_ITEM_GROUP_ID = #{condition.parentItemGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.groupType != null ">
+        and GROUP_TYPE = #{condition.groupType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

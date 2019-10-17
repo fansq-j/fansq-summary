@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.DocumentMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.DocumentDO">
+    <id column="DOC_ID" jdbcType="BIGINT" property="docId"/>
+    <result column="DOC_NAME" jdbcType="VARCHAR" property="docName"/>
+    <result column="DOC_NBR" jdbcType="VARCHAR" property="docNbr"/>
+    <result column="DOC_DESC" jdbcType="VARCHAR" property="docDesc"/>
+    <result column="FORMAT_TYPE" jdbcType="VARCHAR" property="formatType"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+    <result column="DOC_SIZE" jdbcType="VARCHAR" property="docSize"/>
+    <result column="AUTHOR" jdbcType="VARCHAR" property="author"/>
+    <result column="STORE_TYPE" jdbcType="VARCHAR" property="storeType"/>
+    <result column="DOC_LINK" jdbcType="VARCHAR" property="docLink"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          DOC_ID, 
+          DOC_NAME, 
+          DOC_NBR, 
+          DOC_DESC, 
+          FORMAT_TYPE, 
+          VER_NUM, 
+          DOC_SIZE, 
+          AUTHOR, 
+          STORE_TYPE, 
+          DOC_LINK, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          DOC_NAME, 
+          DOC_NBR, 
+          DOC_DESC, 
+          FORMAT_TYPE, 
+          VER_NUM, 
+          DOC_SIZE, 
+          AUTHOR, 
+          STORE_TYPE, 
+          DOC_LINK, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="docId != null ">
+        DOC_ID = #{docId, jdbcType=BIGINT }
+      </if>
+      <if test="docName != null and docName != ''">
+        and DOC_NAME = #{docName, jdbcType=VARCHAR }
+      </if>
+      <if test="docNbr != null and docNbr != ''">
+        and DOC_NBR = #{docNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="docDesc != null and docDesc != ''">
+        and DOC_DESC = #{docDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="formatType != null and formatType != ''">
+        and FORMAT_TYPE = #{formatType, jdbcType=VARCHAR }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+      <if test="docSize != null and docSize != ''">
+        and DOC_SIZE = #{docSize, jdbcType=VARCHAR }
+      </if>
+      <if test="author != null and author != ''">
+        and AUTHOR = #{author, jdbcType=VARCHAR }
+      </if>
+      <if test="storeType != null and storeType != ''">
+        and STORE_TYPE = #{storeType, jdbcType=VARCHAR }
+      </if>
+      <if test="docLink != null and docLink != ''">
+        and DOC_LINK = #{docLink, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.DocumentDO" resultType="java.lang.Integer">
+      select count(*) from DOCUMENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from DOCUMENT
+        where 
+           DOC_ID = #{docId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DOCUMENT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="docId">
+      insert into  DOCUMENT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{docName,jdbcType=VARCHAR}, 
+        #{docNbr,jdbcType=VARCHAR}, 
+        #{docDesc,jdbcType=VARCHAR}, 
+        #{formatType,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{docSize,jdbcType=VARCHAR}, 
+        #{author,jdbcType=VARCHAR}, 
+        #{storeType,jdbcType=VARCHAR}, 
+        #{docLink,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  DOCUMENT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{docId,jdbcType=BIGINT}, 
+        #{docName,jdbcType=VARCHAR}, 
+        #{docNbr,jdbcType=VARCHAR}, 
+        #{docDesc,jdbcType=VARCHAR}, 
+        #{formatType,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{docSize,jdbcType=VARCHAR}, 
+        #{author,jdbcType=VARCHAR}, 
+        #{storeType,jdbcType=VARCHAR}, 
+        #{docLink,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from DOCUMENT  
+        where
+           DOC_ID = #{docId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from DOCUMENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  DOCUMENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="docName != null">
+         DOC_NAME = #{docName,jdbcType=VARCHAR},
+      </if>
+      <if test="docNbr != null">
+         DOC_NBR = #{docNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="docDesc != null">
+         DOC_DESC = #{docDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="formatType != null">
+         FORMAT_TYPE = #{formatType,jdbcType=VARCHAR},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+      <if test="docSize != null">
+         DOC_SIZE = #{docSize,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+         AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="storeType != null">
+         STORE_TYPE = #{storeType,jdbcType=VARCHAR},
+      </if>
+      <if test="docLink != null">
+         DOC_LINK = #{docLink,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           DOC_ID = #{docId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update DOCUMENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.docId != null">
+        DOC_ID = #{record.docId,jdbcType=BIGINT},
+      </if>
+      <if test="record.docName != null">
+        DOC_NAME = #{record.docName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docNbr != null">
+        DOC_NBR = #{record.docNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docDesc != null">
+        DOC_DESC = #{record.docDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formatType != null">
+        FORMAT_TYPE = #{record.formatType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.docSize != null">
+        DOC_SIZE = #{record.docSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null">
+        AUTHOR = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeType != null">
+        STORE_TYPE = #{record.storeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docLink != null">
+        DOC_LINK = #{record.docLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.docId != null ">
+        DOC_ID = #{condition.docId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.docName != null and condition.docName != ''">
+        and DOC_NAME = #{condition.docName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.docNbr != null and condition.docNbr != ''">
+        and DOC_NBR = #{condition.docNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.docDesc != null and condition.docDesc != ''">
+        and DOC_DESC = #{condition.docDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.formatType != null and condition.formatType != ''">
+        and FORMAT_TYPE = #{condition.formatType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.docSize != null and condition.docSize != ''">
+        and DOC_SIZE = #{condition.docSize, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.author != null and condition.author != ''">
+        and AUTHOR = #{condition.author, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.storeType != null and condition.storeType != ''">
+        and STORE_TYPE = #{condition.storeType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.docLink != null and condition.docLink != ''">
+        and DOC_LINK = #{condition.docLink, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

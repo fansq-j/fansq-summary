@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.InvOperRecordMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.InvOperRecordDO">
+    <id column="OPER_ID" jdbcType="BIGINT" property="operId"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="SITE_ID" jdbcType="INTEGER" property="siteId"/>
+    <result column="OPER_TYPE" jdbcType="INTEGER" property="operType"/>
+    <result column="INVOICE_TYPE_ID" jdbcType="INTEGER" property="invoiceTypeId"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="PRN_DATE" jdbcType="TIMESTAMP" property="prnDate"/>
+    <result column="IF_SEP_NBR_FLAG" jdbcType="INTEGER" property="ifSepNbrFlag"/>
+    <result column="IF_SEP_CYCLE_FLAG" jdbcType="INTEGER" property="ifSepCycleFlag"/>
+    <result column="PRINT_ACC_NBR" jdbcType="VARCHAR" property="printAccNbr"/>
+    <result column="IF_SEP_AMOUNT" jdbcType="INTEGER" property="ifSepAmount"/>
+    <result column="EXP_OPER_ID" jdbcType="BIGINT" property="expOperId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          OPER_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          LAN_ID, 
+          SITE_ID, 
+          OPER_TYPE, 
+          INVOICE_TYPE_ID, 
+          STATUS_DATE, 
+          PRN_DATE, 
+          IF_SEP_NBR_FLAG, 
+          IF_SEP_CYCLE_FLAG, 
+          PRINT_ACC_NBR, 
+          IF_SEP_AMOUNT, 
+          EXP_OPER_ID, 
+          ACCT_ID, 
+          AMOUNT, 
+          STATUS_CD
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          STAFF_ID, 
+          ORG_ID, 
+          LAN_ID, 
+          SITE_ID, 
+          OPER_TYPE, 
+          INVOICE_TYPE_ID, 
+          STATUS_DATE, 
+          PRN_DATE, 
+          IF_SEP_NBR_FLAG, 
+          IF_SEP_CYCLE_FLAG, 
+          PRINT_ACC_NBR, 
+          IF_SEP_AMOUNT, 
+          EXP_OPER_ID, 
+          ACCT_ID, 
+          AMOUNT, 
+          STATUS_CD
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="operId != null ">
+        OPER_ID = #{operId, jdbcType=BIGINT }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="siteId != null ">
+        and SITE_ID = #{siteId, jdbcType=INTEGER }
+      </if>
+      <if test="operType != null ">
+        and OPER_TYPE = #{operType, jdbcType=INTEGER }
+      </if>
+      <if test="invoiceTypeId != null ">
+        and INVOICE_TYPE_ID = #{invoiceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="prnDate != null ">
+        and PRN_DATE = #{prnDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="ifSepNbrFlag != null ">
+        and IF_SEP_NBR_FLAG = #{ifSepNbrFlag, jdbcType=INTEGER }
+      </if>
+      <if test="ifSepCycleFlag != null ">
+        and IF_SEP_CYCLE_FLAG = #{ifSepCycleFlag, jdbcType=INTEGER }
+      </if>
+      <if test="printAccNbr != null and printAccNbr != ''">
+        and PRINT_ACC_NBR = #{printAccNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="ifSepAmount != null ">
+        and IF_SEP_AMOUNT = #{ifSepAmount, jdbcType=INTEGER }
+      </if>
+      <if test="expOperId != null ">
+        and EXP_OPER_ID = #{expOperId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.InvOperRecordDO" resultType="java.lang.Integer">
+      select count(*) from INV_OPER_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from INV_OPER_RECORD
+        where 
+           OPER_ID = #{operId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  INV_OPER_RECORD 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="operId">
+      insert into  INV_OPER_RECORD ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{siteId,jdbcType=INTEGER}, 
+        #{operType,jdbcType=INTEGER}, 
+        #{invoiceTypeId,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{prnDate,jdbcType=TIMESTAMP}, 
+        #{ifSepNbrFlag,jdbcType=INTEGER}, 
+        #{ifSepCycleFlag,jdbcType=INTEGER}, 
+        #{printAccNbr,jdbcType=VARCHAR}, 
+        #{ifSepAmount,jdbcType=INTEGER}, 
+        #{expOperId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  INV_OPER_RECORD ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{operId,jdbcType=BIGINT}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{siteId,jdbcType=INTEGER}, 
+        #{operType,jdbcType=INTEGER}, 
+        #{invoiceTypeId,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{prnDate,jdbcType=TIMESTAMP}, 
+        #{ifSepNbrFlag,jdbcType=INTEGER}, 
+        #{ifSepCycleFlag,jdbcType=INTEGER}, 
+        #{printAccNbr,jdbcType=VARCHAR}, 
+        #{ifSepAmount,jdbcType=INTEGER}, 
+        #{expOperId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from INV_OPER_RECORD  
+        where
+           OPER_ID = #{operId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from INV_OPER_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  INV_OPER_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="siteId != null">
+         SITE_ID = #{siteId,jdbcType=INTEGER},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceTypeId != null">
+         INVOICE_TYPE_ID = #{invoiceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prnDate != null">
+         PRN_DATE = #{prnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifSepNbrFlag != null">
+         IF_SEP_NBR_FLAG = #{ifSepNbrFlag,jdbcType=INTEGER},
+      </if>
+      <if test="ifSepCycleFlag != null">
+         IF_SEP_CYCLE_FLAG = #{ifSepCycleFlag,jdbcType=INTEGER},
+      </if>
+      <if test="printAccNbr != null">
+         PRINT_ACC_NBR = #{printAccNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="ifSepAmount != null">
+         IF_SEP_AMOUNT = #{ifSepAmount,jdbcType=INTEGER},
+      </if>
+      <if test="expOperId != null">
+         EXP_OPER_ID = #{expOperId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           OPER_ID = #{operId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update INV_OPER_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.operId != null">
+        OPER_ID = #{record.operId,jdbcType=BIGINT},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.siteId != null">
+        SITE_ID = #{record.siteId,jdbcType=INTEGER},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceTypeId != null">
+        INVOICE_TYPE_ID = #{record.invoiceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.prnDate != null">
+        PRN_DATE = #{record.prnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ifSepNbrFlag != null">
+        IF_SEP_NBR_FLAG = #{record.ifSepNbrFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifSepCycleFlag != null">
+        IF_SEP_CYCLE_FLAG = #{record.ifSepCycleFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.printAccNbr != null">
+        PRINT_ACC_NBR = #{record.printAccNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifSepAmount != null">
+        IF_SEP_AMOUNT = #{record.ifSepAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.expOperId != null">
+        EXP_OPER_ID = #{record.expOperId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.operId != null ">
+        OPER_ID = #{condition.operId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.siteId != null ">
+        and SITE_ID = #{condition.siteId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operType != null ">
+        and OPER_TYPE = #{condition.operType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.invoiceTypeId != null ">
+        and INVOICE_TYPE_ID = #{condition.invoiceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.prnDate != null ">
+        and PRN_DATE = #{condition.prnDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.ifSepNbrFlag != null ">
+        and IF_SEP_NBR_FLAG = #{condition.ifSepNbrFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifSepCycleFlag != null ">
+        and IF_SEP_CYCLE_FLAG = #{condition.ifSepCycleFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.printAccNbr != null and condition.printAccNbr != ''">
+        and PRINT_ACC_NBR = #{condition.printAccNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifSepAmount != null ">
+        and IF_SEP_AMOUNT = #{condition.ifSepAmount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.expOperId != null ">
+        and EXP_OPER_ID = #{condition.expOperId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

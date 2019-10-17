@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.LateFeeComputeRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.LateFeeComputeRuleDO">
+    <id column="LATE_FEE_RULE_ID" jdbcType="INTEGER" property="lateFeeRuleId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="PROD_ID" jdbcType="INTEGER" property="prodId"/>
+    <result column="PAYMENT_MODE_CD" jdbcType="VARCHAR" property="paymentModeCd"/>
+    <result column="OFFSET" jdbcType="INTEGER" property="offset"/>
+    <result column="ADJUST_DAYS" jdbcType="INTEGER" property="adjustDays"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          LATE_FEE_RULE_ID, 
+          BILLING_CYCLE_ID, 
+          LAN_ID, 
+          PROD_ID, 
+          PAYMENT_MODE_CD, 
+          OFFSET, 
+          ADJUST_DAYS, 
+          REMARK, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BILLING_CYCLE_ID, 
+          LAN_ID, 
+          PROD_ID, 
+          PAYMENT_MODE_CD, 
+          OFFSET, 
+          ADJUST_DAYS, 
+          REMARK, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="lateFeeRuleId != null ">
+        LATE_FEE_RULE_ID = #{lateFeeRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="prodId != null ">
+        and PROD_ID = #{prodId, jdbcType=INTEGER }
+      </if>
+      <if test="paymentModeCd != null and paymentModeCd != ''">
+        and PAYMENT_MODE_CD = #{paymentModeCd, jdbcType=VARCHAR }
+      </if>
+      <if test="offset != null ">
+        and OFFSET = #{offset, jdbcType=INTEGER }
+      </if>
+      <if test="adjustDays != null ">
+        and ADJUST_DAYS = #{adjustDays, jdbcType=INTEGER }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.LateFeeComputeRuleDO" resultType="java.lang.Integer">
+      select count(*) from LATE_FEE_COMPUTE_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from LATE_FEE_COMPUTE_RULE
+        where 
+           LATE_FEE_RULE_ID = #{lateFeeRuleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  LATE_FEE_COMPUTE_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="lateFeeRuleId">
+      insert into  LATE_FEE_COMPUTE_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{prodId,jdbcType=INTEGER}, 
+        #{paymentModeCd,jdbcType=VARCHAR}, 
+        #{offset,jdbcType=INTEGER}, 
+        #{adjustDays,jdbcType=INTEGER}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  LATE_FEE_COMPUTE_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{lateFeeRuleId,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{prodId,jdbcType=INTEGER}, 
+        #{paymentModeCd,jdbcType=VARCHAR}, 
+        #{offset,jdbcType=INTEGER}, 
+        #{adjustDays,jdbcType=INTEGER}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from LATE_FEE_COMPUTE_RULE  
+        where
+           LATE_FEE_RULE_ID = #{lateFeeRuleId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from LATE_FEE_COMPUTE_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  LATE_FEE_COMPUTE_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="prodId != null">
+         PROD_ID = #{prodId,jdbcType=INTEGER},
+      </if>
+      <if test="paymentModeCd != null">
+         PAYMENT_MODE_CD = #{paymentModeCd,jdbcType=VARCHAR},
+      </if>
+      <if test="offset != null">
+         OFFSET = #{offset,jdbcType=INTEGER},
+      </if>
+      <if test="adjustDays != null">
+         ADJUST_DAYS = #{adjustDays,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           LATE_FEE_RULE_ID = #{lateFeeRuleId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update LATE_FEE_COMPUTE_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.lateFeeRuleId != null">
+        LATE_FEE_RULE_ID = #{record.lateFeeRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodId != null">
+        PROD_ID = #{record.prodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentModeCd != null">
+        PAYMENT_MODE_CD = #{record.paymentModeCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offset != null">
+        OFFSET = #{record.offset,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustDays != null">
+        ADJUST_DAYS = #{record.adjustDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.lateFeeRuleId != null ">
+        LATE_FEE_RULE_ID = #{condition.lateFeeRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodId != null ">
+        and PROD_ID = #{condition.prodId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.paymentModeCd != null and condition.paymentModeCd != ''">
+        and PAYMENT_MODE_CD = #{condition.paymentModeCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offset != null ">
+        and OFFSET = #{condition.offset, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustDays != null ">
+        and ADJUST_DAYS = #{condition.adjustDays, jdbcType=INTEGER }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

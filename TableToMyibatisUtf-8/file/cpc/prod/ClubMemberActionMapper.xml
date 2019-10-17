@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ClubMemberActionMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ClubMemberActionDO">
+    <id column="ACTION_ID" jdbcType="BIGINT" property="actionId"/>
+    <result column="CLUB_ID" jdbcType="INTEGER" property="clubId"/>
+    <result column="ACTION_NAME" jdbcType="VARCHAR" property="actionName"/>
+    <result column="ACTION_CODE" jdbcType="VARCHAR" property="actionCode"/>
+    <result column="ACTION_CONTENT" jdbcType="VARCHAR" property="actionContent"/>
+    <result column="ACTION_DESC" jdbcType="VARCHAR" property="actionDesc"/>
+    <result column="BEGIN_DATE" jdbcType="TIMESTAMP" property="beginDate"/>
+    <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate"/>
+    <result column="ACTION_PLACE" jdbcType="VARCHAR" property="actionPlace"/>
+    <result column="CONTACT_PERSON" jdbcType="VARCHAR" property="contactPerson"/>
+    <result column="CONTACT_PHONE" jdbcType="VARCHAR" property="contactPhone"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACTION_ID, 
+          CLUB_ID, 
+          ACTION_NAME, 
+          ACTION_CODE, 
+          ACTION_CONTENT, 
+          ACTION_DESC, 
+          BEGIN_DATE, 
+          END_DATE, 
+          ACTION_PLACE, 
+          CONTACT_PERSON, 
+          CONTACT_PHONE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CLUB_ID, 
+          ACTION_NAME, 
+          ACTION_CODE, 
+          ACTION_CONTENT, 
+          ACTION_DESC, 
+          BEGIN_DATE, 
+          END_DATE, 
+          ACTION_PLACE, 
+          CONTACT_PERSON, 
+          CONTACT_PHONE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="actionId != null ">
+        ACTION_ID = #{actionId, jdbcType=BIGINT }
+      </if>
+      <if test="clubId != null ">
+        and CLUB_ID = #{clubId, jdbcType=INTEGER }
+      </if>
+      <if test="actionName != null and actionName != ''">
+        and ACTION_NAME = #{actionName, jdbcType=VARCHAR }
+      </if>
+      <if test="actionCode != null and actionCode != ''">
+        and ACTION_CODE = #{actionCode, jdbcType=VARCHAR }
+      </if>
+      <if test="actionContent != null and actionContent != ''">
+        and ACTION_CONTENT = #{actionContent, jdbcType=VARCHAR }
+      </if>
+      <if test="actionDesc != null and actionDesc != ''">
+        and ACTION_DESC = #{actionDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="beginDate != null ">
+        and BEGIN_DATE = #{beginDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="endDate != null ">
+        and END_DATE = #{endDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="actionPlace != null and actionPlace != ''">
+        and ACTION_PLACE = #{actionPlace, jdbcType=VARCHAR }
+      </if>
+      <if test="contactPerson != null and contactPerson != ''">
+        and CONTACT_PERSON = #{contactPerson, jdbcType=VARCHAR }
+      </if>
+      <if test="contactPhone != null and contactPhone != ''">
+        and CONTACT_PHONE = #{contactPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ClubMemberActionDO" resultType="java.lang.Integer">
+      select count(*) from CLUB_MEMBER_ACTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CLUB_MEMBER_ACTION
+        where 
+           ACTION_ID = #{actionId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CLUB_MEMBER_ACTION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="actionId">
+      insert into  CLUB_MEMBER_ACTION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{clubId,jdbcType=INTEGER}, 
+        #{actionName,jdbcType=VARCHAR}, 
+        #{actionCode,jdbcType=VARCHAR}, 
+        #{actionContent,jdbcType=VARCHAR}, 
+        #{actionDesc,jdbcType=VARCHAR}, 
+        #{beginDate,jdbcType=TIMESTAMP}, 
+        #{endDate,jdbcType=TIMESTAMP}, 
+        #{actionPlace,jdbcType=VARCHAR}, 
+        #{contactPerson,jdbcType=VARCHAR}, 
+        #{contactPhone,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CLUB_MEMBER_ACTION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{actionId,jdbcType=BIGINT}, 
+        #{clubId,jdbcType=INTEGER}, 
+        #{actionName,jdbcType=VARCHAR}, 
+        #{actionCode,jdbcType=VARCHAR}, 
+        #{actionContent,jdbcType=VARCHAR}, 
+        #{actionDesc,jdbcType=VARCHAR}, 
+        #{beginDate,jdbcType=TIMESTAMP}, 
+        #{endDate,jdbcType=TIMESTAMP}, 
+        #{actionPlace,jdbcType=VARCHAR}, 
+        #{contactPerson,jdbcType=VARCHAR}, 
+        #{contactPhone,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CLUB_MEMBER_ACTION  
+        where
+           ACTION_ID = #{actionId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CLUB_MEMBER_ACTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CLUB_MEMBER_ACTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="clubId != null">
+         CLUB_ID = #{clubId,jdbcType=INTEGER},
+      </if>
+      <if test="actionName != null">
+         ACTION_NAME = #{actionName,jdbcType=VARCHAR},
+      </if>
+      <if test="actionCode != null">
+         ACTION_CODE = #{actionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="actionContent != null">
+         ACTION_CONTENT = #{actionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="actionDesc != null">
+         ACTION_DESC = #{actionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+         BEGIN_DATE = #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+         END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actionPlace != null">
+         ACTION_PLACE = #{actionPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null">
+         CONTACT_PERSON = #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+         CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ACTION_ID = #{actionId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CLUB_MEMBER_ACTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.actionId != null">
+        ACTION_ID = #{record.actionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.clubId != null">
+        CLUB_ID = #{record.clubId,jdbcType=INTEGER},
+      </if>
+      <if test="record.actionName != null">
+        ACTION_NAME = #{record.actionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actionCode != null">
+        ACTION_CODE = #{record.actionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actionContent != null">
+        ACTION_CONTENT = #{record.actionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actionDesc != null">
+        ACTION_DESC = #{record.actionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.beginDate != null">
+        BEGIN_DATE = #{record.beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null">
+        END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actionPlace != null">
+        ACTION_PLACE = #{record.actionPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPerson != null">
+        CONTACT_PERSON = #{record.contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null">
+        CONTACT_PHONE = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.actionId != null ">
+        ACTION_ID = #{condition.actionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.clubId != null ">
+        and CLUB_ID = #{condition.clubId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.actionName != null and condition.actionName != ''">
+        and ACTION_NAME = #{condition.actionName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.actionCode != null and condition.actionCode != ''">
+        and ACTION_CODE = #{condition.actionCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.actionContent != null and condition.actionContent != ''">
+        and ACTION_CONTENT = #{condition.actionContent, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.actionDesc != null and condition.actionDesc != ''">
+        and ACTION_DESC = #{condition.actionDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.beginDate != null ">
+        and BEGIN_DATE = #{condition.beginDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.endDate != null ">
+        and END_DATE = #{condition.endDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.actionPlace != null and condition.actionPlace != ''">
+        and ACTION_PLACE = #{condition.actionPlace, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactPerson != null and condition.contactPerson != ''">
+        and CONTACT_PERSON = #{condition.contactPerson, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactPhone != null and condition.contactPhone != ''">
+        and CONTACT_PHONE = #{condition.contactPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

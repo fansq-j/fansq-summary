@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.CardAttrControlMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.CardAttrControlDO">
+    <id column="ATTR_SHOW_CONTROL_ID" jdbcType="INTEGER" property="attrShowControlId"/>
+    <result column="ATTR_ID" jdbcType="INTEGER" property="attrId"/>
+    <result column="ATTR_OBJ_ID" jdbcType="VARCHAR" property="attrObjId"/>
+    <result column="ATTR_OBJ_TYPE" jdbcType="VARCHAR" property="attrObjType"/>
+    <result column="ATTR_SHOW_TYPE" jdbcType="VARCHAR" property="attrShowType"/>
+    <result column="ATTR_SHOW_Name" jdbcType="VARCHAR" property="attrShowName"/>
+    <result column="OPER_TYPE" jdbcType="INTEGER" property="operType"/>
+    <result column="IS_DISPLAY" jdbcType="INTEGER" property="isDisplay"/>
+    <result column="IS_MODIFY" jdbcType="INTEGER" property="isModify"/>
+    <result column="IS_DEFAULT_SHOW" jdbcType="INTEGER" property="isDefaultShow"/>
+    <result column="RESERVE" jdbcType="VARCHAR" property="reserve"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ATTR_SHOW_CONTROL_ID, 
+          ATTR_ID, 
+          ATTR_OBJ_ID, 
+          ATTR_OBJ_TYPE, 
+          ATTR_SHOW_TYPE, 
+          ATTR_SHOW_Name, 
+          OPER_TYPE, 
+          IS_DISPLAY, 
+          IS_MODIFY, 
+          IS_DEFAULT_SHOW, 
+          RESERVE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ATTR_ID, 
+          ATTR_OBJ_ID, 
+          ATTR_OBJ_TYPE, 
+          ATTR_SHOW_TYPE, 
+          ATTR_SHOW_Name, 
+          OPER_TYPE, 
+          IS_DISPLAY, 
+          IS_MODIFY, 
+          IS_DEFAULT_SHOW, 
+          RESERVE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="attrShowControlId != null ">
+        ATTR_SHOW_CONTROL_ID = #{attrShowControlId, jdbcType=INTEGER }
+      </if>
+      <if test="attrId != null ">
+        and ATTR_ID = #{attrId, jdbcType=INTEGER }
+      </if>
+      <if test="attrObjId != null and attrObjId != ''">
+        and ATTR_OBJ_ID = #{attrObjId, jdbcType=VARCHAR }
+      </if>
+      <if test="attrObjType != null and attrObjType != ''">
+        and ATTR_OBJ_TYPE = #{attrObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="attrShowType != null and attrShowType != ''">
+        and ATTR_SHOW_TYPE = #{attrShowType, jdbcType=VARCHAR }
+      </if>
+      <if test="attrShowName != null and attrShowName != ''">
+        and ATTR_SHOW_Name = #{attrShowName, jdbcType=VARCHAR }
+      </if>
+      <if test="operType != null ">
+        and OPER_TYPE = #{operType, jdbcType=INTEGER }
+      </if>
+      <if test="isDisplay != null ">
+        and IS_DISPLAY = #{isDisplay, jdbcType=INTEGER }
+      </if>
+      <if test="isModify != null ">
+        and IS_MODIFY = #{isModify, jdbcType=INTEGER }
+      </if>
+      <if test="isDefaultShow != null ">
+        and IS_DEFAULT_SHOW = #{isDefaultShow, jdbcType=INTEGER }
+      </if>
+      <if test="reserve != null and reserve != ''">
+        and RESERVE = #{reserve, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.CardAttrControlDO" resultType="java.lang.Integer">
+      select count(*) from CARD_ATTR_CONTROL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CARD_ATTR_CONTROL
+        where 
+           ATTR_SHOW_CONTROL_ID = #{attrShowControlId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CARD_ATTR_CONTROL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="attrShowControlId">
+      insert into  CARD_ATTR_CONTROL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{attrId,jdbcType=INTEGER}, 
+        #{attrObjId,jdbcType=VARCHAR}, 
+        #{attrObjType,jdbcType=VARCHAR}, 
+        #{attrShowType,jdbcType=VARCHAR}, 
+        #{attrShowName,jdbcType=VARCHAR}, 
+        #{operType,jdbcType=INTEGER}, 
+        #{isDisplay,jdbcType=INTEGER}, 
+        #{isModify,jdbcType=INTEGER}, 
+        #{isDefaultShow,jdbcType=INTEGER}, 
+        #{reserve,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CARD_ATTR_CONTROL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{attrShowControlId,jdbcType=INTEGER}, 
+        #{attrId,jdbcType=INTEGER}, 
+        #{attrObjId,jdbcType=VARCHAR}, 
+        #{attrObjType,jdbcType=VARCHAR}, 
+        #{attrShowType,jdbcType=VARCHAR}, 
+        #{attrShowName,jdbcType=VARCHAR}, 
+        #{operType,jdbcType=INTEGER}, 
+        #{isDisplay,jdbcType=INTEGER}, 
+        #{isModify,jdbcType=INTEGER}, 
+        #{isDefaultShow,jdbcType=INTEGER}, 
+        #{reserve,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CARD_ATTR_CONTROL  
+        where
+           ATTR_SHOW_CONTROL_ID = #{attrShowControlId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from CARD_ATTR_CONTROL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CARD_ATTR_CONTROL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="attrId != null">
+         ATTR_ID = #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="attrObjId != null">
+         ATTR_OBJ_ID = #{attrObjId,jdbcType=VARCHAR},
+      </if>
+      <if test="attrObjType != null">
+         ATTR_OBJ_TYPE = #{attrObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="attrShowType != null">
+         ATTR_SHOW_TYPE = #{attrShowType,jdbcType=VARCHAR},
+      </if>
+      <if test="attrShowName != null">
+         ATTR_SHOW_Name = #{attrShowName,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=INTEGER},
+      </if>
+      <if test="isDisplay != null">
+         IS_DISPLAY = #{isDisplay,jdbcType=INTEGER},
+      </if>
+      <if test="isModify != null">
+         IS_MODIFY = #{isModify,jdbcType=INTEGER},
+      </if>
+      <if test="isDefaultShow != null">
+         IS_DEFAULT_SHOW = #{isDefaultShow,jdbcType=INTEGER},
+      </if>
+      <if test="reserve != null">
+         RESERVE = #{reserve,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ATTR_SHOW_CONTROL_ID = #{attrShowControlId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update CARD_ATTR_CONTROL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.attrShowControlId != null">
+        ATTR_SHOW_CONTROL_ID = #{record.attrShowControlId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrId != null">
+        ATTR_ID = #{record.attrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrObjId != null">
+        ATTR_OBJ_ID = #{record.attrObjId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrObjType != null">
+        ATTR_OBJ_TYPE = #{record.attrObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrShowType != null">
+        ATTR_SHOW_TYPE = #{record.attrShowType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrShowName != null">
+        ATTR_SHOW_Name = #{record.attrShowName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDisplay != null">
+        IS_DISPLAY = #{record.isDisplay,jdbcType=INTEGER},
+      </if>
+      <if test="record.isModify != null">
+        IS_MODIFY = #{record.isModify,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDefaultShow != null">
+        IS_DEFAULT_SHOW = #{record.isDefaultShow,jdbcType=INTEGER},
+      </if>
+      <if test="record.reserve != null">
+        RESERVE = #{record.reserve,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.attrShowControlId != null ">
+        ATTR_SHOW_CONTROL_ID = #{condition.attrShowControlId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrId != null ">
+        and ATTR_ID = #{condition.attrId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrObjId != null and condition.attrObjId != ''">
+        and ATTR_OBJ_ID = #{condition.attrObjId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrObjType != null and condition.attrObjType != ''">
+        and ATTR_OBJ_TYPE = #{condition.attrObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrShowType != null and condition.attrShowType != ''">
+        and ATTR_SHOW_TYPE = #{condition.attrShowType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrShowName != null and condition.attrShowName != ''">
+        and ATTR_SHOW_Name = #{condition.attrShowName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operType != null ">
+        and OPER_TYPE = #{condition.operType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.isDisplay != null ">
+        and IS_DISPLAY = #{condition.isDisplay, jdbcType=INTEGER }
+      </if>
+      <if test="condition.isModify != null ">
+        and IS_MODIFY = #{condition.isModify, jdbcType=INTEGER }
+      </if>
+      <if test="condition.isDefaultShow != null ">
+        and IS_DEFAULT_SHOW = #{condition.isDefaultShow, jdbcType=INTEGER }
+      </if>
+      <if test="condition.reserve != null and condition.reserve != ''">
+        and RESERVE = #{condition.reserve, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

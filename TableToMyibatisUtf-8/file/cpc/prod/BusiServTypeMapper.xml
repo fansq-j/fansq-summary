@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BusiServTypeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BusiServTypeDO">
+    <id column="SERV_TYPE_ID" jdbcType="BIGINT" property="servTypeId"/>
+    <result column="SERV_TYPE_NBR" jdbcType="VARCHAR" property="servTypeNbr"/>
+    <result column="SERV_TYPE_NAME" jdbcType="VARCHAR" property="servTypeName"/>
+    <result column="EN_NAME" jdbcType="VARCHAR" property="enName"/>
+    <result column="PAR_SERV_TYPE_ID" jdbcType="BIGINT" property="parServTypeId"/>
+    <result column="SERVICE_OFFER_ID" jdbcType="BIGINT" property="serviceOfferId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SERV_TYPE_ID, 
+          SERV_TYPE_NBR, 
+          SERV_TYPE_NAME, 
+          EN_NAME, 
+          PAR_SERV_TYPE_ID, 
+          SERVICE_OFFER_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SERV_TYPE_NBR, 
+          SERV_TYPE_NAME, 
+          EN_NAME, 
+          PAR_SERV_TYPE_ID, 
+          SERVICE_OFFER_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="servTypeId != null ">
+        SERV_TYPE_ID = #{servTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="servTypeNbr != null and servTypeNbr != ''">
+        and SERV_TYPE_NBR = #{servTypeNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="servTypeName != null and servTypeName != ''">
+        and SERV_TYPE_NAME = #{servTypeName, jdbcType=VARCHAR }
+      </if>
+      <if test="enName != null and enName != ''">
+        and EN_NAME = #{enName, jdbcType=VARCHAR }
+      </if>
+      <if test="parServTypeId != null ">
+        and PAR_SERV_TYPE_ID = #{parServTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{serviceOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BusiServTypeDO" resultType="java.lang.Integer">
+      select count(*) from BUSI_SERV_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BUSI_SERV_TYPE
+        where 
+           SERV_TYPE_ID = #{servTypeId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BUSI_SERV_TYPE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="servTypeId">
+      insert into  BUSI_SERV_TYPE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{servTypeNbr,jdbcType=VARCHAR}, 
+        #{servTypeName,jdbcType=VARCHAR}, 
+        #{enName,jdbcType=VARCHAR}, 
+        #{parServTypeId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BUSI_SERV_TYPE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{servTypeId,jdbcType=BIGINT}, 
+        #{servTypeNbr,jdbcType=VARCHAR}, 
+        #{servTypeName,jdbcType=VARCHAR}, 
+        #{enName,jdbcType=VARCHAR}, 
+        #{parServTypeId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BUSI_SERV_TYPE  
+        where
+           SERV_TYPE_ID = #{servTypeId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BUSI_SERV_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BUSI_SERV_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="servTypeNbr != null">
+         SERV_TYPE_NBR = #{servTypeNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="servTypeName != null">
+         SERV_TYPE_NAME = #{servTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+         EN_NAME = #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="parServTypeId != null">
+         PAR_SERV_TYPE_ID = #{parServTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceOfferId != null">
+         SERVICE_OFFER_ID = #{serviceOfferId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SERV_TYPE_ID = #{servTypeId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BUSI_SERV_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.servTypeId != null">
+        SERV_TYPE_ID = #{record.servTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.servTypeNbr != null">
+        SERV_TYPE_NBR = #{record.servTypeNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servTypeName != null">
+        SERV_TYPE_NAME = #{record.servTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enName != null">
+        EN_NAME = #{record.enName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parServTypeId != null">
+        PAR_SERV_TYPE_ID = #{record.parServTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceOfferId != null">
+        SERVICE_OFFER_ID = #{record.serviceOfferId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.servTypeId != null ">
+        SERV_TYPE_ID = #{condition.servTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.servTypeNbr != null and condition.servTypeNbr != ''">
+        and SERV_TYPE_NBR = #{condition.servTypeNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.servTypeName != null and condition.servTypeName != ''">
+        and SERV_TYPE_NAME = #{condition.servTypeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.enName != null and condition.enName != ''">
+        and EN_NAME = #{condition.enName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parServTypeId != null ">
+        and PAR_SERV_TYPE_ID = #{condition.parServTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{condition.serviceOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

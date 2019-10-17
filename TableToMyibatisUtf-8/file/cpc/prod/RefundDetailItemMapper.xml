@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.RefundDetailItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.RefundDetailItemDO">
+    <id column="REFUND_DETAIL_ID" jdbcType="BIGINT" property="refundDetailId"/>
+    <result column="REFUND_ID" jdbcType="BIGINT" property="refundId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="ACCT_ITEM_ID" jdbcType="BIGINT" property="acctItemId"/>
+    <result column="BILL_PAYMENT_DATE" jdbcType="TIMESTAMP" property="billPaymentDate"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="ITEM_SOURCE_ID" jdbcType="INTEGER" property="itemSourceId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          REFUND_DETAIL_ID, 
+          REFUND_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          BILLING_CYCLE_ID, 
+          ACCT_ITEM_ID, 
+          BILL_PAYMENT_DATE, 
+          ACCT_ITEM_TYPE_ID, 
+          ITEM_SOURCE_ID, 
+          AMOUNT
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          REFUND_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          BILLING_CYCLE_ID, 
+          ACCT_ITEM_ID, 
+          BILL_PAYMENT_DATE, 
+          ACCT_ITEM_TYPE_ID, 
+          ITEM_SOURCE_ID, 
+          AMOUNT
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="refundDetailId != null ">
+        REFUND_DETAIL_ID = #{refundDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="refundId != null ">
+        and REFUND_ID = #{refundId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="acctItemId != null ">
+        and ACCT_ITEM_ID = #{acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="billPaymentDate != null ">
+        and BILL_PAYMENT_DATE = #{billPaymentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.RefundDetailItemDO" resultType="java.lang.Integer">
+      select count(*) from REFUND_DETAIL_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from REFUND_DETAIL_ITEM
+        where 
+           REFUND_DETAIL_ID = #{refundDetailId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  REFUND_DETAIL_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="refundDetailId">
+      insert into  REFUND_DETAIL_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{refundId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctItemId,jdbcType=BIGINT}, 
+        #{billPaymentDate,jdbcType=TIMESTAMP}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  REFUND_DETAIL_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{refundDetailId,jdbcType=BIGINT}, 
+        #{refundId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctItemId,jdbcType=BIGINT}, 
+        #{billPaymentDate,jdbcType=TIMESTAMP}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from REFUND_DETAIL_ITEM  
+        where
+           REFUND_DETAIL_ID = #{refundDetailId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from REFUND_DETAIL_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  REFUND_DETAIL_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="refundId != null">
+         REFUND_ID = #{refundId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="acctItemId != null">
+         ACCT_ITEM_ID = #{acctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="billPaymentDate != null">
+         BILL_PAYMENT_DATE = #{billPaymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="itemSourceId != null">
+         ITEM_SOURCE_ID = #{itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           REFUND_DETAIL_ID = #{refundDetailId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update REFUND_DETAIL_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.refundDetailId != null">
+        REFUND_DETAIL_ID = #{record.refundDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundId != null">
+        REFUND_ID = #{record.refundId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctItemId != null">
+        ACCT_ITEM_ID = #{record.acctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billPaymentDate != null">
+        BILL_PAYMENT_DATE = #{record.billPaymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemSourceId != null">
+        ITEM_SOURCE_ID = #{record.itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.refundDetailId != null ">
+        REFUND_DETAIL_ID = #{condition.refundDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.refundId != null ">
+        and REFUND_ID = #{condition.refundId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctItemId != null ">
+        and ACCT_ITEM_ID = #{condition.acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billPaymentDate != null ">
+        and BILL_PAYMENT_DATE = #{condition.billPaymentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{condition.itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

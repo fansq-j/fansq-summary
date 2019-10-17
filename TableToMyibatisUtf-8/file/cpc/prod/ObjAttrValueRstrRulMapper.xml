@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ObjAttrValueRstrRulMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ObjAttrValueRstrRulDO">
+    <id column="VALUE_RSTR_ID" jdbcType="BIGINT" property="valueRstrId"/>
+    <result column="RESTRICT_ID" jdbcType="BIGINT" property="restrictId"/>
+    <result column="A_ATTR_VALUE_ID" jdbcType="BIGINT" property="aAttrValueId"/>
+    <result column="Z_ATTR_VALUE_ID" jdbcType="BIGINT" property="zAttrValueId"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          VALUE_RSTR_ID, 
+          RESTRICT_ID, 
+          A_ATTR_VALUE_ID, 
+          Z_ATTR_VALUE_ID, 
+          APPLY_REGION_ID, 
+          REMARK, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RESTRICT_ID, 
+          A_ATTR_VALUE_ID, 
+          Z_ATTR_VALUE_ID, 
+          APPLY_REGION_ID, 
+          REMARK, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="valueRstrId != null ">
+        VALUE_RSTR_ID = #{valueRstrId, jdbcType=BIGINT }
+      </if>
+      <if test="restrictId != null ">
+        and RESTRICT_ID = #{restrictId, jdbcType=BIGINT }
+      </if>
+      <if test="aAttrValueId != null ">
+        and A_ATTR_VALUE_ID = #{aAttrValueId, jdbcType=BIGINT }
+      </if>
+      <if test="zAttrValueId != null ">
+        and Z_ATTR_VALUE_ID = #{zAttrValueId, jdbcType=BIGINT }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ObjAttrValueRstrRulDO" resultType="java.lang.Integer">
+      select count(*) from OBJ_ATTR_VALUE_RSTR_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from OBJ_ATTR_VALUE_RSTR_RUL
+        where 
+           VALUE_RSTR_ID = #{valueRstrId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  OBJ_ATTR_VALUE_RSTR_RUL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="valueRstrId">
+      insert into  OBJ_ATTR_VALUE_RSTR_RUL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{restrictId,jdbcType=BIGINT}, 
+        #{aAttrValueId,jdbcType=BIGINT}, 
+        #{zAttrValueId,jdbcType=BIGINT}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  OBJ_ATTR_VALUE_RSTR_RUL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{valueRstrId,jdbcType=BIGINT}, 
+        #{restrictId,jdbcType=BIGINT}, 
+        #{aAttrValueId,jdbcType=BIGINT}, 
+        #{zAttrValueId,jdbcType=BIGINT}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from OBJ_ATTR_VALUE_RSTR_RUL  
+        where
+           VALUE_RSTR_ID = #{valueRstrId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from OBJ_ATTR_VALUE_RSTR_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  OBJ_ATTR_VALUE_RSTR_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="restrictId != null">
+         RESTRICT_ID = #{restrictId,jdbcType=BIGINT},
+      </if>
+      <if test="aAttrValueId != null">
+         A_ATTR_VALUE_ID = #{aAttrValueId,jdbcType=BIGINT},
+      </if>
+      <if test="zAttrValueId != null">
+         Z_ATTR_VALUE_ID = #{zAttrValueId,jdbcType=BIGINT},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           VALUE_RSTR_ID = #{valueRstrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update OBJ_ATTR_VALUE_RSTR_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.valueRstrId != null">
+        VALUE_RSTR_ID = #{record.valueRstrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.restrictId != null">
+        RESTRICT_ID = #{record.restrictId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aAttrValueId != null">
+        A_ATTR_VALUE_ID = #{record.aAttrValueId,jdbcType=BIGINT},
+      </if>
+      <if test="record.zAttrValueId != null">
+        Z_ATTR_VALUE_ID = #{record.zAttrValueId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.valueRstrId != null ">
+        VALUE_RSTR_ID = #{condition.valueRstrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.restrictId != null ">
+        and RESTRICT_ID = #{condition.restrictId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.aAttrValueId != null ">
+        and A_ATTR_VALUE_ID = #{condition.aAttrValueId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.zAttrValueId != null ">
+        and Z_ATTR_VALUE_ID = #{condition.zAttrValueId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.GridClaimRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.GridClaimRuleDO">
+    <id column="GRID_CLAIM_RULE_ID" jdbcType="BIGINT" property="gridClaimRuleId"/>
+    <result column="GRID_CLAIM_RULE_NAME" jdbcType="VARCHAR" property="gridClaimRuleName"/>
+    <result column="GRID_CLAIM_RULE_DESC" jdbcType="VARCHAR" property="gridClaimRuleDesc"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="GRID_CLAIM_RULE_CODE" jdbcType="VARCHAR" property="gridClaimRuleCode"/>
+    <result column="GRID_TYPE" jdbcType="VARCHAR" property="gridType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          GRID_CLAIM_RULE_ID, 
+          GRID_CLAIM_RULE_NAME, 
+          GRID_CLAIM_RULE_DESC, 
+          PRIORITY, 
+          GRID_CLAIM_RULE_CODE, 
+          GRID_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          GRID_CLAIM_RULE_NAME, 
+          GRID_CLAIM_RULE_DESC, 
+          PRIORITY, 
+          GRID_CLAIM_RULE_CODE, 
+          GRID_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="gridClaimRuleId != null ">
+        GRID_CLAIM_RULE_ID = #{gridClaimRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="gridClaimRuleName != null and gridClaimRuleName != ''">
+        and GRID_CLAIM_RULE_NAME = #{gridClaimRuleName, jdbcType=VARCHAR }
+      </if>
+      <if test="gridClaimRuleDesc != null and gridClaimRuleDesc != ''">
+        and GRID_CLAIM_RULE_DESC = #{gridClaimRuleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="gridClaimRuleCode != null and gridClaimRuleCode != ''">
+        and GRID_CLAIM_RULE_CODE = #{gridClaimRuleCode, jdbcType=VARCHAR }
+      </if>
+      <if test="gridType != null and gridType != ''">
+        and GRID_TYPE = #{gridType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.GridClaimRuleDO" resultType="java.lang.Integer">
+      select count(*) from GRID_CLAIM_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GRID_CLAIM_RULE
+        where 
+           GRID_CLAIM_RULE_ID = #{gridClaimRuleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GRID_CLAIM_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="gridClaimRuleId">
+      insert into  GRID_CLAIM_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{gridClaimRuleName,jdbcType=VARCHAR}, 
+        #{gridClaimRuleDesc,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{gridClaimRuleCode,jdbcType=VARCHAR}, 
+        #{gridType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GRID_CLAIM_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{gridClaimRuleId,jdbcType=BIGINT}, 
+        #{gridClaimRuleName,jdbcType=VARCHAR}, 
+        #{gridClaimRuleDesc,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{gridClaimRuleCode,jdbcType=VARCHAR}, 
+        #{gridType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GRID_CLAIM_RULE  
+        where
+           GRID_CLAIM_RULE_ID = #{gridClaimRuleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GRID_CLAIM_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GRID_CLAIM_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="gridClaimRuleName != null">
+         GRID_CLAIM_RULE_NAME = #{gridClaimRuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="gridClaimRuleDesc != null">
+         GRID_CLAIM_RULE_DESC = #{gridClaimRuleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="gridClaimRuleCode != null">
+         GRID_CLAIM_RULE_CODE = #{gridClaimRuleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gridType != null">
+         GRID_TYPE = #{gridType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           GRID_CLAIM_RULE_ID = #{gridClaimRuleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GRID_CLAIM_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.gridClaimRuleId != null">
+        GRID_CLAIM_RULE_ID = #{record.gridClaimRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gridClaimRuleName != null">
+        GRID_CLAIM_RULE_NAME = #{record.gridClaimRuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gridClaimRuleDesc != null">
+        GRID_CLAIM_RULE_DESC = #{record.gridClaimRuleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.gridClaimRuleCode != null">
+        GRID_CLAIM_RULE_CODE = #{record.gridClaimRuleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gridType != null">
+        GRID_TYPE = #{record.gridType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.gridClaimRuleId != null ">
+        GRID_CLAIM_RULE_ID = #{condition.gridClaimRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.gridClaimRuleName != null and condition.gridClaimRuleName != ''">
+        and GRID_CLAIM_RULE_NAME = #{condition.gridClaimRuleName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gridClaimRuleDesc != null and condition.gridClaimRuleDesc != ''">
+        and GRID_CLAIM_RULE_DESC = #{condition.gridClaimRuleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.gridClaimRuleCode != null and condition.gridClaimRuleCode != ''">
+        and GRID_CLAIM_RULE_CODE = #{condition.gridClaimRuleCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gridType != null and condition.gridType != ''">
+        and GRID_TYPE = #{condition.gridType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

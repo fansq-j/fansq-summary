@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SystemAuthenInfoRelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SystemAuthenInfoRelDO">
+    <id column="SYSTEM_AUTHEN_INFO_REL_ID" jdbcType="BIGINT" property="systemAuthenInfoRelId"/>
+    <result column="AUTHEN_INFO_ID" jdbcType="BIGINT" property="authenInfoId"/>
+    <result column="SYSTEM_ID" jdbcType="BIGINT" property="systemId"/>
+    <result column="AUTHEN_TYPE" jdbcType="VARCHAR" property="authenType"/>
+    <result column="LIMIT_LOGIN_COUNT" jdbcType="INTEGER" property="limitLoginCount"/>
+    <result column="PWD_VALID_TYPE" jdbcType="VARCHAR" property="pwdValidType"/>
+    <result column="LIMIT_LOGIN_CHANNEL" jdbcType="VARCHAR" property="limitLoginChannel"/>
+    <result column="LIMIT_REASON" jdbcType="VARCHAR" property="limitReason"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SYSTEM_AUTHEN_INFO_REL_ID, 
+          AUTHEN_INFO_ID, 
+          SYSTEM_ID, 
+          AUTHEN_TYPE, 
+          LIMIT_LOGIN_COUNT, 
+          PWD_VALID_TYPE, 
+          LIMIT_LOGIN_CHANNEL, 
+          LIMIT_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          AUTHEN_INFO_ID, 
+          SYSTEM_ID, 
+          AUTHEN_TYPE, 
+          LIMIT_LOGIN_COUNT, 
+          PWD_VALID_TYPE, 
+          LIMIT_LOGIN_CHANNEL, 
+          LIMIT_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="systemAuthenInfoRelId != null ">
+        SYSTEM_AUTHEN_INFO_REL_ID = #{systemAuthenInfoRelId, jdbcType=BIGINT }
+      </if>
+      <if test="authenInfoId != null ">
+        and AUTHEN_INFO_ID = #{authenInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="systemId != null ">
+        and SYSTEM_ID = #{systemId, jdbcType=BIGINT }
+      </if>
+      <if test="authenType != null and authenType != ''">
+        and AUTHEN_TYPE = #{authenType, jdbcType=VARCHAR }
+      </if>
+      <if test="limitLoginCount != null ">
+        and LIMIT_LOGIN_COUNT = #{limitLoginCount, jdbcType=INTEGER }
+      </if>
+      <if test="pwdValidType != null and pwdValidType != ''">
+        and PWD_VALID_TYPE = #{pwdValidType, jdbcType=VARCHAR }
+      </if>
+      <if test="limitLoginChannel != null and limitLoginChannel != ''">
+        and LIMIT_LOGIN_CHANNEL = #{limitLoginChannel, jdbcType=VARCHAR }
+      </if>
+      <if test="limitReason != null and limitReason != ''">
+        and LIMIT_REASON = #{limitReason, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SystemAuthenInfoRelDO" resultType="java.lang.Integer">
+      select count(*) from SYSTEM_AUTHEN_INFO_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SYSTEM_AUTHEN_INFO_REL
+        where 
+           SYSTEM_AUTHEN_INFO_REL_ID = #{systemAuthenInfoRelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SYSTEM_AUTHEN_INFO_REL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="systemAuthenInfoRelId">
+      insert into  SYSTEM_AUTHEN_INFO_REL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{authenInfoId,jdbcType=BIGINT}, 
+        #{systemId,jdbcType=BIGINT}, 
+        #{authenType,jdbcType=VARCHAR}, 
+        #{limitLoginCount,jdbcType=INTEGER}, 
+        #{pwdValidType,jdbcType=VARCHAR}, 
+        #{limitLoginChannel,jdbcType=VARCHAR}, 
+        #{limitReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SYSTEM_AUTHEN_INFO_REL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{systemAuthenInfoRelId,jdbcType=BIGINT}, 
+        #{authenInfoId,jdbcType=BIGINT}, 
+        #{systemId,jdbcType=BIGINT}, 
+        #{authenType,jdbcType=VARCHAR}, 
+        #{limitLoginCount,jdbcType=INTEGER}, 
+        #{pwdValidType,jdbcType=VARCHAR}, 
+        #{limitLoginChannel,jdbcType=VARCHAR}, 
+        #{limitReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SYSTEM_AUTHEN_INFO_REL  
+        where
+           SYSTEM_AUTHEN_INFO_REL_ID = #{systemAuthenInfoRelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SYSTEM_AUTHEN_INFO_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SYSTEM_AUTHEN_INFO_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="authenInfoId != null">
+         AUTHEN_INFO_ID = #{authenInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="systemId != null">
+         SYSTEM_ID = #{systemId,jdbcType=BIGINT},
+      </if>
+      <if test="authenType != null">
+         AUTHEN_TYPE = #{authenType,jdbcType=VARCHAR},
+      </if>
+      <if test="limitLoginCount != null">
+         LIMIT_LOGIN_COUNT = #{limitLoginCount,jdbcType=INTEGER},
+      </if>
+      <if test="pwdValidType != null">
+         PWD_VALID_TYPE = #{pwdValidType,jdbcType=VARCHAR},
+      </if>
+      <if test="limitLoginChannel != null">
+         LIMIT_LOGIN_CHANNEL = #{limitLoginChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="limitReason != null">
+         LIMIT_REASON = #{limitReason,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SYSTEM_AUTHEN_INFO_REL_ID = #{systemAuthenInfoRelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SYSTEM_AUTHEN_INFO_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.systemAuthenInfoRelId != null">
+        SYSTEM_AUTHEN_INFO_REL_ID = #{record.systemAuthenInfoRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.authenInfoId != null">
+        AUTHEN_INFO_ID = #{record.authenInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.systemId != null">
+        SYSTEM_ID = #{record.systemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.authenType != null">
+        AUTHEN_TYPE = #{record.authenType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitLoginCount != null">
+        LIMIT_LOGIN_COUNT = #{record.limitLoginCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.pwdValidType != null">
+        PWD_VALID_TYPE = #{record.pwdValidType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitLoginChannel != null">
+        LIMIT_LOGIN_CHANNEL = #{record.limitLoginChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitReason != null">
+        LIMIT_REASON = #{record.limitReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.systemAuthenInfoRelId != null ">
+        SYSTEM_AUTHEN_INFO_REL_ID = #{condition.systemAuthenInfoRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.authenInfoId != null ">
+        and AUTHEN_INFO_ID = #{condition.authenInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.systemId != null ">
+        and SYSTEM_ID = #{condition.systemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.authenType != null and condition.authenType != ''">
+        and AUTHEN_TYPE = #{condition.authenType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.limitLoginCount != null ">
+        and LIMIT_LOGIN_COUNT = #{condition.limitLoginCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pwdValidType != null and condition.pwdValidType != ''">
+        and PWD_VALID_TYPE = #{condition.pwdValidType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.limitLoginChannel != null and condition.limitLoginChannel != ''">
+        and LIMIT_LOGIN_CHANNEL = #{condition.limitLoginChannel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.limitReason != null and condition.limitReason != ''">
+        and LIMIT_REASON = #{condition.limitReason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.RuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.RuleDO">
+    <id column="RULE_ID" jdbcType="BIGINT" property="ruleId"/>
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName"/>
+    <result column="COMMENTS" jdbcType="VARCHAR" property="comments"/>
+    <result column="RULE_TYPE" jdbcType="VARCHAR" property="ruleType"/>
+    <result column="DATA" jdbcType="VARCHAR" property="data"/>
+    <result column="MANAGE_LEVEL_CD" jdbcType="VARCHAR" property="manageLevelCd"/>
+    <result column="PPM_RULE_ID" jdbcType="BIGINT" property="ppmRuleId"/>
+    <result column="RULE_QUERY_TYPE" jdbcType="INTEGER" property="ruleQueryType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RULE_ID, 
+          RULE_NAME, 
+          COMMENTS, 
+          RULE_TYPE, 
+          DATA, 
+          MANAGE_LEVEL_CD, 
+          PPM_RULE_ID, 
+          RULE_QUERY_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RULE_NAME, 
+          COMMENTS, 
+          RULE_TYPE, 
+          DATA, 
+          MANAGE_LEVEL_CD, 
+          PPM_RULE_ID, 
+          RULE_QUERY_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="ruleId != null ">
+        RULE_ID = #{ruleId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleName != null and ruleName != ''">
+        and RULE_NAME = #{ruleName, jdbcType=VARCHAR }
+      </if>
+      <if test="comments != null and comments != ''">
+        and COMMENTS = #{comments, jdbcType=VARCHAR }
+      </if>
+      <if test="ruleType != null and ruleType != ''">
+        and RULE_TYPE = #{ruleType, jdbcType=VARCHAR }
+      </if>
+      <if test="data != null and data != ''">
+        and DATA = #{data, jdbcType=VARCHAR }
+      </if>
+      <if test="manageLevelCd != null and manageLevelCd != ''">
+        and MANAGE_LEVEL_CD = #{manageLevelCd, jdbcType=VARCHAR }
+      </if>
+      <if test="ppmRuleId != null ">
+        and PPM_RULE_ID = #{ppmRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleQueryType != null ">
+        and RULE_QUERY_TYPE = #{ruleQueryType, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.RuleDO" resultType="java.lang.Integer">
+      select count(*) from RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RULE
+        where 
+           RULE_ID = #{ruleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="ruleId">
+      insert into  RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ruleName,jdbcType=VARCHAR}, 
+        #{comments,jdbcType=VARCHAR}, 
+        #{ruleType,jdbcType=VARCHAR}, 
+        #{data,jdbcType=VARCHAR}, 
+        #{manageLevelCd,jdbcType=VARCHAR}, 
+        #{ppmRuleId,jdbcType=BIGINT}, 
+        #{ruleQueryType,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{ruleId,jdbcType=BIGINT}, 
+        #{ruleName,jdbcType=VARCHAR}, 
+        #{comments,jdbcType=VARCHAR}, 
+        #{ruleType,jdbcType=VARCHAR}, 
+        #{data,jdbcType=VARCHAR}, 
+        #{manageLevelCd,jdbcType=VARCHAR}, 
+        #{ppmRuleId,jdbcType=BIGINT}, 
+        #{ruleQueryType,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RULE  
+        where
+           RULE_ID = #{ruleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ruleName != null">
+         RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+         COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleType != null">
+         RULE_TYPE = #{ruleType,jdbcType=VARCHAR},
+      </if>
+      <if test="data != null">
+         DATA = #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="manageLevelCd != null">
+         MANAGE_LEVEL_CD = #{manageLevelCd,jdbcType=VARCHAR},
+      </if>
+      <if test="ppmRuleId != null">
+         PPM_RULE_ID = #{ppmRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="ruleQueryType != null">
+         RULE_QUERY_TYPE = #{ruleQueryType,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           RULE_ID = #{ruleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.ruleId != null">
+        RULE_ID = #{record.ruleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleName != null">
+        RULE_NAME = #{record.ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null">
+        COMMENTS = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleType != null">
+        RULE_TYPE = #{record.ruleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.data != null">
+        DATA = #{record.data,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageLevelCd != null">
+        MANAGE_LEVEL_CD = #{record.manageLevelCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppmRuleId != null">
+        PPM_RULE_ID = #{record.ppmRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleQueryType != null">
+        RULE_QUERY_TYPE = #{record.ruleQueryType,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.ruleId != null ">
+        RULE_ID = #{condition.ruleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleName != null and condition.ruleName != ''">
+        and RULE_NAME = #{condition.ruleName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.comments != null and condition.comments != ''">
+        and COMMENTS = #{condition.comments, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ruleType != null and condition.ruleType != ''">
+        and RULE_TYPE = #{condition.ruleType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.data != null and condition.data != ''">
+        and DATA = #{condition.data, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.manageLevelCd != null and condition.manageLevelCd != ''">
+        and MANAGE_LEVEL_CD = #{condition.manageLevelCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ppmRuleId != null ">
+        and PPM_RULE_ID = #{condition.ppmRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleQueryType != null ">
+        and RULE_QUERY_TYPE = #{condition.ruleQueryType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

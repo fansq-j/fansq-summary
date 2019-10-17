@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.FuncMenuMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.FuncMenuDO">
+    <id column="MENU_ID" jdbcType="INTEGER" property="menuId"/>
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName"/>
+    <result column="MENU_TYPE" jdbcType="VARCHAR" property="menuType"/>
+    <result column="MENU_LEVEL" jdbcType="INTEGER" property="menuLevel"/>
+    <result column="MENU_INDEX" jdbcType="INTEGER" property="menuIndex"/>
+    <result column="PAR_MENU_ID" jdbcType="INTEGER" property="parMenuId"/>
+    <result column="MENU_DESC" jdbcType="VARCHAR" property="menuDesc"/>
+    <result column="URL_ADDR" jdbcType="VARCHAR" property="urlAddr"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="SYSTEM_INFO_ID" jdbcType="BIGINT" property="systemInfoId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MENU_ID, 
+          MENU_NAME, 
+          MENU_TYPE, 
+          MENU_LEVEL, 
+          MENU_INDEX, 
+          PAR_MENU_ID, 
+          MENU_DESC, 
+          URL_ADDR, 
+          REGION_ID, 
+          SYSTEM_INFO_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MENU_NAME, 
+          MENU_TYPE, 
+          MENU_LEVEL, 
+          MENU_INDEX, 
+          PAR_MENU_ID, 
+          MENU_DESC, 
+          URL_ADDR, 
+          REGION_ID, 
+          SYSTEM_INFO_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="menuId != null ">
+        MENU_ID = #{menuId, jdbcType=INTEGER }
+      </if>
+      <if test="menuName != null and menuName != ''">
+        and MENU_NAME = #{menuName, jdbcType=VARCHAR }
+      </if>
+      <if test="menuType != null and menuType != ''">
+        and MENU_TYPE = #{menuType, jdbcType=VARCHAR }
+      </if>
+      <if test="menuLevel != null ">
+        and MENU_LEVEL = #{menuLevel, jdbcType=INTEGER }
+      </if>
+      <if test="menuIndex != null ">
+        and MENU_INDEX = #{menuIndex, jdbcType=INTEGER }
+      </if>
+      <if test="parMenuId != null ">
+        and PAR_MENU_ID = #{parMenuId, jdbcType=INTEGER }
+      </if>
+      <if test="menuDesc != null and menuDesc != ''">
+        and MENU_DESC = #{menuDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="urlAddr != null and urlAddr != ''">
+        and URL_ADDR = #{urlAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.FuncMenuDO" resultType="java.lang.Integer">
+      select count(*) from FUNC_MENU
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from FUNC_MENU
+        where 
+           MENU_ID = #{menuId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  FUNC_MENU 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="menuId">
+      insert into  FUNC_MENU ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{menuName,jdbcType=VARCHAR}, 
+        #{menuType,jdbcType=VARCHAR}, 
+        #{menuLevel,jdbcType=INTEGER}, 
+        #{menuIndex,jdbcType=INTEGER}, 
+        #{parMenuId,jdbcType=INTEGER}, 
+        #{menuDesc,jdbcType=VARCHAR}, 
+        #{urlAddr,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  FUNC_MENU ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{menuId,jdbcType=INTEGER}, 
+        #{menuName,jdbcType=VARCHAR}, 
+        #{menuType,jdbcType=VARCHAR}, 
+        #{menuLevel,jdbcType=INTEGER}, 
+        #{menuIndex,jdbcType=INTEGER}, 
+        #{parMenuId,jdbcType=INTEGER}, 
+        #{menuDesc,jdbcType=VARCHAR}, 
+        #{urlAddr,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from FUNC_MENU  
+        where
+           MENU_ID = #{menuId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from FUNC_MENU
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  FUNC_MENU
+    <trim prefix="set" suffixOverrides=",">
+      <if test="menuName != null">
+         MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null">
+         MENU_TYPE = #{menuType,jdbcType=VARCHAR},
+      </if>
+      <if test="menuLevel != null">
+         MENU_LEVEL = #{menuLevel,jdbcType=INTEGER},
+      </if>
+      <if test="menuIndex != null">
+         MENU_INDEX = #{menuIndex,jdbcType=INTEGER},
+      </if>
+      <if test="parMenuId != null">
+         PAR_MENU_ID = #{parMenuId,jdbcType=INTEGER},
+      </if>
+      <if test="menuDesc != null">
+         MENU_DESC = #{menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="urlAddr != null">
+         URL_ADDR = #{urlAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="systemInfoId != null">
+         SYSTEM_INFO_ID = #{systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           MENU_ID = #{menuId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update FUNC_MENU
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.menuId != null">
+        MENU_ID = #{record.menuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuName != null">
+        MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuType != null">
+        MENU_TYPE = #{record.menuType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuLevel != null">
+        MENU_LEVEL = #{record.menuLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuIndex != null">
+        MENU_INDEX = #{record.menuIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.parMenuId != null">
+        PAR_MENU_ID = #{record.parMenuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuDesc != null">
+        MENU_DESC = #{record.menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.urlAddr != null">
+        URL_ADDR = #{record.urlAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.systemInfoId != null">
+        SYSTEM_INFO_ID = #{record.systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.menuId != null ">
+        MENU_ID = #{condition.menuId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.menuName != null and condition.menuName != ''">
+        and MENU_NAME = #{condition.menuName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.menuType != null and condition.menuType != ''">
+        and MENU_TYPE = #{condition.menuType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.menuLevel != null ">
+        and MENU_LEVEL = #{condition.menuLevel, jdbcType=INTEGER }
+      </if>
+      <if test="condition.menuIndex != null ">
+        and MENU_INDEX = #{condition.menuIndex, jdbcType=INTEGER }
+      </if>
+      <if test="condition.parMenuId != null ">
+        and PAR_MENU_ID = #{condition.parMenuId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.menuDesc != null and condition.menuDesc != ''">
+        and MENU_DESC = #{condition.menuDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.urlAddr != null and condition.urlAddr != ''">
+        and URL_ADDR = #{condition.urlAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{condition.systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

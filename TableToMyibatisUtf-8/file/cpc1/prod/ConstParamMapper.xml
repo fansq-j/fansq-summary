@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.ConstParamMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.ConstParamDO">
+    <id column="CONST_PARAM_ID" jdbcType="BIGINT" property="constParamId"/>
+    <result column="EXPRESS_ID" jdbcType="BIGINT" property="expressId"/>
+    <result column="FORMAL_PARAM_ID" jdbcType="BIGINT" property="formalParamId"/>
+    <result column="PROPERTY_ID" jdbcType="BIGINT" property="propertyId"/>
+    <result column="VALUE" jdbcType="VARCHAR" property="value"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CONST_PARAM_ID, 
+          EXPRESS_ID, 
+          FORMAL_PARAM_ID, 
+          PROPERTY_ID, 
+          VALUE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EXPRESS_ID, 
+          FORMAL_PARAM_ID, 
+          PROPERTY_ID, 
+          VALUE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="constParamId != null ">
+        CONST_PARAM_ID = #{constParamId, jdbcType=BIGINT }
+      </if>
+      <if test="expressId != null ">
+        and EXPRESS_ID = #{expressId, jdbcType=BIGINT }
+      </if>
+      <if test="formalParamId != null ">
+        and FORMAL_PARAM_ID = #{formalParamId, jdbcType=BIGINT }
+      </if>
+      <if test="propertyId != null ">
+        and PROPERTY_ID = #{propertyId, jdbcType=BIGINT }
+      </if>
+      <if test="value != null and value != ''">
+        and VALUE = #{value, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.ConstParamDO" resultType="java.lang.Integer">
+      select count(*) from CONST_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CONST_PARAM
+        where 
+           CONST_PARAM_ID = #{constParamId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CONST_PARAM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="constParamId">
+      insert into  CONST_PARAM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{expressId,jdbcType=BIGINT}, 
+        #{formalParamId,jdbcType=BIGINT}, 
+        #{propertyId,jdbcType=BIGINT}, 
+        #{value,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CONST_PARAM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{constParamId,jdbcType=BIGINT}, 
+        #{expressId,jdbcType=BIGINT}, 
+        #{formalParamId,jdbcType=BIGINT}, 
+        #{propertyId,jdbcType=BIGINT}, 
+        #{value,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CONST_PARAM  
+        where
+           CONST_PARAM_ID = #{constParamId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CONST_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CONST_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="expressId != null">
+         EXPRESS_ID = #{expressId,jdbcType=BIGINT},
+      </if>
+      <if test="formalParamId != null">
+         FORMAL_PARAM_ID = #{formalParamId,jdbcType=BIGINT},
+      </if>
+      <if test="propertyId != null">
+         PROPERTY_ID = #{propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null">
+         VALUE = #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CONST_PARAM_ID = #{constParamId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CONST_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.constParamId != null">
+        CONST_PARAM_ID = #{record.constParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.expressId != null">
+        EXPRESS_ID = #{record.expressId,jdbcType=BIGINT},
+      </if>
+      <if test="record.formalParamId != null">
+        FORMAL_PARAM_ID = #{record.formalParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.propertyId != null">
+        PROPERTY_ID = #{record.propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.value != null">
+        VALUE = #{record.value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.constParamId != null ">
+        CONST_PARAM_ID = #{condition.constParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.expressId != null ">
+        and EXPRESS_ID = #{condition.expressId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.formalParamId != null ">
+        and FORMAL_PARAM_ID = #{condition.formalParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.propertyId != null ">
+        and PROPERTY_ID = #{condition.propertyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.value != null and condition.value != ''">
+        and VALUE = #{condition.value, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

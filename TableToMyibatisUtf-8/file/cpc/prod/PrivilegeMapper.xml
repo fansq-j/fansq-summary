@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PrivilegeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PrivilegeDO">
+    <id column="PRIV_ID" jdbcType="BIGINT" property="privId"/>
+    <result column="PRIV_CODE" jdbcType="VARCHAR" property="privCode"/>
+    <result column="PRIV_NAME" jdbcType="VARCHAR" property="privName"/>
+    <result column="PRIV_TYPE" jdbcType="VARCHAR" property="privType"/>
+    <result column="PRIV_DESC" jdbcType="VARCHAR" property="privDesc"/>
+    <result column="PRIV_MANAGE_CLASS" jdbcType="VARCHAR" property="privManageClass"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="SYSTEM_INFO_ID" jdbcType="BIGINT" property="systemInfoId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRIV_ID, 
+          PRIV_CODE, 
+          PRIV_NAME, 
+          PRIV_TYPE, 
+          PRIV_DESC, 
+          PRIV_MANAGE_CLASS, 
+          EFF_DATE, 
+          EXP_DATE, 
+          SYSTEM_INFO_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PRIV_CODE, 
+          PRIV_NAME, 
+          PRIV_TYPE, 
+          PRIV_DESC, 
+          PRIV_MANAGE_CLASS, 
+          EFF_DATE, 
+          EXP_DATE, 
+          SYSTEM_INFO_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="privId != null ">
+        PRIV_ID = #{privId, jdbcType=BIGINT }
+      </if>
+      <if test="privCode != null and privCode != ''">
+        and PRIV_CODE = #{privCode, jdbcType=VARCHAR }
+      </if>
+      <if test="privName != null and privName != ''">
+        and PRIV_NAME = #{privName, jdbcType=VARCHAR }
+      </if>
+      <if test="privType != null and privType != ''">
+        and PRIV_TYPE = #{privType, jdbcType=VARCHAR }
+      </if>
+      <if test="privDesc != null and privDesc != ''">
+        and PRIV_DESC = #{privDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="privManageClass != null and privManageClass != ''">
+        and PRIV_MANAGE_CLASS = #{privManageClass, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PrivilegeDO" resultType="java.lang.Integer">
+      select count(*) from PRIVILEGE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRIVILEGE
+        where 
+           PRIV_ID = #{privId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRIVILEGE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="privId">
+      insert into  PRIVILEGE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{privCode,jdbcType=VARCHAR}, 
+        #{privName,jdbcType=VARCHAR}, 
+        #{privType,jdbcType=VARCHAR}, 
+        #{privDesc,jdbcType=VARCHAR}, 
+        #{privManageClass,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRIVILEGE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{privId,jdbcType=BIGINT}, 
+        #{privCode,jdbcType=VARCHAR}, 
+        #{privName,jdbcType=VARCHAR}, 
+        #{privType,jdbcType=VARCHAR}, 
+        #{privDesc,jdbcType=VARCHAR}, 
+        #{privManageClass,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRIVILEGE  
+        where
+           PRIV_ID = #{privId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PRIVILEGE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRIVILEGE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="privCode != null">
+         PRIV_CODE = #{privCode,jdbcType=VARCHAR},
+      </if>
+      <if test="privName != null">
+         PRIV_NAME = #{privName,jdbcType=VARCHAR},
+      </if>
+      <if test="privType != null">
+         PRIV_TYPE = #{privType,jdbcType=VARCHAR},
+      </if>
+      <if test="privDesc != null">
+         PRIV_DESC = #{privDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="privManageClass != null">
+         PRIV_MANAGE_CLASS = #{privManageClass,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="systemInfoId != null">
+         SYSTEM_INFO_ID = #{systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           PRIV_ID = #{privId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PRIVILEGE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.privId != null">
+        PRIV_ID = #{record.privId,jdbcType=BIGINT},
+      </if>
+      <if test="record.privCode != null">
+        PRIV_CODE = #{record.privCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privName != null">
+        PRIV_NAME = #{record.privName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privType != null">
+        PRIV_TYPE = #{record.privType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privDesc != null">
+        PRIV_DESC = #{record.privDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privManageClass != null">
+        PRIV_MANAGE_CLASS = #{record.privManageClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.systemInfoId != null">
+        SYSTEM_INFO_ID = #{record.systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.privId != null ">
+        PRIV_ID = #{condition.privId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.privCode != null and condition.privCode != ''">
+        and PRIV_CODE = #{condition.privCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.privName != null and condition.privName != ''">
+        and PRIV_NAME = #{condition.privName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.privType != null and condition.privType != ''">
+        and PRIV_TYPE = #{condition.privType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.privDesc != null and condition.privDesc != ''">
+        and PRIV_DESC = #{condition.privDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.privManageClass != null and condition.privManageClass != ''">
+        and PRIV_MANAGE_CLASS = #{condition.privManageClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{condition.systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CustomerOrderMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CustomerOrderDO">
+    <id column="CUST_ORDER_ID" jdbcType="BIGINT" property="custOrderId"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+    <result column="ORDER_HANDLER_ID" jdbcType="BIGINT" property="orderHandlerId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="AUTH_TYPE" jdbcType="VARCHAR" property="authType"/>
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+    <result column="CUST_ORDER_NBR" jdbcType="VARCHAR" property="custOrderNbr"/>
+    <result column="CUST_ORDER_TYPE" jdbcType="VARCHAR" property="custOrderType"/>
+    <result column="PRE_HANDLE_FLAG" jdbcType="VARCHAR" property="preHandleFlag"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="ACCEPT_DATE" jdbcType="TIMESTAMP" property="acceptDate"/>
+    <result column="ACCEPT_LAN_ID" jdbcType="BIGINT" property="acceptLanId"/>
+    <result column="ACCEPT_REGION_ID" jdbcType="BIGINT" property="acceptRegionId"/>
+    <result column="ORDER_SOURCE" jdbcType="VARCHAR" property="orderSource"/>
+    <result column="SOURCE_ORDER_ID" jdbcType="BIGINT" property="sourceOrderId"/>
+    <result column="PLAN_ACT_DATE" jdbcType="TIMESTAMP" property="planActDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_POST" jdbcType="BIGINT" property="createPost"/>
+    <result column="CREATE_ORG_ID" jdbcType="BIGINT" property="createOrgId"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_POST" jdbcType="BIGINT" property="updatePost"/>
+    <result column="UPDATE_ORG" jdbcType="BIGINT" property="updateOrg"/>
+    <result column="EXT_CUST_ORDER_ID" jdbcType="VARCHAR" property="extCustOrderId"/>
+    <result column="SYS_SOURCE" jdbcType="INTEGER" property="sysSource"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CUST_ORDER_ID, 
+          VER_NUM, 
+          ORDER_HANDLER_ID, 
+          OPER_TYPE, 
+          AUTH_TYPE, 
+          CUST_ID, 
+          CUST_ORDER_NBR, 
+          CUST_ORDER_TYPE, 
+          PRE_HANDLE_FLAG, 
+          PRIORITY, 
+          ACCEPT_DATE, 
+          ACCEPT_LAN_ID, 
+          ACCEPT_REGION_ID, 
+          ORDER_SOURCE, 
+          SOURCE_ORDER_ID, 
+          PLAN_ACT_DATE, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_POST, 
+          UPDATE_ORG, 
+          EXT_CUST_ORDER_ID, 
+          SYS_SOURCE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          VER_NUM, 
+          ORDER_HANDLER_ID, 
+          OPER_TYPE, 
+          AUTH_TYPE, 
+          CUST_ID, 
+          CUST_ORDER_NBR, 
+          CUST_ORDER_TYPE, 
+          PRE_HANDLE_FLAG, 
+          PRIORITY, 
+          ACCEPT_DATE, 
+          ACCEPT_LAN_ID, 
+          ACCEPT_REGION_ID, 
+          ORDER_SOURCE, 
+          SOURCE_ORDER_ID, 
+          PLAN_ACT_DATE, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_POST, 
+          UPDATE_ORG, 
+          EXT_CUST_ORDER_ID, 
+          SYS_SOURCE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="custOrderId != null ">
+        CUST_ORDER_ID = #{custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+      <if test="orderHandlerId != null ">
+        and ORDER_HANDLER_ID = #{orderHandlerId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="authType != null and authType != ''">
+        and AUTH_TYPE = #{authType, jdbcType=VARCHAR }
+      </if>
+      <if test="custId != null ">
+        and CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+      <if test="custOrderNbr != null and custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="custOrderType != null and custOrderType != ''">
+        and CUST_ORDER_TYPE = #{custOrderType, jdbcType=VARCHAR }
+      </if>
+      <if test="preHandleFlag != null and preHandleFlag != ''">
+        and PRE_HANDLE_FLAG = #{preHandleFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="acceptDate != null ">
+        and ACCEPT_DATE = #{acceptDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="acceptLanId != null ">
+        and ACCEPT_LAN_ID = #{acceptLanId, jdbcType=BIGINT }
+      </if>
+      <if test="acceptRegionId != null ">
+        and ACCEPT_REGION_ID = #{acceptRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="orderSource != null and orderSource != ''">
+        and ORDER_SOURCE = #{orderSource, jdbcType=VARCHAR }
+      </if>
+      <if test="sourceOrderId != null ">
+        and SOURCE_ORDER_ID = #{sourceOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="planActDate != null ">
+        and PLAN_ACT_DATE = #{planActDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createPost != null ">
+        and CREATE_POST = #{createPost, jdbcType=BIGINT }
+      </if>
+      <if test="createOrgId != null ">
+        and CREATE_ORG_ID = #{createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updatePost != null ">
+        and UPDATE_POST = #{updatePost, jdbcType=BIGINT }
+      </if>
+      <if test="updateOrg != null ">
+        and UPDATE_ORG = #{updateOrg, jdbcType=BIGINT }
+      </if>
+      <if test="extCustOrderId != null and extCustOrderId != ''">
+        and EXT_CUST_ORDER_ID = #{extCustOrderId, jdbcType=VARCHAR }
+      </if>
+      <if test="sysSource != null ">
+        and SYS_SOURCE = #{sysSource, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CustomerOrderDO" resultType="java.lang.Integer">
+      select count(*) from CUSTOMER_ORDER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CUSTOMER_ORDER
+        where 
+           CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CUSTOMER_ORDER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="custOrderId">
+      insert into  CUSTOMER_ORDER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{verNum,jdbcType=INTEGER}, 
+        #{orderHandlerId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{authType,jdbcType=VARCHAR}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{custOrderType,jdbcType=VARCHAR}, 
+        #{preHandleFlag,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{acceptDate,jdbcType=TIMESTAMP}, 
+        #{acceptLanId,jdbcType=BIGINT}, 
+        #{acceptRegionId,jdbcType=BIGINT}, 
+        #{orderSource,jdbcType=VARCHAR}, 
+        #{sourceOrderId,jdbcType=BIGINT}, 
+        #{planActDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updatePost,jdbcType=BIGINT}, 
+        #{updateOrg,jdbcType=BIGINT}, 
+        #{extCustOrderId,jdbcType=VARCHAR}, 
+        #{sysSource,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CUSTOMER_ORDER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{orderHandlerId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{authType,jdbcType=VARCHAR}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{custOrderType,jdbcType=VARCHAR}, 
+        #{preHandleFlag,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{acceptDate,jdbcType=TIMESTAMP}, 
+        #{acceptLanId,jdbcType=BIGINT}, 
+        #{acceptRegionId,jdbcType=BIGINT}, 
+        #{orderSource,jdbcType=VARCHAR}, 
+        #{sourceOrderId,jdbcType=BIGINT}, 
+        #{planActDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updatePost,jdbcType=BIGINT}, 
+        #{updateOrg,jdbcType=BIGINT}, 
+        #{extCustOrderId,jdbcType=VARCHAR}, 
+        #{sysSource,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CUSTOMER_ORDER  
+        where
+           CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CUSTOMER_ORDER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CUSTOMER_ORDER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderHandlerId != null">
+         ORDER_HANDLER_ID = #{orderHandlerId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="authType != null">
+         AUTH_TYPE = #{authType,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="custOrderNbr != null">
+         CUST_ORDER_NBR = #{custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="custOrderType != null">
+         CUST_ORDER_TYPE = #{custOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="preHandleFlag != null">
+         PRE_HANDLE_FLAG = #{preHandleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="acceptDate != null">
+         ACCEPT_DATE = #{acceptDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acceptLanId != null">
+         ACCEPT_LAN_ID = #{acceptLanId,jdbcType=BIGINT},
+      </if>
+      <if test="acceptRegionId != null">
+         ACCEPT_REGION_ID = #{acceptRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="orderSource != null">
+         ORDER_SOURCE = #{orderSource,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceOrderId != null">
+         SOURCE_ORDER_ID = #{sourceOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="planActDate != null">
+         PLAN_ACT_DATE = #{planActDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPost != null">
+         CREATE_POST = #{createPost,jdbcType=BIGINT},
+      </if>
+      <if test="createOrgId != null">
+         CREATE_ORG_ID = #{createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatePost != null">
+         UPDATE_POST = #{updatePost,jdbcType=BIGINT},
+      </if>
+      <if test="updateOrg != null">
+         UPDATE_ORG = #{updateOrg,jdbcType=BIGINT},
+      </if>
+      <if test="extCustOrderId != null">
+         EXT_CUST_ORDER_ID = #{extCustOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysSource != null">
+         SYS_SOURCE = #{sysSource,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CUSTOMER_ORDER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.custOrderId != null">
+        CUST_ORDER_ID = #{record.custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderHandlerId != null">
+        ORDER_HANDLER_ID = #{record.orderHandlerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authType != null">
+        AUTH_TYPE = #{record.authType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custOrderNbr != null">
+        CUST_ORDER_NBR = #{record.custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custOrderType != null">
+        CUST_ORDER_TYPE = #{record.custOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preHandleFlag != null">
+        PRE_HANDLE_FLAG = #{record.preHandleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.acceptDate != null">
+        ACCEPT_DATE = #{record.acceptDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.acceptLanId != null">
+        ACCEPT_LAN_ID = #{record.acceptLanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acceptRegionId != null">
+        ACCEPT_REGION_ID = #{record.acceptRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderSource != null">
+        ORDER_SOURCE = #{record.orderSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceOrderId != null">
+        SOURCE_ORDER_ID = #{record.sourceOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planActDate != null">
+        PLAN_ACT_DATE = #{record.planActDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createPost != null">
+        CREATE_POST = #{record.createPost,jdbcType=BIGINT},
+      </if>
+      <if test="record.createOrgId != null">
+        CREATE_ORG_ID = #{record.createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatePost != null">
+        UPDATE_POST = #{record.updatePost,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateOrg != null">
+        UPDATE_ORG = #{record.updateOrg,jdbcType=BIGINT},
+      </if>
+      <if test="record.extCustOrderId != null">
+        EXT_CUST_ORDER_ID = #{record.extCustOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysSource != null">
+        SYS_SOURCE = #{record.sysSource,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.custOrderId != null ">
+        CUST_ORDER_ID = #{condition.custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orderHandlerId != null ">
+        and ORDER_HANDLER_ID = #{condition.orderHandlerId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.authType != null and condition.authType != ''">
+        and AUTH_TYPE = #{condition.authType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custId != null ">
+        and CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custOrderNbr != null and condition.custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{condition.custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custOrderType != null and condition.custOrderType != ''">
+        and CUST_ORDER_TYPE = #{condition.custOrderType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.preHandleFlag != null and condition.preHandleFlag != ''">
+        and PRE_HANDLE_FLAG = #{condition.preHandleFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acceptDate != null ">
+        and ACCEPT_DATE = #{condition.acceptDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.acceptLanId != null ">
+        and ACCEPT_LAN_ID = #{condition.acceptLanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acceptRegionId != null ">
+        and ACCEPT_REGION_ID = #{condition.acceptRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderSource != null and condition.orderSource != ''">
+        and ORDER_SOURCE = #{condition.orderSource, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sourceOrderId != null ">
+        and SOURCE_ORDER_ID = #{condition.sourceOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.planActDate != null ">
+        and PLAN_ACT_DATE = #{condition.planActDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createPost != null ">
+        and CREATE_POST = #{condition.createPost, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createOrgId != null ">
+        and CREATE_ORG_ID = #{condition.createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updatePost != null ">
+        and UPDATE_POST = #{condition.updatePost, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateOrg != null ">
+        and UPDATE_ORG = #{condition.updateOrg, jdbcType=BIGINT }
+      </if>
+      <if test="condition.extCustOrderId != null and condition.extCustOrderId != ''">
+        and EXT_CUST_ORDER_ID = #{condition.extCustOrderId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sysSource != null ">
+        and SYS_SOURCE = #{condition.sysSource, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

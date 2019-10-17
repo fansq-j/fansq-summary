@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.NumGenerRulMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.NumGenerRulDO">
+    <id column="NUM_GENER_RUL_ID" jdbcType="BIGINT" property="numGenerRulId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="NUM_TYPE" jdbcType="VARCHAR" property="numType"/>
+    <result column="PREFIX_NAME" jdbcType="VARCHAR" property="prefixName"/>
+    <result column="POSTFIX_NAME" jdbcType="VARCHAR" property="postfixName"/>
+    <result column="SEQ_NAME" jdbcType="VARCHAR" property="seqName"/>
+    <result column="NUM_LENGTH" jdbcType="BIGINT" property="numLength"/>
+    <result column="REGEX" jdbcType="VARCHAR" property="regex"/>
+    <result column="REGEX_DESC" jdbcType="VARCHAR" property="regexDesc"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          NUM_GENER_RUL_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          NUM_TYPE, 
+          PREFIX_NAME, 
+          POSTFIX_NAME, 
+          SEQ_NAME, 
+          NUM_LENGTH, 
+          REGEX, 
+          REGEX_DESC, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OBJ_TYPE, 
+          OBJ_ID, 
+          NUM_TYPE, 
+          PREFIX_NAME, 
+          POSTFIX_NAME, 
+          SEQ_NAME, 
+          NUM_LENGTH, 
+          REGEX, 
+          REGEX_DESC, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="numGenerRulId != null ">
+        NUM_GENER_RUL_ID = #{numGenerRulId, jdbcType=BIGINT }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="numType != null and numType != ''">
+        and NUM_TYPE = #{numType, jdbcType=VARCHAR }
+      </if>
+      <if test="prefixName != null and prefixName != ''">
+        and PREFIX_NAME = #{prefixName, jdbcType=VARCHAR }
+      </if>
+      <if test="postfixName != null and postfixName != ''">
+        and POSTFIX_NAME = #{postfixName, jdbcType=VARCHAR }
+      </if>
+      <if test="seqName != null and seqName != ''">
+        and SEQ_NAME = #{seqName, jdbcType=VARCHAR }
+      </if>
+      <if test="numLength != null ">
+        and NUM_LENGTH = #{numLength, jdbcType=BIGINT }
+      </if>
+      <if test="regex != null and regex != ''">
+        and REGEX = #{regex, jdbcType=VARCHAR }
+      </if>
+      <if test="regexDesc != null and regexDesc != ''">
+        and REGEX_DESC = #{regexDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.NumGenerRulDO" resultType="java.lang.Integer">
+      select count(*) from NUM_GENER_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from NUM_GENER_RUL
+        where 
+           NUM_GENER_RUL_ID = #{numGenerRulId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  NUM_GENER_RUL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="numGenerRulId">
+      insert into  NUM_GENER_RUL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{numType,jdbcType=VARCHAR}, 
+        #{prefixName,jdbcType=VARCHAR}, 
+        #{postfixName,jdbcType=VARCHAR}, 
+        #{seqName,jdbcType=VARCHAR}, 
+        #{numLength,jdbcType=BIGINT}, 
+        #{regex,jdbcType=VARCHAR}, 
+        #{regexDesc,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  NUM_GENER_RUL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{numGenerRulId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{numType,jdbcType=VARCHAR}, 
+        #{prefixName,jdbcType=VARCHAR}, 
+        #{postfixName,jdbcType=VARCHAR}, 
+        #{seqName,jdbcType=VARCHAR}, 
+        #{numLength,jdbcType=BIGINT}, 
+        #{regex,jdbcType=VARCHAR}, 
+        #{regexDesc,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from NUM_GENER_RUL  
+        where
+           NUM_GENER_RUL_ID = #{numGenerRulId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from NUM_GENER_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  NUM_GENER_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="numType != null">
+         NUM_TYPE = #{numType,jdbcType=VARCHAR},
+      </if>
+      <if test="prefixName != null">
+         PREFIX_NAME = #{prefixName,jdbcType=VARCHAR},
+      </if>
+      <if test="postfixName != null">
+         POSTFIX_NAME = #{postfixName,jdbcType=VARCHAR},
+      </if>
+      <if test="seqName != null">
+         SEQ_NAME = #{seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="numLength != null">
+         NUM_LENGTH = #{numLength,jdbcType=BIGINT},
+      </if>
+      <if test="regex != null">
+         REGEX = #{regex,jdbcType=VARCHAR},
+      </if>
+      <if test="regexDesc != null">
+         REGEX_DESC = #{regexDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           NUM_GENER_RUL_ID = #{numGenerRulId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update NUM_GENER_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.numGenerRulId != null">
+        NUM_GENER_RUL_ID = #{record.numGenerRulId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.numType != null">
+        NUM_TYPE = #{record.numType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prefixName != null">
+        PREFIX_NAME = #{record.prefixName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postfixName != null">
+        POSTFIX_NAME = #{record.postfixName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seqName != null">
+        SEQ_NAME = #{record.seqName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.numLength != null">
+        NUM_LENGTH = #{record.numLength,jdbcType=BIGINT},
+      </if>
+      <if test="record.regex != null">
+        REGEX = #{record.regex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regexDesc != null">
+        REGEX_DESC = #{record.regexDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.numGenerRulId != null ">
+        NUM_GENER_RUL_ID = #{condition.numGenerRulId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.numType != null and condition.numType != ''">
+        and NUM_TYPE = #{condition.numType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prefixName != null and condition.prefixName != ''">
+        and PREFIX_NAME = #{condition.prefixName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.postfixName != null and condition.postfixName != ''">
+        and POSTFIX_NAME = #{condition.postfixName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.seqName != null and condition.seqName != ''">
+        and SEQ_NAME = #{condition.seqName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.numLength != null ">
+        and NUM_LENGTH = #{condition.numLength, jdbcType=BIGINT }
+      </if>
+      <if test="condition.regex != null and condition.regex != ''">
+        and REGEX = #{condition.regex, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regexDesc != null and condition.regexDesc != ''">
+        and REGEX_DESC = #{condition.regexDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

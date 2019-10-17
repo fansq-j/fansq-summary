@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AcctItemPlusminusMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AcctItemPlusminusDO">
+    <id column="PLUS_SEQ_NBR" jdbcType="BIGINT" property="plusSeqNbr"/>
+    <result column="ACC_NUM" jdbcType="VARCHAR" property="accNum"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="MERGE_FLAG" jdbcType="INTEGER" property="mergeFlag"/>
+    <result column="MERGE_BALANCE" jdbcType="BIGINT" property="mergeBalance"/>
+    <result column="FEE_CYCLE_ID" jdbcType="INTEGER" property="feeCycleId"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="PLUS_TYPE" jdbcType="INTEGER" property="plusType"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="REASON" jdbcType="VARCHAR" property="reason"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PLUS_SEQ_NBR, 
+          ACC_NUM, 
+          BILLING_CYCLE_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          AMOUNT, 
+          MERGE_FLAG, 
+          MERGE_BALANCE, 
+          FEE_CYCLE_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          PLUS_TYPE, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          REASON, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          STATUS_CD
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACC_NUM, 
+          BILLING_CYCLE_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          AMOUNT, 
+          MERGE_FLAG, 
+          MERGE_BALANCE, 
+          FEE_CYCLE_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          PLUS_TYPE, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          REASON, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          STATUS_CD
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="plusSeqNbr != null ">
+        PLUS_SEQ_NBR = #{plusSeqNbr, jdbcType=BIGINT }
+      </if>
+      <if test="accNum != null and accNum != ''">
+        and ACC_NUM = #{accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="mergeFlag != null ">
+        and MERGE_FLAG = #{mergeFlag, jdbcType=INTEGER }
+      </if>
+      <if test="mergeBalance != null ">
+        and MERGE_BALANCE = #{mergeBalance, jdbcType=BIGINT }
+      </if>
+      <if test="feeCycleId != null ">
+        and FEE_CYCLE_ID = #{feeCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="plusType != null ">
+        and PLUS_TYPE = #{plusType, jdbcType=INTEGER }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="reason != null and reason != ''">
+        and REASON = #{reason, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AcctItemPlusminusDO" resultType="java.lang.Integer">
+      select count(*) from ACCT_ITEM_PLUSMINUS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCT_ITEM_PLUSMINUS
+        where 
+           PLUS_SEQ_NBR = #{plusSeqNbr,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCT_ITEM_PLUSMINUS 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="plusSeqNbr">
+      insert into  ACCT_ITEM_PLUSMINUS ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{mergeFlag,jdbcType=INTEGER}, 
+        #{mergeBalance,jdbcType=BIGINT}, 
+        #{feeCycleId,jdbcType=INTEGER}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{plusType,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{reason,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCT_ITEM_PLUSMINUS ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{plusSeqNbr,jdbcType=BIGINT}, 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{mergeFlag,jdbcType=INTEGER}, 
+        #{mergeBalance,jdbcType=BIGINT}, 
+        #{feeCycleId,jdbcType=INTEGER}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{plusType,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{reason,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCT_ITEM_PLUSMINUS  
+        where
+           PLUS_SEQ_NBR = #{plusSeqNbr,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCT_ITEM_PLUSMINUS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCT_ITEM_PLUSMINUS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="accNum != null">
+         ACC_NUM = #{accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="mergeFlag != null">
+         MERGE_FLAG = #{mergeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="mergeBalance != null">
+         MERGE_BALANCE = #{mergeBalance,jdbcType=BIGINT},
+      </if>
+      <if test="feeCycleId != null">
+         FEE_CYCLE_ID = #{feeCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="plusType != null">
+         PLUS_TYPE = #{plusType,jdbcType=INTEGER},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+         REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PLUS_SEQ_NBR = #{plusSeqNbr,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCT_ITEM_PLUSMINUS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.plusSeqNbr != null">
+        PLUS_SEQ_NBR = #{record.plusSeqNbr,jdbcType=BIGINT},
+      </if>
+      <if test="record.accNum != null">
+        ACC_NUM = #{record.accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.mergeFlag != null">
+        MERGE_FLAG = #{record.mergeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.mergeBalance != null">
+        MERGE_BALANCE = #{record.mergeBalance,jdbcType=BIGINT},
+      </if>
+      <if test="record.feeCycleId != null">
+        FEE_CYCLE_ID = #{record.feeCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.plusType != null">
+        PLUS_TYPE = #{record.plusType,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.reason != null">
+        REASON = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.plusSeqNbr != null ">
+        PLUS_SEQ_NBR = #{condition.plusSeqNbr, jdbcType=BIGINT }
+      </if>
+      <if test="condition.accNum != null and condition.accNum != ''">
+        and ACC_NUM = #{condition.accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.mergeFlag != null ">
+        and MERGE_FLAG = #{condition.mergeFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.mergeBalance != null ">
+        and MERGE_BALANCE = #{condition.mergeBalance, jdbcType=BIGINT }
+      </if>
+      <if test="condition.feeCycleId != null ">
+        and FEE_CYCLE_ID = #{condition.feeCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.plusType != null ">
+        and PLUS_TYPE = #{condition.plusType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.reason != null and condition.reason != ''">
+        and REASON = #{condition.reason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

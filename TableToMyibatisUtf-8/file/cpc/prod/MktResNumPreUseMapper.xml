@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktResNumPreUseMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktResNumPreUseDO">
+    <id column="MKT_RES_NUM_PRE_USE_ID" jdbcType="BIGINT" property="mktResNumPreUseId"/>
+    <result column="MKT_RES_INST_ID" jdbcType="BIGINT" property="mktResInstId"/>
+    <result column="APPLICANT_NAME" jdbcType="VARCHAR" property="applicantName"/>
+    <result column="APPLICANT_TYPE" jdbcType="VARCHAR" property="applicantType"/>
+    <result column="APPLICANT_ID" jdbcType="BIGINT" property="applicantId"/>
+    <result column="REQUEST_NBR" jdbcType="VARCHAR" property="requestNbr"/>
+    <result column="CERT_TYPE" jdbcType="VARCHAR" property="certType"/>
+    <result column="CONNECT_PHONE" jdbcType="VARCHAR" property="connectPhone"/>
+    <result column="CERT_NUM" jdbcType="VARCHAR" property="certNum"/>
+    <result column="REQUEST_SOURCE" jdbcType="VARCHAR" property="requestSource"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_POST" jdbcType="BIGINT" property="createPost"/>
+    <result column="CREATE_ORG_ID" jdbcType="BIGINT" property="createOrgId"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MKT_RES_NUM_PRE_USE_ID, 
+          MKT_RES_INST_ID, 
+          APPLICANT_NAME, 
+          APPLICANT_TYPE, 
+          APPLICANT_ID, 
+          REQUEST_NBR, 
+          CERT_TYPE, 
+          CONNECT_PHONE, 
+          CERT_NUM, 
+          REQUEST_SOURCE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          REGION_ID, 
+          LAN_ID, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MKT_RES_INST_ID, 
+          APPLICANT_NAME, 
+          APPLICANT_TYPE, 
+          APPLICANT_ID, 
+          REQUEST_NBR, 
+          CERT_TYPE, 
+          CONNECT_PHONE, 
+          CERT_NUM, 
+          REQUEST_SOURCE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          REGION_ID, 
+          LAN_ID, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="mktResNumPreUseId != null ">
+        MKT_RES_NUM_PRE_USE_ID = #{mktResNumPreUseId, jdbcType=BIGINT }
+      </if>
+      <if test="mktResInstId != null ">
+        and MKT_RES_INST_ID = #{mktResInstId, jdbcType=BIGINT }
+      </if>
+      <if test="applicantName != null and applicantName != ''">
+        and APPLICANT_NAME = #{applicantName, jdbcType=VARCHAR }
+      </if>
+      <if test="applicantType != null and applicantType != ''">
+        and APPLICANT_TYPE = #{applicantType, jdbcType=VARCHAR }
+      </if>
+      <if test="applicantId != null ">
+        and APPLICANT_ID = #{applicantId, jdbcType=BIGINT }
+      </if>
+      <if test="requestNbr != null and requestNbr != ''">
+        and REQUEST_NBR = #{requestNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="certType != null and certType != ''">
+        and CERT_TYPE = #{certType, jdbcType=VARCHAR }
+      </if>
+      <if test="connectPhone != null and connectPhone != ''">
+        and CONNECT_PHONE = #{connectPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="certNum != null and certNum != ''">
+        and CERT_NUM = #{certNum, jdbcType=VARCHAR }
+      </if>
+      <if test="requestSource != null and requestSource != ''">
+        and REQUEST_SOURCE = #{requestSource, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createPost != null ">
+        and CREATE_POST = #{createPost, jdbcType=BIGINT }
+      </if>
+      <if test="createOrgId != null ">
+        and CREATE_ORG_ID = #{createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktResNumPreUseDO" resultType="java.lang.Integer">
+      select count(*) from MKT_RES_NUM_PRE_USE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_RES_NUM_PRE_USE
+        where 
+           MKT_RES_NUM_PRE_USE_ID = #{mktResNumPreUseId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_RES_NUM_PRE_USE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="mktResNumPreUseId">
+      insert into  MKT_RES_NUM_PRE_USE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{mktResInstId,jdbcType=BIGINT}, 
+        #{applicantName,jdbcType=VARCHAR}, 
+        #{applicantType,jdbcType=VARCHAR}, 
+        #{applicantId,jdbcType=BIGINT}, 
+        #{requestNbr,jdbcType=VARCHAR}, 
+        #{certType,jdbcType=VARCHAR}, 
+        #{connectPhone,jdbcType=VARCHAR}, 
+        #{certNum,jdbcType=VARCHAR}, 
+        #{requestSource,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_RES_NUM_PRE_USE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{mktResNumPreUseId,jdbcType=BIGINT}, 
+        #{mktResInstId,jdbcType=BIGINT}, 
+        #{applicantName,jdbcType=VARCHAR}, 
+        #{applicantType,jdbcType=VARCHAR}, 
+        #{applicantId,jdbcType=BIGINT}, 
+        #{requestNbr,jdbcType=VARCHAR}, 
+        #{certType,jdbcType=VARCHAR}, 
+        #{connectPhone,jdbcType=VARCHAR}, 
+        #{certNum,jdbcType=VARCHAR}, 
+        #{requestSource,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_RES_NUM_PRE_USE  
+        where
+           MKT_RES_NUM_PRE_USE_ID = #{mktResNumPreUseId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_RES_NUM_PRE_USE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_RES_NUM_PRE_USE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="mktResInstId != null">
+         MKT_RES_INST_ID = #{mktResInstId,jdbcType=BIGINT},
+      </if>
+      <if test="applicantName != null">
+         APPLICANT_NAME = #{applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantType != null">
+         APPLICANT_TYPE = #{applicantType,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantId != null">
+         APPLICANT_ID = #{applicantId,jdbcType=BIGINT},
+      </if>
+      <if test="requestNbr != null">
+         REQUEST_NBR = #{requestNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null">
+         CERT_TYPE = #{certType,jdbcType=VARCHAR},
+      </if>
+      <if test="connectPhone != null">
+         CONNECT_PHONE = #{connectPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="certNum != null">
+         CERT_NUM = #{certNum,jdbcType=VARCHAR},
+      </if>
+      <if test="requestSource != null">
+         REQUEST_SOURCE = #{requestSource,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPost != null">
+         CREATE_POST = #{createPost,jdbcType=BIGINT},
+      </if>
+      <if test="createOrgId != null">
+         CREATE_ORG_ID = #{createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           MKT_RES_NUM_PRE_USE_ID = #{mktResNumPreUseId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_RES_NUM_PRE_USE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.mktResNumPreUseId != null">
+        MKT_RES_NUM_PRE_USE_ID = #{record.mktResNumPreUseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mktResInstId != null">
+        MKT_RES_INST_ID = #{record.mktResInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applicantName != null">
+        APPLICANT_NAME = #{record.applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantType != null">
+        APPLICANT_TYPE = #{record.applicantType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantId != null">
+        APPLICANT_ID = #{record.applicantId,jdbcType=BIGINT},
+      </if>
+      <if test="record.requestNbr != null">
+        REQUEST_NBR = #{record.requestNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certType != null">
+        CERT_TYPE = #{record.certType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connectPhone != null">
+        CONNECT_PHONE = #{record.connectPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certNum != null">
+        CERT_NUM = #{record.certNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestSource != null">
+        REQUEST_SOURCE = #{record.requestSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createPost != null">
+        CREATE_POST = #{record.createPost,jdbcType=BIGINT},
+      </if>
+      <if test="record.createOrgId != null">
+        CREATE_ORG_ID = #{record.createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.mktResNumPreUseId != null ">
+        MKT_RES_NUM_PRE_USE_ID = #{condition.mktResNumPreUseId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.mktResInstId != null ">
+        and MKT_RES_INST_ID = #{condition.mktResInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.applicantName != null and condition.applicantName != ''">
+        and APPLICANT_NAME = #{condition.applicantName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.applicantType != null and condition.applicantType != ''">
+        and APPLICANT_TYPE = #{condition.applicantType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.applicantId != null ">
+        and APPLICANT_ID = #{condition.applicantId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.requestNbr != null and condition.requestNbr != ''">
+        and REQUEST_NBR = #{condition.requestNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.certType != null and condition.certType != ''">
+        and CERT_TYPE = #{condition.certType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.connectPhone != null and condition.connectPhone != ''">
+        and CONNECT_PHONE = #{condition.connectPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.certNum != null and condition.certNum != ''">
+        and CERT_NUM = #{condition.certNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.requestSource != null and condition.requestSource != ''">
+        and REQUEST_SOURCE = #{condition.requestSource, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createPost != null ">
+        and CREATE_POST = #{condition.createPost, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createOrgId != null ">
+        and CREATE_ORG_ID = #{condition.createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

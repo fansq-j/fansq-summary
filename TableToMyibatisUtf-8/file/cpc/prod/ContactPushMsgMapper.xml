@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ContactPushMsgMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ContactPushMsgDO">
+    <id column="PUSH_MSG_ID" jdbcType="BIGINT" property="pushMsgId"/>
+    <result column="CONTACT_ORDER_ID" jdbcType="BIGINT" property="contactOrderId"/>
+    <result column="CONTACT_CHL_ID" jdbcType="BIGINT" property="contactChlId"/>
+    <result column="PUSH_TYPE" jdbcType="VARCHAR" property="pushType"/>
+    <result column="PUSH_ACCOUNT" jdbcType="VARCHAR" property="pushAccount"/>
+    <result column="MSG_CONTENT" jdbcType="VARCHAR" property="msgContent"/>
+    <result column="PLAN_DATE" jdbcType="TIMESTAMP" property="planDate"/>
+    <result column="PUSH_DATE" jdbcType="TIMESTAMP" property="pushDate"/>
+    <result column="PUSH_COUNT" jdbcType="INTEGER" property="pushCount"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PUSH_MSG_ID, 
+          CONTACT_ORDER_ID, 
+          CONTACT_CHL_ID, 
+          PUSH_TYPE, 
+          PUSH_ACCOUNT, 
+          MSG_CONTENT, 
+          PLAN_DATE, 
+          PUSH_DATE, 
+          PUSH_COUNT, 
+          PRIORITY, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CONTACT_ORDER_ID, 
+          CONTACT_CHL_ID, 
+          PUSH_TYPE, 
+          PUSH_ACCOUNT, 
+          MSG_CONTENT, 
+          PLAN_DATE, 
+          PUSH_DATE, 
+          PUSH_COUNT, 
+          PRIORITY, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pushMsgId != null ">
+        PUSH_MSG_ID = #{pushMsgId, jdbcType=BIGINT }
+      </if>
+      <if test="contactOrderId != null ">
+        and CONTACT_ORDER_ID = #{contactOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="contactChlId != null ">
+        and CONTACT_CHL_ID = #{contactChlId, jdbcType=BIGINT }
+      </if>
+      <if test="pushType != null and pushType != ''">
+        and PUSH_TYPE = #{pushType, jdbcType=VARCHAR }
+      </if>
+      <if test="pushAccount != null and pushAccount != ''">
+        and PUSH_ACCOUNT = #{pushAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="msgContent != null and msgContent != ''">
+        and MSG_CONTENT = #{msgContent, jdbcType=VARCHAR }
+      </if>
+      <if test="planDate != null ">
+        and PLAN_DATE = #{planDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="pushDate != null ">
+        and PUSH_DATE = #{pushDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="pushCount != null ">
+        and PUSH_COUNT = #{pushCount, jdbcType=INTEGER }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ContactPushMsgDO" resultType="java.lang.Integer">
+      select count(*) from CONTACT_PUSH_MSG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CONTACT_PUSH_MSG
+        where 
+           PUSH_MSG_ID = #{pushMsgId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CONTACT_PUSH_MSG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pushMsgId">
+      insert into  CONTACT_PUSH_MSG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{contactOrderId,jdbcType=BIGINT}, 
+        #{contactChlId,jdbcType=BIGINT}, 
+        #{pushType,jdbcType=VARCHAR}, 
+        #{pushAccount,jdbcType=VARCHAR}, 
+        #{msgContent,jdbcType=VARCHAR}, 
+        #{planDate,jdbcType=TIMESTAMP}, 
+        #{pushDate,jdbcType=TIMESTAMP}, 
+        #{pushCount,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CONTACT_PUSH_MSG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pushMsgId,jdbcType=BIGINT}, 
+        #{contactOrderId,jdbcType=BIGINT}, 
+        #{contactChlId,jdbcType=BIGINT}, 
+        #{pushType,jdbcType=VARCHAR}, 
+        #{pushAccount,jdbcType=VARCHAR}, 
+        #{msgContent,jdbcType=VARCHAR}, 
+        #{planDate,jdbcType=TIMESTAMP}, 
+        #{pushDate,jdbcType=TIMESTAMP}, 
+        #{pushCount,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CONTACT_PUSH_MSG  
+        where
+           PUSH_MSG_ID = #{pushMsgId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CONTACT_PUSH_MSG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CONTACT_PUSH_MSG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="contactOrderId != null">
+         CONTACT_ORDER_ID = #{contactOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="contactChlId != null">
+         CONTACT_CHL_ID = #{contactChlId,jdbcType=BIGINT},
+      </if>
+      <if test="pushType != null">
+         PUSH_TYPE = #{pushType,jdbcType=VARCHAR},
+      </if>
+      <if test="pushAccount != null">
+         PUSH_ACCOUNT = #{pushAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null">
+         MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="planDate != null">
+         PLAN_DATE = #{planDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushDate != null">
+         PUSH_DATE = #{pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushCount != null">
+         PUSH_COUNT = #{pushCount,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PUSH_MSG_ID = #{pushMsgId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CONTACT_PUSH_MSG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pushMsgId != null">
+        PUSH_MSG_ID = #{record.pushMsgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactOrderId != null">
+        CONTACT_ORDER_ID = #{record.contactOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactChlId != null">
+        CONTACT_CHL_ID = #{record.contactChlId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pushType != null">
+        PUSH_TYPE = #{record.pushType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pushAccount != null">
+        PUSH_ACCOUNT = #{record.pushAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgContent != null">
+        MSG_CONTENT = #{record.msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planDate != null">
+        PLAN_DATE = #{record.planDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pushDate != null">
+        PUSH_DATE = #{record.pushDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pushCount != null">
+        PUSH_COUNT = #{record.pushCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pushMsgId != null ">
+        PUSH_MSG_ID = #{condition.pushMsgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.contactOrderId != null ">
+        and CONTACT_ORDER_ID = #{condition.contactOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.contactChlId != null ">
+        and CONTACT_CHL_ID = #{condition.contactChlId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pushType != null and condition.pushType != ''">
+        and PUSH_TYPE = #{condition.pushType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pushAccount != null and condition.pushAccount != ''">
+        and PUSH_ACCOUNT = #{condition.pushAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.msgContent != null and condition.msgContent != ''">
+        and MSG_CONTENT = #{condition.msgContent, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.planDate != null ">
+        and PLAN_DATE = #{condition.planDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.pushDate != null ">
+        and PUSH_DATE = #{condition.pushDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.pushCount != null ">
+        and PUSH_COUNT = #{condition.pushCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

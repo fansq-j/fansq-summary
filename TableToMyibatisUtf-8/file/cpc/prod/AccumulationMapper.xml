@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AccumulationMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AccumulationDO">
+    <id column="ACCU_ID" jdbcType="BIGINT" property="accuId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+    <result column="ACCU_TYPE_ID" jdbcType="INTEGER" property="accuTypeId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="OTHER_SOURCE_VAL" jdbcType="BIGINT" property="otherSourceVal"/>
+    <result column="INIT_VAL" jdbcType="BIGINT" property="initVal"/>
+    <result column="ACCU_VAL" jdbcType="BIGINT" property="accuVal"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCU_ID, 
+          OFFER_INST_ID, 
+          ACCU_TYPE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          OTHER_SOURCE_VAL, 
+          INIT_VAL, 
+          ACCU_VAL, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OFFER_INST_ID, 
+          ACCU_TYPE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          OTHER_SOURCE_VAL, 
+          INIT_VAL, 
+          ACCU_VAL, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="accuId != null ">
+        ACCU_ID = #{accuId, jdbcType=BIGINT }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="accuTypeId != null ">
+        and ACCU_TYPE_ID = #{accuTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="otherSourceVal != null ">
+        and OTHER_SOURCE_VAL = #{otherSourceVal, jdbcType=BIGINT }
+      </if>
+      <if test="initVal != null ">
+        and INIT_VAL = #{initVal, jdbcType=BIGINT }
+      </if>
+      <if test="accuVal != null ">
+        and ACCU_VAL = #{accuVal, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AccumulationDO" resultType="java.lang.Integer">
+      select count(*) from ACCUMULATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCUMULATION
+        where 
+           ACCU_ID = #{accuId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCUMULATION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="accuId">
+      insert into  ACCUMULATION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{accuTypeId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{otherSourceVal,jdbcType=BIGINT}, 
+        #{initVal,jdbcType=BIGINT}, 
+        #{accuVal,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCUMULATION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{accuId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{accuTypeId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{otherSourceVal,jdbcType=BIGINT}, 
+        #{initVal,jdbcType=BIGINT}, 
+        #{accuVal,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCUMULATION  
+        where
+           ACCU_ID = #{accuId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCUMULATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCUMULATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="accuTypeId != null">
+         ACCU_TYPE_ID = #{accuTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="otherSourceVal != null">
+         OTHER_SOURCE_VAL = #{otherSourceVal,jdbcType=BIGINT},
+      </if>
+      <if test="initVal != null">
+         INIT_VAL = #{initVal,jdbcType=BIGINT},
+      </if>
+      <if test="accuVal != null">
+         ACCU_VAL = #{accuVal,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ACCU_ID = #{accuId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCUMULATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.accuId != null">
+        ACCU_ID = #{record.accuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.accuTypeId != null">
+        ACCU_TYPE_ID = #{record.accuTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.otherSourceVal != null">
+        OTHER_SOURCE_VAL = #{record.otherSourceVal,jdbcType=BIGINT},
+      </if>
+      <if test="record.initVal != null">
+        INIT_VAL = #{record.initVal,jdbcType=BIGINT},
+      </if>
+      <if test="record.accuVal != null">
+        ACCU_VAL = #{record.accuVal,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.accuId != null ">
+        ACCU_ID = #{condition.accuId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.accuTypeId != null ">
+        and ACCU_TYPE_ID = #{condition.accuTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.otherSourceVal != null ">
+        and OTHER_SOURCE_VAL = #{condition.otherSourceVal, jdbcType=BIGINT }
+      </if>
+      <if test="condition.initVal != null ">
+        and INIT_VAL = #{condition.initVal, jdbcType=BIGINT }
+      </if>
+      <if test="condition.accuVal != null ">
+        and ACCU_VAL = #{condition.accuVal, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

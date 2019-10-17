@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrderSplitRulMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrderSplitRulDO">
+    <id column="ORDER_SPLIT_RUL_ID" jdbcType="BIGINT" property="orderSplitRulId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_OPER_TYPE" jdbcType="VARCHAR" property="objOperType"/>
+    <result column="OBJ_SPEC_ID" jdbcType="BIGINT" property="objSpecId"/>
+    <result column="ATTR_ID" jdbcType="BIGINT" property="attrId"/>
+    <result column="ATTR_OPER_TYPE" jdbcType="BIGINT" property="attrOperType"/>
+    <result column="SERVICE_OFFER_ID" jdbcType="INTEGER" property="serviceOfferId"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ORDER_SPLIT_RUL_ID, 
+          OBJ_TYPE, 
+          OBJ_OPER_TYPE, 
+          OBJ_SPEC_ID, 
+          ATTR_ID, 
+          ATTR_OPER_TYPE, 
+          SERVICE_OFFER_ID, 
+          PRIORITY, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OBJ_TYPE, 
+          OBJ_OPER_TYPE, 
+          OBJ_SPEC_ID, 
+          ATTR_ID, 
+          ATTR_OPER_TYPE, 
+          SERVICE_OFFER_ID, 
+          PRIORITY, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="orderSplitRulId != null ">
+        ORDER_SPLIT_RUL_ID = #{orderSplitRulId, jdbcType=BIGINT }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objOperType != null and objOperType != ''">
+        and OBJ_OPER_TYPE = #{objOperType, jdbcType=VARCHAR }
+      </if>
+      <if test="objSpecId != null ">
+        and OBJ_SPEC_ID = #{objSpecId, jdbcType=BIGINT }
+      </if>
+      <if test="attrId != null ">
+        and ATTR_ID = #{attrId, jdbcType=BIGINT }
+      </if>
+      <if test="attrOperType != null ">
+        and ATTR_OPER_TYPE = #{attrOperType, jdbcType=BIGINT }
+      </if>
+      <if test="serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrderSplitRulDO" resultType="java.lang.Integer">
+      select count(*) from ORDER_SPLIT_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORDER_SPLIT_RUL
+        where 
+           ORDER_SPLIT_RUL_ID = #{orderSplitRulId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORDER_SPLIT_RUL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="orderSplitRulId">
+      insert into  ORDER_SPLIT_RUL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objOperType,jdbcType=VARCHAR}, 
+        #{objSpecId,jdbcType=BIGINT}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{attrOperType,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORDER_SPLIT_RUL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{orderSplitRulId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objOperType,jdbcType=VARCHAR}, 
+        #{objSpecId,jdbcType=BIGINT}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{attrOperType,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORDER_SPLIT_RUL  
+        where
+           ORDER_SPLIT_RUL_ID = #{orderSplitRulId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORDER_SPLIT_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORDER_SPLIT_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objOperType != null">
+         OBJ_OPER_TYPE = #{objOperType,jdbcType=VARCHAR},
+      </if>
+      <if test="objSpecId != null">
+         OBJ_SPEC_ID = #{objSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="attrId != null">
+         ATTR_ID = #{attrId,jdbcType=BIGINT},
+      </if>
+      <if test="attrOperType != null">
+         ATTR_OPER_TYPE = #{attrOperType,jdbcType=BIGINT},
+      </if>
+      <if test="serviceOfferId != null">
+         SERVICE_OFFER_ID = #{serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ORDER_SPLIT_RUL_ID = #{orderSplitRulId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORDER_SPLIT_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.orderSplitRulId != null">
+        ORDER_SPLIT_RUL_ID = #{record.orderSplitRulId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objOperType != null">
+        OBJ_OPER_TYPE = #{record.objOperType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objSpecId != null">
+        OBJ_SPEC_ID = #{record.objSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrId != null">
+        ATTR_ID = #{record.attrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrOperType != null">
+        ATTR_OPER_TYPE = #{record.attrOperType,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceOfferId != null">
+        SERVICE_OFFER_ID = #{record.serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.orderSplitRulId != null ">
+        ORDER_SPLIT_RUL_ID = #{condition.orderSplitRulId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objOperType != null and condition.objOperType != ''">
+        and OBJ_OPER_TYPE = #{condition.objOperType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objSpecId != null ">
+        and OBJ_SPEC_ID = #{condition.objSpecId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrId != null ">
+        and ATTR_ID = #{condition.attrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrOperType != null ">
+        and ATTR_OPER_TYPE = #{condition.attrOperType, jdbcType=BIGINT }
+      </if>
+      <if test="condition.serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{condition.serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

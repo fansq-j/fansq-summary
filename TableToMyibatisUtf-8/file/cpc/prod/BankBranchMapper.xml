@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BankBranchMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BankBranchDO">
+    <id column="BANK_BRANCH_ID" jdbcType="INTEGER" property="bankBranchId"/>
+    <result column="PAR_BRANCH_ID" jdbcType="INTEGER" property="parBranchId"/>
+    <result column="BANK_ID" jdbcType="INTEGER" property="bankId"/>
+    <result column="BANK_BRANCH_NAME" jdbcType="VARCHAR" property="bankBranchName"/>
+    <result column="BANK_ACCT" jdbcType="VARCHAR" property="bankAcct"/>
+    <result column="BANK_ACCT_NAME" jdbcType="VARCHAR" property="bankAcctName"/>
+    <result column="LAN_ID" jdbcType="INTEGER" property="lanId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BANK_BRANCH_ID, 
+          PAR_BRANCH_ID, 
+          BANK_ID, 
+          BANK_BRANCH_NAME, 
+          BANK_ACCT, 
+          BANK_ACCT_NAME, 
+          LAN_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PAR_BRANCH_ID, 
+          BANK_ID, 
+          BANK_BRANCH_NAME, 
+          BANK_ACCT, 
+          BANK_ACCT_NAME, 
+          LAN_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="bankBranchId != null ">
+        BANK_BRANCH_ID = #{bankBranchId, jdbcType=INTEGER }
+      </if>
+      <if test="parBranchId != null ">
+        and PAR_BRANCH_ID = #{parBranchId, jdbcType=INTEGER }
+      </if>
+      <if test="bankId != null ">
+        and BANK_ID = #{bankId, jdbcType=INTEGER }
+      </if>
+      <if test="bankBranchName != null and bankBranchName != ''">
+        and BANK_BRANCH_NAME = #{bankBranchName, jdbcType=VARCHAR }
+      </if>
+      <if test="bankAcct != null and bankAcct != ''">
+        and BANK_ACCT = #{bankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="bankAcctName != null and bankAcctName != ''">
+        and BANK_ACCT_NAME = #{bankAcctName, jdbcType=VARCHAR }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BankBranchDO" resultType="java.lang.Integer">
+      select count(*) from BANK_BRANCH
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BANK_BRANCH
+        where 
+           BANK_BRANCH_ID = #{bankBranchId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BANK_BRANCH 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="bankBranchId">
+      insert into  BANK_BRANCH ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{parBranchId,jdbcType=INTEGER}, 
+        #{bankId,jdbcType=INTEGER}, 
+        #{bankBranchName,jdbcType=VARCHAR}, 
+        #{bankAcct,jdbcType=VARCHAR}, 
+        #{bankAcctName,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BANK_BRANCH ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{bankBranchId,jdbcType=INTEGER}, 
+        #{parBranchId,jdbcType=INTEGER}, 
+        #{bankId,jdbcType=INTEGER}, 
+        #{bankBranchName,jdbcType=VARCHAR}, 
+        #{bankAcct,jdbcType=VARCHAR}, 
+        #{bankAcctName,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BANK_BRANCH  
+        where
+           BANK_BRANCH_ID = #{bankBranchId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from BANK_BRANCH
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BANK_BRANCH
+    <trim prefix="set" suffixOverrides=",">
+      <if test="parBranchId != null">
+         PAR_BRANCH_ID = #{parBranchId,jdbcType=INTEGER},
+      </if>
+      <if test="bankId != null">
+         BANK_ID = #{bankId,jdbcType=INTEGER},
+      </if>
+      <if test="bankBranchName != null">
+         BANK_BRANCH_NAME = #{bankBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcct != null">
+         BANK_ACCT = #{bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcctName != null">
+         BANK_ACCT_NAME = #{bankAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           BANK_BRANCH_ID = #{bankBranchId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update BANK_BRANCH
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.bankBranchId != null">
+        BANK_BRANCH_ID = #{record.bankBranchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.parBranchId != null">
+        PAR_BRANCH_ID = #{record.parBranchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankId != null">
+        BANK_ID = #{record.bankId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankBranchName != null">
+        BANK_BRANCH_NAME = #{record.bankBranchName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAcct != null">
+        BANK_ACCT = #{record.bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAcctName != null">
+        BANK_ACCT_NAME = #{record.bankAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.bankBranchId != null ">
+        BANK_BRANCH_ID = #{condition.bankBranchId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.parBranchId != null ">
+        and PAR_BRANCH_ID = #{condition.parBranchId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.bankId != null ">
+        and BANK_ID = #{condition.bankId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.bankBranchName != null and condition.bankBranchName != ''">
+        and BANK_BRANCH_NAME = #{condition.bankBranchName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bankAcct != null and condition.bankAcct != ''">
+        and BANK_ACCT = #{condition.bankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bankAcctName != null and condition.bankAcctName != ''">
+        and BANK_ACCT_NAME = #{condition.bankAcctName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

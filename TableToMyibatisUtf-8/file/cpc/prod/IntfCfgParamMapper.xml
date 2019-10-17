@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.IntfCfgParamMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.IntfCfgParamDO">
+    <id column="INTF_CFG_PARAM_ID" jdbcType="BIGINT" property="intfCfgParamId"/>
+    <result column="INTERFACE_CFG_ID" jdbcType="BIGINT" property="interfaceCfgId"/>
+    <result column="URL" jdbcType="VARCHAR" property="url"/>
+    <result column="PORT" jdbcType="VARCHAR" property="port"/>
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+    <result column="TIMEOUT" jdbcType="INTEGER" property="timeout"/>
+    <result column="PUBLIC_KEY" jdbcType="VARCHAR" property="publicKey"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          INTF_CFG_PARAM_ID, 
+          INTERFACE_CFG_ID, 
+          URL, 
+          PORT, 
+          USER_NAME, 
+          PASSWORD, 
+          TIMEOUT, 
+          PUBLIC_KEY, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          INTERFACE_CFG_ID, 
+          URL, 
+          PORT, 
+          USER_NAME, 
+          PASSWORD, 
+          TIMEOUT, 
+          PUBLIC_KEY, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="intfCfgParamId != null ">
+        INTF_CFG_PARAM_ID = #{intfCfgParamId, jdbcType=BIGINT }
+      </if>
+      <if test="interfaceCfgId != null ">
+        and INTERFACE_CFG_ID = #{interfaceCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="url != null and url != ''">
+        and URL = #{url, jdbcType=VARCHAR }
+      </if>
+      <if test="port != null and port != ''">
+        and PORT = #{port, jdbcType=VARCHAR }
+      </if>
+      <if test="userName != null and userName != ''">
+        and USER_NAME = #{userName, jdbcType=VARCHAR }
+      </if>
+      <if test="password != null and password != ''">
+        and PASSWORD = #{password, jdbcType=VARCHAR }
+      </if>
+      <if test="timeout != null ">
+        and TIMEOUT = #{timeout, jdbcType=INTEGER }
+      </if>
+      <if test="publicKey != null and publicKey != ''">
+        and PUBLIC_KEY = #{publicKey, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.IntfCfgParamDO" resultType="java.lang.Integer">
+      select count(*) from INTF_CFG_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from INTF_CFG_PARAM
+        where 
+           INTF_CFG_PARAM_ID = #{intfCfgParamId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  INTF_CFG_PARAM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="intfCfgParamId">
+      insert into  INTF_CFG_PARAM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{interfaceCfgId,jdbcType=BIGINT}, 
+        #{url,jdbcType=VARCHAR}, 
+        #{port,jdbcType=VARCHAR}, 
+        #{userName,jdbcType=VARCHAR}, 
+        #{password,jdbcType=VARCHAR}, 
+        #{timeout,jdbcType=INTEGER}, 
+        #{publicKey,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  INTF_CFG_PARAM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{intfCfgParamId,jdbcType=BIGINT}, 
+        #{interfaceCfgId,jdbcType=BIGINT}, 
+        #{url,jdbcType=VARCHAR}, 
+        #{port,jdbcType=VARCHAR}, 
+        #{userName,jdbcType=VARCHAR}, 
+        #{password,jdbcType=VARCHAR}, 
+        #{timeout,jdbcType=INTEGER}, 
+        #{publicKey,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from INTF_CFG_PARAM  
+        where
+           INTF_CFG_PARAM_ID = #{intfCfgParamId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from INTF_CFG_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  INTF_CFG_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="interfaceCfgId != null">
+         INTERFACE_CFG_ID = #{interfaceCfgId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+         URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+         PORT = #{port,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+         USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+         PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="timeout != null">
+         TIMEOUT = #{timeout,jdbcType=INTEGER},
+      </if>
+      <if test="publicKey != null">
+         PUBLIC_KEY = #{publicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           INTF_CFG_PARAM_ID = #{intfCfgParamId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update INTF_CFG_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.intfCfgParamId != null">
+        INTF_CFG_PARAM_ID = #{record.intfCfgParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.interfaceCfgId != null">
+        INTERFACE_CFG_ID = #{record.interfaceCfgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.port != null">
+        PORT = #{record.port,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeout != null">
+        TIMEOUT = #{record.timeout,jdbcType=INTEGER},
+      </if>
+      <if test="record.publicKey != null">
+        PUBLIC_KEY = #{record.publicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.intfCfgParamId != null ">
+        INTF_CFG_PARAM_ID = #{condition.intfCfgParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.interfaceCfgId != null ">
+        and INTERFACE_CFG_ID = #{condition.interfaceCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.url != null and condition.url != ''">
+        and URL = #{condition.url, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.port != null and condition.port != ''">
+        and PORT = #{condition.port, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.userName != null and condition.userName != ''">
+        and USER_NAME = #{condition.userName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.password != null and condition.password != ''">
+        and PASSWORD = #{condition.password, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.timeout != null ">
+        and TIMEOUT = #{condition.timeout, jdbcType=INTEGER }
+      </if>
+      <if test="condition.publicKey != null and condition.publicKey != ''">
+        and PUBLIC_KEY = #{condition.publicKey, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

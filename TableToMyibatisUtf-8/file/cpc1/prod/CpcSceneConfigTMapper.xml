@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.CpcSceneConfigTMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.CpcSceneConfigTDO">
+    <id column="SERVICE_CODE" jdbcType="VARCHAR" property="serviceCode"/>
+    <result column="BO_CODE" jdbcType="VARCHAR" property="boCode"/>
+    <result column="METHOD_CODE" jdbcType="VARCHAR" property="methodCode"/>
+    <result column="IF_VALID" jdbcType="INTEGER" property="ifValid"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SERVICE_CODE, 
+          BO_CODE, 
+          METHOD_CODE, 
+          IF_VALID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BO_CODE, 
+          METHOD_CODE, 
+          IF_VALID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="serviceCode != null and serviceCode != ''">
+        SERVICE_CODE = #{serviceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="boCode != null and boCode != ''">
+        and BO_CODE = #{boCode, jdbcType=VARCHAR }
+      </if>
+      <if test="methodCode != null and methodCode != ''">
+        and METHOD_CODE = #{methodCode, jdbcType=VARCHAR }
+      </if>
+      <if test="ifValid != null ">
+        and IF_VALID = #{ifValid, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.CpcSceneConfigTDO" resultType="java.lang.Integer">
+      select count(*) from CPC_SCENE_CONFIG_T
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CPC_SCENE_CONFIG_T
+        where 
+           SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CPC_SCENE_CONFIG_T 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="serviceCode">
+      insert into  CPC_SCENE_CONFIG_T ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{boCode,jdbcType=VARCHAR}, 
+        #{methodCode,jdbcType=VARCHAR}, 
+        #{ifValid,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CPC_SCENE_CONFIG_T ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{serviceCode,jdbcType=VARCHAR}, 
+        #{boCode,jdbcType=VARCHAR}, 
+        #{methodCode,jdbcType=VARCHAR}, 
+        #{ifValid,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CPC_SCENE_CONFIG_T  
+        where
+           SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="delete">
+      delete from CPC_SCENE_CONFIG_T
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CPC_SCENE_CONFIG_T
+    <trim prefix="set" suffixOverrides=",">
+      <if test="boCode != null">
+         BO_CODE = #{boCode,jdbcType=VARCHAR},
+      </if>
+      <if test="methodCode != null">
+         METHOD_CODE = #{methodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ifValid != null">
+         IF_VALID = #{ifValid,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateBySelective">
+      update CPC_SCENE_CONFIG_T
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.serviceCode != null">
+        SERVICE_CODE = #{record.serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boCode != null">
+        BO_CODE = #{record.boCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.methodCode != null">
+        METHOD_CODE = #{record.methodCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifValid != null">
+        IF_VALID = #{record.ifValid,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.serviceCode != null and condition.serviceCode != ''">
+        SERVICE_CODE = #{condition.serviceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.boCode != null and condition.boCode != ''">
+        and BO_CODE = #{condition.boCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.methodCode != null and condition.methodCode != ''">
+        and METHOD_CODE = #{condition.methodCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifValid != null ">
+        and IF_VALID = #{condition.ifValid, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

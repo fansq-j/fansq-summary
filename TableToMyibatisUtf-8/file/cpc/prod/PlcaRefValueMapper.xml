@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PlcaRefValueMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PlcaRefValueDO">
+    <id column="REF_VALUE_ID" jdbcType="INTEGER" property="refValueId"/>
+    <result column="REF_VALUE_NAME" jdbcType="VARCHAR" property="refValueName"/>
+    <result column="FIELD_NAME" jdbcType="VARCHAR" property="fieldName"/>
+    <result column="VALUE_TYPE" jdbcType="INTEGER" property="valueType"/>
+    <result column="REF_VALUE_TYPE" jdbcType="INTEGER" property="refValueType"/>
+    <result column="PROPERTY_TYPE" jdbcType="INTEGER" property="propertyType"/>
+    <result column="OWNER_OBJECT_TYPE" jdbcType="INTEGER" property="ownerObjectType"/>
+    <result column="PROPERTY_DEFINE_ID" jdbcType="INTEGER" property="propertyDefineId"/>
+    <result column="VALUE_STRING" jdbcType="VARCHAR" property="valueString"/>
+    <result column="LEFT_REF_VALUE_ID" jdbcType="INTEGER" property="leftRefValueId"/>
+    <result column="OPERATOR_ID" jdbcType="INTEGER" property="operatorId"/>
+    <result column="RIGHT_REF_VALUE_ID" jdbcType="INTEGER" property="rightRefValueId"/>
+    <result column="CALC_PRECISION" jdbcType="INTEGER" property="calcPrecision"/>
+    <result column="CALC_PRECISION_METHOD" jdbcType="INTEGER" property="calcPrecisionMethod"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          REF_VALUE_ID, 
+          REF_VALUE_NAME, 
+          FIELD_NAME, 
+          VALUE_TYPE, 
+          REF_VALUE_TYPE, 
+          PROPERTY_TYPE, 
+          OWNER_OBJECT_TYPE, 
+          PROPERTY_DEFINE_ID, 
+          VALUE_STRING, 
+          LEFT_REF_VALUE_ID, 
+          OPERATOR_ID, 
+          RIGHT_REF_VALUE_ID, 
+          CALC_PRECISION, 
+          CALC_PRECISION_METHOD, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          REF_VALUE_NAME, 
+          FIELD_NAME, 
+          VALUE_TYPE, 
+          REF_VALUE_TYPE, 
+          PROPERTY_TYPE, 
+          OWNER_OBJECT_TYPE, 
+          PROPERTY_DEFINE_ID, 
+          VALUE_STRING, 
+          LEFT_REF_VALUE_ID, 
+          OPERATOR_ID, 
+          RIGHT_REF_VALUE_ID, 
+          CALC_PRECISION, 
+          CALC_PRECISION_METHOD, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="refValueId != null ">
+        REF_VALUE_ID = #{refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="refValueName != null and refValueName != ''">
+        and REF_VALUE_NAME = #{refValueName, jdbcType=VARCHAR }
+      </if>
+      <if test="fieldName != null and fieldName != ''">
+        and FIELD_NAME = #{fieldName, jdbcType=VARCHAR }
+      </if>
+      <if test="valueType != null ">
+        and VALUE_TYPE = #{valueType, jdbcType=INTEGER }
+      </if>
+      <if test="refValueType != null ">
+        and REF_VALUE_TYPE = #{refValueType, jdbcType=INTEGER }
+      </if>
+      <if test="propertyType != null ">
+        and PROPERTY_TYPE = #{propertyType, jdbcType=INTEGER }
+      </if>
+      <if test="ownerObjectType != null ">
+        and OWNER_OBJECT_TYPE = #{ownerObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="propertyDefineId != null ">
+        and PROPERTY_DEFINE_ID = #{propertyDefineId, jdbcType=INTEGER }
+      </if>
+      <if test="valueString != null and valueString != ''">
+        and VALUE_STRING = #{valueString, jdbcType=VARCHAR }
+      </if>
+      <if test="leftRefValueId != null ">
+        and LEFT_REF_VALUE_ID = #{leftRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="operatorId != null ">
+        and OPERATOR_ID = #{operatorId, jdbcType=INTEGER }
+      </if>
+      <if test="rightRefValueId != null ">
+        and RIGHT_REF_VALUE_ID = #{rightRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="calcPrecision != null ">
+        and CALC_PRECISION = #{calcPrecision, jdbcType=INTEGER }
+      </if>
+      <if test="calcPrecisionMethod != null ">
+        and CALC_PRECISION_METHOD = #{calcPrecisionMethod, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PlcaRefValueDO" resultType="java.lang.Integer">
+      select count(*) from PLCA_REF_VALUE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PLCA_REF_VALUE
+        where 
+           REF_VALUE_ID = #{refValueId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PLCA_REF_VALUE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="refValueId">
+      insert into  PLCA_REF_VALUE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{refValueName,jdbcType=VARCHAR}, 
+        #{fieldName,jdbcType=VARCHAR}, 
+        #{valueType,jdbcType=INTEGER}, 
+        #{refValueType,jdbcType=INTEGER}, 
+        #{propertyType,jdbcType=INTEGER}, 
+        #{ownerObjectType,jdbcType=INTEGER}, 
+        #{propertyDefineId,jdbcType=INTEGER}, 
+        #{valueString,jdbcType=VARCHAR}, 
+        #{leftRefValueId,jdbcType=INTEGER}, 
+        #{operatorId,jdbcType=INTEGER}, 
+        #{rightRefValueId,jdbcType=INTEGER}, 
+        #{calcPrecision,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PLCA_REF_VALUE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{refValueId,jdbcType=INTEGER}, 
+        #{refValueName,jdbcType=VARCHAR}, 
+        #{fieldName,jdbcType=VARCHAR}, 
+        #{valueType,jdbcType=INTEGER}, 
+        #{refValueType,jdbcType=INTEGER}, 
+        #{propertyType,jdbcType=INTEGER}, 
+        #{ownerObjectType,jdbcType=INTEGER}, 
+        #{propertyDefineId,jdbcType=INTEGER}, 
+        #{valueString,jdbcType=VARCHAR}, 
+        #{leftRefValueId,jdbcType=INTEGER}, 
+        #{operatorId,jdbcType=INTEGER}, 
+        #{rightRefValueId,jdbcType=INTEGER}, 
+        #{calcPrecision,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PLCA_REF_VALUE  
+        where
+           REF_VALUE_ID = #{refValueId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PLCA_REF_VALUE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PLCA_REF_VALUE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="refValueName != null">
+         REF_VALUE_NAME = #{refValueName,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldName != null">
+         FIELD_NAME = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="valueType != null">
+         VALUE_TYPE = #{valueType,jdbcType=INTEGER},
+      </if>
+      <if test="refValueType != null">
+         REF_VALUE_TYPE = #{refValueType,jdbcType=INTEGER},
+      </if>
+      <if test="propertyType != null">
+         PROPERTY_TYPE = #{propertyType,jdbcType=INTEGER},
+      </if>
+      <if test="ownerObjectType != null">
+         OWNER_OBJECT_TYPE = #{ownerObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="propertyDefineId != null">
+         PROPERTY_DEFINE_ID = #{propertyDefineId,jdbcType=INTEGER},
+      </if>
+      <if test="valueString != null">
+         VALUE_STRING = #{valueString,jdbcType=VARCHAR},
+      </if>
+      <if test="leftRefValueId != null">
+         LEFT_REF_VALUE_ID = #{leftRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+         OPERATOR_ID = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="rightRefValueId != null">
+         RIGHT_REF_VALUE_ID = #{rightRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="calcPrecision != null">
+         CALC_PRECISION = #{calcPrecision,jdbcType=INTEGER},
+      </if>
+      <if test="calcPrecisionMethod != null">
+         CALC_PRECISION_METHOD = #{calcPrecisionMethod,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           REF_VALUE_ID = #{refValueId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PLCA_REF_VALUE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.refValueId != null">
+        REF_VALUE_ID = #{record.refValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.refValueName != null">
+        REF_VALUE_NAME = #{record.refValueName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fieldName != null">
+        FIELD_NAME = #{record.fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueType != null">
+        VALUE_TYPE = #{record.valueType,jdbcType=INTEGER},
+      </if>
+      <if test="record.refValueType != null">
+        REF_VALUE_TYPE = #{record.refValueType,jdbcType=INTEGER},
+      </if>
+      <if test="record.propertyType != null">
+        PROPERTY_TYPE = #{record.propertyType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ownerObjectType != null">
+        OWNER_OBJECT_TYPE = #{record.ownerObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.propertyDefineId != null">
+        PROPERTY_DEFINE_ID = #{record.propertyDefineId,jdbcType=INTEGER},
+      </if>
+      <if test="record.valueString != null">
+        VALUE_STRING = #{record.valueString,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leftRefValueId != null">
+        LEFT_REF_VALUE_ID = #{record.leftRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorId != null">
+        OPERATOR_ID = #{record.operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rightRefValueId != null">
+        RIGHT_REF_VALUE_ID = #{record.rightRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPrecision != null">
+        CALC_PRECISION = #{record.calcPrecision,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPrecisionMethod != null">
+        CALC_PRECISION_METHOD = #{record.calcPrecisionMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.refValueId != null ">
+        REF_VALUE_ID = #{condition.refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.refValueName != null and condition.refValueName != ''">
+        and REF_VALUE_NAME = #{condition.refValueName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.fieldName != null and condition.fieldName != ''">
+        and FIELD_NAME = #{condition.fieldName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueType != null ">
+        and VALUE_TYPE = #{condition.valueType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.refValueType != null ">
+        and REF_VALUE_TYPE = #{condition.refValueType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.propertyType != null ">
+        and PROPERTY_TYPE = #{condition.propertyType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ownerObjectType != null ">
+        and OWNER_OBJECT_TYPE = #{condition.ownerObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.propertyDefineId != null ">
+        and PROPERTY_DEFINE_ID = #{condition.propertyDefineId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.valueString != null and condition.valueString != ''">
+        and VALUE_STRING = #{condition.valueString, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.leftRefValueId != null ">
+        and LEFT_REF_VALUE_ID = #{condition.leftRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operatorId != null ">
+        and OPERATOR_ID = #{condition.operatorId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.rightRefValueId != null ">
+        and RIGHT_REF_VALUE_ID = #{condition.rightRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPrecision != null ">
+        and CALC_PRECISION = #{condition.calcPrecision, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPrecisionMethod != null ">
+        and CALC_PRECISION_METHOD = #{condition.calcPrecisionMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

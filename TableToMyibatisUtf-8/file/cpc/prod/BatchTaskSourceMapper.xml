@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BatchTaskSourceMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BatchTaskSourceDO">
+    <id column="BATCH_TASK_SOURCE_ID" jdbcType="BIGINT" property="batchTaskSourceId"/>
+    <result column="BATCH_TASK_ID" jdbcType="BIGINT" property="batchTaskId"/>
+    <result column="FILE_ROW_ID" jdbcType="INTEGER" property="fileRowId"/>
+    <result column="COL1" jdbcType="VARCHAR" property="col1"/>
+    <result column="COL2" jdbcType="VARCHAR" property="col2"/>
+    <result column="COL3" jdbcType="VARCHAR" property="col3"/>
+    <result column="COL4" jdbcType="VARCHAR" property="col4"/>
+    <result column="COL5" jdbcType="VARCHAR" property="col5"/>
+    <result column="COL6" jdbcType="VARCHAR" property="col6"/>
+    <result column="COL7" jdbcType="VARCHAR" property="col7"/>
+    <result column="COL8" jdbcType="VARCHAR" property="col8"/>
+    <result column="COL9" jdbcType="VARCHAR" property="col9"/>
+    <result column="COL10" jdbcType="VARCHAR" property="col10"/>
+    <result column="COL11" jdbcType="VARCHAR" property="col11"/>
+    <result column="COL12" jdbcType="VARCHAR" property="col12"/>
+    <result column="COL13" jdbcType="VARCHAR" property="col13"/>
+    <result column="COL14" jdbcType="VARCHAR" property="col14"/>
+    <result column="COL15" jdbcType="VARCHAR" property="col15"/>
+    <result column="COL16" jdbcType="VARCHAR" property="col16"/>
+    <result column="COL17" jdbcType="VARCHAR" property="col17"/>
+    <result column="COL18" jdbcType="VARCHAR" property="col18"/>
+    <result column="COL19" jdbcType="VARCHAR" property="col19"/>
+    <result column="COL20" jdbcType="VARCHAR" property="col20"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BATCH_TASK_SOURCE_ID, 
+          BATCH_TASK_ID, 
+          FILE_ROW_ID, 
+          COL1, 
+          COL2, 
+          COL3, 
+          COL4, 
+          COL5, 
+          COL6, 
+          COL7, 
+          COL8, 
+          COL9, 
+          COL10, 
+          COL11, 
+          COL12, 
+          COL13, 
+          COL14, 
+          COL15, 
+          COL16, 
+          COL17, 
+          COL18, 
+          COL19, 
+          COL20, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BATCH_TASK_ID, 
+          FILE_ROW_ID, 
+          COL1, 
+          COL2, 
+          COL3, 
+          COL4, 
+          COL5, 
+          COL6, 
+          COL7, 
+          COL8, 
+          COL9, 
+          COL10, 
+          COL11, 
+          COL12, 
+          COL13, 
+          COL14, 
+          COL15, 
+          COL16, 
+          COL17, 
+          COL18, 
+          COL19, 
+          COL20, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="batchTaskSourceId != null ">
+        BATCH_TASK_SOURCE_ID = #{batchTaskSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="batchTaskId != null ">
+        and BATCH_TASK_ID = #{batchTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="fileRowId != null ">
+        and FILE_ROW_ID = #{fileRowId, jdbcType=INTEGER }
+      </if>
+      <if test="col1 != null and col1 != ''">
+        and COL1 = #{col1, jdbcType=VARCHAR }
+      </if>
+      <if test="col2 != null and col2 != ''">
+        and COL2 = #{col2, jdbcType=VARCHAR }
+      </if>
+      <if test="col3 != null and col3 != ''">
+        and COL3 = #{col3, jdbcType=VARCHAR }
+      </if>
+      <if test="col4 != null and col4 != ''">
+        and COL4 = #{col4, jdbcType=VARCHAR }
+      </if>
+      <if test="col5 != null and col5 != ''">
+        and COL5 = #{col5, jdbcType=VARCHAR }
+      </if>
+      <if test="col6 != null and col6 != ''">
+        and COL6 = #{col6, jdbcType=VARCHAR }
+      </if>
+      <if test="col7 != null and col7 != ''">
+        and COL7 = #{col7, jdbcType=VARCHAR }
+      </if>
+      <if test="col8 != null and col8 != ''">
+        and COL8 = #{col8, jdbcType=VARCHAR }
+      </if>
+      <if test="col9 != null and col9 != ''">
+        and COL9 = #{col9, jdbcType=VARCHAR }
+      </if>
+      <if test="col10 != null and col10 != ''">
+        and COL10 = #{col10, jdbcType=VARCHAR }
+      </if>
+      <if test="col11 != null and col11 != ''">
+        and COL11 = #{col11, jdbcType=VARCHAR }
+      </if>
+      <if test="col12 != null and col12 != ''">
+        and COL12 = #{col12, jdbcType=VARCHAR }
+      </if>
+      <if test="col13 != null and col13 != ''">
+        and COL13 = #{col13, jdbcType=VARCHAR }
+      </if>
+      <if test="col14 != null and col14 != ''">
+        and COL14 = #{col14, jdbcType=VARCHAR }
+      </if>
+      <if test="col15 != null and col15 != ''">
+        and COL15 = #{col15, jdbcType=VARCHAR }
+      </if>
+      <if test="col16 != null and col16 != ''">
+        and COL16 = #{col16, jdbcType=VARCHAR }
+      </if>
+      <if test="col17 != null and col17 != ''">
+        and COL17 = #{col17, jdbcType=VARCHAR }
+      </if>
+      <if test="col18 != null and col18 != ''">
+        and COL18 = #{col18, jdbcType=VARCHAR }
+      </if>
+      <if test="col19 != null and col19 != ''">
+        and COL19 = #{col19, jdbcType=VARCHAR }
+      </if>
+      <if test="col20 != null and col20 != ''">
+        and COL20 = #{col20, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BatchTaskSourceDO" resultType="java.lang.Integer">
+      select count(*) from BATCH_TASK_SOURCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BATCH_TASK_SOURCE
+        where 
+           BATCH_TASK_SOURCE_ID = #{batchTaskSourceId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BATCH_TASK_SOURCE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="batchTaskSourceId">
+      insert into  BATCH_TASK_SOURCE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{batchTaskId,jdbcType=BIGINT}, 
+        #{fileRowId,jdbcType=INTEGER}, 
+        #{col1,jdbcType=VARCHAR}, 
+        #{col2,jdbcType=VARCHAR}, 
+        #{col3,jdbcType=VARCHAR}, 
+        #{col4,jdbcType=VARCHAR}, 
+        #{col5,jdbcType=VARCHAR}, 
+        #{col6,jdbcType=VARCHAR}, 
+        #{col7,jdbcType=VARCHAR}, 
+        #{col8,jdbcType=VARCHAR}, 
+        #{col9,jdbcType=VARCHAR}, 
+        #{col10,jdbcType=VARCHAR}, 
+        #{col11,jdbcType=VARCHAR}, 
+        #{col12,jdbcType=VARCHAR}, 
+        #{col13,jdbcType=VARCHAR}, 
+        #{col14,jdbcType=VARCHAR}, 
+        #{col15,jdbcType=VARCHAR}, 
+        #{col16,jdbcType=VARCHAR}, 
+        #{col17,jdbcType=VARCHAR}, 
+        #{col18,jdbcType=VARCHAR}, 
+        #{col19,jdbcType=VARCHAR}, 
+        #{col20,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BATCH_TASK_SOURCE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{batchTaskSourceId,jdbcType=BIGINT}, 
+        #{batchTaskId,jdbcType=BIGINT}, 
+        #{fileRowId,jdbcType=INTEGER}, 
+        #{col1,jdbcType=VARCHAR}, 
+        #{col2,jdbcType=VARCHAR}, 
+        #{col3,jdbcType=VARCHAR}, 
+        #{col4,jdbcType=VARCHAR}, 
+        #{col5,jdbcType=VARCHAR}, 
+        #{col6,jdbcType=VARCHAR}, 
+        #{col7,jdbcType=VARCHAR}, 
+        #{col8,jdbcType=VARCHAR}, 
+        #{col9,jdbcType=VARCHAR}, 
+        #{col10,jdbcType=VARCHAR}, 
+        #{col11,jdbcType=VARCHAR}, 
+        #{col12,jdbcType=VARCHAR}, 
+        #{col13,jdbcType=VARCHAR}, 
+        #{col14,jdbcType=VARCHAR}, 
+        #{col15,jdbcType=VARCHAR}, 
+        #{col16,jdbcType=VARCHAR}, 
+        #{col17,jdbcType=VARCHAR}, 
+        #{col18,jdbcType=VARCHAR}, 
+        #{col19,jdbcType=VARCHAR}, 
+        #{col20,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BATCH_TASK_SOURCE  
+        where
+           BATCH_TASK_SOURCE_ID = #{batchTaskSourceId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BATCH_TASK_SOURCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BATCH_TASK_SOURCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="batchTaskId != null">
+         BATCH_TASK_ID = #{batchTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="fileRowId != null">
+         FILE_ROW_ID = #{fileRowId,jdbcType=INTEGER},
+      </if>
+      <if test="col1 != null">
+         COL1 = #{col1,jdbcType=VARCHAR},
+      </if>
+      <if test="col2 != null">
+         COL2 = #{col2,jdbcType=VARCHAR},
+      </if>
+      <if test="col3 != null">
+         COL3 = #{col3,jdbcType=VARCHAR},
+      </if>
+      <if test="col4 != null">
+         COL4 = #{col4,jdbcType=VARCHAR},
+      </if>
+      <if test="col5 != null">
+         COL5 = #{col5,jdbcType=VARCHAR},
+      </if>
+      <if test="col6 != null">
+         COL6 = #{col6,jdbcType=VARCHAR},
+      </if>
+      <if test="col7 != null">
+         COL7 = #{col7,jdbcType=VARCHAR},
+      </if>
+      <if test="col8 != null">
+         COL8 = #{col8,jdbcType=VARCHAR},
+      </if>
+      <if test="col9 != null">
+         COL9 = #{col9,jdbcType=VARCHAR},
+      </if>
+      <if test="col10 != null">
+         COL10 = #{col10,jdbcType=VARCHAR},
+      </if>
+      <if test="col11 != null">
+         COL11 = #{col11,jdbcType=VARCHAR},
+      </if>
+      <if test="col12 != null">
+         COL12 = #{col12,jdbcType=VARCHAR},
+      </if>
+      <if test="col13 != null">
+         COL13 = #{col13,jdbcType=VARCHAR},
+      </if>
+      <if test="col14 != null">
+         COL14 = #{col14,jdbcType=VARCHAR},
+      </if>
+      <if test="col15 != null">
+         COL15 = #{col15,jdbcType=VARCHAR},
+      </if>
+      <if test="col16 != null">
+         COL16 = #{col16,jdbcType=VARCHAR},
+      </if>
+      <if test="col17 != null">
+         COL17 = #{col17,jdbcType=VARCHAR},
+      </if>
+      <if test="col18 != null">
+         COL18 = #{col18,jdbcType=VARCHAR},
+      </if>
+      <if test="col19 != null">
+         COL19 = #{col19,jdbcType=VARCHAR},
+      </if>
+      <if test="col20 != null">
+         COL20 = #{col20,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           BATCH_TASK_SOURCE_ID = #{batchTaskSourceId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BATCH_TASK_SOURCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.batchTaskSourceId != null">
+        BATCH_TASK_SOURCE_ID = #{record.batchTaskSourceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchTaskId != null">
+        BATCH_TASK_ID = #{record.batchTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fileRowId != null">
+        FILE_ROW_ID = #{record.fileRowId,jdbcType=INTEGER},
+      </if>
+      <if test="record.col1 != null">
+        COL1 = #{record.col1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col2 != null">
+        COL2 = #{record.col2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col3 != null">
+        COL3 = #{record.col3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col4 != null">
+        COL4 = #{record.col4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col5 != null">
+        COL5 = #{record.col5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col6 != null">
+        COL6 = #{record.col6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col7 != null">
+        COL7 = #{record.col7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col8 != null">
+        COL8 = #{record.col8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col9 != null">
+        COL9 = #{record.col9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col10 != null">
+        COL10 = #{record.col10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col11 != null">
+        COL11 = #{record.col11,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col12 != null">
+        COL12 = #{record.col12,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col13 != null">
+        COL13 = #{record.col13,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col14 != null">
+        COL14 = #{record.col14,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col15 != null">
+        COL15 = #{record.col15,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col16 != null">
+        COL16 = #{record.col16,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col17 != null">
+        COL17 = #{record.col17,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col18 != null">
+        COL18 = #{record.col18,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col19 != null">
+        COL19 = #{record.col19,jdbcType=VARCHAR},
+      </if>
+      <if test="record.col20 != null">
+        COL20 = #{record.col20,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.batchTaskSourceId != null ">
+        BATCH_TASK_SOURCE_ID = #{condition.batchTaskSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.batchTaskId != null ">
+        and BATCH_TASK_ID = #{condition.batchTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.fileRowId != null ">
+        and FILE_ROW_ID = #{condition.fileRowId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.col1 != null and condition.col1 != ''">
+        and COL1 = #{condition.col1, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col2 != null and condition.col2 != ''">
+        and COL2 = #{condition.col2, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col3 != null and condition.col3 != ''">
+        and COL3 = #{condition.col3, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col4 != null and condition.col4 != ''">
+        and COL4 = #{condition.col4, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col5 != null and condition.col5 != ''">
+        and COL5 = #{condition.col5, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col6 != null and condition.col6 != ''">
+        and COL6 = #{condition.col6, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col7 != null and condition.col7 != ''">
+        and COL7 = #{condition.col7, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col8 != null and condition.col8 != ''">
+        and COL8 = #{condition.col8, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col9 != null and condition.col9 != ''">
+        and COL9 = #{condition.col9, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col10 != null and condition.col10 != ''">
+        and COL10 = #{condition.col10, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col11 != null and condition.col11 != ''">
+        and COL11 = #{condition.col11, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col12 != null and condition.col12 != ''">
+        and COL12 = #{condition.col12, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col13 != null and condition.col13 != ''">
+        and COL13 = #{condition.col13, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col14 != null and condition.col14 != ''">
+        and COL14 = #{condition.col14, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col15 != null and condition.col15 != ''">
+        and COL15 = #{condition.col15, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col16 != null and condition.col16 != ''">
+        and COL16 = #{condition.col16, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col17 != null and condition.col17 != ''">
+        and COL17 = #{condition.col17, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col18 != null and condition.col18 != ''">
+        and COL18 = #{condition.col18, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col19 != null and condition.col19 != ''">
+        and COL19 = #{condition.col19, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.col20 != null and condition.col20 != ''">
+        and COL20 = #{condition.col20, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

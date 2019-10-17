@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.LabelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.LabelDO">
+    <id column="LABEL_ID" jdbcType="BIGINT" property="labelId"/>
+    <result column="LABEL_CODE" jdbcType="VARCHAR" property="labelCode"/>
+    <result column="LABEL_NAME" jdbcType="VARCHAR" property="labelName"/>
+    <result column="LABEL_DESC" jdbcType="VARCHAR" property="labelDesc"/>
+    <result column="LABEL_TYPE" jdbcType="VARCHAR" property="labelType"/>
+    <result column="LABEL_VALUE_TYPE" jdbcType="VARCHAR" property="labelValueType"/>
+    <result column="LABEL_DATA_TYPE" jdbcType="VARCHAR" property="labelDataType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          LABEL_ID, 
+          LABEL_CODE, 
+          LABEL_NAME, 
+          LABEL_DESC, 
+          LABEL_TYPE, 
+          LABEL_VALUE_TYPE, 
+          LABEL_DATA_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          LABEL_CODE, 
+          LABEL_NAME, 
+          LABEL_DESC, 
+          LABEL_TYPE, 
+          LABEL_VALUE_TYPE, 
+          LABEL_DATA_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="labelId != null ">
+        LABEL_ID = #{labelId, jdbcType=BIGINT }
+      </if>
+      <if test="labelCode != null and labelCode != ''">
+        and LABEL_CODE = #{labelCode, jdbcType=VARCHAR }
+      </if>
+      <if test="labelName != null and labelName != ''">
+        and LABEL_NAME = #{labelName, jdbcType=VARCHAR }
+      </if>
+      <if test="labelDesc != null and labelDesc != ''">
+        and LABEL_DESC = #{labelDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="labelType != null and labelType != ''">
+        and LABEL_TYPE = #{labelType, jdbcType=VARCHAR }
+      </if>
+      <if test="labelValueType != null and labelValueType != ''">
+        and LABEL_VALUE_TYPE = #{labelValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="labelDataType != null and labelDataType != ''">
+        and LABEL_DATA_TYPE = #{labelDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.LabelDO" resultType="java.lang.Integer">
+      select count(*) from LABEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from LABEL
+        where 
+           LABEL_ID = #{labelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  LABEL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="labelId">
+      insert into  LABEL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{labelCode,jdbcType=VARCHAR}, 
+        #{labelName,jdbcType=VARCHAR}, 
+        #{labelDesc,jdbcType=VARCHAR}, 
+        #{labelType,jdbcType=VARCHAR}, 
+        #{labelValueType,jdbcType=VARCHAR}, 
+        #{labelDataType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  LABEL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{labelId,jdbcType=BIGINT}, 
+        #{labelCode,jdbcType=VARCHAR}, 
+        #{labelName,jdbcType=VARCHAR}, 
+        #{labelDesc,jdbcType=VARCHAR}, 
+        #{labelType,jdbcType=VARCHAR}, 
+        #{labelValueType,jdbcType=VARCHAR}, 
+        #{labelDataType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from LABEL  
+        where
+           LABEL_ID = #{labelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from LABEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  LABEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="labelCode != null">
+         LABEL_CODE = #{labelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="labelName != null">
+         LABEL_NAME = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="labelDesc != null">
+         LABEL_DESC = #{labelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="labelType != null">
+         LABEL_TYPE = #{labelType,jdbcType=VARCHAR},
+      </if>
+      <if test="labelValueType != null">
+         LABEL_VALUE_TYPE = #{labelValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="labelDataType != null">
+         LABEL_DATA_TYPE = #{labelDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           LABEL_ID = #{labelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update LABEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.labelId != null">
+        LABEL_ID = #{record.labelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.labelCode != null">
+        LABEL_CODE = #{record.labelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelName != null">
+        LABEL_NAME = #{record.labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelDesc != null">
+        LABEL_DESC = #{record.labelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelType != null">
+        LABEL_TYPE = #{record.labelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelValueType != null">
+        LABEL_VALUE_TYPE = #{record.labelValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelDataType != null">
+        LABEL_DATA_TYPE = #{record.labelDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.labelId != null ">
+        LABEL_ID = #{condition.labelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.labelCode != null and condition.labelCode != ''">
+        and LABEL_CODE = #{condition.labelCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelName != null and condition.labelName != ''">
+        and LABEL_NAME = #{condition.labelName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelDesc != null and condition.labelDesc != ''">
+        and LABEL_DESC = #{condition.labelDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelType != null and condition.labelType != ''">
+        and LABEL_TYPE = #{condition.labelType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelValueType != null and condition.labelValueType != ''">
+        and LABEL_VALUE_TYPE = #{condition.labelValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelDataType != null and condition.labelDataType != ''">
+        and LABEL_DATA_TYPE = #{condition.labelDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

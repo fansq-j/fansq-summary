@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OfferInstAssureMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OfferInstAssureDO">
+    <id column="OFFER_INST_ASSURE_ID" jdbcType="BIGINT" property="offerInstAssureId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+    <result column="ASSURE_TYPE" jdbcType="VARCHAR" property="assureType"/>
+    <result column="ASSURE_OBJ_TYPE" jdbcType="VARCHAR" property="assureObjType"/>
+    <result column="ASSURE_OBJ_ID" jdbcType="BIGINT" property="assureObjId"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="LAST_ORDER_ITEM_ID" jdbcType="BIGINT" property="lastOrderItemId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          OFFER_INST_ASSURE_ID, 
+          OFFER_INST_ID, 
+          ASSURE_TYPE, 
+          ASSURE_OBJ_TYPE, 
+          ASSURE_OBJ_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          LAST_ORDER_ITEM_ID, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OFFER_INST_ID, 
+          ASSURE_TYPE, 
+          ASSURE_OBJ_TYPE, 
+          ASSURE_OBJ_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          LAST_ORDER_ITEM_ID, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="offerInstAssureId != null ">
+        OFFER_INST_ASSURE_ID = #{offerInstAssureId, jdbcType=BIGINT }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="assureType != null and assureType != ''">
+        and ASSURE_TYPE = #{assureType, jdbcType=VARCHAR }
+      </if>
+      <if test="assureObjType != null and assureObjType != ''">
+        and ASSURE_OBJ_TYPE = #{assureObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="assureObjId != null ">
+        and ASSURE_OBJ_ID = #{assureObjId, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="lastOrderItemId != null ">
+        and LAST_ORDER_ITEM_ID = #{lastOrderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OfferInstAssureDO" resultType="java.lang.Integer">
+      select count(*) from OFFER_INST_ASSURE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from OFFER_INST_ASSURE
+        where 
+           OFFER_INST_ASSURE_ID = #{offerInstAssureId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  OFFER_INST_ASSURE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="offerInstAssureId">
+      insert into  OFFER_INST_ASSURE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{assureType,jdbcType=VARCHAR}, 
+        #{assureObjType,jdbcType=VARCHAR}, 
+        #{assureObjId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{lastOrderItemId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  OFFER_INST_ASSURE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{offerInstAssureId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{assureType,jdbcType=VARCHAR}, 
+        #{assureObjType,jdbcType=VARCHAR}, 
+        #{assureObjId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{lastOrderItemId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from OFFER_INST_ASSURE  
+        where
+           OFFER_INST_ASSURE_ID = #{offerInstAssureId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from OFFER_INST_ASSURE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  OFFER_INST_ASSURE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="assureType != null">
+         ASSURE_TYPE = #{assureType,jdbcType=VARCHAR},
+      </if>
+      <if test="assureObjType != null">
+         ASSURE_OBJ_TYPE = #{assureObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="assureObjId != null">
+         ASSURE_OBJ_ID = #{assureObjId,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastOrderItemId != null">
+         LAST_ORDER_ITEM_ID = #{lastOrderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           OFFER_INST_ASSURE_ID = #{offerInstAssureId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update OFFER_INST_ASSURE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.offerInstAssureId != null">
+        OFFER_INST_ASSURE_ID = #{record.offerInstAssureId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.assureType != null">
+        ASSURE_TYPE = #{record.assureType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assureObjType != null">
+        ASSURE_OBJ_TYPE = #{record.assureObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assureObjId != null">
+        ASSURE_OBJ_ID = #{record.assureObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastOrderItemId != null">
+        LAST_ORDER_ITEM_ID = #{record.lastOrderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.offerInstAssureId != null ">
+        OFFER_INST_ASSURE_ID = #{condition.offerInstAssureId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.assureType != null and condition.assureType != ''">
+        and ASSURE_TYPE = #{condition.assureType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.assureObjType != null and condition.assureObjType != ''">
+        and ASSURE_OBJ_TYPE = #{condition.assureObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.assureObjId != null ">
+        and ASSURE_OBJ_ID = #{condition.assureObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.lastOrderItemId != null ">
+        and LAST_ORDER_ITEM_ID = #{condition.lastOrderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

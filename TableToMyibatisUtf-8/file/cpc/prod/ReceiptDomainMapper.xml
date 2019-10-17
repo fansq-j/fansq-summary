@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ReceiptDomainMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ReceiptDomainDO">
+    <id column="RECEIPT_DOMAIN_ID" jdbcType="BIGINT" property="receiptDomainId"/>
+    <result column="RECEIPT_TEMPLATE_ID" jdbcType="BIGINT" property="receiptTemplateId"/>
+    <result column="DOMAIN_TYPE" jdbcType="VARCHAR" property="domainType"/>
+    <result column="SEQ" jdbcType="INTEGER" property="seq"/>
+    <result column="IS_REPEAT" jdbcType="VARCHAR" property="isRepeat"/>
+    <result column="DOMAIN_NAME" jdbcType="VARCHAR" property="domainName"/>
+    <result column="DOMAIN_LABEL" jdbcType="VARCHAR" property="domainLabel"/>
+    <result column="OBTAIN_VALUE_TYPE" jdbcType="VARCHAR" property="obtainValueType"/>
+    <result column="EXPRESSION" jdbcType="VARCHAR" property="expression"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RECEIPT_DOMAIN_ID, 
+          RECEIPT_TEMPLATE_ID, 
+          DOMAIN_TYPE, 
+          SEQ, 
+          IS_REPEAT, 
+          DOMAIN_NAME, 
+          DOMAIN_LABEL, 
+          OBTAIN_VALUE_TYPE, 
+          EXPRESSION, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RECEIPT_TEMPLATE_ID, 
+          DOMAIN_TYPE, 
+          SEQ, 
+          IS_REPEAT, 
+          DOMAIN_NAME, 
+          DOMAIN_LABEL, 
+          OBTAIN_VALUE_TYPE, 
+          EXPRESSION, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="receiptDomainId != null ">
+        RECEIPT_DOMAIN_ID = #{receiptDomainId, jdbcType=BIGINT }
+      </if>
+      <if test="receiptTemplateId != null ">
+        and RECEIPT_TEMPLATE_ID = #{receiptTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="domainType != null and domainType != ''">
+        and DOMAIN_TYPE = #{domainType, jdbcType=VARCHAR }
+      </if>
+      <if test="seq != null ">
+        and SEQ = #{seq, jdbcType=INTEGER }
+      </if>
+      <if test="isRepeat != null and isRepeat != ''">
+        and IS_REPEAT = #{isRepeat, jdbcType=VARCHAR }
+      </if>
+      <if test="domainName != null and domainName != ''">
+        and DOMAIN_NAME = #{domainName, jdbcType=VARCHAR }
+      </if>
+      <if test="domainLabel != null and domainLabel != ''">
+        and DOMAIN_LABEL = #{domainLabel, jdbcType=VARCHAR }
+      </if>
+      <if test="obtainValueType != null and obtainValueType != ''">
+        and OBTAIN_VALUE_TYPE = #{obtainValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="expression != null and expression != ''">
+        and EXPRESSION = #{expression, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ReceiptDomainDO" resultType="java.lang.Integer">
+      select count(*) from RECEIPT_DOMAIN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RECEIPT_DOMAIN
+        where 
+           RECEIPT_DOMAIN_ID = #{receiptDomainId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RECEIPT_DOMAIN 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="receiptDomainId">
+      insert into  RECEIPT_DOMAIN ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{receiptTemplateId,jdbcType=BIGINT}, 
+        #{domainType,jdbcType=VARCHAR}, 
+        #{seq,jdbcType=INTEGER}, 
+        #{isRepeat,jdbcType=VARCHAR}, 
+        #{domainName,jdbcType=VARCHAR}, 
+        #{domainLabel,jdbcType=VARCHAR}, 
+        #{obtainValueType,jdbcType=VARCHAR}, 
+        #{expression,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RECEIPT_DOMAIN ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{receiptDomainId,jdbcType=BIGINT}, 
+        #{receiptTemplateId,jdbcType=BIGINT}, 
+        #{domainType,jdbcType=VARCHAR}, 
+        #{seq,jdbcType=INTEGER}, 
+        #{isRepeat,jdbcType=VARCHAR}, 
+        #{domainName,jdbcType=VARCHAR}, 
+        #{domainLabel,jdbcType=VARCHAR}, 
+        #{obtainValueType,jdbcType=VARCHAR}, 
+        #{expression,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RECEIPT_DOMAIN  
+        where
+           RECEIPT_DOMAIN_ID = #{receiptDomainId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RECEIPT_DOMAIN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RECEIPT_DOMAIN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="receiptTemplateId != null">
+         RECEIPT_TEMPLATE_ID = #{receiptTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="domainType != null">
+         DOMAIN_TYPE = #{domainType,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+         SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="isRepeat != null">
+         IS_REPEAT = #{isRepeat,jdbcType=VARCHAR},
+      </if>
+      <if test="domainName != null">
+         DOMAIN_NAME = #{domainName,jdbcType=VARCHAR},
+      </if>
+      <if test="domainLabel != null">
+         DOMAIN_LABEL = #{domainLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="obtainValueType != null">
+         OBTAIN_VALUE_TYPE = #{obtainValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="expression != null">
+         EXPRESSION = #{expression,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           RECEIPT_DOMAIN_ID = #{receiptDomainId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RECEIPT_DOMAIN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.receiptDomainId != null">
+        RECEIPT_DOMAIN_ID = #{record.receiptDomainId,jdbcType=BIGINT},
+      </if>
+      <if test="record.receiptTemplateId != null">
+        RECEIPT_TEMPLATE_ID = #{record.receiptTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.domainType != null">
+        DOMAIN_TYPE = #{record.domainType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seq != null">
+        SEQ = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.isRepeat != null">
+        IS_REPEAT = #{record.isRepeat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domainName != null">
+        DOMAIN_NAME = #{record.domainName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.domainLabel != null">
+        DOMAIN_LABEL = #{record.domainLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obtainValueType != null">
+        OBTAIN_VALUE_TYPE = #{record.obtainValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expression != null">
+        EXPRESSION = #{record.expression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.receiptDomainId != null ">
+        RECEIPT_DOMAIN_ID = #{condition.receiptDomainId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.receiptTemplateId != null ">
+        and RECEIPT_TEMPLATE_ID = #{condition.receiptTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.domainType != null and condition.domainType != ''">
+        and DOMAIN_TYPE = #{condition.domainType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.seq != null ">
+        and SEQ = #{condition.seq, jdbcType=INTEGER }
+      </if>
+      <if test="condition.isRepeat != null and condition.isRepeat != ''">
+        and IS_REPEAT = #{condition.isRepeat, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.domainName != null and condition.domainName != ''">
+        and DOMAIN_NAME = #{condition.domainName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.domainLabel != null and condition.domainLabel != ''">
+        and DOMAIN_LABEL = #{condition.domainLabel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.obtainValueType != null and condition.obtainValueType != ''">
+        and OBTAIN_VALUE_TYPE = #{condition.obtainValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.expression != null and condition.expression != ''">
+        and EXPRESSION = #{condition.expression, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

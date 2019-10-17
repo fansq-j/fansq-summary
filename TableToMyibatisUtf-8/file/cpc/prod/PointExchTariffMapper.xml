@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PointExchTariffMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PointExchTariffDO">
+    <id column="POINT_EXCH_TARIFF_ID" jdbcType="INTEGER" property="pointExchTariffId"/>
+    <result column="POINT_EXCH_OBJ_ID" jdbcType="INTEGER" property="pointExchObjId"/>
+    <result column="GROUP_ID" jdbcType="INTEGER" property="groupId"/>
+    <result column="EXCH_PAY_TYPE" jdbcType="VARCHAR" property="exchPayType"/>
+    <result column="POINT_PAY_KIND" jdbcType="VARCHAR" property="pointPayKind"/>
+    <result column="POINT_TYPE_ID" jdbcType="INTEGER" property="pointTypeId"/>
+    <result column="EXCH_VALUE" jdbcType="INTEGER" property="exchValue"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          POINT_EXCH_TARIFF_ID, 
+          POINT_EXCH_OBJ_ID, 
+          GROUP_ID, 
+          EXCH_PAY_TYPE, 
+          POINT_PAY_KIND, 
+          POINT_TYPE_ID, 
+          EXCH_VALUE, 
+          ACCT_ITEM_TYPE_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          POINT_EXCH_OBJ_ID, 
+          GROUP_ID, 
+          EXCH_PAY_TYPE, 
+          POINT_PAY_KIND, 
+          POINT_TYPE_ID, 
+          EXCH_VALUE, 
+          ACCT_ITEM_TYPE_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pointExchTariffId != null ">
+        POINT_EXCH_TARIFF_ID = #{pointExchTariffId, jdbcType=INTEGER }
+      </if>
+      <if test="pointExchObjId != null ">
+        and POINT_EXCH_OBJ_ID = #{pointExchObjId, jdbcType=INTEGER }
+      </if>
+      <if test="groupId != null ">
+        and GROUP_ID = #{groupId, jdbcType=INTEGER }
+      </if>
+      <if test="exchPayType != null and exchPayType != ''">
+        and EXCH_PAY_TYPE = #{exchPayType, jdbcType=VARCHAR }
+      </if>
+      <if test="pointPayKind != null and pointPayKind != ''">
+        and POINT_PAY_KIND = #{pointPayKind, jdbcType=VARCHAR }
+      </if>
+      <if test="pointTypeId != null ">
+        and POINT_TYPE_ID = #{pointTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="exchValue != null ">
+        and EXCH_VALUE = #{exchValue, jdbcType=INTEGER }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PointExchTariffDO" resultType="java.lang.Integer">
+      select count(*) from POINT_EXCH_TARIFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POINT_EXCH_TARIFF
+        where 
+           POINT_EXCH_TARIFF_ID = #{pointExchTariffId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POINT_EXCH_TARIFF 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pointExchTariffId">
+      insert into  POINT_EXCH_TARIFF ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{pointExchObjId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{exchPayType,jdbcType=VARCHAR}, 
+        #{pointPayKind,jdbcType=VARCHAR}, 
+        #{pointTypeId,jdbcType=INTEGER}, 
+        #{exchValue,jdbcType=INTEGER}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POINT_EXCH_TARIFF ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pointExchTariffId,jdbcType=INTEGER}, 
+        #{pointExchObjId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{exchPayType,jdbcType=VARCHAR}, 
+        #{pointPayKind,jdbcType=VARCHAR}, 
+        #{pointTypeId,jdbcType=INTEGER}, 
+        #{exchValue,jdbcType=INTEGER}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POINT_EXCH_TARIFF  
+        where
+           POINT_EXCH_TARIFF_ID = #{pointExchTariffId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from POINT_EXCH_TARIFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POINT_EXCH_TARIFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="pointExchObjId != null">
+         POINT_EXCH_OBJ_ID = #{pointExchObjId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+         GROUP_ID = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="exchPayType != null">
+         EXCH_PAY_TYPE = #{exchPayType,jdbcType=VARCHAR},
+      </if>
+      <if test="pointPayKind != null">
+         POINT_PAY_KIND = #{pointPayKind,jdbcType=VARCHAR},
+      </if>
+      <if test="pointTypeId != null">
+         POINT_TYPE_ID = #{pointTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="exchValue != null">
+         EXCH_VALUE = #{exchValue,jdbcType=INTEGER},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           POINT_EXCH_TARIFF_ID = #{pointExchTariffId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update POINT_EXCH_TARIFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pointExchTariffId != null">
+        POINT_EXCH_TARIFF_ID = #{record.pointExchTariffId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointExchObjId != null">
+        POINT_EXCH_OBJ_ID = #{record.pointExchObjId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchPayType != null">
+        EXCH_PAY_TYPE = #{record.exchPayType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointPayKind != null">
+        POINT_PAY_KIND = #{record.pointPayKind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointTypeId != null">
+        POINT_TYPE_ID = #{record.pointTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.exchValue != null">
+        EXCH_VALUE = #{record.exchValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pointExchTariffId != null ">
+        POINT_EXCH_TARIFF_ID = #{condition.pointExchTariffId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pointExchObjId != null ">
+        and POINT_EXCH_OBJ_ID = #{condition.pointExchObjId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.groupId != null ">
+        and GROUP_ID = #{condition.groupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.exchPayType != null and condition.exchPayType != ''">
+        and EXCH_PAY_TYPE = #{condition.exchPayType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointPayKind != null and condition.pointPayKind != ''">
+        and POINT_PAY_KIND = #{condition.pointPayKind, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointTypeId != null ">
+        and POINT_TYPE_ID = #{condition.pointTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.exchValue != null ">
+        and EXCH_VALUE = #{condition.exchValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

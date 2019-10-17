@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AccuTypeAttrMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AccuTypeAttrDO">
+    <id column="ACCU_TYPE_ATTR_ID" jdbcType="BIGINT" property="accuTypeAttrId"/>
+    <result column="ACCU_TYPE_ID" jdbcType="INTEGER" property="accuTypeId"/>
+    <result column="ATTR_ID" jdbcType="BIGINT" property="attrId"/>
+    <result column="ATTR_VALUE" jdbcType="VARCHAR" property="attrValue"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCU_TYPE_ATTR_ID, 
+          ACCU_TYPE_ID, 
+          ATTR_ID, 
+          ATTR_VALUE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCU_TYPE_ID, 
+          ATTR_ID, 
+          ATTR_VALUE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="accuTypeAttrId != null ">
+        ACCU_TYPE_ATTR_ID = #{accuTypeAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="accuTypeId != null ">
+        and ACCU_TYPE_ID = #{accuTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="attrId != null ">
+        and ATTR_ID = #{attrId, jdbcType=BIGINT }
+      </if>
+      <if test="attrValue != null and attrValue != ''">
+        and ATTR_VALUE = #{attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AccuTypeAttrDO" resultType="java.lang.Integer">
+      select count(*) from ACCU_TYPE_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCU_TYPE_ATTR
+        where 
+           ACCU_TYPE_ATTR_ID = #{accuTypeAttrId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCU_TYPE_ATTR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="accuTypeAttrId">
+      insert into  ACCU_TYPE_ATTR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{accuTypeId,jdbcType=INTEGER}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCU_TYPE_ATTR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{accuTypeAttrId,jdbcType=BIGINT}, 
+        #{accuTypeId,jdbcType=INTEGER}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCU_TYPE_ATTR  
+        where
+           ACCU_TYPE_ATTR_ID = #{accuTypeAttrId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCU_TYPE_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCU_TYPE_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="accuTypeId != null">
+         ACCU_TYPE_ID = #{accuTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="attrId != null">
+         ATTR_ID = #{attrId,jdbcType=BIGINT},
+      </if>
+      <if test="attrValue != null">
+         ATTR_VALUE = #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ACCU_TYPE_ATTR_ID = #{accuTypeAttrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCU_TYPE_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.accuTypeAttrId != null">
+        ACCU_TYPE_ATTR_ID = #{record.accuTypeAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.accuTypeId != null">
+        ACCU_TYPE_ID = #{record.accuTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrId != null">
+        ATTR_ID = #{record.attrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrValue != null">
+        ATTR_VALUE = #{record.attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.accuTypeAttrId != null ">
+        ACCU_TYPE_ATTR_ID = #{condition.accuTypeAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.accuTypeId != null ">
+        and ACCU_TYPE_ID = #{condition.accuTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrId != null ">
+        and ATTR_ID = #{condition.attrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrValue != null and condition.attrValue != ''">
+        and ATTR_VALUE = #{condition.attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

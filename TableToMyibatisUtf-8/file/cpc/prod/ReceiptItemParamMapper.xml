@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ReceiptItemParamMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ReceiptItemParamDO">
+    <result column="RECEIPT_ITEM_ID" jdbcType="BIGINT" property="receiptItemId"/>
+    <id column="RECEIPT_ITEM_PARAM_ID" jdbcType="BIGINT" property="receiptItemParamId"/>
+    <result column="PARAM_CODE" jdbcType="VARCHAR" property="paramCode"/>
+    <result column="OBTAIN_VALUE_TYPE" jdbcType="VARCHAR" property="obtainValueType"/>
+    <result column="EXPRESSION" jdbcType="VARCHAR" property="expression"/>
+    <result column="IS_ARRAY" jdbcType="VARCHAR" property="isArray"/>
+    <result column="PARAM_NAME" jdbcType="VARCHAR" property="paramName"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RECEIPT_ITEM_ID, 
+          RECEIPT_ITEM_PARAM_ID, 
+          PARAM_CODE, 
+          OBTAIN_VALUE_TYPE, 
+          EXPRESSION, 
+          IS_ARRAY, 
+          PARAM_NAME, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RECEIPT_ITEM_ID, 
+          PARAM_CODE, 
+          OBTAIN_VALUE_TYPE, 
+          EXPRESSION, 
+          IS_ARRAY, 
+          PARAM_NAME, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="receiptItemId != null ">
+        RECEIPT_ITEM_ID = #{receiptItemId, jdbcType=BIGINT }
+      </if>
+      <if test="receiptItemParamId != null ">
+        and RECEIPT_ITEM_PARAM_ID = #{receiptItemParamId, jdbcType=BIGINT }
+      </if>
+      <if test="paramCode != null and paramCode != ''">
+        and PARAM_CODE = #{paramCode, jdbcType=VARCHAR }
+      </if>
+      <if test="obtainValueType != null and obtainValueType != ''">
+        and OBTAIN_VALUE_TYPE = #{obtainValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="expression != null and expression != ''">
+        and EXPRESSION = #{expression, jdbcType=VARCHAR }
+      </if>
+      <if test="isArray != null and isArray != ''">
+        and IS_ARRAY = #{isArray, jdbcType=VARCHAR }
+      </if>
+      <if test="paramName != null and paramName != ''">
+        and PARAM_NAME = #{paramName, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ReceiptItemParamDO" resultType="java.lang.Integer">
+      select count(*) from RECEIPT_ITEM_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RECEIPT_ITEM_PARAM
+        where 
+           RECEIPT_ITEM_PARAM_ID = #{receiptItemParamId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RECEIPT_ITEM_PARAM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="receiptItemParamId">
+      insert into  RECEIPT_ITEM_PARAM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{receiptItemId,jdbcType=BIGINT}, 
+        #{paramCode,jdbcType=VARCHAR}, 
+        #{obtainValueType,jdbcType=VARCHAR}, 
+        #{expression,jdbcType=VARCHAR}, 
+        #{isArray,jdbcType=VARCHAR}, 
+        #{paramName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RECEIPT_ITEM_PARAM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{receiptItemId,jdbcType=BIGINT}, 
+        #{receiptItemParamId,jdbcType=BIGINT}, 
+        #{paramCode,jdbcType=VARCHAR}, 
+        #{obtainValueType,jdbcType=VARCHAR}, 
+        #{expression,jdbcType=VARCHAR}, 
+        #{isArray,jdbcType=VARCHAR}, 
+        #{paramName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RECEIPT_ITEM_PARAM  
+        where
+           RECEIPT_ITEM_PARAM_ID = #{receiptItemParamId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RECEIPT_ITEM_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RECEIPT_ITEM_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="receiptItemId != null">
+         RECEIPT_ITEM_ID = #{receiptItemId,jdbcType=BIGINT},
+      </if>
+      <if test="paramCode != null">
+         PARAM_CODE = #{paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="obtainValueType != null">
+         OBTAIN_VALUE_TYPE = #{obtainValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="expression != null">
+         EXPRESSION = #{expression,jdbcType=VARCHAR},
+      </if>
+      <if test="isArray != null">
+         IS_ARRAY = #{isArray,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null">
+         PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           RECEIPT_ITEM_PARAM_ID = #{receiptItemParamId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RECEIPT_ITEM_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.receiptItemId != null">
+        RECEIPT_ITEM_ID = #{record.receiptItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.receiptItemParamId != null">
+        RECEIPT_ITEM_PARAM_ID = #{record.receiptItemParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paramCode != null">
+        PARAM_CODE = #{record.paramCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obtainValueType != null">
+        OBTAIN_VALUE_TYPE = #{record.obtainValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expression != null">
+        EXPRESSION = #{record.expression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isArray != null">
+        IS_ARRAY = #{record.isArray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramName != null">
+        PARAM_NAME = #{record.paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.receiptItemId != null ">
+        RECEIPT_ITEM_ID = #{condition.receiptItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.receiptItemParamId != null ">
+        and RECEIPT_ITEM_PARAM_ID = #{condition.receiptItemParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paramCode != null and condition.paramCode != ''">
+        and PARAM_CODE = #{condition.paramCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.obtainValueType != null and condition.obtainValueType != ''">
+        and OBTAIN_VALUE_TYPE = #{condition.obtainValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.expression != null and condition.expression != ''">
+        and EXPRESSION = #{condition.expression, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isArray != null and condition.isArray != ''">
+        and IS_ARRAY = #{condition.isArray, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paramName != null and condition.paramName != ''">
+        and PARAM_NAME = #{condition.paramName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

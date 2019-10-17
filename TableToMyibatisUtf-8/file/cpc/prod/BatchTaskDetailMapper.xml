@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BatchTaskDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BatchTaskDetailDO">
+    <id column="BATCH_TASK_DETAIL_ID" jdbcType="BIGINT" property="batchTaskDetailId"/>
+    <result column="BATCH_TASK_ID" jdbcType="BIGINT" property="batchTaskId"/>
+    <result column="CUST_ORDER_ID" jdbcType="BIGINT" property="custOrderId"/>
+    <result column="FINISH_DATE" jdbcType="TIMESTAMP" property="finishDate"/>
+    <result column="FILE_ROW_ID" jdbcType="INTEGER" property="fileRowId"/>
+    <result column="GROUP_ID" jdbcType="BIGINT" property="groupId"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="ROW_CONTENT" jdbcType="CLOB" property="rowContent"/>
+    <result column="ORDER_JSON_SOURCE" jdbcType="CLOB" property="orderJsonSource"/>
+    <result column="ORDER_JSON_DEST" jdbcType="CLOB" property="orderJsonDest"/>
+    <result column="STATUS_REASON" jdbcType="VARCHAR" property="statusReason"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BATCH_TASK_DETAIL_ID, 
+          BATCH_TASK_ID, 
+          CUST_ORDER_ID, 
+          FINISH_DATE, 
+          FILE_ROW_ID, 
+          GROUP_ID, 
+          PRIORITY, 
+          ROW_CONTENT, 
+          ORDER_JSON_SOURCE, 
+          ORDER_JSON_DEST, 
+          STATUS_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BATCH_TASK_ID, 
+          CUST_ORDER_ID, 
+          FINISH_DATE, 
+          FILE_ROW_ID, 
+          GROUP_ID, 
+          PRIORITY, 
+          ROW_CONTENT, 
+          ORDER_JSON_SOURCE, 
+          ORDER_JSON_DEST, 
+          STATUS_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="batchTaskDetailId != null ">
+        BATCH_TASK_DETAIL_ID = #{batchTaskDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="batchTaskId != null ">
+        and BATCH_TASK_ID = #{batchTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="custOrderId != null ">
+        and CUST_ORDER_ID = #{custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="finishDate != null ">
+        and FINISH_DATE = #{finishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="fileRowId != null ">
+        and FILE_ROW_ID = #{fileRowId, jdbcType=INTEGER }
+      </if>
+      <if test="groupId != null ">
+        and GROUP_ID = #{groupId, jdbcType=BIGINT }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="rowContent != null and rowContent != ''">
+        and ROW_CONTENT = #{rowContent, jdbcType=CLOB }
+      </if>
+      <if test="orderJsonSource != null and orderJsonSource != ''">
+        and ORDER_JSON_SOURCE = #{orderJsonSource, jdbcType=CLOB }
+      </if>
+      <if test="orderJsonDest != null and orderJsonDest != ''">
+        and ORDER_JSON_DEST = #{orderJsonDest, jdbcType=CLOB }
+      </if>
+      <if test="statusReason != null and statusReason != ''">
+        and STATUS_REASON = #{statusReason, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BatchTaskDetailDO" resultType="java.lang.Integer">
+      select count(*) from BATCH_TASK_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BATCH_TASK_DETAIL
+        where 
+           BATCH_TASK_DETAIL_ID = #{batchTaskDetailId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BATCH_TASK_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="batchTaskDetailId">
+      insert into  BATCH_TASK_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{batchTaskId,jdbcType=BIGINT}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{finishDate,jdbcType=TIMESTAMP}, 
+        #{fileRowId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=BIGINT}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{rowContent,jdbcType=CLOB}, 
+        #{orderJsonSource,jdbcType=CLOB}, 
+        #{orderJsonDest,jdbcType=CLOB}, 
+        #{statusReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BATCH_TASK_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{batchTaskDetailId,jdbcType=BIGINT}, 
+        #{batchTaskId,jdbcType=BIGINT}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{finishDate,jdbcType=TIMESTAMP}, 
+        #{fileRowId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=BIGINT}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{rowContent,jdbcType=CLOB}, 
+        #{orderJsonSource,jdbcType=CLOB}, 
+        #{orderJsonDest,jdbcType=CLOB}, 
+        #{statusReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BATCH_TASK_DETAIL  
+        where
+           BATCH_TASK_DETAIL_ID = #{batchTaskDetailId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BATCH_TASK_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BATCH_TASK_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="batchTaskId != null">
+         BATCH_TASK_ID = #{batchTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="custOrderId != null">
+         CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="finishDate != null">
+         FINISH_DATE = #{finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileRowId != null">
+         FILE_ROW_ID = #{fileRowId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+         GROUP_ID = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="rowContent != null">
+         ROW_CONTENT = #{rowContent,jdbcType=CLOB},
+      </if>
+      <if test="orderJsonSource != null">
+         ORDER_JSON_SOURCE = #{orderJsonSource,jdbcType=CLOB},
+      </if>
+      <if test="orderJsonDest != null">
+         ORDER_JSON_DEST = #{orderJsonDest,jdbcType=CLOB},
+      </if>
+      <if test="statusReason != null">
+         STATUS_REASON = #{statusReason,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           BATCH_TASK_DETAIL_ID = #{batchTaskDetailId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BATCH_TASK_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.batchTaskDetailId != null">
+        BATCH_TASK_DETAIL_ID = #{record.batchTaskDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchTaskId != null">
+        BATCH_TASK_ID = #{record.batchTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custOrderId != null">
+        CUST_ORDER_ID = #{record.custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.finishDate != null">
+        FINISH_DATE = #{record.finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fileRowId != null">
+        FILE_ROW_ID = #{record.fileRowId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        GROUP_ID = #{record.groupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.rowContent != null">
+        ROW_CONTENT = #{record.rowContent,jdbcType=CLOB},
+      </if>
+      <if test="record.orderJsonSource != null">
+        ORDER_JSON_SOURCE = #{record.orderJsonSource,jdbcType=CLOB},
+      </if>
+      <if test="record.orderJsonDest != null">
+        ORDER_JSON_DEST = #{record.orderJsonDest,jdbcType=CLOB},
+      </if>
+      <if test="record.statusReason != null">
+        STATUS_REASON = #{record.statusReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.batchTaskDetailId != null ">
+        BATCH_TASK_DETAIL_ID = #{condition.batchTaskDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.batchTaskId != null ">
+        and BATCH_TASK_ID = #{condition.batchTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custOrderId != null ">
+        and CUST_ORDER_ID = #{condition.custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.finishDate != null ">
+        and FINISH_DATE = #{condition.finishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.fileRowId != null ">
+        and FILE_ROW_ID = #{condition.fileRowId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.groupId != null ">
+        and GROUP_ID = #{condition.groupId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.rowContent != null and condition.rowContent != ''">
+        and ROW_CONTENT = #{condition.rowContent, jdbcType=CLOB }
+      </if>
+      <if test="condition.orderJsonSource != null and condition.orderJsonSource != ''">
+        and ORDER_JSON_SOURCE = #{condition.orderJsonSource, jdbcType=CLOB }
+      </if>
+      <if test="condition.orderJsonDest != null and condition.orderJsonDest != ''">
+        and ORDER_JSON_DEST = #{condition.orderJsonDest, jdbcType=CLOB }
+      </if>
+      <if test="condition.statusReason != null and condition.statusReason != ''">
+        and STATUS_REASON = #{condition.statusReason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

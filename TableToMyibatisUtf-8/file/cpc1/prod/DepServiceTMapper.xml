@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.DepServiceTMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.DepServiceTDO">
+    <id column="SERVICE_CODE" jdbcType="VARCHAR" property="serviceCode"/>
+    <result column="SERVICE_NAME" jdbcType="VARCHAR" property="serviceName"/>
+    <result column="SERVICE_TYPE" jdbcType="VARCHAR" property="serviceType"/>
+    <result column="BO_CODE" jdbcType="VARCHAR" property="boCode"/>
+    <result column="METHOD_NAME" jdbcType="VARCHAR" property="methodName"/>
+    <result column="PARAM_CLASS" jdbcType="VARCHAR" property="paramClass"/>
+    <result column="SERVICE_PROVIDER" jdbcType="VARCHAR" property="serviceProvider"/>
+    <result column="UP_SERVICE_CODE" jdbcType="VARCHAR" property="upServiceCode"/>
+    <result column="IF_HIS_LOG" jdbcType="INTEGER" property="ifHisLog"/>
+    <result column="IF_IN_LOG" jdbcType="INTEGER" property="ifInLog"/>
+    <result column="IF_OUT_LOG" jdbcType="INTEGER" property="ifOutLog"/>
+    <result column="IF_CALL_GRP" jdbcType="INTEGER" property="ifCallGrp"/>
+    <result column="IF_GRP_LOG" jdbcType="INTEGER" property="ifGrpLog"/>
+    <result column="IF_VALID" jdbcType="INTEGER" property="ifValid"/>
+    <result column="DEVELOPER" jdbcType="VARCHAR" property="developer"/>
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="if_his_rel" jdbcType="INTEGER" property="ifHisRel"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SERVICE_CODE, 
+          SERVICE_NAME, 
+          SERVICE_TYPE, 
+          BO_CODE, 
+          METHOD_NAME, 
+          PARAM_CLASS, 
+          SERVICE_PROVIDER, 
+          UP_SERVICE_CODE, 
+          IF_HIS_LOG, 
+          IF_IN_LOG, 
+          IF_OUT_LOG, 
+          IF_CALL_GRP, 
+          IF_GRP_LOG, 
+          IF_VALID, 
+          DEVELOPER, 
+          CREATE_TIME, 
+          if_his_rel
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SERVICE_NAME, 
+          SERVICE_TYPE, 
+          BO_CODE, 
+          METHOD_NAME, 
+          PARAM_CLASS, 
+          SERVICE_PROVIDER, 
+          UP_SERVICE_CODE, 
+          IF_HIS_LOG, 
+          IF_IN_LOG, 
+          IF_OUT_LOG, 
+          IF_CALL_GRP, 
+          IF_GRP_LOG, 
+          IF_VALID, 
+          DEVELOPER, 
+          CREATE_TIME, 
+          if_his_rel
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="serviceCode != null and serviceCode != ''">
+        SERVICE_CODE = #{serviceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="serviceName != null and serviceName != ''">
+        and SERVICE_NAME = #{serviceName, jdbcType=VARCHAR }
+      </if>
+      <if test="serviceType != null and serviceType != ''">
+        and SERVICE_TYPE = #{serviceType, jdbcType=VARCHAR }
+      </if>
+      <if test="boCode != null and boCode != ''">
+        and BO_CODE = #{boCode, jdbcType=VARCHAR }
+      </if>
+      <if test="methodName != null and methodName != ''">
+        and METHOD_NAME = #{methodName, jdbcType=VARCHAR }
+      </if>
+      <if test="paramClass != null and paramClass != ''">
+        and PARAM_CLASS = #{paramClass, jdbcType=VARCHAR }
+      </if>
+      <if test="serviceProvider != null and serviceProvider != ''">
+        and SERVICE_PROVIDER = #{serviceProvider, jdbcType=VARCHAR }
+      </if>
+      <if test="upServiceCode != null and upServiceCode != ''">
+        and UP_SERVICE_CODE = #{upServiceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="ifHisLog != null ">
+        and IF_HIS_LOG = #{ifHisLog, jdbcType=INTEGER }
+      </if>
+      <if test="ifInLog != null ">
+        and IF_IN_LOG = #{ifInLog, jdbcType=INTEGER }
+      </if>
+      <if test="ifOutLog != null ">
+        and IF_OUT_LOG = #{ifOutLog, jdbcType=INTEGER }
+      </if>
+      <if test="ifCallGrp != null ">
+        and IF_CALL_GRP = #{ifCallGrp, jdbcType=INTEGER }
+      </if>
+      <if test="ifGrpLog != null ">
+        and IF_GRP_LOG = #{ifGrpLog, jdbcType=INTEGER }
+      </if>
+      <if test="ifValid != null ">
+        and IF_VALID = #{ifValid, jdbcType=INTEGER }
+      </if>
+      <if test="developer != null and developer != ''">
+        and DEVELOPER = #{developer, jdbcType=VARCHAR }
+      </if>
+      <if test="createTime != null ">
+        and CREATE_TIME = #{createTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="ifHisRel != null ">
+        and if_his_rel = #{ifHisRel, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.DepServiceTDO" resultType="java.lang.Integer">
+      select count(*) from DEP_SERVICE_T
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from DEP_SERVICE_T
+        where 
+           SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DEP_SERVICE_T 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="serviceCode">
+      insert into  DEP_SERVICE_T ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{serviceName,jdbcType=VARCHAR}, 
+        #{serviceType,jdbcType=VARCHAR}, 
+        #{boCode,jdbcType=VARCHAR}, 
+        #{methodName,jdbcType=VARCHAR}, 
+        #{paramClass,jdbcType=VARCHAR}, 
+        #{serviceProvider,jdbcType=VARCHAR}, 
+        #{upServiceCode,jdbcType=VARCHAR}, 
+        #{ifHisLog,jdbcType=INTEGER}, 
+        #{ifInLog,jdbcType=INTEGER}, 
+        #{ifOutLog,jdbcType=INTEGER}, 
+        #{ifCallGrp,jdbcType=INTEGER}, 
+        #{ifGrpLog,jdbcType=INTEGER}, 
+        #{ifValid,jdbcType=INTEGER}, 
+        #{developer,jdbcType=VARCHAR}, 
+        #{createTime,jdbcType=TIMESTAMP}, 
+        #{ifHisRel,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  DEP_SERVICE_T ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{serviceCode,jdbcType=VARCHAR}, 
+        #{serviceName,jdbcType=VARCHAR}, 
+        #{serviceType,jdbcType=VARCHAR}, 
+        #{boCode,jdbcType=VARCHAR}, 
+        #{methodName,jdbcType=VARCHAR}, 
+        #{paramClass,jdbcType=VARCHAR}, 
+        #{serviceProvider,jdbcType=VARCHAR}, 
+        #{upServiceCode,jdbcType=VARCHAR}, 
+        #{ifHisLog,jdbcType=INTEGER}, 
+        #{ifInLog,jdbcType=INTEGER}, 
+        #{ifOutLog,jdbcType=INTEGER}, 
+        #{ifCallGrp,jdbcType=INTEGER}, 
+        #{ifGrpLog,jdbcType=INTEGER}, 
+        #{ifValid,jdbcType=INTEGER}, 
+        #{developer,jdbcType=VARCHAR}, 
+        #{createTime,jdbcType=TIMESTAMP}, 
+        #{ifHisRel,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from DEP_SERVICE_T  
+        where
+           SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="delete">
+      delete from DEP_SERVICE_T
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  DEP_SERVICE_T
+    <trim prefix="set" suffixOverrides=",">
+      <if test="serviceName != null">
+         SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null">
+         SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="boCode != null">
+         BO_CODE = #{boCode,jdbcType=VARCHAR},
+      </if>
+      <if test="methodName != null">
+         METHOD_NAME = #{methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramClass != null">
+         PARAM_CLASS = #{paramClass,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceProvider != null">
+         SERVICE_PROVIDER = #{serviceProvider,jdbcType=VARCHAR},
+      </if>
+      <if test="upServiceCode != null">
+         UP_SERVICE_CODE = #{upServiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ifHisLog != null">
+         IF_HIS_LOG = #{ifHisLog,jdbcType=INTEGER},
+      </if>
+      <if test="ifInLog != null">
+         IF_IN_LOG = #{ifInLog,jdbcType=INTEGER},
+      </if>
+      <if test="ifOutLog != null">
+         IF_OUT_LOG = #{ifOutLog,jdbcType=INTEGER},
+      </if>
+      <if test="ifCallGrp != null">
+         IF_CALL_GRP = #{ifCallGrp,jdbcType=INTEGER},
+      </if>
+      <if test="ifGrpLog != null">
+         IF_GRP_LOG = #{ifGrpLog,jdbcType=INTEGER},
+      </if>
+      <if test="ifValid != null">
+         IF_VALID = #{ifValid,jdbcType=INTEGER},
+      </if>
+      <if test="developer != null">
+         DEVELOPER = #{developer,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifHisRel != null">
+         if_his_rel = #{ifHisRel,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateBySelective">
+      update DEP_SERVICE_T
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.serviceCode != null">
+        SERVICE_CODE = #{record.serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceName != null">
+        SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceType != null">
+        SERVICE_TYPE = #{record.serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boCode != null">
+        BO_CODE = #{record.boCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.methodName != null">
+        METHOD_NAME = #{record.methodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramClass != null">
+        PARAM_CLASS = #{record.paramClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceProvider != null">
+        SERVICE_PROVIDER = #{record.serviceProvider,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upServiceCode != null">
+        UP_SERVICE_CODE = #{record.upServiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifHisLog != null">
+        IF_HIS_LOG = #{record.ifHisLog,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifInLog != null">
+        IF_IN_LOG = #{record.ifInLog,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifOutLog != null">
+        IF_OUT_LOG = #{record.ifOutLog,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifCallGrp != null">
+        IF_CALL_GRP = #{record.ifCallGrp,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifGrpLog != null">
+        IF_GRP_LOG = #{record.ifGrpLog,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifValid != null">
+        IF_VALID = #{record.ifValid,jdbcType=INTEGER},
+      </if>
+      <if test="record.developer != null">
+        DEVELOPER = #{record.developer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ifHisRel != null">
+        if_his_rel = #{record.ifHisRel,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.serviceCode != null and condition.serviceCode != ''">
+        SERVICE_CODE = #{condition.serviceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.serviceName != null and condition.serviceName != ''">
+        and SERVICE_NAME = #{condition.serviceName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.serviceType != null and condition.serviceType != ''">
+        and SERVICE_TYPE = #{condition.serviceType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.boCode != null and condition.boCode != ''">
+        and BO_CODE = #{condition.boCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.methodName != null and condition.methodName != ''">
+        and METHOD_NAME = #{condition.methodName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paramClass != null and condition.paramClass != ''">
+        and PARAM_CLASS = #{condition.paramClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.serviceProvider != null and condition.serviceProvider != ''">
+        and SERVICE_PROVIDER = #{condition.serviceProvider, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.upServiceCode != null and condition.upServiceCode != ''">
+        and UP_SERVICE_CODE = #{condition.upServiceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifHisLog != null ">
+        and IF_HIS_LOG = #{condition.ifHisLog, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifInLog != null ">
+        and IF_IN_LOG = #{condition.ifInLog, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifOutLog != null ">
+        and IF_OUT_LOG = #{condition.ifOutLog, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifCallGrp != null ">
+        and IF_CALL_GRP = #{condition.ifCallGrp, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifGrpLog != null ">
+        and IF_GRP_LOG = #{condition.ifGrpLog, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifValid != null ">
+        and IF_VALID = #{condition.ifValid, jdbcType=INTEGER }
+      </if>
+      <if test="condition.developer != null and condition.developer != ''">
+        and DEVELOPER = #{condition.developer, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createTime != null ">
+        and CREATE_TIME = #{condition.createTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.ifHisRel != null ">
+        and if_his_rel = #{condition.ifHisRel, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

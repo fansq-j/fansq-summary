@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PricingSectionMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PricingSectionDO">
+    <id column="PRICING_SECTION_ID" jdbcType="INTEGER" property="pricingSectionId"/>
+    <result column="SECTION_CALC_TYPE" jdbcType="INTEGER" property="sectionCalcType"/>
+    <result column="PRICING_SECTION_NAME" jdbcType="VARCHAR" property="pricingSectionName"/>
+    <result column="CYCLE_SECTION_BEGIN_ID" jdbcType="INTEGER" property="cycleSectionBeginId"/>
+    <result column="CYCLE_SECTION_END_ID" jdbcType="INTEGER" property="cycleSectionEndId"/>
+    <result column="CYCLE_SECTION_DURATION_ID" jdbcType="INTEGER" property="cycleSectionDurationId"/>
+    <result column="START_REF_VALUE_ID" jdbcType="INTEGER" property="startRefValueId"/>
+    <result column="END_REF_VALUE_ID" jdbcType="INTEGER" property="endRefValueId"/>
+    <result column="SUB_SECTION_REL" jdbcType="INTEGER" property="subSectionRel"/>
+    <result column="JUDGE_RESULT" jdbcType="INTEGER" property="judgeResult"/>
+    <result column="SECTION_TYPE_ID" jdbcType="INTEGER" property="sectionTypeId"/>
+    <result column="ZONE_ITEM_ID" jdbcType="INTEGER" property="zoneItemId"/>
+    <result column="CALC_PRIORITY" jdbcType="INTEGER" property="calcPriority"/>
+    <result column="PARENT_SECTION_ID" jdbcType="INTEGER" property="parentSectionId"/>
+    <result column="EVENT_PRICING_STRATEGY_ID" jdbcType="INTEGER" property="eventPricingStrategyId"/>
+    <result column="PRICING_REF_OBJECT_ID" jdbcType="INTEGER" property="pricingRefObjectId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRICING_SECTION_ID, 
+          SECTION_CALC_TYPE, 
+          PRICING_SECTION_NAME, 
+          CYCLE_SECTION_BEGIN_ID, 
+          CYCLE_SECTION_END_ID, 
+          CYCLE_SECTION_DURATION_ID, 
+          START_REF_VALUE_ID, 
+          END_REF_VALUE_ID, 
+          SUB_SECTION_REL, 
+          JUDGE_RESULT, 
+          SECTION_TYPE_ID, 
+          ZONE_ITEM_ID, 
+          CALC_PRIORITY, 
+          PARENT_SECTION_ID, 
+          EVENT_PRICING_STRATEGY_ID, 
+          PRICING_REF_OBJECT_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SECTION_CALC_TYPE, 
+          PRICING_SECTION_NAME, 
+          CYCLE_SECTION_BEGIN_ID, 
+          CYCLE_SECTION_END_ID, 
+          CYCLE_SECTION_DURATION_ID, 
+          START_REF_VALUE_ID, 
+          END_REF_VALUE_ID, 
+          SUB_SECTION_REL, 
+          JUDGE_RESULT, 
+          SECTION_TYPE_ID, 
+          ZONE_ITEM_ID, 
+          CALC_PRIORITY, 
+          PARENT_SECTION_ID, 
+          EVENT_PRICING_STRATEGY_ID, 
+          PRICING_REF_OBJECT_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pricingSectionId != null ">
+        PRICING_SECTION_ID = #{pricingSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="sectionCalcType != null ">
+        and SECTION_CALC_TYPE = #{sectionCalcType, jdbcType=INTEGER }
+      </if>
+      <if test="pricingSectionName != null and pricingSectionName != ''">
+        and PRICING_SECTION_NAME = #{pricingSectionName, jdbcType=VARCHAR }
+      </if>
+      <if test="cycleSectionBeginId != null ">
+        and CYCLE_SECTION_BEGIN_ID = #{cycleSectionBeginId, jdbcType=INTEGER }
+      </if>
+      <if test="cycleSectionEndId != null ">
+        and CYCLE_SECTION_END_ID = #{cycleSectionEndId, jdbcType=INTEGER }
+      </if>
+      <if test="cycleSectionDurationId != null ">
+        and CYCLE_SECTION_DURATION_ID = #{cycleSectionDurationId, jdbcType=INTEGER }
+      </if>
+      <if test="startRefValueId != null ">
+        and START_REF_VALUE_ID = #{startRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="endRefValueId != null ">
+        and END_REF_VALUE_ID = #{endRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="subSectionRel != null ">
+        and SUB_SECTION_REL = #{subSectionRel, jdbcType=INTEGER }
+      </if>
+      <if test="judgeResult != null ">
+        and JUDGE_RESULT = #{judgeResult, jdbcType=INTEGER }
+      </if>
+      <if test="sectionTypeId != null ">
+        and SECTION_TYPE_ID = #{sectionTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="zoneItemId != null ">
+        and ZONE_ITEM_ID = #{zoneItemId, jdbcType=INTEGER }
+      </if>
+      <if test="calcPriority != null ">
+        and CALC_PRIORITY = #{calcPriority, jdbcType=INTEGER }
+      </if>
+      <if test="parentSectionId != null ">
+        and PARENT_SECTION_ID = #{parentSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="eventPricingStrategyId != null ">
+        and EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId, jdbcType=INTEGER }
+      </if>
+      <if test="pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PricingSectionDO" resultType="java.lang.Integer">
+      select count(*) from PRICING_SECTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRICING_SECTION
+        where 
+           PRICING_SECTION_ID = #{pricingSectionId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRICING_SECTION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pricingSectionId">
+      insert into  PRICING_SECTION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{sectionCalcType,jdbcType=INTEGER}, 
+        #{pricingSectionName,jdbcType=VARCHAR}, 
+        #{cycleSectionBeginId,jdbcType=INTEGER}, 
+        #{cycleSectionEndId,jdbcType=INTEGER}, 
+        #{cycleSectionDurationId,jdbcType=INTEGER}, 
+        #{startRefValueId,jdbcType=INTEGER}, 
+        #{endRefValueId,jdbcType=INTEGER}, 
+        #{subSectionRel,jdbcType=INTEGER}, 
+        #{judgeResult,jdbcType=INTEGER}, 
+        #{sectionTypeId,jdbcType=INTEGER}, 
+        #{zoneItemId,jdbcType=INTEGER}, 
+        #{calcPriority,jdbcType=INTEGER}, 
+        #{parentSectionId,jdbcType=INTEGER}, 
+        #{eventPricingStrategyId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRICING_SECTION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pricingSectionId,jdbcType=INTEGER}, 
+        #{sectionCalcType,jdbcType=INTEGER}, 
+        #{pricingSectionName,jdbcType=VARCHAR}, 
+        #{cycleSectionBeginId,jdbcType=INTEGER}, 
+        #{cycleSectionEndId,jdbcType=INTEGER}, 
+        #{cycleSectionDurationId,jdbcType=INTEGER}, 
+        #{startRefValueId,jdbcType=INTEGER}, 
+        #{endRefValueId,jdbcType=INTEGER}, 
+        #{subSectionRel,jdbcType=INTEGER}, 
+        #{judgeResult,jdbcType=INTEGER}, 
+        #{sectionTypeId,jdbcType=INTEGER}, 
+        #{zoneItemId,jdbcType=INTEGER}, 
+        #{calcPriority,jdbcType=INTEGER}, 
+        #{parentSectionId,jdbcType=INTEGER}, 
+        #{eventPricingStrategyId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRICING_SECTION  
+        where
+           PRICING_SECTION_ID = #{pricingSectionId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PRICING_SECTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRICING_SECTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="sectionCalcType != null">
+         SECTION_CALC_TYPE = #{sectionCalcType,jdbcType=INTEGER},
+      </if>
+      <if test="pricingSectionName != null">
+         PRICING_SECTION_NAME = #{pricingSectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleSectionBeginId != null">
+         CYCLE_SECTION_BEGIN_ID = #{cycleSectionBeginId,jdbcType=INTEGER},
+      </if>
+      <if test="cycleSectionEndId != null">
+         CYCLE_SECTION_END_ID = #{cycleSectionEndId,jdbcType=INTEGER},
+      </if>
+      <if test="cycleSectionDurationId != null">
+         CYCLE_SECTION_DURATION_ID = #{cycleSectionDurationId,jdbcType=INTEGER},
+      </if>
+      <if test="startRefValueId != null">
+         START_REF_VALUE_ID = #{startRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="endRefValueId != null">
+         END_REF_VALUE_ID = #{endRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="subSectionRel != null">
+         SUB_SECTION_REL = #{subSectionRel,jdbcType=INTEGER},
+      </if>
+      <if test="judgeResult != null">
+         JUDGE_RESULT = #{judgeResult,jdbcType=INTEGER},
+      </if>
+      <if test="sectionTypeId != null">
+         SECTION_TYPE_ID = #{sectionTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="zoneItemId != null">
+         ZONE_ITEM_ID = #{zoneItemId,jdbcType=INTEGER},
+      </if>
+      <if test="calcPriority != null">
+         CALC_PRIORITY = #{calcPriority,jdbcType=INTEGER},
+      </if>
+      <if test="parentSectionId != null">
+         PARENT_SECTION_ID = #{parentSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="eventPricingStrategyId != null">
+         EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="pricingRefObjectId != null">
+         PRICING_REF_OBJECT_ID = #{pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PRICING_SECTION_ID = #{pricingSectionId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PRICING_SECTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pricingSectionId != null">
+        PRICING_SECTION_ID = #{record.pricingSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sectionCalcType != null">
+        SECTION_CALC_TYPE = #{record.sectionCalcType,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingSectionName != null">
+        PRICING_SECTION_NAME = #{record.pricingSectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycleSectionBeginId != null">
+        CYCLE_SECTION_BEGIN_ID = #{record.cycleSectionBeginId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleSectionEndId != null">
+        CYCLE_SECTION_END_ID = #{record.cycleSectionEndId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleSectionDurationId != null">
+        CYCLE_SECTION_DURATION_ID = #{record.cycleSectionDurationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.startRefValueId != null">
+        START_REF_VALUE_ID = #{record.startRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.endRefValueId != null">
+        END_REF_VALUE_ID = #{record.endRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.subSectionRel != null">
+        SUB_SECTION_REL = #{record.subSectionRel,jdbcType=INTEGER},
+      </if>
+      <if test="record.judgeResult != null">
+        JUDGE_RESULT = #{record.judgeResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.sectionTypeId != null">
+        SECTION_TYPE_ID = #{record.sectionTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.zoneItemId != null">
+        ZONE_ITEM_ID = #{record.zoneItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPriority != null">
+        CALC_PRIORITY = #{record.calcPriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentSectionId != null">
+        PARENT_SECTION_ID = #{record.parentSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventPricingStrategyId != null">
+        EVENT_PRICING_STRATEGY_ID = #{record.eventPricingStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingRefObjectId != null">
+        PRICING_REF_OBJECT_ID = #{record.pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pricingSectionId != null ">
+        PRICING_SECTION_ID = #{condition.pricingSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.sectionCalcType != null ">
+        and SECTION_CALC_TYPE = #{condition.sectionCalcType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingSectionName != null and condition.pricingSectionName != ''">
+        and PRICING_SECTION_NAME = #{condition.pricingSectionName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.cycleSectionBeginId != null ">
+        and CYCLE_SECTION_BEGIN_ID = #{condition.cycleSectionBeginId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cycleSectionEndId != null ">
+        and CYCLE_SECTION_END_ID = #{condition.cycleSectionEndId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cycleSectionDurationId != null ">
+        and CYCLE_SECTION_DURATION_ID = #{condition.cycleSectionDurationId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.startRefValueId != null ">
+        and START_REF_VALUE_ID = #{condition.startRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.endRefValueId != null ">
+        and END_REF_VALUE_ID = #{condition.endRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.subSectionRel != null ">
+        and SUB_SECTION_REL = #{condition.subSectionRel, jdbcType=INTEGER }
+      </if>
+      <if test="condition.judgeResult != null ">
+        and JUDGE_RESULT = #{condition.judgeResult, jdbcType=INTEGER }
+      </if>
+      <if test="condition.sectionTypeId != null ">
+        and SECTION_TYPE_ID = #{condition.sectionTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.zoneItemId != null ">
+        and ZONE_ITEM_ID = #{condition.zoneItemId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPriority != null ">
+        and CALC_PRIORITY = #{condition.calcPriority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.parentSectionId != null ">
+        and PARENT_SECTION_ID = #{condition.parentSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.eventPricingStrategyId != null ">
+        and EVENT_PRICING_STRATEGY_ID = #{condition.eventPricingStrategyId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{condition.pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

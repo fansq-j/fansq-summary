@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BankAgentSendMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BankAgentSendDO">
+    <id column="SEND_ID" jdbcType="BIGINT" property="sendId"/>
+    <result column="SEND_BATCH_ID" jdbcType="BIGINT" property="sendBatchId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="AGENT_TYPE" jdbcType="INTEGER" property="agentType"/>
+    <result column="TEL_BRANCH_ID" jdbcType="INTEGER" property="telBranchId"/>
+    <result column="TEL_BANK_ACCT" jdbcType="VARCHAR" property="telBankAcct"/>
+    <result column="BANK_ID" jdbcType="INTEGER" property="bankId"/>
+    <result column="AGENT_CHARGE" jdbcType="BIGINT" property="agentCharge"/>
+    <result column="SEND_DATE" jdbcType="TIMESTAMP" property="sendDate"/>
+    <result column="BANK_FILE" jdbcType="VARCHAR" property="bankFile"/>
+    <result column="AGENT_TIMES" jdbcType="INTEGER" property="agentTimes"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId"/>
+    <result column="BILL_RESULT" jdbcType="INTEGER" property="billResult"/>
+    <result column="REASON" jdbcType="VARCHAR" property="reason"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SEND_ID, 
+          SEND_BATCH_ID, 
+          BILLING_CYCLE_ID, 
+          ACCT_ID, 
+          AMOUNT, 
+          AGENT_TYPE, 
+          TEL_BRANCH_ID, 
+          TEL_BANK_ACCT, 
+          BANK_ID, 
+          AGENT_CHARGE, 
+          SEND_DATE, 
+          BANK_FILE, 
+          AGENT_TIMES, 
+          STAFF_ID, 
+          ORG_ID, 
+          BILL_ID, 
+          BILL_RESULT, 
+          REASON, 
+          LAN_ID, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SEND_BATCH_ID, 
+          BILLING_CYCLE_ID, 
+          ACCT_ID, 
+          AMOUNT, 
+          AGENT_TYPE, 
+          TEL_BRANCH_ID, 
+          TEL_BANK_ACCT, 
+          BANK_ID, 
+          AGENT_CHARGE, 
+          SEND_DATE, 
+          BANK_FILE, 
+          AGENT_TIMES, 
+          STAFF_ID, 
+          ORG_ID, 
+          BILL_ID, 
+          BILL_RESULT, 
+          REASON, 
+          LAN_ID, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="sendId != null ">
+        SEND_ID = #{sendId, jdbcType=BIGINT }
+      </if>
+      <if test="sendBatchId != null ">
+        and SEND_BATCH_ID = #{sendBatchId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="agentType != null ">
+        and AGENT_TYPE = #{agentType, jdbcType=INTEGER }
+      </if>
+      <if test="telBranchId != null ">
+        and TEL_BRANCH_ID = #{telBranchId, jdbcType=INTEGER }
+      </if>
+      <if test="telBankAcct != null and telBankAcct != ''">
+        and TEL_BANK_ACCT = #{telBankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="bankId != null ">
+        and BANK_ID = #{bankId, jdbcType=INTEGER }
+      </if>
+      <if test="agentCharge != null ">
+        and AGENT_CHARGE = #{agentCharge, jdbcType=BIGINT }
+      </if>
+      <if test="sendDate != null ">
+        and SEND_DATE = #{sendDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="bankFile != null and bankFile != ''">
+        and BANK_FILE = #{bankFile, jdbcType=VARCHAR }
+      </if>
+      <if test="agentTimes != null ">
+        and AGENT_TIMES = #{agentTimes, jdbcType=INTEGER }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="billId != null ">
+        and BILL_ID = #{billId, jdbcType=BIGINT }
+      </if>
+      <if test="billResult != null ">
+        and BILL_RESULT = #{billResult, jdbcType=INTEGER }
+      </if>
+      <if test="reason != null and reason != ''">
+        and REASON = #{reason, jdbcType=VARCHAR }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BankAgentSendDO" resultType="java.lang.Integer">
+      select count(*) from BANK_AGENT_SEND
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BANK_AGENT_SEND
+        where 
+           SEND_ID = #{sendId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BANK_AGENT_SEND 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="sendId">
+      insert into  BANK_AGENT_SEND ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{sendBatchId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{agentType,jdbcType=INTEGER}, 
+        #{telBranchId,jdbcType=INTEGER}, 
+        #{telBankAcct,jdbcType=VARCHAR}, 
+        #{bankId,jdbcType=INTEGER}, 
+        #{agentCharge,jdbcType=BIGINT}, 
+        #{sendDate,jdbcType=TIMESTAMP}, 
+        #{bankFile,jdbcType=VARCHAR}, 
+        #{agentTimes,jdbcType=INTEGER}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{billResult,jdbcType=INTEGER}, 
+        #{reason,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BANK_AGENT_SEND ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{sendId,jdbcType=BIGINT}, 
+        #{sendBatchId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{agentType,jdbcType=INTEGER}, 
+        #{telBranchId,jdbcType=INTEGER}, 
+        #{telBankAcct,jdbcType=VARCHAR}, 
+        #{bankId,jdbcType=INTEGER}, 
+        #{agentCharge,jdbcType=BIGINT}, 
+        #{sendDate,jdbcType=TIMESTAMP}, 
+        #{bankFile,jdbcType=VARCHAR}, 
+        #{agentTimes,jdbcType=INTEGER}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{billResult,jdbcType=INTEGER}, 
+        #{reason,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BANK_AGENT_SEND  
+        where
+           SEND_ID = #{sendId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BANK_AGENT_SEND
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BANK_AGENT_SEND
+    <trim prefix="set" suffixOverrides=",">
+      <if test="sendBatchId != null">
+         SEND_BATCH_ID = #{sendBatchId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="agentType != null">
+         AGENT_TYPE = #{agentType,jdbcType=INTEGER},
+      </if>
+      <if test="telBranchId != null">
+         TEL_BRANCH_ID = #{telBranchId,jdbcType=INTEGER},
+      </if>
+      <if test="telBankAcct != null">
+         TEL_BANK_ACCT = #{telBankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="bankId != null">
+         BANK_ID = #{bankId,jdbcType=INTEGER},
+      </if>
+      <if test="agentCharge != null">
+         AGENT_CHARGE = #{agentCharge,jdbcType=BIGINT},
+      </if>
+      <if test="sendDate != null">
+         SEND_DATE = #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankFile != null">
+         BANK_FILE = #{bankFile,jdbcType=VARCHAR},
+      </if>
+      <if test="agentTimes != null">
+         AGENT_TIMES = #{agentTimes,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null">
+         BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="billResult != null">
+         BILL_RESULT = #{billResult,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+         REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           SEND_ID = #{sendId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BANK_AGENT_SEND
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.sendId != null">
+        SEND_ID = #{record.sendId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sendBatchId != null">
+        SEND_BATCH_ID = #{record.sendBatchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.agentType != null">
+        AGENT_TYPE = #{record.agentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.telBranchId != null">
+        TEL_BRANCH_ID = #{record.telBranchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.telBankAcct != null">
+        TEL_BANK_ACCT = #{record.telBankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankId != null">
+        BANK_ID = #{record.bankId,jdbcType=INTEGER},
+      </if>
+      <if test="record.agentCharge != null">
+        AGENT_CHARGE = #{record.agentCharge,jdbcType=BIGINT},
+      </if>
+      <if test="record.sendDate != null">
+        SEND_DATE = #{record.sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bankFile != null">
+        BANK_FILE = #{record.bankFile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentTimes != null">
+        AGENT_TIMES = #{record.agentTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billResult != null">
+        BILL_RESULT = #{record.billResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.reason != null">
+        REASON = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.sendId != null ">
+        SEND_ID = #{condition.sendId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sendBatchId != null ">
+        and SEND_BATCH_ID = #{condition.sendBatchId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agentType != null ">
+        and AGENT_TYPE = #{condition.agentType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.telBranchId != null ">
+        and TEL_BRANCH_ID = #{condition.telBranchId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.telBankAcct != null and condition.telBankAcct != ''">
+        and TEL_BANK_ACCT = #{condition.telBankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bankId != null ">
+        and BANK_ID = #{condition.bankId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.agentCharge != null ">
+        and AGENT_CHARGE = #{condition.agentCharge, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sendDate != null ">
+        and SEND_DATE = #{condition.sendDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.bankFile != null and condition.bankFile != ''">
+        and BANK_FILE = #{condition.bankFile, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.agentTimes != null ">
+        and AGENT_TIMES = #{condition.agentTimes, jdbcType=INTEGER }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billId != null ">
+        and BILL_ID = #{condition.billId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billResult != null ">
+        and BILL_RESULT = #{condition.billResult, jdbcType=INTEGER }
+      </if>
+      <if test="condition.reason != null and condition.reason != ''">
+        and REASON = #{condition.reason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

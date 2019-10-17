@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.EmulatoryPartnerMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.EmulatoryPartnerDO">
+    <id column="PARTNER_ID" jdbcType="INTEGER" property="partnerId"/>
+    <result column="PARTNER_NBR" jdbcType="VARCHAR" property="partnerNbr"/>
+    <result column="PARTNER_NAME" jdbcType="VARCHAR" property="partnerName"/>
+    <result column="PARTNER_TYPE" jdbcType="VARCHAR" property="partnerType"/>
+    <result column="PARTNER_DESC" jdbcType="VARCHAR" property="partnerDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PARTNER_ID, 
+          PARTNER_NBR, 
+          PARTNER_NAME, 
+          PARTNER_TYPE, 
+          PARTNER_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PARTNER_NBR, 
+          PARTNER_NAME, 
+          PARTNER_TYPE, 
+          PARTNER_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="partnerId != null ">
+        PARTNER_ID = #{partnerId, jdbcType=INTEGER }
+      </if>
+      <if test="partnerNbr != null and partnerNbr != ''">
+        and PARTNER_NBR = #{partnerNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="partnerName != null and partnerName != ''">
+        and PARTNER_NAME = #{partnerName, jdbcType=VARCHAR }
+      </if>
+      <if test="partnerType != null and partnerType != ''">
+        and PARTNER_TYPE = #{partnerType, jdbcType=VARCHAR }
+      </if>
+      <if test="partnerDesc != null and partnerDesc != ''">
+        and PARTNER_DESC = #{partnerDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.EmulatoryPartnerDO" resultType="java.lang.Integer">
+      select count(*) from EMULATORY_PARTNER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from EMULATORY_PARTNER
+        where 
+           PARTNER_ID = #{partnerId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EMULATORY_PARTNER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="partnerId">
+      insert into  EMULATORY_PARTNER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{partnerNbr,jdbcType=VARCHAR}, 
+        #{partnerName,jdbcType=VARCHAR}, 
+        #{partnerType,jdbcType=VARCHAR}, 
+        #{partnerDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  EMULATORY_PARTNER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{partnerId,jdbcType=INTEGER}, 
+        #{partnerNbr,jdbcType=VARCHAR}, 
+        #{partnerName,jdbcType=VARCHAR}, 
+        #{partnerType,jdbcType=VARCHAR}, 
+        #{partnerDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from EMULATORY_PARTNER  
+        where
+           PARTNER_ID = #{partnerId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from EMULATORY_PARTNER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  EMULATORY_PARTNER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="partnerNbr != null">
+         PARTNER_NBR = #{partnerNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerName != null">
+         PARTNER_NAME = #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerType != null">
+         PARTNER_TYPE = #{partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerDesc != null">
+         PARTNER_DESC = #{partnerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PARTNER_ID = #{partnerId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update EMULATORY_PARTNER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.partnerId != null">
+        PARTNER_ID = #{record.partnerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerNbr != null">
+        PARTNER_NBR = #{record.partnerNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerName != null">
+        PARTNER_NAME = #{record.partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerType != null">
+        PARTNER_TYPE = #{record.partnerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerDesc != null">
+        PARTNER_DESC = #{record.partnerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.partnerId != null ">
+        PARTNER_ID = #{condition.partnerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.partnerNbr != null and condition.partnerNbr != ''">
+        and PARTNER_NBR = #{condition.partnerNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partnerName != null and condition.partnerName != ''">
+        and PARTNER_NAME = #{condition.partnerName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partnerType != null and condition.partnerType != ''">
+        and PARTNER_TYPE = #{condition.partnerType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partnerDesc != null and condition.partnerDesc != ''">
+        and PARTNER_DESC = #{condition.partnerDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

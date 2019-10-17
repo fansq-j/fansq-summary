@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CustGroupMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CustGroupDO">
+    <id column="CUST_GROUP_ID" jdbcType="BIGINT" property="custGroupId"/>
+    <result column="CUST_GROUP_FEATURE_ID" jdbcType="BIGINT" property="custGroupFeatureId"/>
+    <result column="CUST_GROUP_CODE" jdbcType="VARCHAR" property="custGroupCode"/>
+    <result column="CUST_GROUP_NAME" jdbcType="VARCHAR" property="custGroupName"/>
+    <result column="CUST_GROUP_DESC" jdbcType="VARCHAR" property="custGroupDesc"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CUST_GROUP_ID, 
+          CUST_GROUP_FEATURE_ID, 
+          CUST_GROUP_CODE, 
+          CUST_GROUP_NAME, 
+          CUST_GROUP_DESC, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CUST_GROUP_FEATURE_ID, 
+          CUST_GROUP_CODE, 
+          CUST_GROUP_NAME, 
+          CUST_GROUP_DESC, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="custGroupId != null ">
+        CUST_GROUP_ID = #{custGroupId, jdbcType=BIGINT }
+      </if>
+      <if test="custGroupFeatureId != null ">
+        and CUST_GROUP_FEATURE_ID = #{custGroupFeatureId, jdbcType=BIGINT }
+      </if>
+      <if test="custGroupCode != null and custGroupCode != ''">
+        and CUST_GROUP_CODE = #{custGroupCode, jdbcType=VARCHAR }
+      </if>
+      <if test="custGroupName != null and custGroupName != ''">
+        and CUST_GROUP_NAME = #{custGroupName, jdbcType=VARCHAR }
+      </if>
+      <if test="custGroupDesc != null and custGroupDesc != ''">
+        and CUST_GROUP_DESC = #{custGroupDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CustGroupDO" resultType="java.lang.Integer">
+      select count(*) from CUST_GROUP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CUST_GROUP
+        where 
+           CUST_GROUP_ID = #{custGroupId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CUST_GROUP 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="custGroupId">
+      insert into  CUST_GROUP ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{custGroupFeatureId,jdbcType=BIGINT}, 
+        #{custGroupCode,jdbcType=VARCHAR}, 
+        #{custGroupName,jdbcType=VARCHAR}, 
+        #{custGroupDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CUST_GROUP ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{custGroupId,jdbcType=BIGINT}, 
+        #{custGroupFeatureId,jdbcType=BIGINT}, 
+        #{custGroupCode,jdbcType=VARCHAR}, 
+        #{custGroupName,jdbcType=VARCHAR}, 
+        #{custGroupDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CUST_GROUP  
+        where
+           CUST_GROUP_ID = #{custGroupId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CUST_GROUP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CUST_GROUP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="custGroupFeatureId != null">
+         CUST_GROUP_FEATURE_ID = #{custGroupFeatureId,jdbcType=BIGINT},
+      </if>
+      <if test="custGroupCode != null">
+         CUST_GROUP_CODE = #{custGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="custGroupName != null">
+         CUST_GROUP_NAME = #{custGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="custGroupDesc != null">
+         CUST_GROUP_DESC = #{custGroupDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CUST_GROUP_ID = #{custGroupId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CUST_GROUP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.custGroupId != null">
+        CUST_GROUP_ID = #{record.custGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custGroupFeatureId != null">
+        CUST_GROUP_FEATURE_ID = #{record.custGroupFeatureId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custGroupCode != null">
+        CUST_GROUP_CODE = #{record.custGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custGroupName != null">
+        CUST_GROUP_NAME = #{record.custGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custGroupDesc != null">
+        CUST_GROUP_DESC = #{record.custGroupDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.custGroupId != null ">
+        CUST_GROUP_ID = #{condition.custGroupId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custGroupFeatureId != null ">
+        and CUST_GROUP_FEATURE_ID = #{condition.custGroupFeatureId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custGroupCode != null and condition.custGroupCode != ''">
+        and CUST_GROUP_CODE = #{condition.custGroupCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custGroupName != null and condition.custGroupName != ''">
+        and CUST_GROUP_NAME = #{condition.custGroupName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custGroupDesc != null and condition.custGroupDesc != ''">
+        and CUST_GROUP_DESC = #{condition.custGroupDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

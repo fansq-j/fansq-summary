@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktCampaignMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktCampaignDO">
+    <id column="MKT_CAMPAIGN_ID" jdbcType="BIGINT" property="mktCampaignId"/>
+    <result column="TIGGER_TYPE" jdbcType="VARCHAR" property="tiggerType"/>
+    <result column="MKT_CAMPAIGN_NAME" jdbcType="VARCHAR" property="mktCampaignName"/>
+    <result column="PLAN_BEGIN_TIME" jdbcType="TIMESTAMP" property="planBeginTime"/>
+    <result column="PLAN_END_TIME" jdbcType="TIMESTAMP" property="planEndTime"/>
+    <result column="BEGIN_TIME" jdbcType="TIMESTAMP" property="beginTime"/>
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime"/>
+    <result column="MKT_CAMPAIGN_TYPE" jdbcType="VARCHAR" property="mktCampaignType"/>
+    <result column="MKT_ACTIVITY_NBR" jdbcType="VARCHAR" property="mktActivityNbr"/>
+    <result column="MKT_ACTIVITY_TARGET" jdbcType="VARCHAR" property="mktActivityTarget"/>
+    <result column="MKT_CAMPAIGN_DESC" jdbcType="VARCHAR" property="mktCampaignDesc"/>
+    <result column="EXEC_TYPE" jdbcType="VARCHAR" property="execType"/>
+    <result column="EXEC_INVL" jdbcType="VARCHAR" property="execInvl"/>
+    <result column="EXEC_NUM" jdbcType="INTEGER" property="execNum"/>
+    <result column="MANAGE_TYPE" jdbcType="VARCHAR" property="manageType"/>
+    <result column="EXT_MKT_CAMPAIGN_ID" jdbcType="VARCHAR" property="extMktCampaignId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MKT_CAMPAIGN_ID, 
+          TIGGER_TYPE, 
+          MKT_CAMPAIGN_NAME, 
+          PLAN_BEGIN_TIME, 
+          PLAN_END_TIME, 
+          BEGIN_TIME, 
+          END_TIME, 
+          MKT_CAMPAIGN_TYPE, 
+          MKT_ACTIVITY_NBR, 
+          MKT_ACTIVITY_TARGET, 
+          MKT_CAMPAIGN_DESC, 
+          EXEC_TYPE, 
+          EXEC_INVL, 
+          EXEC_NUM, 
+          MANAGE_TYPE, 
+          EXT_MKT_CAMPAIGN_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          REGION_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TIGGER_TYPE, 
+          MKT_CAMPAIGN_NAME, 
+          PLAN_BEGIN_TIME, 
+          PLAN_END_TIME, 
+          BEGIN_TIME, 
+          END_TIME, 
+          MKT_CAMPAIGN_TYPE, 
+          MKT_ACTIVITY_NBR, 
+          MKT_ACTIVITY_TARGET, 
+          MKT_CAMPAIGN_DESC, 
+          EXEC_TYPE, 
+          EXEC_INVL, 
+          EXEC_NUM, 
+          MANAGE_TYPE, 
+          EXT_MKT_CAMPAIGN_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          REGION_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="mktCampaignId != null ">
+        MKT_CAMPAIGN_ID = #{mktCampaignId, jdbcType=BIGINT }
+      </if>
+      <if test="tiggerType != null and tiggerType != ''">
+        and TIGGER_TYPE = #{tiggerType, jdbcType=VARCHAR }
+      </if>
+      <if test="mktCampaignName != null and mktCampaignName != ''">
+        and MKT_CAMPAIGN_NAME = #{mktCampaignName, jdbcType=VARCHAR }
+      </if>
+      <if test="planBeginTime != null ">
+        and PLAN_BEGIN_TIME = #{planBeginTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="planEndTime != null ">
+        and PLAN_END_TIME = #{planEndTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="beginTime != null ">
+        and BEGIN_TIME = #{beginTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="endTime != null ">
+        and END_TIME = #{endTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="mktCampaignType != null and mktCampaignType != ''">
+        and MKT_CAMPAIGN_TYPE = #{mktCampaignType, jdbcType=VARCHAR }
+      </if>
+      <if test="mktActivityNbr != null and mktActivityNbr != ''">
+        and MKT_ACTIVITY_NBR = #{mktActivityNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="mktActivityTarget != null and mktActivityTarget != ''">
+        and MKT_ACTIVITY_TARGET = #{mktActivityTarget, jdbcType=VARCHAR }
+      </if>
+      <if test="mktCampaignDesc != null and mktCampaignDesc != ''">
+        and MKT_CAMPAIGN_DESC = #{mktCampaignDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="execType != null and execType != ''">
+        and EXEC_TYPE = #{execType, jdbcType=VARCHAR }
+      </if>
+      <if test="execInvl != null and execInvl != ''">
+        and EXEC_INVL = #{execInvl, jdbcType=VARCHAR }
+      </if>
+      <if test="execNum != null ">
+        and EXEC_NUM = #{execNum, jdbcType=INTEGER }
+      </if>
+      <if test="manageType != null and manageType != ''">
+        and MANAGE_TYPE = #{manageType, jdbcType=VARCHAR }
+      </if>
+      <if test="extMktCampaignId != null and extMktCampaignId != ''">
+        and EXT_MKT_CAMPAIGN_ID = #{extMktCampaignId, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktCampaignDO" resultType="java.lang.Integer">
+      select count(*) from MKT_CAMPAIGN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_CAMPAIGN
+        where 
+           MKT_CAMPAIGN_ID = #{mktCampaignId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_CAMPAIGN 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="mktCampaignId">
+      insert into  MKT_CAMPAIGN ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{tiggerType,jdbcType=VARCHAR}, 
+        #{mktCampaignName,jdbcType=VARCHAR}, 
+        #{planBeginTime,jdbcType=TIMESTAMP}, 
+        #{planEndTime,jdbcType=TIMESTAMP}, 
+        #{beginTime,jdbcType=TIMESTAMP}, 
+        #{endTime,jdbcType=TIMESTAMP}, 
+        #{mktCampaignType,jdbcType=VARCHAR}, 
+        #{mktActivityNbr,jdbcType=VARCHAR}, 
+        #{mktActivityTarget,jdbcType=VARCHAR}, 
+        #{mktCampaignDesc,jdbcType=VARCHAR}, 
+        #{execType,jdbcType=VARCHAR}, 
+        #{execInvl,jdbcType=VARCHAR}, 
+        #{execNum,jdbcType=INTEGER}, 
+        #{manageType,jdbcType=VARCHAR}, 
+        #{extMktCampaignId,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_CAMPAIGN ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{mktCampaignId,jdbcType=BIGINT}, 
+        #{tiggerType,jdbcType=VARCHAR}, 
+        #{mktCampaignName,jdbcType=VARCHAR}, 
+        #{planBeginTime,jdbcType=TIMESTAMP}, 
+        #{planEndTime,jdbcType=TIMESTAMP}, 
+        #{beginTime,jdbcType=TIMESTAMP}, 
+        #{endTime,jdbcType=TIMESTAMP}, 
+        #{mktCampaignType,jdbcType=VARCHAR}, 
+        #{mktActivityNbr,jdbcType=VARCHAR}, 
+        #{mktActivityTarget,jdbcType=VARCHAR}, 
+        #{mktCampaignDesc,jdbcType=VARCHAR}, 
+        #{execType,jdbcType=VARCHAR}, 
+        #{execInvl,jdbcType=VARCHAR}, 
+        #{execNum,jdbcType=INTEGER}, 
+        #{manageType,jdbcType=VARCHAR}, 
+        #{extMktCampaignId,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_CAMPAIGN  
+        where
+           MKT_CAMPAIGN_ID = #{mktCampaignId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_CAMPAIGN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_CAMPAIGN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="tiggerType != null">
+         TIGGER_TYPE = #{tiggerType,jdbcType=VARCHAR},
+      </if>
+      <if test="mktCampaignName != null">
+         MKT_CAMPAIGN_NAME = #{mktCampaignName,jdbcType=VARCHAR},
+      </if>
+      <if test="planBeginTime != null">
+         PLAN_BEGIN_TIME = #{planBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEndTime != null">
+         PLAN_END_TIME = #{planEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginTime != null">
+         BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+         END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mktCampaignType != null">
+         MKT_CAMPAIGN_TYPE = #{mktCampaignType,jdbcType=VARCHAR},
+      </if>
+      <if test="mktActivityNbr != null">
+         MKT_ACTIVITY_NBR = #{mktActivityNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="mktActivityTarget != null">
+         MKT_ACTIVITY_TARGET = #{mktActivityTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="mktCampaignDesc != null">
+         MKT_CAMPAIGN_DESC = #{mktCampaignDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="execType != null">
+         EXEC_TYPE = #{execType,jdbcType=VARCHAR},
+      </if>
+      <if test="execInvl != null">
+         EXEC_INVL = #{execInvl,jdbcType=VARCHAR},
+      </if>
+      <if test="execNum != null">
+         EXEC_NUM = #{execNum,jdbcType=INTEGER},
+      </if>
+      <if test="manageType != null">
+         MANAGE_TYPE = #{manageType,jdbcType=VARCHAR},
+      </if>
+      <if test="extMktCampaignId != null">
+         EXT_MKT_CAMPAIGN_ID = #{extMktCampaignId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           MKT_CAMPAIGN_ID = #{mktCampaignId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_CAMPAIGN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.mktCampaignId != null">
+        MKT_CAMPAIGN_ID = #{record.mktCampaignId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tiggerType != null">
+        TIGGER_TYPE = #{record.tiggerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktCampaignName != null">
+        MKT_CAMPAIGN_NAME = #{record.mktCampaignName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planBeginTime != null">
+        PLAN_BEGIN_TIME = #{record.planBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planEndTime != null">
+        PLAN_END_TIME = #{record.planEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.beginTime != null">
+        BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mktCampaignType != null">
+        MKT_CAMPAIGN_TYPE = #{record.mktCampaignType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktActivityNbr != null">
+        MKT_ACTIVITY_NBR = #{record.mktActivityNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktActivityTarget != null">
+        MKT_ACTIVITY_TARGET = #{record.mktActivityTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktCampaignDesc != null">
+        MKT_CAMPAIGN_DESC = #{record.mktCampaignDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execType != null">
+        EXEC_TYPE = #{record.execType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execInvl != null">
+        EXEC_INVL = #{record.execInvl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execNum != null">
+        EXEC_NUM = #{record.execNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.manageType != null">
+        MANAGE_TYPE = #{record.manageType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extMktCampaignId != null">
+        EXT_MKT_CAMPAIGN_ID = #{record.extMktCampaignId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.mktCampaignId != null ">
+        MKT_CAMPAIGN_ID = #{condition.mktCampaignId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tiggerType != null and condition.tiggerType != ''">
+        and TIGGER_TYPE = #{condition.tiggerType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktCampaignName != null and condition.mktCampaignName != ''">
+        and MKT_CAMPAIGN_NAME = #{condition.mktCampaignName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.planBeginTime != null ">
+        and PLAN_BEGIN_TIME = #{condition.planBeginTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.planEndTime != null ">
+        and PLAN_END_TIME = #{condition.planEndTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.beginTime != null ">
+        and BEGIN_TIME = #{condition.beginTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.endTime != null ">
+        and END_TIME = #{condition.endTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.mktCampaignType != null and condition.mktCampaignType != ''">
+        and MKT_CAMPAIGN_TYPE = #{condition.mktCampaignType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktActivityNbr != null and condition.mktActivityNbr != ''">
+        and MKT_ACTIVITY_NBR = #{condition.mktActivityNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktActivityTarget != null and condition.mktActivityTarget != ''">
+        and MKT_ACTIVITY_TARGET = #{condition.mktActivityTarget, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktCampaignDesc != null and condition.mktCampaignDesc != ''">
+        and MKT_CAMPAIGN_DESC = #{condition.mktCampaignDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.execType != null and condition.execType != ''">
+        and EXEC_TYPE = #{condition.execType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.execInvl != null and condition.execInvl != ''">
+        and EXEC_INVL = #{condition.execInvl, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.execNum != null ">
+        and EXEC_NUM = #{condition.execNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.manageType != null and condition.manageType != ''">
+        and MANAGE_TYPE = #{condition.manageType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.extMktCampaignId != null and condition.extMktCampaignId != ''">
+        and EXT_MKT_CAMPAIGN_ID = #{condition.extMktCampaignId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

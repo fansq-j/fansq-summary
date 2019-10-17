@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.RefundDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.RefundDetailDO">
+    <id column="REFUND_ID" jdbcType="BIGINT" property="refundId"/>
+    <result column="INVOICE_ID" jdbcType="BIGINT" property="invoiceId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="ACC_NUM" jdbcType="VARCHAR" property="accNum"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="METHOD" jdbcType="INTEGER" property="method"/>
+    <result column="OPER_TYPE" jdbcType="INTEGER" property="operType"/>
+    <result column="OPER_ID" jdbcType="BIGINT" property="operId"/>
+    <result column="BANK_ID" jdbcType="INTEGER" property="bankId"/>
+    <result column="BANK_ACCT" jdbcType="VARCHAR" property="bankAcct"/>
+    <result column="BANK_ACCT_NAME" jdbcType="VARCHAR" property="bankAcctName"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          REFUND_ID, 
+          INVOICE_ID, 
+          ACCT_ID, 
+          ACC_NUM, 
+          PROD_INST_ID, 
+          METHOD, 
+          OPER_TYPE, 
+          OPER_ID, 
+          BANK_ID, 
+          BANK_ACCT, 
+          BANK_ACCT_NAME, 
+          AMOUNT, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          INVOICE_ID, 
+          ACCT_ID, 
+          ACC_NUM, 
+          PROD_INST_ID, 
+          METHOD, 
+          OPER_TYPE, 
+          OPER_ID, 
+          BANK_ID, 
+          BANK_ACCT, 
+          BANK_ACCT_NAME, 
+          AMOUNT, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="refundId != null ">
+        REFUND_ID = #{refundId, jdbcType=BIGINT }
+      </if>
+      <if test="invoiceId != null ">
+        and INVOICE_ID = #{invoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="accNum != null and accNum != ''">
+        and ACC_NUM = #{accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="method != null ">
+        and METHOD = #{method, jdbcType=INTEGER }
+      </if>
+      <if test="operType != null ">
+        and OPER_TYPE = #{operType, jdbcType=INTEGER }
+      </if>
+      <if test="operId != null ">
+        and OPER_ID = #{operId, jdbcType=BIGINT }
+      </if>
+      <if test="bankId != null ">
+        and BANK_ID = #{bankId, jdbcType=INTEGER }
+      </if>
+      <if test="bankAcct != null and bankAcct != ''">
+        and BANK_ACCT = #{bankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="bankAcctName != null and bankAcctName != ''">
+        and BANK_ACCT_NAME = #{bankAcctName, jdbcType=VARCHAR }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.RefundDetailDO" resultType="java.lang.Integer">
+      select count(*) from REFUND_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from REFUND_DETAIL
+        where 
+           REFUND_ID = #{refundId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  REFUND_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="refundId">
+      insert into  REFUND_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{invoiceId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{method,jdbcType=INTEGER}, 
+        #{operType,jdbcType=INTEGER}, 
+        #{operId,jdbcType=BIGINT}, 
+        #{bankId,jdbcType=INTEGER}, 
+        #{bankAcct,jdbcType=VARCHAR}, 
+        #{bankAcctName,jdbcType=VARCHAR}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  REFUND_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{refundId,jdbcType=BIGINT}, 
+        #{invoiceId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{method,jdbcType=INTEGER}, 
+        #{operType,jdbcType=INTEGER}, 
+        #{operId,jdbcType=BIGINT}, 
+        #{bankId,jdbcType=INTEGER}, 
+        #{bankAcct,jdbcType=VARCHAR}, 
+        #{bankAcctName,jdbcType=VARCHAR}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from REFUND_DETAIL  
+        where
+           REFUND_ID = #{refundId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from REFUND_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  REFUND_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="invoiceId != null">
+         INVOICE_ID = #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="accNum != null">
+         ACC_NUM = #{accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="method != null">
+         METHOD = #{method,jdbcType=INTEGER},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=INTEGER},
+      </if>
+      <if test="operId != null">
+         OPER_ID = #{operId,jdbcType=BIGINT},
+      </if>
+      <if test="bankId != null">
+         BANK_ID = #{bankId,jdbcType=INTEGER},
+      </if>
+      <if test="bankAcct != null">
+         BANK_ACCT = #{bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcctName != null">
+         BANK_ACCT_NAME = #{bankAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           REFUND_ID = #{refundId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update REFUND_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.refundId != null">
+        REFUND_ID = #{record.refundId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoiceId != null">
+        INVOICE_ID = #{record.invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.accNum != null">
+        ACC_NUM = #{record.accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.method != null">
+        METHOD = #{record.method,jdbcType=INTEGER},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=INTEGER},
+      </if>
+      <if test="record.operId != null">
+        OPER_ID = #{record.operId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bankId != null">
+        BANK_ID = #{record.bankId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankAcct != null">
+        BANK_ACCT = #{record.bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAcctName != null">
+        BANK_ACCT_NAME = #{record.bankAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.refundId != null ">
+        REFUND_ID = #{condition.refundId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.invoiceId != null ">
+        and INVOICE_ID = #{condition.invoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.accNum != null and condition.accNum != ''">
+        and ACC_NUM = #{condition.accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.method != null ">
+        and METHOD = #{condition.method, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operType != null ">
+        and OPER_TYPE = #{condition.operType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operId != null ">
+        and OPER_ID = #{condition.operId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.bankId != null ">
+        and BANK_ID = #{condition.bankId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.bankAcct != null and condition.bankAcct != ''">
+        and BANK_ACCT = #{condition.bankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bankAcctName != null and condition.bankAcctName != ''">
+        and BANK_ACCT_NAME = #{condition.bankAcctName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

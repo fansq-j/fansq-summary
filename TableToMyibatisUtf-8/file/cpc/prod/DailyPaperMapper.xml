@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.DailyPaperMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.DailyPaperDO">
+    <result column="date" jdbcType="TIMESTAMP" property="date"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+    <result column="task_desc" jdbcType="VARCHAR" property="taskDesc"/>
+    <result column="planned_date" jdbcType="TIMESTAMP" property="plannedDate"/>
+    <result column="man_hour" jdbcType="VARCHAR" property="manHour"/>
+    <result column="complate_rate" jdbcType="VARCHAR" property="complateRate"/>
+    <result column="delay_reason" jdbcType="VARCHAR" property="delayReason"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          date, 
+          name, 
+          project_name, 
+          task_desc, 
+          planned_date, 
+          man_hour, 
+          complate_rate, 
+          delay_reason
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          date, 
+          name, 
+          project_name, 
+          task_desc, 
+          planned_date, 
+          man_hour, 
+          complate_rate, 
+          delay_reason
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="date != null ">
+        date = #{date, jdbcType=TIMESTAMP }
+      </if>
+      <if test="name != null and name != ''">
+        and name = #{name, jdbcType=VARCHAR }
+      </if>
+      <if test="projectName != null and projectName != ''">
+        and project_name = #{projectName, jdbcType=VARCHAR }
+      </if>
+      <if test="taskDesc != null and taskDesc != ''">
+        and task_desc = #{taskDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="plannedDate != null ">
+        and planned_date = #{plannedDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="manHour != null and manHour != ''">
+        and man_hour = #{manHour, jdbcType=VARCHAR }
+      </if>
+      <if test="complateRate != null and complateRate != ''">
+        and complate_rate = #{complateRate, jdbcType=VARCHAR }
+      </if>
+      <if test="delayReason != null and delayReason != ''">
+        and delay_reason = #{delayReason, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.DailyPaperDO" resultType="java.lang.Integer">
+      select count(*) from DAILY_PAPER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DAILY_PAPER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insert">
+      insert into  DAILY_PAPER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{date,jdbcType=TIMESTAMP}, 
+        #{name,jdbcType=VARCHAR}, 
+        #{projectName,jdbcType=VARCHAR}, 
+        #{taskDesc,jdbcType=VARCHAR}, 
+        #{plannedDate,jdbcType=TIMESTAMP}, 
+        #{manHour,jdbcType=VARCHAR}, 
+        #{complateRate,jdbcType=VARCHAR}, 
+        #{delayReason,jdbcType=VARCHAR}
+         )
+  </insert>
+
+
+  <delete id="delete">
+      delete from DAILY_PAPER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+
+  <update id="updateBySelective">
+      update DAILY_PAPER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectName != null">
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskDesc != null">
+        task_desc = #{record.taskDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plannedDate != null">
+        planned_date = #{record.plannedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.manHour != null">
+        man_hour = #{record.manHour,jdbcType=VARCHAR},
+      </if>
+      <if test="record.complateRate != null">
+        complate_rate = #{record.complateRate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delayReason != null">
+        delay_reason = #{record.delayReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.date != null ">
+        date = #{condition.date, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.name != null and condition.name != ''">
+        and name = #{condition.name, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.projectName != null and condition.projectName != ''">
+        and project_name = #{condition.projectName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taskDesc != null and condition.taskDesc != ''">
+        and task_desc = #{condition.taskDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.plannedDate != null ">
+        and planned_date = #{condition.plannedDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.manHour != null and condition.manHour != ''">
+        and man_hour = #{condition.manHour, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.complateRate != null and condition.complateRate != ''">
+        and complate_rate = #{condition.complateRate, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.delayReason != null and condition.delayReason != ''">
+        and delay_reason = #{condition.delayReason, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

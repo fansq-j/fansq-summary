@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.GrossProfitModelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.GrossProfitModelDO">
+    <id column="gross_profit_model_id" jdbcType="BIGINT" property="grossProfitModelId"/>
+    <result column="par_gross_profit_model_id" jdbcType="BIGINT" property="parGrossProfitModelId"/>
+    <result column="param_name" jdbcType="VARCHAR" property="paramName"/>
+    <result column="param_type" jdbcType="VARCHAR" property="paramType"/>
+    <result column="model_type" jdbcType="VARCHAR" property="modelType"/>
+    <result column="model_id" jdbcType="VARCHAR" property="modelId"/>
+    <result column="is_show" jdbcType="VARCHAR" property="isShow"/>
+    <result column="data_resourse" jdbcType="VARCHAR" property="dataResourse"/>
+    <result column="remark" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          gross_profit_model_id, 
+          par_gross_profit_model_id, 
+          param_name, 
+          param_type, 
+          model_type, 
+          model_id, 
+          is_show, 
+          data_resourse, 
+          remark
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          par_gross_profit_model_id, 
+          param_name, 
+          param_type, 
+          model_type, 
+          model_id, 
+          is_show, 
+          data_resourse, 
+          remark
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="grossProfitModelId != null ">
+        gross_profit_model_id = #{grossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="parGrossProfitModelId != null ">
+        and par_gross_profit_model_id = #{parGrossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="paramName != null and paramName != ''">
+        and param_name = #{paramName, jdbcType=VARCHAR }
+      </if>
+      <if test="paramType != null and paramType != ''">
+        and param_type = #{paramType, jdbcType=VARCHAR }
+      </if>
+      <if test="modelType != null and modelType != ''">
+        and model_type = #{modelType, jdbcType=VARCHAR }
+      </if>
+      <if test="modelId != null and modelId != ''">
+        and model_id = #{modelId, jdbcType=VARCHAR }
+      </if>
+      <if test="isShow != null and isShow != ''">
+        and is_show = #{isShow, jdbcType=VARCHAR }
+      </if>
+      <if test="dataResourse != null and dataResourse != ''">
+        and data_resourse = #{dataResourse, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and remark = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.GrossProfitModelDO" resultType="java.lang.Integer">
+      select count(*) from GROSS_PROFIT_MODEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GROSS_PROFIT_MODEL
+        where 
+           gross_profit_model_id = #{grossProfitModelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GROSS_PROFIT_MODEL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="grossProfitModelId">
+      insert into  GROSS_PROFIT_MODEL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{parGrossProfitModelId,jdbcType=BIGINT}, 
+        #{paramName,jdbcType=VARCHAR}, 
+        #{paramType,jdbcType=VARCHAR}, 
+        #{modelType,jdbcType=VARCHAR}, 
+        #{modelId,jdbcType=VARCHAR}, 
+        #{isShow,jdbcType=VARCHAR}, 
+        #{dataResourse,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GROSS_PROFIT_MODEL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{grossProfitModelId,jdbcType=BIGINT}, 
+        #{parGrossProfitModelId,jdbcType=BIGINT}, 
+        #{paramName,jdbcType=VARCHAR}, 
+        #{paramType,jdbcType=VARCHAR}, 
+        #{modelType,jdbcType=VARCHAR}, 
+        #{modelId,jdbcType=VARCHAR}, 
+        #{isShow,jdbcType=VARCHAR}, 
+        #{dataResourse,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GROSS_PROFIT_MODEL  
+        where
+           gross_profit_model_id = #{grossProfitModelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GROSS_PROFIT_MODEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GROSS_PROFIT_MODEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="parGrossProfitModelId != null">
+         par_gross_profit_model_id = #{parGrossProfitModelId,jdbcType=BIGINT},
+      </if>
+      <if test="paramName != null">
+         param_name = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramType != null">
+         param_type = #{paramType,jdbcType=VARCHAR},
+      </if>
+      <if test="modelType != null">
+         model_type = #{modelType,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null">
+         model_id = #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+         is_show = #{isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="dataResourse != null">
+         data_resourse = #{dataResourse,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           gross_profit_model_id = #{grossProfitModelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GROSS_PROFIT_MODEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.grossProfitModelId != null">
+        gross_profit_model_id = #{record.grossProfitModelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parGrossProfitModelId != null">
+        par_gross_profit_model_id = #{record.parGrossProfitModelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paramName != null">
+        param_name = #{record.paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramType != null">
+        param_type = #{record.paramType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelType != null">
+        model_type = #{record.modelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelId != null">
+        model_id = #{record.modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShow != null">
+        is_show = #{record.isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataResourse != null">
+        data_resourse = #{record.dataResourse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.grossProfitModelId != null ">
+        gross_profit_model_id = #{condition.grossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.parGrossProfitModelId != null ">
+        and par_gross_profit_model_id = #{condition.parGrossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paramName != null and condition.paramName != ''">
+        and param_name = #{condition.paramName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paramType != null and condition.paramType != ''">
+        and param_type = #{condition.paramType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.modelType != null and condition.modelType != ''">
+        and model_type = #{condition.modelType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.modelId != null and condition.modelId != ''">
+        and model_id = #{condition.modelId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isShow != null and condition.isShow != ''">
+        and is_show = #{condition.isShow, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.dataResourse != null and condition.dataResourse != ''">
+        and data_resourse = #{condition.dataResourse, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and remark = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

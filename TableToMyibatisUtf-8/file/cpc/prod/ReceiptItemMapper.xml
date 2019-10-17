@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ReceiptItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ReceiptItemDO">
+    <id column="RECEIPT_ITEM_ID" jdbcType="BIGINT" property="receiptItemId"/>
+    <result column="RECEIPT_DOMAIN_ID" jdbcType="BIGINT" property="receiptDomainId"/>
+    <result column="ITEM_TYPE" jdbcType="VARCHAR" property="itemType"/>
+    <result column="PER_ITEM_ID" jdbcType="BIGINT" property="perItemId"/>
+    <result column="SEQ" jdbcType="INTEGER" property="seq"/>
+    <result column="CONTENT_TEMPLATE" jdbcType="VARCHAR" property="contentTemplate"/>
+    <result column="LABEL" jdbcType="VARCHAR" property="label"/>
+    <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+    <result column="SEQ_TYPE" jdbcType="VARCHAR" property="seqType"/>
+    <result column="IS_MERGE" jdbcType="VARCHAR" property="isMerge"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RECEIPT_ITEM_ID, 
+          RECEIPT_DOMAIN_ID, 
+          ITEM_TYPE, 
+          PER_ITEM_ID, 
+          SEQ, 
+          CONTENT_TEMPLATE, 
+          LABEL, 
+          ITEM_NAME, 
+          SEQ_TYPE, 
+          IS_MERGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RECEIPT_DOMAIN_ID, 
+          ITEM_TYPE, 
+          PER_ITEM_ID, 
+          SEQ, 
+          CONTENT_TEMPLATE, 
+          LABEL, 
+          ITEM_NAME, 
+          SEQ_TYPE, 
+          IS_MERGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="receiptItemId != null ">
+        RECEIPT_ITEM_ID = #{receiptItemId, jdbcType=BIGINT }
+      </if>
+      <if test="receiptDomainId != null ">
+        and RECEIPT_DOMAIN_ID = #{receiptDomainId, jdbcType=BIGINT }
+      </if>
+      <if test="itemType != null and itemType != ''">
+        and ITEM_TYPE = #{itemType, jdbcType=VARCHAR }
+      </if>
+      <if test="perItemId != null ">
+        and PER_ITEM_ID = #{perItemId, jdbcType=BIGINT }
+      </if>
+      <if test="seq != null ">
+        and SEQ = #{seq, jdbcType=INTEGER }
+      </if>
+      <if test="contentTemplate != null and contentTemplate != ''">
+        and CONTENT_TEMPLATE = #{contentTemplate, jdbcType=VARCHAR }
+      </if>
+      <if test="label != null and label != ''">
+        and LABEL = #{label, jdbcType=VARCHAR }
+      </if>
+      <if test="itemName != null and itemName != ''">
+        and ITEM_NAME = #{itemName, jdbcType=VARCHAR }
+      </if>
+      <if test="seqType != null and seqType != ''">
+        and SEQ_TYPE = #{seqType, jdbcType=VARCHAR }
+      </if>
+      <if test="isMerge != null and isMerge != ''">
+        and IS_MERGE = #{isMerge, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ReceiptItemDO" resultType="java.lang.Integer">
+      select count(*) from RECEIPT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RECEIPT_ITEM
+        where 
+           RECEIPT_ITEM_ID = #{receiptItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RECEIPT_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="receiptItemId">
+      insert into  RECEIPT_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{receiptDomainId,jdbcType=BIGINT}, 
+        #{itemType,jdbcType=VARCHAR}, 
+        #{perItemId,jdbcType=BIGINT}, 
+        #{seq,jdbcType=INTEGER}, 
+        #{contentTemplate,jdbcType=VARCHAR}, 
+        #{label,jdbcType=VARCHAR}, 
+        #{itemName,jdbcType=VARCHAR}, 
+        #{seqType,jdbcType=VARCHAR}, 
+        #{isMerge,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RECEIPT_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{receiptItemId,jdbcType=BIGINT}, 
+        #{receiptDomainId,jdbcType=BIGINT}, 
+        #{itemType,jdbcType=VARCHAR}, 
+        #{perItemId,jdbcType=BIGINT}, 
+        #{seq,jdbcType=INTEGER}, 
+        #{contentTemplate,jdbcType=VARCHAR}, 
+        #{label,jdbcType=VARCHAR}, 
+        #{itemName,jdbcType=VARCHAR}, 
+        #{seqType,jdbcType=VARCHAR}, 
+        #{isMerge,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RECEIPT_ITEM  
+        where
+           RECEIPT_ITEM_ID = #{receiptItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RECEIPT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RECEIPT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="receiptDomainId != null">
+         RECEIPT_DOMAIN_ID = #{receiptDomainId,jdbcType=BIGINT},
+      </if>
+      <if test="itemType != null">
+         ITEM_TYPE = #{itemType,jdbcType=VARCHAR},
+      </if>
+      <if test="perItemId != null">
+         PER_ITEM_ID = #{perItemId,jdbcType=BIGINT},
+      </if>
+      <if test="seq != null">
+         SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="contentTemplate != null">
+         CONTENT_TEMPLATE = #{contentTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+         LABEL = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+         ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="seqType != null">
+         SEQ_TYPE = #{seqType,jdbcType=VARCHAR},
+      </if>
+      <if test="isMerge != null">
+         IS_MERGE = #{isMerge,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           RECEIPT_ITEM_ID = #{receiptItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RECEIPT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.receiptItemId != null">
+        RECEIPT_ITEM_ID = #{record.receiptItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.receiptDomainId != null">
+        RECEIPT_DOMAIN_ID = #{record.receiptDomainId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemType != null">
+        ITEM_TYPE = #{record.itemType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.perItemId != null">
+        PER_ITEM_ID = #{record.perItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.seq != null">
+        SEQ = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.contentTemplate != null">
+        CONTENT_TEMPLATE = #{record.contentTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.label != null">
+        LABEL = #{record.label,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemName != null">
+        ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seqType != null">
+        SEQ_TYPE = #{record.seqType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMerge != null">
+        IS_MERGE = #{record.isMerge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.receiptItemId != null ">
+        RECEIPT_ITEM_ID = #{condition.receiptItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.receiptDomainId != null ">
+        and RECEIPT_DOMAIN_ID = #{condition.receiptDomainId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.itemType != null and condition.itemType != ''">
+        and ITEM_TYPE = #{condition.itemType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.perItemId != null ">
+        and PER_ITEM_ID = #{condition.perItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.seq != null ">
+        and SEQ = #{condition.seq, jdbcType=INTEGER }
+      </if>
+      <if test="condition.contentTemplate != null and condition.contentTemplate != ''">
+        and CONTENT_TEMPLATE = #{condition.contentTemplate, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.label != null and condition.label != ''">
+        and LABEL = #{condition.label, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.itemName != null and condition.itemName != ''">
+        and ITEM_NAME = #{condition.itemName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.seqType != null and condition.seqType != ''">
+        and SEQ_TYPE = #{condition.seqType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isMerge != null and condition.isMerge != ''">
+        and IS_MERGE = #{condition.isMerge, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

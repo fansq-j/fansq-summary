@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PricingRefValueMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PricingRefValueDO">
+    <id column="REF_VALUE_ID" jdbcType="INTEGER" property="refValueId"/>
+    <result column="REF_VALUE_NAME" jdbcType="VARCHAR" property="refValueName"/>
+    <result column="REF_VALUE_TYPE" jdbcType="INTEGER" property="refValueType"/>
+    <result column="VALUE_STRING" jdbcType="VARCHAR" property="valueString"/>
+    <result column="PRICING_PARAM_ID" jdbcType="INTEGER" property="pricingParamId"/>
+    <result column="SOURCE_REF_VALUE_ID" jdbcType="INTEGER" property="sourceRefValueId"/>
+    <result column="PRICING_REF_OBJECT_ID" jdbcType="INTEGER" property="pricingRefObjectId"/>
+    <result column="VALUE_TYPE" jdbcType="INTEGER" property="valueType"/>
+    <result column="RATE_PRECISION" jdbcType="INTEGER" property="ratePrecision"/>
+    <result column="CALC_PRECISION" jdbcType="INTEGER" property="calcPrecision"/>
+    <result column="ADJUST_METHOD" jdbcType="INTEGER" property="adjustMethod"/>
+    <result column="ADJUST_REF_VALUE_ID" jdbcType="INTEGER" property="adjustRefValueId"/>
+    <result column="CALC_PRECISION_METHOD" jdbcType="INTEGER" property="calcPrecisionMethod"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          REF_VALUE_ID, 
+          REF_VALUE_NAME, 
+          REF_VALUE_TYPE, 
+          VALUE_STRING, 
+          PRICING_PARAM_ID, 
+          SOURCE_REF_VALUE_ID, 
+          PRICING_REF_OBJECT_ID, 
+          VALUE_TYPE, 
+          RATE_PRECISION, 
+          CALC_PRECISION, 
+          ADJUST_METHOD, 
+          ADJUST_REF_VALUE_ID, 
+          CALC_PRECISION_METHOD, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          REF_VALUE_NAME, 
+          REF_VALUE_TYPE, 
+          VALUE_STRING, 
+          PRICING_PARAM_ID, 
+          SOURCE_REF_VALUE_ID, 
+          PRICING_REF_OBJECT_ID, 
+          VALUE_TYPE, 
+          RATE_PRECISION, 
+          CALC_PRECISION, 
+          ADJUST_METHOD, 
+          ADJUST_REF_VALUE_ID, 
+          CALC_PRECISION_METHOD, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="refValueId != null ">
+        REF_VALUE_ID = #{refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="refValueName != null and refValueName != ''">
+        and REF_VALUE_NAME = #{refValueName, jdbcType=VARCHAR }
+      </if>
+      <if test="refValueType != null ">
+        and REF_VALUE_TYPE = #{refValueType, jdbcType=INTEGER }
+      </if>
+      <if test="valueString != null and valueString != ''">
+        and VALUE_STRING = #{valueString, jdbcType=VARCHAR }
+      </if>
+      <if test="pricingParamId != null ">
+        and PRICING_PARAM_ID = #{pricingParamId, jdbcType=INTEGER }
+      </if>
+      <if test="sourceRefValueId != null ">
+        and SOURCE_REF_VALUE_ID = #{sourceRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="valueType != null ">
+        and VALUE_TYPE = #{valueType, jdbcType=INTEGER }
+      </if>
+      <if test="ratePrecision != null ">
+        and RATE_PRECISION = #{ratePrecision, jdbcType=INTEGER }
+      </if>
+      <if test="calcPrecision != null ">
+        and CALC_PRECISION = #{calcPrecision, jdbcType=INTEGER }
+      </if>
+      <if test="adjustMethod != null ">
+        and ADJUST_METHOD = #{adjustMethod, jdbcType=INTEGER }
+      </if>
+      <if test="adjustRefValueId != null ">
+        and ADJUST_REF_VALUE_ID = #{adjustRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="calcPrecisionMethod != null ">
+        and CALC_PRECISION_METHOD = #{calcPrecisionMethod, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PricingRefValueDO" resultType="java.lang.Integer">
+      select count(*) from PRICING_REF_VALUE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRICING_REF_VALUE
+        where 
+           REF_VALUE_ID = #{refValueId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRICING_REF_VALUE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="refValueId">
+      insert into  PRICING_REF_VALUE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{refValueName,jdbcType=VARCHAR}, 
+        #{refValueType,jdbcType=INTEGER}, 
+        #{valueString,jdbcType=VARCHAR}, 
+        #{pricingParamId,jdbcType=INTEGER}, 
+        #{sourceRefValueId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{valueType,jdbcType=INTEGER}, 
+        #{ratePrecision,jdbcType=INTEGER}, 
+        #{calcPrecision,jdbcType=INTEGER}, 
+        #{adjustMethod,jdbcType=INTEGER}, 
+        #{adjustRefValueId,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRICING_REF_VALUE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{refValueId,jdbcType=INTEGER}, 
+        #{refValueName,jdbcType=VARCHAR}, 
+        #{refValueType,jdbcType=INTEGER}, 
+        #{valueString,jdbcType=VARCHAR}, 
+        #{pricingParamId,jdbcType=INTEGER}, 
+        #{sourceRefValueId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{valueType,jdbcType=INTEGER}, 
+        #{ratePrecision,jdbcType=INTEGER}, 
+        #{calcPrecision,jdbcType=INTEGER}, 
+        #{adjustMethod,jdbcType=INTEGER}, 
+        #{adjustRefValueId,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRICING_REF_VALUE  
+        where
+           REF_VALUE_ID = #{refValueId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PRICING_REF_VALUE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRICING_REF_VALUE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="refValueName != null">
+         REF_VALUE_NAME = #{refValueName,jdbcType=VARCHAR},
+      </if>
+      <if test="refValueType != null">
+         REF_VALUE_TYPE = #{refValueType,jdbcType=INTEGER},
+      </if>
+      <if test="valueString != null">
+         VALUE_STRING = #{valueString,jdbcType=VARCHAR},
+      </if>
+      <if test="pricingParamId != null">
+         PRICING_PARAM_ID = #{pricingParamId,jdbcType=INTEGER},
+      </if>
+      <if test="sourceRefValueId != null">
+         SOURCE_REF_VALUE_ID = #{sourceRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="pricingRefObjectId != null">
+         PRICING_REF_OBJECT_ID = #{pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="valueType != null">
+         VALUE_TYPE = #{valueType,jdbcType=INTEGER},
+      </if>
+      <if test="ratePrecision != null">
+         RATE_PRECISION = #{ratePrecision,jdbcType=INTEGER},
+      </if>
+      <if test="calcPrecision != null">
+         CALC_PRECISION = #{calcPrecision,jdbcType=INTEGER},
+      </if>
+      <if test="adjustMethod != null">
+         ADJUST_METHOD = #{adjustMethod,jdbcType=INTEGER},
+      </if>
+      <if test="adjustRefValueId != null">
+         ADJUST_REF_VALUE_ID = #{adjustRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="calcPrecisionMethod != null">
+         CALC_PRECISION_METHOD = #{calcPrecisionMethod,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           REF_VALUE_ID = #{refValueId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PRICING_REF_VALUE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.refValueId != null">
+        REF_VALUE_ID = #{record.refValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.refValueName != null">
+        REF_VALUE_NAME = #{record.refValueName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refValueType != null">
+        REF_VALUE_TYPE = #{record.refValueType,jdbcType=INTEGER},
+      </if>
+      <if test="record.valueString != null">
+        VALUE_STRING = #{record.valueString,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricingParamId != null">
+        PRICING_PARAM_ID = #{record.pricingParamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sourceRefValueId != null">
+        SOURCE_REF_VALUE_ID = #{record.sourceRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingRefObjectId != null">
+        PRICING_REF_OBJECT_ID = #{record.pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.valueType != null">
+        VALUE_TYPE = #{record.valueType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratePrecision != null">
+        RATE_PRECISION = #{record.ratePrecision,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPrecision != null">
+        CALC_PRECISION = #{record.calcPrecision,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustMethod != null">
+        ADJUST_METHOD = #{record.adjustMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustRefValueId != null">
+        ADJUST_REF_VALUE_ID = #{record.adjustRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPrecisionMethod != null">
+        CALC_PRECISION_METHOD = #{record.calcPrecisionMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.refValueId != null ">
+        REF_VALUE_ID = #{condition.refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.refValueName != null and condition.refValueName != ''">
+        and REF_VALUE_NAME = #{condition.refValueName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.refValueType != null ">
+        and REF_VALUE_TYPE = #{condition.refValueType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.valueString != null and condition.valueString != ''">
+        and VALUE_STRING = #{condition.valueString, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pricingParamId != null ">
+        and PRICING_PARAM_ID = #{condition.pricingParamId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.sourceRefValueId != null ">
+        and SOURCE_REF_VALUE_ID = #{condition.sourceRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{condition.pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.valueType != null ">
+        and VALUE_TYPE = #{condition.valueType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratePrecision != null ">
+        and RATE_PRECISION = #{condition.ratePrecision, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPrecision != null ">
+        and CALC_PRECISION = #{condition.calcPrecision, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustMethod != null ">
+        and ADJUST_METHOD = #{condition.adjustMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustRefValueId != null ">
+        and ADJUST_REF_VALUE_ID = #{condition.adjustRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPrecisionMethod != null ">
+        and CALC_PRECISION_METHOD = #{condition.calcPrecisionMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

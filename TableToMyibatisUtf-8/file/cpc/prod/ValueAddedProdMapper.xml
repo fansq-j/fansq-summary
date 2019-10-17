@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ValueAddedProdMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ValueAddedProdDO">
+    <id column="VA_PROD_ID" jdbcType="BIGINT" property="vaProdId"/>
+    <result column="PROD_NBR" jdbcType="VARCHAR" property="prodNbr"/>
+    <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName"/>
+    <result column="PROD_DESC" jdbcType="VARCHAR" property="prodDesc"/>
+    <result column="PROD_EN_NAME" jdbcType="VARCHAR" property="prodEnName"/>
+    <result column="PROD_EN_DESC" jdbcType="VARCHAR" property="prodEnDesc"/>
+    <result column="MANAGE_GRADE" jdbcType="VARCHAR" property="manageGrade"/>
+    <result column="PROD_FUNC_TYPE" jdbcType="VARCHAR" property="prodFuncType"/>
+    <result column="PROD_COMP_TYPE" jdbcType="VARCHAR" property="prodCompType"/>
+    <result column="PROD_USE_TYPE" jdbcType="VARCHAR" property="prodUseType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="DATA_SOURCE" jdbcType="VARCHAR" property="dataSource"/>
+    <result column="MANAGE_REGION_ID" jdbcType="BIGINT" property="manageRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          VA_PROD_ID, 
+          PROD_NBR, 
+          PROD_NAME, 
+          PROD_DESC, 
+          PROD_EN_NAME, 
+          PROD_EN_DESC, 
+          MANAGE_GRADE, 
+          PROD_FUNC_TYPE, 
+          PROD_COMP_TYPE, 
+          PROD_USE_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          DATA_SOURCE, 
+          MANAGE_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROD_NBR, 
+          PROD_NAME, 
+          PROD_DESC, 
+          PROD_EN_NAME, 
+          PROD_EN_DESC, 
+          MANAGE_GRADE, 
+          PROD_FUNC_TYPE, 
+          PROD_COMP_TYPE, 
+          PROD_USE_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          DATA_SOURCE, 
+          MANAGE_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="vaProdId != null ">
+        VA_PROD_ID = #{vaProdId, jdbcType=BIGINT }
+      </if>
+      <if test="prodNbr != null and prodNbr != ''">
+        and PROD_NBR = #{prodNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="prodName != null and prodName != ''">
+        and PROD_NAME = #{prodName, jdbcType=VARCHAR }
+      </if>
+      <if test="prodDesc != null and prodDesc != ''">
+        and PROD_DESC = #{prodDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="prodEnName != null and prodEnName != ''">
+        and PROD_EN_NAME = #{prodEnName, jdbcType=VARCHAR }
+      </if>
+      <if test="prodEnDesc != null and prodEnDesc != ''">
+        and PROD_EN_DESC = #{prodEnDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="manageGrade != null and manageGrade != ''">
+        and MANAGE_GRADE = #{manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="prodFuncType != null and prodFuncType != ''">
+        and PROD_FUNC_TYPE = #{prodFuncType, jdbcType=VARCHAR }
+      </if>
+      <if test="prodCompType != null and prodCompType != ''">
+        and PROD_COMP_TYPE = #{prodCompType, jdbcType=VARCHAR }
+      </if>
+      <if test="prodUseType != null and prodUseType != ''">
+        and PROD_USE_TYPE = #{prodUseType, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="dataSource != null and dataSource != ''">
+        and DATA_SOURCE = #{dataSource, jdbcType=VARCHAR }
+      </if>
+      <if test="manageRegionId != null ">
+        and MANAGE_REGION_ID = #{manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ValueAddedProdDO" resultType="java.lang.Integer">
+      select count(*) from VALUE_ADDED_PROD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from VALUE_ADDED_PROD
+        where 
+           VA_PROD_ID = #{vaProdId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  VALUE_ADDED_PROD 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="vaProdId">
+      insert into  VALUE_ADDED_PROD ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{prodNbr,jdbcType=VARCHAR}, 
+        #{prodName,jdbcType=VARCHAR}, 
+        #{prodDesc,jdbcType=VARCHAR}, 
+        #{prodEnName,jdbcType=VARCHAR}, 
+        #{prodEnDesc,jdbcType=VARCHAR}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{prodFuncType,jdbcType=VARCHAR}, 
+        #{prodCompType,jdbcType=VARCHAR}, 
+        #{prodUseType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{dataSource,jdbcType=VARCHAR}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  VALUE_ADDED_PROD ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{vaProdId,jdbcType=BIGINT}, 
+        #{prodNbr,jdbcType=VARCHAR}, 
+        #{prodName,jdbcType=VARCHAR}, 
+        #{prodDesc,jdbcType=VARCHAR}, 
+        #{prodEnName,jdbcType=VARCHAR}, 
+        #{prodEnDesc,jdbcType=VARCHAR}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{prodFuncType,jdbcType=VARCHAR}, 
+        #{prodCompType,jdbcType=VARCHAR}, 
+        #{prodUseType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{dataSource,jdbcType=VARCHAR}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from VALUE_ADDED_PROD  
+        where
+           VA_PROD_ID = #{vaProdId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from VALUE_ADDED_PROD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  VALUE_ADDED_PROD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="prodNbr != null">
+         PROD_NBR = #{prodNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+         PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodDesc != null">
+         PROD_DESC = #{prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="prodEnName != null">
+         PROD_EN_NAME = #{prodEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodEnDesc != null">
+         PROD_EN_DESC = #{prodEnDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="manageGrade != null">
+         MANAGE_GRADE = #{manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="prodFuncType != null">
+         PROD_FUNC_TYPE = #{prodFuncType,jdbcType=VARCHAR},
+      </if>
+      <if test="prodCompType != null">
+         PROD_COMP_TYPE = #{prodCompType,jdbcType=VARCHAR},
+      </if>
+      <if test="prodUseType != null">
+         PROD_USE_TYPE = #{prodUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataSource != null">
+         DATA_SOURCE = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="manageRegionId != null">
+         MANAGE_REGION_ID = #{manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           VA_PROD_ID = #{vaProdId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update VALUE_ADDED_PROD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.vaProdId != null">
+        VA_PROD_ID = #{record.vaProdId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodNbr != null">
+        PROD_NBR = #{record.prodNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodName != null">
+        PROD_NAME = #{record.prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodDesc != null">
+        PROD_DESC = #{record.prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodEnName != null">
+        PROD_EN_NAME = #{record.prodEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodEnDesc != null">
+        PROD_EN_DESC = #{record.prodEnDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageGrade != null">
+        MANAGE_GRADE = #{record.manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodFuncType != null">
+        PROD_FUNC_TYPE = #{record.prodFuncType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodCompType != null">
+        PROD_COMP_TYPE = #{record.prodCompType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodUseType != null">
+        PROD_USE_TYPE = #{record.prodUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dataSource != null">
+        DATA_SOURCE = #{record.dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageRegionId != null">
+        MANAGE_REGION_ID = #{record.manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.vaProdId != null ">
+        VA_PROD_ID = #{condition.vaProdId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodNbr != null and condition.prodNbr != ''">
+        and PROD_NBR = #{condition.prodNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodName != null and condition.prodName != ''">
+        and PROD_NAME = #{condition.prodName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodDesc != null and condition.prodDesc != ''">
+        and PROD_DESC = #{condition.prodDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodEnName != null and condition.prodEnName != ''">
+        and PROD_EN_NAME = #{condition.prodEnName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodEnDesc != null and condition.prodEnDesc != ''">
+        and PROD_EN_DESC = #{condition.prodEnDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.manageGrade != null and condition.manageGrade != ''">
+        and MANAGE_GRADE = #{condition.manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodFuncType != null and condition.prodFuncType != ''">
+        and PROD_FUNC_TYPE = #{condition.prodFuncType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodCompType != null and condition.prodCompType != ''">
+        and PROD_COMP_TYPE = #{condition.prodCompType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodUseType != null and condition.prodUseType != ''">
+        and PROD_USE_TYPE = #{condition.prodUseType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.dataSource != null and condition.dataSource != ''">
+        and DATA_SOURCE = #{condition.dataSource, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.manageRegionId != null ">
+        and MANAGE_REGION_ID = #{condition.manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

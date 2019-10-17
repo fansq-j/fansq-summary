@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrgTimeSchdlMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrgTimeSchdlDO">
+    <id column="TIME_SCHDL_ID" jdbcType="BIGINT" property="timeSchdlId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="SCHDL_TYPE" jdbcType="VARCHAR" property="schdlType"/>
+    <result column="START_ITME" jdbcType="VARCHAR" property="startItme"/>
+    <result column="END_TIME" jdbcType="VARCHAR" property="endTime"/>
+    <result column="DURATION" jdbcType="INTEGER" property="duration"/>
+    <result column="DURATION_UNIT" jdbcType="VARCHAR" property="durationUnit"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TIME_SCHDL_ID, 
+          ORG_ID, 
+          SCHDL_TYPE, 
+          START_ITME, 
+          END_TIME, 
+          DURATION, 
+          DURATION_UNIT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ORG_ID, 
+          SCHDL_TYPE, 
+          START_ITME, 
+          END_TIME, 
+          DURATION, 
+          DURATION_UNIT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="timeSchdlId != null ">
+        TIME_SCHDL_ID = #{timeSchdlId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="schdlType != null and schdlType != ''">
+        and SCHDL_TYPE = #{schdlType, jdbcType=VARCHAR }
+      </if>
+      <if test="startItme != null and startItme != ''">
+        and START_ITME = #{startItme, jdbcType=VARCHAR }
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and END_TIME = #{endTime, jdbcType=VARCHAR }
+      </if>
+      <if test="duration != null ">
+        and DURATION = #{duration, jdbcType=INTEGER }
+      </if>
+      <if test="durationUnit != null and durationUnit != ''">
+        and DURATION_UNIT = #{durationUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrgTimeSchdlDO" resultType="java.lang.Integer">
+      select count(*) from ORG_TIME_SCHDL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORG_TIME_SCHDL
+        where 
+           TIME_SCHDL_ID = #{timeSchdlId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORG_TIME_SCHDL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="timeSchdlId">
+      insert into  ORG_TIME_SCHDL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{orgId,jdbcType=BIGINT}, 
+        #{schdlType,jdbcType=VARCHAR}, 
+        #{startItme,jdbcType=VARCHAR}, 
+        #{endTime,jdbcType=VARCHAR}, 
+        #{duration,jdbcType=INTEGER}, 
+        #{durationUnit,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORG_TIME_SCHDL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{timeSchdlId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{schdlType,jdbcType=VARCHAR}, 
+        #{startItme,jdbcType=VARCHAR}, 
+        #{endTime,jdbcType=VARCHAR}, 
+        #{duration,jdbcType=INTEGER}, 
+        #{durationUnit,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORG_TIME_SCHDL  
+        where
+           TIME_SCHDL_ID = #{timeSchdlId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORG_TIME_SCHDL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORG_TIME_SCHDL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="schdlType != null">
+         SCHDL_TYPE = #{schdlType,jdbcType=VARCHAR},
+      </if>
+      <if test="startItme != null">
+         START_ITME = #{startItme,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+         END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null">
+         DURATION = #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="durationUnit != null">
+         DURATION_UNIT = #{durationUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           TIME_SCHDL_ID = #{timeSchdlId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORG_TIME_SCHDL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.timeSchdlId != null">
+        TIME_SCHDL_ID = #{record.timeSchdlId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.schdlType != null">
+        SCHDL_TYPE = #{record.schdlType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startItme != null">
+        START_ITME = #{record.startItme,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.duration != null">
+        DURATION = #{record.duration,jdbcType=INTEGER},
+      </if>
+      <if test="record.durationUnit != null">
+        DURATION_UNIT = #{record.durationUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.timeSchdlId != null ">
+        TIME_SCHDL_ID = #{condition.timeSchdlId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.schdlType != null and condition.schdlType != ''">
+        and SCHDL_TYPE = #{condition.schdlType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.startItme != null and condition.startItme != ''">
+        and START_ITME = #{condition.startItme, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.endTime != null and condition.endTime != ''">
+        and END_TIME = #{condition.endTime, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.duration != null ">
+        and DURATION = #{condition.duration, jdbcType=INTEGER }
+      </if>
+      <if test="condition.durationUnit != null and condition.durationUnit != ''">
+        and DURATION_UNIT = #{condition.durationUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

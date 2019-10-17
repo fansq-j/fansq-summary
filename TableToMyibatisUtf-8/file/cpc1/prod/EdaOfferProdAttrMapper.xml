@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.EdaOfferProdAttrMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.EdaOfferProdAttrDO">
+    <id column="EDA_OFFER_PROD_ATTR_ID" jdbcType="BIGINT" property="edaOfferProdAttrId"/>
+    <result column="PROD_OFFER_TYPE" jdbcType="VARCHAR" property="prodOfferType"/>
+    <result column="OFFER_ID" jdbcType="INTEGER" property="offerId"/>
+    <result column="PROD_ID" jdbcType="INTEGER" property="prodId"/>
+    <result column="ATTR_ID" jdbcType="INTEGER" property="attrId"/>
+    <result column="ATTR_VALUE_ID" jdbcType="INTEGER" property="attrValueId"/>
+    <result column="ATTR_VALUE" jdbcType="INTEGER" property="attrValue"/>
+    <result column="AMOUNT" jdbcType="INTEGER" property="amount"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="SORT" jdbcType="INTEGER" property="sort"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="EXP1" jdbcType="VARCHAR" property="exp1"/>
+    <result column="EXP2" jdbcType="VARCHAR" property="exp2"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EDA_OFFER_PROD_ATTR_ID, 
+          PROD_OFFER_TYPE, 
+          OFFER_ID, 
+          PROD_ID, 
+          ATTR_ID, 
+          ATTR_VALUE_ID, 
+          ATTR_VALUE, 
+          AMOUNT, 
+          APPLY_REGION_ID, 
+          SORT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          EXP1, 
+          EXP2, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROD_OFFER_TYPE, 
+          OFFER_ID, 
+          PROD_ID, 
+          ATTR_ID, 
+          ATTR_VALUE_ID, 
+          ATTR_VALUE, 
+          AMOUNT, 
+          APPLY_REGION_ID, 
+          SORT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          EXP1, 
+          EXP2, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="edaOfferProdAttrId != null ">
+        EDA_OFFER_PROD_ATTR_ID = #{edaOfferProdAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="prodOfferType != null and prodOfferType != ''">
+        and PROD_OFFER_TYPE = #{prodOfferType, jdbcType=VARCHAR }
+      </if>
+      <if test="offerId != null ">
+        and OFFER_ID = #{offerId, jdbcType=INTEGER }
+      </if>
+      <if test="prodId != null ">
+        and PROD_ID = #{prodId, jdbcType=INTEGER }
+      </if>
+      <if test="attrId != null ">
+        and ATTR_ID = #{attrId, jdbcType=INTEGER }
+      </if>
+      <if test="attrValueId != null ">
+        and ATTR_VALUE_ID = #{attrValueId, jdbcType=INTEGER }
+      </if>
+      <if test="attrValue != null ">
+        and ATTR_VALUE = #{attrValue, jdbcType=INTEGER }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=INTEGER }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="sort != null ">
+        and SORT = #{sort, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="exp1 != null and exp1 != ''">
+        and EXP1 = #{exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="exp2 != null and exp2 != ''">
+        and EXP2 = #{exp2, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.EdaOfferProdAttrDO" resultType="java.lang.Integer">
+      select count(*) from EDA_OFFER_PROD_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from EDA_OFFER_PROD_ATTR
+        where 
+           EDA_OFFER_PROD_ATTR_ID = #{edaOfferProdAttrId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EDA_OFFER_PROD_ATTR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="edaOfferProdAttrId">
+      insert into  EDA_OFFER_PROD_ATTR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{prodOfferType,jdbcType=VARCHAR}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{prodId,jdbcType=INTEGER}, 
+        #{attrId,jdbcType=INTEGER}, 
+        #{attrValueId,jdbcType=INTEGER}, 
+        #{attrValue,jdbcType=INTEGER}, 
+        #{amount,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{sort,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  EDA_OFFER_PROD_ATTR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{edaOfferProdAttrId,jdbcType=BIGINT}, 
+        #{prodOfferType,jdbcType=VARCHAR}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{prodId,jdbcType=INTEGER}, 
+        #{attrId,jdbcType=INTEGER}, 
+        #{attrValueId,jdbcType=INTEGER}, 
+        #{attrValue,jdbcType=INTEGER}, 
+        #{amount,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{sort,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from EDA_OFFER_PROD_ATTR  
+        where
+           EDA_OFFER_PROD_ATTR_ID = #{edaOfferProdAttrId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from EDA_OFFER_PROD_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  EDA_OFFER_PROD_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="prodOfferType != null">
+         PROD_OFFER_TYPE = #{prodOfferType,jdbcType=VARCHAR},
+      </if>
+      <if test="offerId != null">
+         OFFER_ID = #{offerId,jdbcType=INTEGER},
+      </if>
+      <if test="prodId != null">
+         PROD_ID = #{prodId,jdbcType=INTEGER},
+      </if>
+      <if test="attrId != null">
+         ATTR_ID = #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="attrValueId != null">
+         ATTR_VALUE_ID = #{attrValueId,jdbcType=INTEGER},
+      </if>
+      <if test="attrValue != null">
+         ATTR_VALUE = #{attrValue,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null">
+         SORT = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exp1 != null">
+         EXP1 = #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null">
+         EXP2 = #{exp2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           EDA_OFFER_PROD_ATTR_ID = #{edaOfferProdAttrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update EDA_OFFER_PROD_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.edaOfferProdAttrId != null">
+        EDA_OFFER_PROD_ATTR_ID = #{record.edaOfferProdAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodOfferType != null">
+        PROD_OFFER_TYPE = #{record.prodOfferType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerId != null">
+        OFFER_ID = #{record.offerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodId != null">
+        PROD_ID = #{record.prodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrId != null">
+        ATTR_ID = #{record.attrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrValueId != null">
+        ATTR_VALUE_ID = #{record.attrValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrValue != null">
+        ATTR_VALUE = #{record.attrValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sort != null">
+        SORT = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exp1 != null">
+        EXP1 = #{record.exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp2 != null">
+        EXP2 = #{record.exp2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.edaOfferProdAttrId != null ">
+        EDA_OFFER_PROD_ATTR_ID = #{condition.edaOfferProdAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodOfferType != null and condition.prodOfferType != ''">
+        and PROD_OFFER_TYPE = #{condition.prodOfferType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerId != null ">
+        and OFFER_ID = #{condition.offerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.prodId != null ">
+        and PROD_ID = #{condition.prodId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrId != null ">
+        and ATTR_ID = #{condition.attrId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrValueId != null ">
+        and ATTR_VALUE_ID = #{condition.attrValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrValue != null ">
+        and ATTR_VALUE = #{condition.attrValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sort != null ">
+        and SORT = #{condition.sort, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.exp1 != null and condition.exp1 != ''">
+        and EXP1 = #{condition.exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exp2 != null and condition.exp2 != ''">
+        and EXP2 = #{condition.exp2, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

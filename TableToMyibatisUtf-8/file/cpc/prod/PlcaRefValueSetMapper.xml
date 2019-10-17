@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PlcaRefValueSetMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PlcaRefValueSetDO">
+    <id column="REF_VALUE_SET_ID" jdbcType="INTEGER" property="refValueSetId"/>
+    <result column="REF_VALUE_ID" jdbcType="INTEGER" property="refValueId"/>
+    <result column="VALUE_STRING" jdbcType="VARCHAR" property="valueString"/>
+    <result column="VALUE_NAME" jdbcType="VARCHAR" property="valueName"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          REF_VALUE_SET_ID, 
+          REF_VALUE_ID, 
+          VALUE_STRING, 
+          VALUE_NAME, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          REF_VALUE_ID, 
+          VALUE_STRING, 
+          VALUE_NAME, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="refValueSetId != null ">
+        REF_VALUE_SET_ID = #{refValueSetId, jdbcType=INTEGER }
+      </if>
+      <if test="refValueId != null ">
+        and REF_VALUE_ID = #{refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="valueString != null and valueString != ''">
+        and VALUE_STRING = #{valueString, jdbcType=VARCHAR }
+      </if>
+      <if test="valueName != null and valueName != ''">
+        and VALUE_NAME = #{valueName, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PlcaRefValueSetDO" resultType="java.lang.Integer">
+      select count(*) from PLCA_REF_VALUE_SET
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PLCA_REF_VALUE_SET
+        where 
+           REF_VALUE_SET_ID = #{refValueSetId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PLCA_REF_VALUE_SET 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="refValueSetId">
+      insert into  PLCA_REF_VALUE_SET ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{refValueId,jdbcType=INTEGER}, 
+        #{valueString,jdbcType=VARCHAR}, 
+        #{valueName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PLCA_REF_VALUE_SET ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{refValueSetId,jdbcType=INTEGER}, 
+        #{refValueId,jdbcType=INTEGER}, 
+        #{valueString,jdbcType=VARCHAR}, 
+        #{valueName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PLCA_REF_VALUE_SET  
+        where
+           REF_VALUE_SET_ID = #{refValueSetId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PLCA_REF_VALUE_SET
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PLCA_REF_VALUE_SET
+    <trim prefix="set" suffixOverrides=",">
+      <if test="refValueId != null">
+         REF_VALUE_ID = #{refValueId,jdbcType=INTEGER},
+      </if>
+      <if test="valueString != null">
+         VALUE_STRING = #{valueString,jdbcType=VARCHAR},
+      </if>
+      <if test="valueName != null">
+         VALUE_NAME = #{valueName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           REF_VALUE_SET_ID = #{refValueSetId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PLCA_REF_VALUE_SET
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.refValueSetId != null">
+        REF_VALUE_SET_ID = #{record.refValueSetId,jdbcType=INTEGER},
+      </if>
+      <if test="record.refValueId != null">
+        REF_VALUE_ID = #{record.refValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.valueString != null">
+        VALUE_STRING = #{record.valueString,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueName != null">
+        VALUE_NAME = #{record.valueName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.refValueSetId != null ">
+        REF_VALUE_SET_ID = #{condition.refValueSetId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.refValueId != null ">
+        and REF_VALUE_ID = #{condition.refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.valueString != null and condition.valueString != ''">
+        and VALUE_STRING = #{condition.valueString, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueName != null and condition.valueName != ''">
+        and VALUE_NAME = #{condition.valueName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

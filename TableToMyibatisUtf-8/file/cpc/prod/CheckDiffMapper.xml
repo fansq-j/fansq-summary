@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CheckDiffMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CheckDiffDO">
+    <id column="CHECK_DIFF_ID" jdbcType="BIGINT" property="checkDiffId"/>
+    <result column="RECORD_ID_A" jdbcType="BIGINT" property="recordIdA"/>
+    <result column="RECORD_ID_Z" jdbcType="BIGINT" property="recordIdZ"/>
+    <result column="CHECK_TOTAL_ID" jdbcType="BIGINT" property="checkTotalId"/>
+    <result column="PAY_TYPE_ID" jdbcType="INTEGER" property="payTypeId"/>
+    <result column="CHECK_DATE" jdbcType="TIMESTAMP" property="checkDate"/>
+    <result column="PAY_SERIAL_ID" jdbcType="VARCHAR" property="paySerialId"/>
+    <result column="PAY_CHANNEL_SERIAL" jdbcType="VARCHAR" property="payChannelSerial"/>
+    <result column="PAY_USER_SERIAL" jdbcType="VARCHAR" property="payUserSerial"/>
+    <result column="USER_AMOUNT" jdbcType="BIGINT" property="userAmount"/>
+    <result column="CHANNEL_AMOUNT" jdbcType="BIGINT" property="channelAmount"/>
+    <result column="OPER_SERIAL_ID" jdbcType="VARCHAR" property="operSerialId"/>
+    <result column="OPER_SERIAL_NBR" jdbcType="VARCHAR" property="operSerialNbr"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="PAY_DATE" jdbcType="TIMESTAMP" property="payDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STAFF_ID" jdbcType="INTEGER" property="staffId"/>
+    <result column="COMMODITY_NAME" jdbcType="VARCHAR" property="commodityName"/>
+    <result column="COMMODITY_DESC" jdbcType="VARCHAR" property="commodityDesc"/>
+    <result column="ACCOUNT_ID" jdbcType="BIGINT" property="accountId"/>
+    <result column="CUSTOMER_ACCOUNT" jdbcType="VARCHAR" property="customerAccount"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CHECK_DIFF_ID, 
+          RECORD_ID_A, 
+          RECORD_ID_Z, 
+          CHECK_TOTAL_ID, 
+          PAY_TYPE_ID, 
+          CHECK_DATE, 
+          PAY_SERIAL_ID, 
+          PAY_CHANNEL_SERIAL, 
+          PAY_USER_SERIAL, 
+          USER_AMOUNT, 
+          CHANNEL_AMOUNT, 
+          OPER_SERIAL_ID, 
+          OPER_SERIAL_NBR, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          PAY_DATE, 
+          STATUS_DATE, 
+          STAFF_ID, 
+          COMMODITY_NAME, 
+          COMMODITY_DESC, 
+          ACCOUNT_ID, 
+          CUSTOMER_ACCOUNT, 
+          REGION_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RECORD_ID_A, 
+          RECORD_ID_Z, 
+          CHECK_TOTAL_ID, 
+          PAY_TYPE_ID, 
+          CHECK_DATE, 
+          PAY_SERIAL_ID, 
+          PAY_CHANNEL_SERIAL, 
+          PAY_USER_SERIAL, 
+          USER_AMOUNT, 
+          CHANNEL_AMOUNT, 
+          OPER_SERIAL_ID, 
+          OPER_SERIAL_NBR, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          PAY_DATE, 
+          STATUS_DATE, 
+          STAFF_ID, 
+          COMMODITY_NAME, 
+          COMMODITY_DESC, 
+          ACCOUNT_ID, 
+          CUSTOMER_ACCOUNT, 
+          REGION_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="checkDiffId != null ">
+        CHECK_DIFF_ID = #{checkDiffId, jdbcType=BIGINT }
+      </if>
+      <if test="recordIdA != null ">
+        and RECORD_ID_A = #{recordIdA, jdbcType=BIGINT }
+      </if>
+      <if test="recordIdZ != null ">
+        and RECORD_ID_Z = #{recordIdZ, jdbcType=BIGINT }
+      </if>
+      <if test="checkTotalId != null ">
+        and CHECK_TOTAL_ID = #{checkTotalId, jdbcType=BIGINT }
+      </if>
+      <if test="payTypeId != null ">
+        and PAY_TYPE_ID = #{payTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="checkDate != null ">
+        and CHECK_DATE = #{checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="paySerialId != null and paySerialId != ''">
+        and PAY_SERIAL_ID = #{paySerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="payChannelSerial != null and payChannelSerial != ''">
+        and PAY_CHANNEL_SERIAL = #{payChannelSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="payUserSerial != null and payUserSerial != ''">
+        and PAY_USER_SERIAL = #{payUserSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="userAmount != null ">
+        and USER_AMOUNT = #{userAmount, jdbcType=BIGINT }
+      </if>
+      <if test="channelAmount != null ">
+        and CHANNEL_AMOUNT = #{channelAmount, jdbcType=BIGINT }
+      </if>
+      <if test="operSerialId != null and operSerialId != ''">
+        and OPER_SERIAL_ID = #{operSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="operSerialNbr != null and operSerialNbr != ''">
+        and OPER_SERIAL_NBR = #{operSerialNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="payDate != null ">
+        and PAY_DATE = #{payDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=INTEGER }
+      </if>
+      <if test="commodityName != null and commodityName != ''">
+        and COMMODITY_NAME = #{commodityName, jdbcType=VARCHAR }
+      </if>
+      <if test="commodityDesc != null and commodityDesc != ''">
+        and COMMODITY_DESC = #{commodityDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="accountId != null ">
+        and ACCOUNT_ID = #{accountId, jdbcType=BIGINT }
+      </if>
+      <if test="customerAccount != null and customerAccount != ''">
+        and CUSTOMER_ACCOUNT = #{customerAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CheckDiffDO" resultType="java.lang.Integer">
+      select count(*) from CHECK_DIFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CHECK_DIFF
+        where 
+           CHECK_DIFF_ID = #{checkDiffId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CHECK_DIFF 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="checkDiffId">
+      insert into  CHECK_DIFF ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{recordIdA,jdbcType=BIGINT}, 
+        #{recordIdZ,jdbcType=BIGINT}, 
+        #{checkTotalId,jdbcType=BIGINT}, 
+        #{payTypeId,jdbcType=INTEGER}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{paySerialId,jdbcType=VARCHAR}, 
+        #{payChannelSerial,jdbcType=VARCHAR}, 
+        #{payUserSerial,jdbcType=VARCHAR}, 
+        #{userAmount,jdbcType=BIGINT}, 
+        #{channelAmount,jdbcType=BIGINT}, 
+        #{operSerialId,jdbcType=VARCHAR}, 
+        #{operSerialNbr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{payDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{staffId,jdbcType=INTEGER}, 
+        #{commodityName,jdbcType=VARCHAR}, 
+        #{commodityDesc,jdbcType=VARCHAR}, 
+        #{accountId,jdbcType=BIGINT}, 
+        #{customerAccount,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CHECK_DIFF ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{checkDiffId,jdbcType=BIGINT}, 
+        #{recordIdA,jdbcType=BIGINT}, 
+        #{recordIdZ,jdbcType=BIGINT}, 
+        #{checkTotalId,jdbcType=BIGINT}, 
+        #{payTypeId,jdbcType=INTEGER}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{paySerialId,jdbcType=VARCHAR}, 
+        #{payChannelSerial,jdbcType=VARCHAR}, 
+        #{payUserSerial,jdbcType=VARCHAR}, 
+        #{userAmount,jdbcType=BIGINT}, 
+        #{channelAmount,jdbcType=BIGINT}, 
+        #{operSerialId,jdbcType=VARCHAR}, 
+        #{operSerialNbr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{payDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{staffId,jdbcType=INTEGER}, 
+        #{commodityName,jdbcType=VARCHAR}, 
+        #{commodityDesc,jdbcType=VARCHAR}, 
+        #{accountId,jdbcType=BIGINT}, 
+        #{customerAccount,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CHECK_DIFF  
+        where
+           CHECK_DIFF_ID = #{checkDiffId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CHECK_DIFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CHECK_DIFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="recordIdA != null">
+         RECORD_ID_A = #{recordIdA,jdbcType=BIGINT},
+      </if>
+      <if test="recordIdZ != null">
+         RECORD_ID_Z = #{recordIdZ,jdbcType=BIGINT},
+      </if>
+      <if test="checkTotalId != null">
+         CHECK_TOTAL_ID = #{checkTotalId,jdbcType=BIGINT},
+      </if>
+      <if test="payTypeId != null">
+         PAY_TYPE_ID = #{payTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="checkDate != null">
+         CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paySerialId != null">
+         PAY_SERIAL_ID = #{paySerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="payChannelSerial != null">
+         PAY_CHANNEL_SERIAL = #{payChannelSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="payUserSerial != null">
+         PAY_USER_SERIAL = #{payUserSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="userAmount != null">
+         USER_AMOUNT = #{userAmount,jdbcType=BIGINT},
+      </if>
+      <if test="channelAmount != null">
+         CHANNEL_AMOUNT = #{channelAmount,jdbcType=BIGINT},
+      </if>
+      <if test="operSerialId != null">
+         OPER_SERIAL_ID = #{operSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="operSerialNbr != null">
+         OPER_SERIAL_NBR = #{operSerialNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payDate != null">
+         PAY_DATE = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityName != null">
+         COMMODITY_NAME = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityDesc != null">
+         COMMODITY_DESC = #{commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+         ACCOUNT_ID = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="customerAccount != null">
+         CUSTOMER_ACCOUNT = #{customerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           CHECK_DIFF_ID = #{checkDiffId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CHECK_DIFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.checkDiffId != null">
+        CHECK_DIFF_ID = #{record.checkDiffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.recordIdA != null">
+        RECORD_ID_A = #{record.recordIdA,jdbcType=BIGINT},
+      </if>
+      <if test="record.recordIdZ != null">
+        RECORD_ID_Z = #{record.recordIdZ,jdbcType=BIGINT},
+      </if>
+      <if test="record.checkTotalId != null">
+        CHECK_TOTAL_ID = #{record.checkTotalId,jdbcType=BIGINT},
+      </if>
+      <if test="record.payTypeId != null">
+        PAY_TYPE_ID = #{record.payTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkDate != null">
+        CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paySerialId != null">
+        PAY_SERIAL_ID = #{record.paySerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payChannelSerial != null">
+        PAY_CHANNEL_SERIAL = #{record.payChannelSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payUserSerial != null">
+        PAY_USER_SERIAL = #{record.payUserSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAmount != null">
+        USER_AMOUNT = #{record.userAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelAmount != null">
+        CHANNEL_AMOUNT = #{record.channelAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.operSerialId != null">
+        OPER_SERIAL_ID = #{record.operSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operSerialNbr != null">
+        OPER_SERIAL_NBR = #{record.operSerialNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payDate != null">
+        PAY_DATE = #{record.payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityName != null">
+        COMMODITY_NAME = #{record.commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityDesc != null">
+        COMMODITY_DESC = #{record.commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountId != null">
+        ACCOUNT_ID = #{record.accountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerAccount != null">
+        CUSTOMER_ACCOUNT = #{record.customerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.checkDiffId != null ">
+        CHECK_DIFF_ID = #{condition.checkDiffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.recordIdA != null ">
+        and RECORD_ID_A = #{condition.recordIdA, jdbcType=BIGINT }
+      </if>
+      <if test="condition.recordIdZ != null ">
+        and RECORD_ID_Z = #{condition.recordIdZ, jdbcType=BIGINT }
+      </if>
+      <if test="condition.checkTotalId != null ">
+        and CHECK_TOTAL_ID = #{condition.checkTotalId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payTypeId != null ">
+        and PAY_TYPE_ID = #{condition.payTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.checkDate != null ">
+        and CHECK_DATE = #{condition.checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.paySerialId != null and condition.paySerialId != ''">
+        and PAY_SERIAL_ID = #{condition.paySerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.payChannelSerial != null and condition.payChannelSerial != ''">
+        and PAY_CHANNEL_SERIAL = #{condition.payChannelSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.payUserSerial != null and condition.payUserSerial != ''">
+        and PAY_USER_SERIAL = #{condition.payUserSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.userAmount != null ">
+        and USER_AMOUNT = #{condition.userAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.channelAmount != null ">
+        and CHANNEL_AMOUNT = #{condition.channelAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operSerialId != null and condition.operSerialId != ''">
+        and OPER_SERIAL_ID = #{condition.operSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operSerialNbr != null and condition.operSerialNbr != ''">
+        and OPER_SERIAL_NBR = #{condition.operSerialNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.payDate != null ">
+        and PAY_DATE = #{condition.payDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.commodityName != null and condition.commodityName != ''">
+        and COMMODITY_NAME = #{condition.commodityName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.commodityDesc != null and condition.commodityDesc != ''">
+        and COMMODITY_DESC = #{condition.commodityDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.accountId != null ">
+        and ACCOUNT_ID = #{condition.accountId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.customerAccount != null and condition.customerAccount != ''">
+        and CUSTOMER_ACCOUNT = #{condition.customerAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

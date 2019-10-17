@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OfferEvtSceneRelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OfferEvtSceneRelDO">
+    <id column="OFFER_SCENE_REL_ID" jdbcType="BIGINT" property="offerSceneRelId"/>
+    <result column="OFFER_ID" jdbcType="BIGINT" property="offerId"/>
+    <result column="EVENT_SCENE_ID" jdbcType="BIGINT" property="eventSceneId"/>
+    <result column="REL_TYPE" jdbcType="VARCHAR" property="relType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          OFFER_SCENE_REL_ID, 
+          OFFER_ID, 
+          EVENT_SCENE_ID, 
+          REL_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OFFER_ID, 
+          EVENT_SCENE_ID, 
+          REL_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="offerSceneRelId != null ">
+        OFFER_SCENE_REL_ID = #{offerSceneRelId, jdbcType=BIGINT }
+      </if>
+      <if test="offerId != null ">
+        and OFFER_ID = #{offerId, jdbcType=BIGINT }
+      </if>
+      <if test="eventSceneId != null ">
+        and EVENT_SCENE_ID = #{eventSceneId, jdbcType=BIGINT }
+      </if>
+      <if test="relType != null and relType != ''">
+        and REL_TYPE = #{relType, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OfferEvtSceneRelDO" resultType="java.lang.Integer">
+      select count(*) from OFFER_EVT_SCENE_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from OFFER_EVT_SCENE_REL
+        where 
+           OFFER_SCENE_REL_ID = #{offerSceneRelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  OFFER_EVT_SCENE_REL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="offerSceneRelId">
+      insert into  OFFER_EVT_SCENE_REL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{offerId,jdbcType=BIGINT}, 
+        #{eventSceneId,jdbcType=BIGINT}, 
+        #{relType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  OFFER_EVT_SCENE_REL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{offerSceneRelId,jdbcType=BIGINT}, 
+        #{offerId,jdbcType=BIGINT}, 
+        #{eventSceneId,jdbcType=BIGINT}, 
+        #{relType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from OFFER_EVT_SCENE_REL  
+        where
+           OFFER_SCENE_REL_ID = #{offerSceneRelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from OFFER_EVT_SCENE_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  OFFER_EVT_SCENE_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="offerId != null">
+         OFFER_ID = #{offerId,jdbcType=BIGINT},
+      </if>
+      <if test="eventSceneId != null">
+         EVENT_SCENE_ID = #{eventSceneId,jdbcType=BIGINT},
+      </if>
+      <if test="relType != null">
+         REL_TYPE = #{relType,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           OFFER_SCENE_REL_ID = #{offerSceneRelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update OFFER_EVT_SCENE_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.offerSceneRelId != null">
+        OFFER_SCENE_REL_ID = #{record.offerSceneRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerId != null">
+        OFFER_ID = #{record.offerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eventSceneId != null">
+        EVENT_SCENE_ID = #{record.eventSceneId,jdbcType=BIGINT},
+      </if>
+      <if test="record.relType != null">
+        REL_TYPE = #{record.relType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.offerSceneRelId != null ">
+        OFFER_SCENE_REL_ID = #{condition.offerSceneRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerId != null ">
+        and OFFER_ID = #{condition.offerId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.eventSceneId != null ">
+        and EVENT_SCENE_ID = #{condition.eventSceneId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.relType != null and condition.relType != ''">
+        and REL_TYPE = #{condition.relType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PolicyTemplateMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PolicyTemplateDO">
+    <id column="POLICY_TEMPLATE_ID" jdbcType="BIGINT" property="policyTemplateId"/>
+    <result column="POLICY_TEMPLATE_CODE" jdbcType="VARCHAR" property="policyTemplateCode"/>
+    <result column="POLICY_TEMPLATE_NAME" jdbcType="VARCHAR" property="policyTemplateName"/>
+    <result column="POLICY_TYPE_ID" jdbcType="INTEGER" property="policyTypeId"/>
+    <result column="STANDARD_CHARGE" jdbcType="CLOB" property="standardCharge"/>
+    <result column="OFFER_GRP_ID" jdbcType="BIGINT" property="offerGrpId"/>
+    <result column="POLICY_TEMPLATE_COM" jdbcType="CLOB" property="policyTemplateCom"/>
+    <result column="BILL_RULE" jdbcType="CLOB" property="billRule"/>
+    <result column="BILL_COND" jdbcType="CLOB" property="billCond"/>
+    <result column="BILL_DESC" jdbcType="CLOB" property="billDesc"/>
+    <result column="CLEAR_TIME" jdbcType="TIMESTAMP" property="clearTime"/>
+    <result column="CLEAR_DESC" jdbcType="CLOB" property="clearDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          POLICY_TEMPLATE_ID, 
+          POLICY_TEMPLATE_CODE, 
+          POLICY_TEMPLATE_NAME, 
+          POLICY_TYPE_ID, 
+          STANDARD_CHARGE, 
+          OFFER_GRP_ID, 
+          POLICY_TEMPLATE_COM, 
+          BILL_RULE, 
+          BILL_COND, 
+          BILL_DESC, 
+          CLEAR_TIME, 
+          CLEAR_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          POLICY_TEMPLATE_CODE, 
+          POLICY_TEMPLATE_NAME, 
+          POLICY_TYPE_ID, 
+          STANDARD_CHARGE, 
+          OFFER_GRP_ID, 
+          POLICY_TEMPLATE_COM, 
+          BILL_RULE, 
+          BILL_COND, 
+          BILL_DESC, 
+          CLEAR_TIME, 
+          CLEAR_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="policyTemplateId != null ">
+        POLICY_TEMPLATE_ID = #{policyTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="policyTemplateCode != null and policyTemplateCode != ''">
+        and POLICY_TEMPLATE_CODE = #{policyTemplateCode, jdbcType=VARCHAR }
+      </if>
+      <if test="policyTemplateName != null and policyTemplateName != ''">
+        and POLICY_TEMPLATE_NAME = #{policyTemplateName, jdbcType=VARCHAR }
+      </if>
+      <if test="policyTypeId != null ">
+        and POLICY_TYPE_ID = #{policyTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="standardCharge != null and standardCharge != ''">
+        and STANDARD_CHARGE = #{standardCharge, jdbcType=CLOB }
+      </if>
+      <if test="offerGrpId != null ">
+        and OFFER_GRP_ID = #{offerGrpId, jdbcType=BIGINT }
+      </if>
+      <if test="policyTemplateCom != null and policyTemplateCom != ''">
+        and POLICY_TEMPLATE_COM = #{policyTemplateCom, jdbcType=CLOB }
+      </if>
+      <if test="billRule != null and billRule != ''">
+        and BILL_RULE = #{billRule, jdbcType=CLOB }
+      </if>
+      <if test="billCond != null and billCond != ''">
+        and BILL_COND = #{billCond, jdbcType=CLOB }
+      </if>
+      <if test="billDesc != null and billDesc != ''">
+        and BILL_DESC = #{billDesc, jdbcType=CLOB }
+      </if>
+      <if test="clearTime != null ">
+        and CLEAR_TIME = #{clearTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="clearDesc != null and clearDesc != ''">
+        and CLEAR_DESC = #{clearDesc, jdbcType=CLOB }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PolicyTemplateDO" resultType="java.lang.Integer">
+      select count(*) from POLICY_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POLICY_TEMPLATE
+        where 
+           POLICY_TEMPLATE_ID = #{policyTemplateId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POLICY_TEMPLATE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="policyTemplateId">
+      insert into  POLICY_TEMPLATE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{policyTemplateCode,jdbcType=VARCHAR}, 
+        #{policyTemplateName,jdbcType=VARCHAR}, 
+        #{policyTypeId,jdbcType=INTEGER}, 
+        #{standardCharge,jdbcType=CLOB}, 
+        #{offerGrpId,jdbcType=BIGINT}, 
+        #{policyTemplateCom,jdbcType=CLOB}, 
+        #{billRule,jdbcType=CLOB}, 
+        #{billCond,jdbcType=CLOB}, 
+        #{billDesc,jdbcType=CLOB}, 
+        #{clearTime,jdbcType=TIMESTAMP}, 
+        #{clearDesc,jdbcType=CLOB}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POLICY_TEMPLATE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{policyTemplateId,jdbcType=BIGINT}, 
+        #{policyTemplateCode,jdbcType=VARCHAR}, 
+        #{policyTemplateName,jdbcType=VARCHAR}, 
+        #{policyTypeId,jdbcType=INTEGER}, 
+        #{standardCharge,jdbcType=CLOB}, 
+        #{offerGrpId,jdbcType=BIGINT}, 
+        #{policyTemplateCom,jdbcType=CLOB}, 
+        #{billRule,jdbcType=CLOB}, 
+        #{billCond,jdbcType=CLOB}, 
+        #{billDesc,jdbcType=CLOB}, 
+        #{clearTime,jdbcType=TIMESTAMP}, 
+        #{clearDesc,jdbcType=CLOB}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POLICY_TEMPLATE  
+        where
+           POLICY_TEMPLATE_ID = #{policyTemplateId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from POLICY_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POLICY_TEMPLATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="policyTemplateCode != null">
+         POLICY_TEMPLATE_CODE = #{policyTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="policyTemplateName != null">
+         POLICY_TEMPLATE_NAME = #{policyTemplateName,jdbcType=VARCHAR},
+      </if>
+      <if test="policyTypeId != null">
+         POLICY_TYPE_ID = #{policyTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="standardCharge != null">
+         STANDARD_CHARGE = #{standardCharge,jdbcType=CLOB},
+      </if>
+      <if test="offerGrpId != null">
+         OFFER_GRP_ID = #{offerGrpId,jdbcType=BIGINT},
+      </if>
+      <if test="policyTemplateCom != null">
+         POLICY_TEMPLATE_COM = #{policyTemplateCom,jdbcType=CLOB},
+      </if>
+      <if test="billRule != null">
+         BILL_RULE = #{billRule,jdbcType=CLOB},
+      </if>
+      <if test="billCond != null">
+         BILL_COND = #{billCond,jdbcType=CLOB},
+      </if>
+      <if test="billDesc != null">
+         BILL_DESC = #{billDesc,jdbcType=CLOB},
+      </if>
+      <if test="clearTime != null">
+         CLEAR_TIME = #{clearTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clearDesc != null">
+         CLEAR_DESC = #{clearDesc,jdbcType=CLOB},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           POLICY_TEMPLATE_ID = #{policyTemplateId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update POLICY_TEMPLATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.policyTemplateId != null">
+        POLICY_TEMPLATE_ID = #{record.policyTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.policyTemplateCode != null">
+        POLICY_TEMPLATE_CODE = #{record.policyTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyTemplateName != null">
+        POLICY_TEMPLATE_NAME = #{record.policyTemplateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyTypeId != null">
+        POLICY_TYPE_ID = #{record.policyTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.standardCharge != null">
+        STANDARD_CHARGE = #{record.standardCharge,jdbcType=CLOB},
+      </if>
+      <if test="record.offerGrpId != null">
+        OFFER_GRP_ID = #{record.offerGrpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.policyTemplateCom != null">
+        POLICY_TEMPLATE_COM = #{record.policyTemplateCom,jdbcType=CLOB},
+      </if>
+      <if test="record.billRule != null">
+        BILL_RULE = #{record.billRule,jdbcType=CLOB},
+      </if>
+      <if test="record.billCond != null">
+        BILL_COND = #{record.billCond,jdbcType=CLOB},
+      </if>
+      <if test="record.billDesc != null">
+        BILL_DESC = #{record.billDesc,jdbcType=CLOB},
+      </if>
+      <if test="record.clearTime != null">
+        CLEAR_TIME = #{record.clearTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.clearDesc != null">
+        CLEAR_DESC = #{record.clearDesc,jdbcType=CLOB},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.policyTemplateId != null ">
+        POLICY_TEMPLATE_ID = #{condition.policyTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.policyTemplateCode != null and condition.policyTemplateCode != ''">
+        and POLICY_TEMPLATE_CODE = #{condition.policyTemplateCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.policyTemplateName != null and condition.policyTemplateName != ''">
+        and POLICY_TEMPLATE_NAME = #{condition.policyTemplateName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.policyTypeId != null ">
+        and POLICY_TYPE_ID = #{condition.policyTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.standardCharge != null and condition.standardCharge != ''">
+        and STANDARD_CHARGE = #{condition.standardCharge, jdbcType=CLOB }
+      </if>
+      <if test="condition.offerGrpId != null ">
+        and OFFER_GRP_ID = #{condition.offerGrpId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.policyTemplateCom != null and condition.policyTemplateCom != ''">
+        and POLICY_TEMPLATE_COM = #{condition.policyTemplateCom, jdbcType=CLOB }
+      </if>
+      <if test="condition.billRule != null and condition.billRule != ''">
+        and BILL_RULE = #{condition.billRule, jdbcType=CLOB }
+      </if>
+      <if test="condition.billCond != null and condition.billCond != ''">
+        and BILL_COND = #{condition.billCond, jdbcType=CLOB }
+      </if>
+      <if test="condition.billDesc != null and condition.billDesc != ''">
+        and BILL_DESC = #{condition.billDesc, jdbcType=CLOB }
+      </if>
+      <if test="condition.clearTime != null ">
+        and CLEAR_TIME = #{condition.clearTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.clearDesc != null and condition.clearDesc != ''">
+        and CLEAR_DESC = #{condition.clearDesc, jdbcType=CLOB }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

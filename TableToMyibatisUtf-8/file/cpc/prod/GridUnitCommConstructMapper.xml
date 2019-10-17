@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.GridUnitCommConstructMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.GridUnitCommConstructDO">
+    <id column="GRID_UNIT_COMM_CONSTRUCT_ID" jdbcType="BIGINT" property="gridUnitCommConstructId"/>
+    <result column="GRID_UNIT_ID" jdbcType="BIGINT" property="gridUnitId"/>
+    <result column="MACHINE_ROOM_FLAG" jdbcType="INTEGER" property="machineRoomFlag"/>
+    <result column="MACHINE_ROOM_TOTAL_AREA" jdbcType="VARCHAR" property="machineRoomTotalArea"/>
+    <result column="MACHINE_ROOM_USED_AREA" jdbcType="VARCHAR" property="machineRoomUsedArea"/>
+    <result column="CABLING_SYSTEM_FLAG" jdbcType="INTEGER" property="cablingSystemFlag"/>
+    <result column="LAN_FLAG" jdbcType="INTEGER" property="lanFlag"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          GRID_UNIT_COMM_CONSTRUCT_ID, 
+          GRID_UNIT_ID, 
+          MACHINE_ROOM_FLAG, 
+          MACHINE_ROOM_TOTAL_AREA, 
+          MACHINE_ROOM_USED_AREA, 
+          CABLING_SYSTEM_FLAG, 
+          LAN_FLAG, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          GRID_UNIT_ID, 
+          MACHINE_ROOM_FLAG, 
+          MACHINE_ROOM_TOTAL_AREA, 
+          MACHINE_ROOM_USED_AREA, 
+          CABLING_SYSTEM_FLAG, 
+          LAN_FLAG, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="gridUnitCommConstructId != null ">
+        GRID_UNIT_COMM_CONSTRUCT_ID = #{gridUnitCommConstructId, jdbcType=BIGINT }
+      </if>
+      <if test="gridUnitId != null ">
+        and GRID_UNIT_ID = #{gridUnitId, jdbcType=BIGINT }
+      </if>
+      <if test="machineRoomFlag != null ">
+        and MACHINE_ROOM_FLAG = #{machineRoomFlag, jdbcType=INTEGER }
+      </if>
+      <if test="machineRoomTotalArea != null and machineRoomTotalArea != ''">
+        and MACHINE_ROOM_TOTAL_AREA = #{machineRoomTotalArea, jdbcType=VARCHAR }
+      </if>
+      <if test="machineRoomUsedArea != null and machineRoomUsedArea != ''">
+        and MACHINE_ROOM_USED_AREA = #{machineRoomUsedArea, jdbcType=VARCHAR }
+      </if>
+      <if test="cablingSystemFlag != null ">
+        and CABLING_SYSTEM_FLAG = #{cablingSystemFlag, jdbcType=INTEGER }
+      </if>
+      <if test="lanFlag != null ">
+        and LAN_FLAG = #{lanFlag, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.GridUnitCommConstructDO" resultType="java.lang.Integer">
+      select count(*) from GRID_UNIT_COMM_CONSTRUCT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GRID_UNIT_COMM_CONSTRUCT
+        where 
+           GRID_UNIT_COMM_CONSTRUCT_ID = #{gridUnitCommConstructId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GRID_UNIT_COMM_CONSTRUCT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="gridUnitCommConstructId">
+      insert into  GRID_UNIT_COMM_CONSTRUCT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{gridUnitId,jdbcType=BIGINT}, 
+        #{machineRoomFlag,jdbcType=INTEGER}, 
+        #{machineRoomTotalArea,jdbcType=VARCHAR}, 
+        #{machineRoomUsedArea,jdbcType=VARCHAR}, 
+        #{cablingSystemFlag,jdbcType=INTEGER}, 
+        #{lanFlag,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GRID_UNIT_COMM_CONSTRUCT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{gridUnitCommConstructId,jdbcType=BIGINT}, 
+        #{gridUnitId,jdbcType=BIGINT}, 
+        #{machineRoomFlag,jdbcType=INTEGER}, 
+        #{machineRoomTotalArea,jdbcType=VARCHAR}, 
+        #{machineRoomUsedArea,jdbcType=VARCHAR}, 
+        #{cablingSystemFlag,jdbcType=INTEGER}, 
+        #{lanFlag,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GRID_UNIT_COMM_CONSTRUCT  
+        where
+           GRID_UNIT_COMM_CONSTRUCT_ID = #{gridUnitCommConstructId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GRID_UNIT_COMM_CONSTRUCT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GRID_UNIT_COMM_CONSTRUCT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="gridUnitId != null">
+         GRID_UNIT_ID = #{gridUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="machineRoomFlag != null">
+         MACHINE_ROOM_FLAG = #{machineRoomFlag,jdbcType=INTEGER},
+      </if>
+      <if test="machineRoomTotalArea != null">
+         MACHINE_ROOM_TOTAL_AREA = #{machineRoomTotalArea,jdbcType=VARCHAR},
+      </if>
+      <if test="machineRoomUsedArea != null">
+         MACHINE_ROOM_USED_AREA = #{machineRoomUsedArea,jdbcType=VARCHAR},
+      </if>
+      <if test="cablingSystemFlag != null">
+         CABLING_SYSTEM_FLAG = #{cablingSystemFlag,jdbcType=INTEGER},
+      </if>
+      <if test="lanFlag != null">
+         LAN_FLAG = #{lanFlag,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           GRID_UNIT_COMM_CONSTRUCT_ID = #{gridUnitCommConstructId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GRID_UNIT_COMM_CONSTRUCT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.gridUnitCommConstructId != null">
+        GRID_UNIT_COMM_CONSTRUCT_ID = #{record.gridUnitCommConstructId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gridUnitId != null">
+        GRID_UNIT_ID = #{record.gridUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.machineRoomFlag != null">
+        MACHINE_ROOM_FLAG = #{record.machineRoomFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.machineRoomTotalArea != null">
+        MACHINE_ROOM_TOTAL_AREA = #{record.machineRoomTotalArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.machineRoomUsedArea != null">
+        MACHINE_ROOM_USED_AREA = #{record.machineRoomUsedArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cablingSystemFlag != null">
+        CABLING_SYSTEM_FLAG = #{record.cablingSystemFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.lanFlag != null">
+        LAN_FLAG = #{record.lanFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.gridUnitCommConstructId != null ">
+        GRID_UNIT_COMM_CONSTRUCT_ID = #{condition.gridUnitCommConstructId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.gridUnitId != null ">
+        and GRID_UNIT_ID = #{condition.gridUnitId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.machineRoomFlag != null ">
+        and MACHINE_ROOM_FLAG = #{condition.machineRoomFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.machineRoomTotalArea != null and condition.machineRoomTotalArea != ''">
+        and MACHINE_ROOM_TOTAL_AREA = #{condition.machineRoomTotalArea, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.machineRoomUsedArea != null and condition.machineRoomUsedArea != ''">
+        and MACHINE_ROOM_USED_AREA = #{condition.machineRoomUsedArea, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.cablingSystemFlag != null ">
+        and CABLING_SYSTEM_FLAG = #{condition.cablingSystemFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.lanFlag != null ">
+        and LAN_FLAG = #{condition.lanFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

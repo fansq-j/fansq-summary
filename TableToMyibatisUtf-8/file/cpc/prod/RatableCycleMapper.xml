@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.RatableCycleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.RatableCycleDO">
+    <id column="RATABLE_CYCLE_ID" jdbcType="INTEGER" property="ratableCycleId"/>
+    <result column="RATABLE_CYCLE_NAME" jdbcType="VARCHAR" property="ratableCycleName"/>
+    <result column="RATABLE_CYCLE_TYPE_ID" jdbcType="INTEGER" property="ratableCycleTypeId"/>
+    <result column="RATABLE_CYCLE_COUNT" jdbcType="INTEGER" property="ratableCycleCount"/>
+    <result column="RATABLE_CYCLE_DURATIVE_TYPE" jdbcType="INTEGER" property="ratableCycleDurativeType"/>
+    <result column="RATABLE_CYCLE_OFFSET" jdbcType="INTEGER" property="ratableCycleOffset"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RATABLE_CYCLE_ID, 
+          RATABLE_CYCLE_NAME, 
+          RATABLE_CYCLE_TYPE_ID, 
+          RATABLE_CYCLE_COUNT, 
+          RATABLE_CYCLE_DURATIVE_TYPE, 
+          RATABLE_CYCLE_OFFSET, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RATABLE_CYCLE_NAME, 
+          RATABLE_CYCLE_TYPE_ID, 
+          RATABLE_CYCLE_COUNT, 
+          RATABLE_CYCLE_DURATIVE_TYPE, 
+          RATABLE_CYCLE_OFFSET, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="ratableCycleId != null ">
+        RATABLE_CYCLE_ID = #{ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="ratableCycleName != null and ratableCycleName != ''">
+        and RATABLE_CYCLE_NAME = #{ratableCycleName, jdbcType=VARCHAR }
+      </if>
+      <if test="ratableCycleTypeId != null ">
+        and RATABLE_CYCLE_TYPE_ID = #{ratableCycleTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="ratableCycleCount != null ">
+        and RATABLE_CYCLE_COUNT = #{ratableCycleCount, jdbcType=INTEGER }
+      </if>
+      <if test="ratableCycleDurativeType != null ">
+        and RATABLE_CYCLE_DURATIVE_TYPE = #{ratableCycleDurativeType, jdbcType=INTEGER }
+      </if>
+      <if test="ratableCycleOffset != null ">
+        and RATABLE_CYCLE_OFFSET = #{ratableCycleOffset, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.RatableCycleDO" resultType="java.lang.Integer">
+      select count(*) from RATABLE_CYCLE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RATABLE_CYCLE
+        where 
+           RATABLE_CYCLE_ID = #{ratableCycleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RATABLE_CYCLE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="ratableCycleId">
+      insert into  RATABLE_CYCLE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ratableCycleName,jdbcType=VARCHAR}, 
+        #{ratableCycleTypeId,jdbcType=INTEGER}, 
+        #{ratableCycleCount,jdbcType=INTEGER}, 
+        #{ratableCycleDurativeType,jdbcType=INTEGER}, 
+        #{ratableCycleOffset,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RATABLE_CYCLE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{ratableCycleId,jdbcType=INTEGER}, 
+        #{ratableCycleName,jdbcType=VARCHAR}, 
+        #{ratableCycleTypeId,jdbcType=INTEGER}, 
+        #{ratableCycleCount,jdbcType=INTEGER}, 
+        #{ratableCycleDurativeType,jdbcType=INTEGER}, 
+        #{ratableCycleOffset,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RATABLE_CYCLE  
+        where
+           RATABLE_CYCLE_ID = #{ratableCycleId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from RATABLE_CYCLE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RATABLE_CYCLE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ratableCycleName != null">
+         RATABLE_CYCLE_NAME = #{ratableCycleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ratableCycleTypeId != null">
+         RATABLE_CYCLE_TYPE_ID = #{ratableCycleTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="ratableCycleCount != null">
+         RATABLE_CYCLE_COUNT = #{ratableCycleCount,jdbcType=INTEGER},
+      </if>
+      <if test="ratableCycleDurativeType != null">
+         RATABLE_CYCLE_DURATIVE_TYPE = #{ratableCycleDurativeType,jdbcType=INTEGER},
+      </if>
+      <if test="ratableCycleOffset != null">
+         RATABLE_CYCLE_OFFSET = #{ratableCycleOffset,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           RATABLE_CYCLE_ID = #{ratableCycleId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update RATABLE_CYCLE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.ratableCycleId != null">
+        RATABLE_CYCLE_ID = #{record.ratableCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratableCycleName != null">
+        RATABLE_CYCLE_NAME = #{record.ratableCycleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ratableCycleTypeId != null">
+        RATABLE_CYCLE_TYPE_ID = #{record.ratableCycleTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratableCycleCount != null">
+        RATABLE_CYCLE_COUNT = #{record.ratableCycleCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratableCycleDurativeType != null">
+        RATABLE_CYCLE_DURATIVE_TYPE = #{record.ratableCycleDurativeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratableCycleOffset != null">
+        RATABLE_CYCLE_OFFSET = #{record.ratableCycleOffset,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.ratableCycleId != null ">
+        RATABLE_CYCLE_ID = #{condition.ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratableCycleName != null and condition.ratableCycleName != ''">
+        and RATABLE_CYCLE_NAME = #{condition.ratableCycleName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ratableCycleTypeId != null ">
+        and RATABLE_CYCLE_TYPE_ID = #{condition.ratableCycleTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratableCycleCount != null ">
+        and RATABLE_CYCLE_COUNT = #{condition.ratableCycleCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratableCycleDurativeType != null ">
+        and RATABLE_CYCLE_DURATIVE_TYPE = #{condition.ratableCycleDurativeType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratableCycleOffset != null ">
+        and RATABLE_CYCLE_OFFSET = #{condition.ratableCycleOffset, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

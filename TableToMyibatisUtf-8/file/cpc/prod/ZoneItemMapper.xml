@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ZoneItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ZoneItemDO">
+    <id column="ZONE_ITEM_ID" jdbcType="INTEGER" property="zoneItemId"/>
+    <result column="ZONE_ITEM_NAME" jdbcType="VARCHAR" property="zoneItemName"/>
+    <result column="PARENT_ZONE_ITEM_ID" jdbcType="INTEGER" property="parentZoneItemId"/>
+    <result column="ZONE_ID" jdbcType="INTEGER" property="zoneId"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="PRICING_REF_OBJECT_ID" jdbcType="INTEGER" property="pricingRefObjectId"/>
+    <result column="MATCHING_TYPE" jdbcType="INTEGER" property="matchingType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ZONE_ITEM_ID, 
+          ZONE_ITEM_NAME, 
+          PARENT_ZONE_ITEM_ID, 
+          ZONE_ID, 
+          REGION_ID, 
+          PRICING_REF_OBJECT_ID, 
+          MATCHING_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ZONE_ITEM_NAME, 
+          PARENT_ZONE_ITEM_ID, 
+          ZONE_ID, 
+          REGION_ID, 
+          PRICING_REF_OBJECT_ID, 
+          MATCHING_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="zoneItemId != null ">
+        ZONE_ITEM_ID = #{zoneItemId, jdbcType=INTEGER }
+      </if>
+      <if test="zoneItemName != null and zoneItemName != ''">
+        and ZONE_ITEM_NAME = #{zoneItemName, jdbcType=VARCHAR }
+      </if>
+      <if test="parentZoneItemId != null ">
+        and PARENT_ZONE_ITEM_ID = #{parentZoneItemId, jdbcType=INTEGER }
+      </if>
+      <if test="zoneId != null ">
+        and ZONE_ID = #{zoneId, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="matchingType != null ">
+        and MATCHING_TYPE = #{matchingType, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ZoneItemDO" resultType="java.lang.Integer">
+      select count(*) from ZONE_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ZONE_ITEM
+        where 
+           ZONE_ITEM_ID = #{zoneItemId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ZONE_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="zoneItemId">
+      insert into  ZONE_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{zoneItemName,jdbcType=VARCHAR}, 
+        #{parentZoneItemId,jdbcType=INTEGER}, 
+        #{zoneId,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{matchingType,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ZONE_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{zoneItemId,jdbcType=INTEGER}, 
+        #{zoneItemName,jdbcType=VARCHAR}, 
+        #{parentZoneItemId,jdbcType=INTEGER}, 
+        #{zoneId,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{pricingRefObjectId,jdbcType=INTEGER}, 
+        #{matchingType,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ZONE_ITEM  
+        where
+           ZONE_ITEM_ID = #{zoneItemId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from ZONE_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ZONE_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="zoneItemName != null">
+         ZONE_ITEM_NAME = #{zoneItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentZoneItemId != null">
+         PARENT_ZONE_ITEM_ID = #{parentZoneItemId,jdbcType=INTEGER},
+      </if>
+      <if test="zoneId != null">
+         ZONE_ID = #{zoneId,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="pricingRefObjectId != null">
+         PRICING_REF_OBJECT_ID = #{pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="matchingType != null">
+         MATCHING_TYPE = #{matchingType,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ZONE_ITEM_ID = #{zoneItemId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update ZONE_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.zoneItemId != null">
+        ZONE_ITEM_ID = #{record.zoneItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.zoneItemName != null">
+        ZONE_ITEM_NAME = #{record.zoneItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentZoneItemId != null">
+        PARENT_ZONE_ITEM_ID = #{record.parentZoneItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.zoneId != null">
+        ZONE_ID = #{record.zoneId,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingRefObjectId != null">
+        PRICING_REF_OBJECT_ID = #{record.pricingRefObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.matchingType != null">
+        MATCHING_TYPE = #{record.matchingType,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.zoneItemId != null ">
+        ZONE_ITEM_ID = #{condition.zoneItemId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.zoneItemName != null and condition.zoneItemName != ''">
+        and ZONE_ITEM_NAME = #{condition.zoneItemName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parentZoneItemId != null ">
+        and PARENT_ZONE_ITEM_ID = #{condition.parentZoneItemId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.zoneId != null ">
+        and ZONE_ID = #{condition.zoneId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingRefObjectId != null ">
+        and PRICING_REF_OBJECT_ID = #{condition.pricingRefObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.matchingType != null ">
+        and MATCHING_TYPE = #{condition.matchingType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

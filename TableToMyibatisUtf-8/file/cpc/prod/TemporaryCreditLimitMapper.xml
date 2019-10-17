@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TemporaryCreditLimitMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TemporaryCreditLimitDO">
+    <id column="TEMPORARY_CREDIT_LIMIT_ID" jdbcType="BIGINT" property="temporaryCreditLimitId"/>
+    <result column="CREDIT_LIMIT_ID" jdbcType="BIGINT" property="creditLimitId"/>
+    <result column="CREDIT_LIMIT_FEE" jdbcType="BIGINT" property="creditLimitFee"/>
+    <result column="AVAILABLE_CREDIT_LIMIT_FEE" jdbcType="BIGINT" property="availableCreditLimitFee"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="ADJUST_REASON" jdbcType="VARCHAR" property="adjustReason"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TEMPORARY_CREDIT_LIMIT_ID, 
+          CREDIT_LIMIT_ID, 
+          CREDIT_LIMIT_FEE, 
+          AVAILABLE_CREDIT_LIMIT_FEE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ADJUST_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CREDIT_LIMIT_ID, 
+          CREDIT_LIMIT_FEE, 
+          AVAILABLE_CREDIT_LIMIT_FEE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ADJUST_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="temporaryCreditLimitId != null ">
+        TEMPORARY_CREDIT_LIMIT_ID = #{temporaryCreditLimitId, jdbcType=BIGINT }
+      </if>
+      <if test="creditLimitId != null ">
+        and CREDIT_LIMIT_ID = #{creditLimitId, jdbcType=BIGINT }
+      </if>
+      <if test="creditLimitFee != null ">
+        and CREDIT_LIMIT_FEE = #{creditLimitFee, jdbcType=BIGINT }
+      </if>
+      <if test="availableCreditLimitFee != null ">
+        and AVAILABLE_CREDIT_LIMIT_FEE = #{availableCreditLimitFee, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="adjustReason != null and adjustReason != ''">
+        and ADJUST_REASON = #{adjustReason, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TemporaryCreditLimitDO" resultType="java.lang.Integer">
+      select count(*) from TEMPORARY_CREDIT_LIMIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TEMPORARY_CREDIT_LIMIT
+        where 
+           TEMPORARY_CREDIT_LIMIT_ID = #{temporaryCreditLimitId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TEMPORARY_CREDIT_LIMIT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="temporaryCreditLimitId">
+      insert into  TEMPORARY_CREDIT_LIMIT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{creditLimitId,jdbcType=BIGINT}, 
+        #{creditLimitFee,jdbcType=BIGINT}, 
+        #{availableCreditLimitFee,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{adjustReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TEMPORARY_CREDIT_LIMIT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{temporaryCreditLimitId,jdbcType=BIGINT}, 
+        #{creditLimitId,jdbcType=BIGINT}, 
+        #{creditLimitFee,jdbcType=BIGINT}, 
+        #{availableCreditLimitFee,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{adjustReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TEMPORARY_CREDIT_LIMIT  
+        where
+           TEMPORARY_CREDIT_LIMIT_ID = #{temporaryCreditLimitId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TEMPORARY_CREDIT_LIMIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TEMPORARY_CREDIT_LIMIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="creditLimitId != null">
+         CREDIT_LIMIT_ID = #{creditLimitId,jdbcType=BIGINT},
+      </if>
+      <if test="creditLimitFee != null">
+         CREDIT_LIMIT_FEE = #{creditLimitFee,jdbcType=BIGINT},
+      </if>
+      <if test="availableCreditLimitFee != null">
+         AVAILABLE_CREDIT_LIMIT_FEE = #{availableCreditLimitFee,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adjustReason != null">
+         ADJUST_REASON = #{adjustReason,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           TEMPORARY_CREDIT_LIMIT_ID = #{temporaryCreditLimitId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TEMPORARY_CREDIT_LIMIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.temporaryCreditLimitId != null">
+        TEMPORARY_CREDIT_LIMIT_ID = #{record.temporaryCreditLimitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.creditLimitId != null">
+        CREDIT_LIMIT_ID = #{record.creditLimitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.creditLimitFee != null">
+        CREDIT_LIMIT_FEE = #{record.creditLimitFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.availableCreditLimitFee != null">
+        AVAILABLE_CREDIT_LIMIT_FEE = #{record.availableCreditLimitFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adjustReason != null">
+        ADJUST_REASON = #{record.adjustReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.temporaryCreditLimitId != null ">
+        TEMPORARY_CREDIT_LIMIT_ID = #{condition.temporaryCreditLimitId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.creditLimitId != null ">
+        and CREDIT_LIMIT_ID = #{condition.creditLimitId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.creditLimitFee != null ">
+        and CREDIT_LIMIT_FEE = #{condition.creditLimitFee, jdbcType=BIGINT }
+      </if>
+      <if test="condition.availableCreditLimitFee != null ">
+        and AVAILABLE_CREDIT_LIMIT_FEE = #{condition.availableCreditLimitFee, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.adjustReason != null and condition.adjustReason != ''">
+        and ADJUST_REASON = #{condition.adjustReason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

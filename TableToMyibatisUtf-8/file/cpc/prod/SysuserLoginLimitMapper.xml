@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SysuserLoginLimitMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SysuserLoginLimitDO">
+    <id column="LOGIN_LIMIT_ID" jdbcType="INTEGER" property="loginLimitId"/>
+    <result column="SYS_USER_ID" jdbcType="BIGINT" property="sysUserId"/>
+    <result column="LOGIN_LIMIT_TYPE" jdbcType="VARCHAR" property="loginLimitType"/>
+    <result column="LOGIN_LIMIT_IP_VAL" jdbcType="VARCHAR" property="loginLimitIpVal"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="LOGIN_LIMIT_MAC_VAL" jdbcType="VARCHAR" property="loginLimitMacVal"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          LOGIN_LIMIT_ID, 
+          SYS_USER_ID, 
+          LOGIN_LIMIT_TYPE, 
+          LOGIN_LIMIT_IP_VAL, 
+          REGION_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          LOGIN_LIMIT_MAC_VAL
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SYS_USER_ID, 
+          LOGIN_LIMIT_TYPE, 
+          LOGIN_LIMIT_IP_VAL, 
+          REGION_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          LOGIN_LIMIT_MAC_VAL
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="loginLimitId != null ">
+        LOGIN_LIMIT_ID = #{loginLimitId, jdbcType=INTEGER }
+      </if>
+      <if test="sysUserId != null ">
+        and SYS_USER_ID = #{sysUserId, jdbcType=BIGINT }
+      </if>
+      <if test="loginLimitType != null and loginLimitType != ''">
+        and LOGIN_LIMIT_TYPE = #{loginLimitType, jdbcType=VARCHAR }
+      </if>
+      <if test="loginLimitIpVal != null and loginLimitIpVal != ''">
+        and LOGIN_LIMIT_IP_VAL = #{loginLimitIpVal, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="loginLimitMacVal != null and loginLimitMacVal != ''">
+        and LOGIN_LIMIT_MAC_VAL = #{loginLimitMacVal, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SysuserLoginLimitDO" resultType="java.lang.Integer">
+      select count(*) from SYSUSER_LOGIN_LIMIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SYSUSER_LOGIN_LIMIT
+        where 
+           LOGIN_LIMIT_ID = #{loginLimitId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SYSUSER_LOGIN_LIMIT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="loginLimitId">
+      insert into  SYSUSER_LOGIN_LIMIT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{sysUserId,jdbcType=BIGINT}, 
+        #{loginLimitType,jdbcType=VARCHAR}, 
+        #{loginLimitIpVal,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{loginLimitMacVal,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SYSUSER_LOGIN_LIMIT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{loginLimitId,jdbcType=INTEGER}, 
+        #{sysUserId,jdbcType=BIGINT}, 
+        #{loginLimitType,jdbcType=VARCHAR}, 
+        #{loginLimitIpVal,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{loginLimitMacVal,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SYSUSER_LOGIN_LIMIT  
+        where
+           LOGIN_LIMIT_ID = #{loginLimitId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from SYSUSER_LOGIN_LIMIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SYSUSER_LOGIN_LIMIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="sysUserId != null">
+         SYS_USER_ID = #{sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="loginLimitType != null">
+         LOGIN_LIMIT_TYPE = #{loginLimitType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLimitIpVal != null">
+         LOGIN_LIMIT_IP_VAL = #{loginLimitIpVal,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="loginLimitMacVal != null">
+         LOGIN_LIMIT_MAC_VAL = #{loginLimitMacVal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           LOGIN_LIMIT_ID = #{loginLimitId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update SYSUSER_LOGIN_LIMIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.loginLimitId != null">
+        LOGIN_LIMIT_ID = #{record.loginLimitId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysUserId != null">
+        SYS_USER_ID = #{record.sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginLimitType != null">
+        LOGIN_LIMIT_TYPE = #{record.loginLimitType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginLimitIpVal != null">
+        LOGIN_LIMIT_IP_VAL = #{record.loginLimitIpVal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginLimitMacVal != null">
+        LOGIN_LIMIT_MAC_VAL = #{record.loginLimitMacVal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.loginLimitId != null ">
+        LOGIN_LIMIT_ID = #{condition.loginLimitId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.sysUserId != null ">
+        and SYS_USER_ID = #{condition.sysUserId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.loginLimitType != null and condition.loginLimitType != ''">
+        and LOGIN_LIMIT_TYPE = #{condition.loginLimitType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.loginLimitIpVal != null and condition.loginLimitIpVal != ''">
+        and LOGIN_LIMIT_IP_VAL = #{condition.loginLimitIpVal, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.loginLimitMacVal != null and condition.loginLimitMacVal != ''">
+        and LOGIN_LIMIT_MAC_VAL = #{condition.loginLimitMacVal, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

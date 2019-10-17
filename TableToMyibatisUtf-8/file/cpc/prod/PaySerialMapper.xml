@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PaySerialMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PaySerialDO">
+    <id column="PAY_SERIAL_ID" jdbcType="INTEGER" property="paySerialId"/>
+    <result column="PAY_NODE_ID" jdbcType="INTEGER" property="payNodeId"/>
+    <result column="NODE_PAY_METHOD_ID" jdbcType="INTEGER" property="nodePayMethodId"/>
+    <result column="PAY_TYPE_ID" jdbcType="INTEGER" property="payTypeId"/>
+    <result column="TRADE_TYPE_ID" jdbcType="INTEGER" property="tradeTypeId"/>
+    <result column="PAY_CHANNEL_SERIAL" jdbcType="VARCHAR" property="payChannelSerial"/>
+    <result column="PAY_USER_SERIAL" jdbcType="VARCHAR" property="payUserSerial"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="REAL_AMOUNT" jdbcType="BIGINT" property="realAmount"/>
+    <result column="OPER_SERIAL_ID" jdbcType="VARCHAR" property="operSerialId"/>
+    <result column="OPER_SERIAL_NBR" jdbcType="VARCHAR" property="operSerialNbr"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="PAY_DATE" jdbcType="TIMESTAMP" property="payDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="NOTIFY_URL" jdbcType="VARCHAR" property="notifyUrl"/>
+    <result column="RETURN_URL" jdbcType="VARCHAR" property="returnUrl"/>
+    <result column="POS_SETTLE_SERIAL" jdbcType="VARCHAR" property="posSettleSerial"/>
+    <result column="POS_TERMIALNBR" jdbcType="VARCHAR" property="posTermialnbr"/>
+    <result column="POS_PAY_SERIAL" jdbcType="VARCHAR" property="posPaySerial"/>
+    <result column="CHANNEL_RETURN_CODE" jdbcType="VARCHAR" property="channelReturnCode"/>
+    <result column="CHANNEL_RETURN_MSG" jdbcType="VARCHAR" property="channelReturnMsg"/>
+    <result column="STAFF_ID" jdbcType="INTEGER" property="staffId"/>
+    <result column="ORG_ID" jdbcType="INTEGER" property="orgId"/>
+    <result column="COMMODITY_NAME" jdbcType="VARCHAR" property="commodityName"/>
+    <result column="COMMODITY_DESC" jdbcType="VARCHAR" property="commodityDesc"/>
+    <result column="ACCOUNT_ID" jdbcType="BIGINT" property="accountId"/>
+    <result column="CUSTOMER_ACCOUNT" jdbcType="VARCHAR" property="customerAccount"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PAY_SERIAL_ID, 
+          PAY_NODE_ID, 
+          NODE_PAY_METHOD_ID, 
+          PAY_TYPE_ID, 
+          TRADE_TYPE_ID, 
+          PAY_CHANNEL_SERIAL, 
+          PAY_USER_SERIAL, 
+          AMOUNT, 
+          REAL_AMOUNT, 
+          OPER_SERIAL_ID, 
+          OPER_SERIAL_NBR, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          PAY_DATE, 
+          STATUS_DATE, 
+          NOTIFY_URL, 
+          RETURN_URL, 
+          POS_SETTLE_SERIAL, 
+          POS_TERMIALNBR, 
+          POS_PAY_SERIAL, 
+          CHANNEL_RETURN_CODE, 
+          CHANNEL_RETURN_MSG, 
+          STAFF_ID, 
+          ORG_ID, 
+          COMMODITY_NAME, 
+          COMMODITY_DESC, 
+          ACCOUNT_ID, 
+          CUSTOMER_ACCOUNT, 
+          REGION_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PAY_NODE_ID, 
+          NODE_PAY_METHOD_ID, 
+          PAY_TYPE_ID, 
+          TRADE_TYPE_ID, 
+          PAY_CHANNEL_SERIAL, 
+          PAY_USER_SERIAL, 
+          AMOUNT, 
+          REAL_AMOUNT, 
+          OPER_SERIAL_ID, 
+          OPER_SERIAL_NBR, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          PAY_DATE, 
+          STATUS_DATE, 
+          NOTIFY_URL, 
+          RETURN_URL, 
+          POS_SETTLE_SERIAL, 
+          POS_TERMIALNBR, 
+          POS_PAY_SERIAL, 
+          CHANNEL_RETURN_CODE, 
+          CHANNEL_RETURN_MSG, 
+          STAFF_ID, 
+          ORG_ID, 
+          COMMODITY_NAME, 
+          COMMODITY_DESC, 
+          ACCOUNT_ID, 
+          CUSTOMER_ACCOUNT, 
+          REGION_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="paySerialId != null ">
+        PAY_SERIAL_ID = #{paySerialId, jdbcType=INTEGER }
+      </if>
+      <if test="payNodeId != null ">
+        and PAY_NODE_ID = #{payNodeId, jdbcType=INTEGER }
+      </if>
+      <if test="nodePayMethodId != null ">
+        and NODE_PAY_METHOD_ID = #{nodePayMethodId, jdbcType=INTEGER }
+      </if>
+      <if test="payTypeId != null ">
+        and PAY_TYPE_ID = #{payTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="tradeTypeId != null ">
+        and TRADE_TYPE_ID = #{tradeTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="payChannelSerial != null and payChannelSerial != ''">
+        and PAY_CHANNEL_SERIAL = #{payChannelSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="payUserSerial != null and payUserSerial != ''">
+        and PAY_USER_SERIAL = #{payUserSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="realAmount != null ">
+        and REAL_AMOUNT = #{realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="operSerialId != null and operSerialId != ''">
+        and OPER_SERIAL_ID = #{operSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="operSerialNbr != null and operSerialNbr != ''">
+        and OPER_SERIAL_NBR = #{operSerialNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="payDate != null ">
+        and PAY_DATE = #{payDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="notifyUrl != null and notifyUrl != ''">
+        and NOTIFY_URL = #{notifyUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="returnUrl != null and returnUrl != ''">
+        and RETURN_URL = #{returnUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="posSettleSerial != null and posSettleSerial != ''">
+        and POS_SETTLE_SERIAL = #{posSettleSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="posTermialnbr != null and posTermialnbr != ''">
+        and POS_TERMIALNBR = #{posTermialnbr, jdbcType=VARCHAR }
+      </if>
+      <if test="posPaySerial != null and posPaySerial != ''">
+        and POS_PAY_SERIAL = #{posPaySerial, jdbcType=VARCHAR }
+      </if>
+      <if test="channelReturnCode != null and channelReturnCode != ''">
+        and CHANNEL_RETURN_CODE = #{channelReturnCode, jdbcType=VARCHAR }
+      </if>
+      <if test="channelReturnMsg != null and channelReturnMsg != ''">
+        and CHANNEL_RETURN_MSG = #{channelReturnMsg, jdbcType=VARCHAR }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=INTEGER }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=INTEGER }
+      </if>
+      <if test="commodityName != null and commodityName != ''">
+        and COMMODITY_NAME = #{commodityName, jdbcType=VARCHAR }
+      </if>
+      <if test="commodityDesc != null and commodityDesc != ''">
+        and COMMODITY_DESC = #{commodityDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="accountId != null ">
+        and ACCOUNT_ID = #{accountId, jdbcType=BIGINT }
+      </if>
+      <if test="customerAccount != null and customerAccount != ''">
+        and CUSTOMER_ACCOUNT = #{customerAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PaySerialDO" resultType="java.lang.Integer">
+      select count(*) from PAY_SERIAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PAY_SERIAL
+        where 
+           PAY_SERIAL_ID = #{paySerialId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PAY_SERIAL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="paySerialId">
+      insert into  PAY_SERIAL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{payNodeId,jdbcType=INTEGER}, 
+        #{nodePayMethodId,jdbcType=INTEGER}, 
+        #{payTypeId,jdbcType=INTEGER}, 
+        #{tradeTypeId,jdbcType=INTEGER}, 
+        #{payChannelSerial,jdbcType=VARCHAR}, 
+        #{payUserSerial,jdbcType=VARCHAR}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{operSerialId,jdbcType=VARCHAR}, 
+        #{operSerialNbr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{payDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{notifyUrl,jdbcType=VARCHAR}, 
+        #{returnUrl,jdbcType=VARCHAR}, 
+        #{posSettleSerial,jdbcType=VARCHAR}, 
+        #{posTermialnbr,jdbcType=VARCHAR}, 
+        #{posPaySerial,jdbcType=VARCHAR}, 
+        #{channelReturnCode,jdbcType=VARCHAR}, 
+        #{channelReturnMsg,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=INTEGER}, 
+        #{orgId,jdbcType=INTEGER}, 
+        #{commodityName,jdbcType=VARCHAR}, 
+        #{commodityDesc,jdbcType=VARCHAR}, 
+        #{accountId,jdbcType=BIGINT}, 
+        #{customerAccount,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PAY_SERIAL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{paySerialId,jdbcType=INTEGER}, 
+        #{payNodeId,jdbcType=INTEGER}, 
+        #{nodePayMethodId,jdbcType=INTEGER}, 
+        #{payTypeId,jdbcType=INTEGER}, 
+        #{tradeTypeId,jdbcType=INTEGER}, 
+        #{payChannelSerial,jdbcType=VARCHAR}, 
+        #{payUserSerial,jdbcType=VARCHAR}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{operSerialId,jdbcType=VARCHAR}, 
+        #{operSerialNbr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{payDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{notifyUrl,jdbcType=VARCHAR}, 
+        #{returnUrl,jdbcType=VARCHAR}, 
+        #{posSettleSerial,jdbcType=VARCHAR}, 
+        #{posTermialnbr,jdbcType=VARCHAR}, 
+        #{posPaySerial,jdbcType=VARCHAR}, 
+        #{channelReturnCode,jdbcType=VARCHAR}, 
+        #{channelReturnMsg,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=INTEGER}, 
+        #{orgId,jdbcType=INTEGER}, 
+        #{commodityName,jdbcType=VARCHAR}, 
+        #{commodityDesc,jdbcType=VARCHAR}, 
+        #{accountId,jdbcType=BIGINT}, 
+        #{customerAccount,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PAY_SERIAL  
+        where
+           PAY_SERIAL_ID = #{paySerialId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PAY_SERIAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PAY_SERIAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="payNodeId != null">
+         PAY_NODE_ID = #{payNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="nodePayMethodId != null">
+         NODE_PAY_METHOD_ID = #{nodePayMethodId,jdbcType=INTEGER},
+      </if>
+      <if test="payTypeId != null">
+         PAY_TYPE_ID = #{payTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="tradeTypeId != null">
+         TRADE_TYPE_ID = #{tradeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="payChannelSerial != null">
+         PAY_CHANNEL_SERIAL = #{payChannelSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="payUserSerial != null">
+         PAY_USER_SERIAL = #{payUserSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="realAmount != null">
+         REAL_AMOUNT = #{realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="operSerialId != null">
+         OPER_SERIAL_ID = #{operSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="operSerialNbr != null">
+         OPER_SERIAL_NBR = #{operSerialNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payDate != null">
+         PAY_DATE = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyUrl != null">
+         NOTIFY_URL = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null">
+         RETURN_URL = #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="posSettleSerial != null">
+         POS_SETTLE_SERIAL = #{posSettleSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="posTermialnbr != null">
+         POS_TERMIALNBR = #{posTermialnbr,jdbcType=VARCHAR},
+      </if>
+      <if test="posPaySerial != null">
+         POS_PAY_SERIAL = #{posPaySerial,jdbcType=VARCHAR},
+      </if>
+      <if test="channelReturnCode != null">
+         CHANNEL_RETURN_CODE = #{channelReturnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="channelReturnMsg != null">
+         CHANNEL_RETURN_MSG = #{channelReturnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="commodityName != null">
+         COMMODITY_NAME = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityDesc != null">
+         COMMODITY_DESC = #{commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+         ACCOUNT_ID = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="customerAccount != null">
+         CUSTOMER_ACCOUNT = #{customerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           PAY_SERIAL_ID = #{paySerialId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PAY_SERIAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.paySerialId != null">
+        PAY_SERIAL_ID = #{record.paySerialId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payNodeId != null">
+        PAY_NODE_ID = #{record.payNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodePayMethodId != null">
+        NODE_PAY_METHOD_ID = #{record.nodePayMethodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payTypeId != null">
+        PAY_TYPE_ID = #{record.payTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tradeTypeId != null">
+        TRADE_TYPE_ID = #{record.tradeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payChannelSerial != null">
+        PAY_CHANNEL_SERIAL = #{record.payChannelSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payUserSerial != null">
+        PAY_USER_SERIAL = #{record.payUserSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.realAmount != null">
+        REAL_AMOUNT = #{record.realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.operSerialId != null">
+        OPER_SERIAL_ID = #{record.operSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operSerialNbr != null">
+        OPER_SERIAL_NBR = #{record.operSerialNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payDate != null">
+        PAY_DATE = #{record.payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.notifyUrl != null">
+        NOTIFY_URL = #{record.notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnUrl != null">
+        RETURN_URL = #{record.returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posSettleSerial != null">
+        POS_SETTLE_SERIAL = #{record.posSettleSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posTermialnbr != null">
+        POS_TERMIALNBR = #{record.posTermialnbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posPaySerial != null">
+        POS_PAY_SERIAL = #{record.posPaySerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelReturnCode != null">
+        CHANNEL_RETURN_CODE = #{record.channelReturnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelReturnMsg != null">
+        CHANNEL_RETURN_MSG = #{record.channelReturnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityName != null">
+        COMMODITY_NAME = #{record.commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commodityDesc != null">
+        COMMODITY_DESC = #{record.commodityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountId != null">
+        ACCOUNT_ID = #{record.accountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerAccount != null">
+        CUSTOMER_ACCOUNT = #{record.customerAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.paySerialId != null ">
+        PAY_SERIAL_ID = #{condition.paySerialId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payNodeId != null ">
+        and PAY_NODE_ID = #{condition.payNodeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.nodePayMethodId != null ">
+        and NODE_PAY_METHOD_ID = #{condition.nodePayMethodId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payTypeId != null ">
+        and PAY_TYPE_ID = #{condition.payTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.tradeTypeId != null ">
+        and TRADE_TYPE_ID = #{condition.tradeTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payChannelSerial != null and condition.payChannelSerial != ''">
+        and PAY_CHANNEL_SERIAL = #{condition.payChannelSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.payUserSerial != null and condition.payUserSerial != ''">
+        and PAY_USER_SERIAL = #{condition.payUserSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.realAmount != null ">
+        and REAL_AMOUNT = #{condition.realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operSerialId != null and condition.operSerialId != ''">
+        and OPER_SERIAL_ID = #{condition.operSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operSerialNbr != null and condition.operSerialNbr != ''">
+        and OPER_SERIAL_NBR = #{condition.operSerialNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.payDate != null ">
+        and PAY_DATE = #{condition.payDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.notifyUrl != null and condition.notifyUrl != ''">
+        and NOTIFY_URL = #{condition.notifyUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.returnUrl != null and condition.returnUrl != ''">
+        and RETURN_URL = #{condition.returnUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.posSettleSerial != null and condition.posSettleSerial != ''">
+        and POS_SETTLE_SERIAL = #{condition.posSettleSerial, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.posTermialnbr != null and condition.posTermialnbr != ''">
+        and POS_TERMIALNBR = #{condition.posTermialnbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.posPaySerial != null and condition.posPaySerial != ''">
+        and POS_PAY_SERIAL = #{condition.posPaySerial, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.channelReturnCode != null and condition.channelReturnCode != ''">
+        and CHANNEL_RETURN_CODE = #{condition.channelReturnCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.channelReturnMsg != null and condition.channelReturnMsg != ''">
+        and CHANNEL_RETURN_MSG = #{condition.channelReturnMsg, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.commodityName != null and condition.commodityName != ''">
+        and COMMODITY_NAME = #{condition.commodityName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.commodityDesc != null and condition.commodityDesc != ''">
+        and COMMODITY_DESC = #{condition.commodityDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.accountId != null ">
+        and ACCOUNT_ID = #{condition.accountId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.customerAccount != null and condition.customerAccount != ''">
+        and CUSTOMER_ACCOUNT = #{condition.customerAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

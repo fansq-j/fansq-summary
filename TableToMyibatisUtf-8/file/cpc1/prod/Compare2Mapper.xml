@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.Compare2Mapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.Compare2DO">
+    <result column="id2" jdbcType="VARCHAR" property="id2"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          id2
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          id2
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="id2 != null and id2 != ''">
+        id2 = #{id2, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.Compare2DO" resultType="java.lang.Integer">
+      select count(*) from COMPARE2
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  COMPARE2 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insert">
+      insert into  COMPARE2 ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{id2,jdbcType=VARCHAR}
+         )
+  </insert>
+
+
+  <delete id="delete">
+      delete from COMPARE2
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+
+  <update id="updateBySelective">
+      update COMPARE2
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.id2 != null">
+        id2 = #{record.id2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.id2 != null and condition.id2 != ''">
+        id2 = #{condition.id2, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

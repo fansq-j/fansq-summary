@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.GrossProfitModelInstMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.GrossProfitModelInstDO">
+    <id column="gross_profit_model_inst_id" jdbcType="BIGINT" property="grossProfitModelInstId"/>
+    <result column="offer_id" jdbcType="BIGINT" property="offerId"/>
+    <result column="gross_profit_model_id" jdbcType="BIGINT" property="grossProfitModelId"/>
+    <result column="param_value" jdbcType="VARCHAR" property="paramValue"/>
+    <result column="create_staff" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="remark" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          gross_profit_model_inst_id, 
+          offer_id, 
+          gross_profit_model_id, 
+          param_value, 
+          create_staff, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          remark
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          offer_id, 
+          gross_profit_model_id, 
+          param_value, 
+          create_staff, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          remark
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="grossProfitModelInstId != null ">
+        gross_profit_model_inst_id = #{grossProfitModelInstId, jdbcType=BIGINT }
+      </if>
+      <if test="offerId != null ">
+        and offer_id = #{offerId, jdbcType=BIGINT }
+      </if>
+      <if test="grossProfitModelId != null ">
+        and gross_profit_model_id = #{grossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="paramValue != null and paramValue != ''">
+        and param_value = #{paramValue, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and create_staff = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and remark = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.GrossProfitModelInstDO" resultType="java.lang.Integer">
+      select count(*) from GROSS_PROFIT_MODEL_INST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GROSS_PROFIT_MODEL_INST
+        where 
+           gross_profit_model_inst_id = #{grossProfitModelInstId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GROSS_PROFIT_MODEL_INST 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="grossProfitModelInstId">
+      insert into  GROSS_PROFIT_MODEL_INST ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{offerId,jdbcType=BIGINT}, 
+        #{grossProfitModelId,jdbcType=BIGINT}, 
+        #{paramValue,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GROSS_PROFIT_MODEL_INST ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{grossProfitModelInstId,jdbcType=BIGINT}, 
+        #{offerId,jdbcType=BIGINT}, 
+        #{grossProfitModelId,jdbcType=BIGINT}, 
+        #{paramValue,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GROSS_PROFIT_MODEL_INST  
+        where
+           gross_profit_model_inst_id = #{grossProfitModelInstId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GROSS_PROFIT_MODEL_INST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GROSS_PROFIT_MODEL_INST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="offerId != null">
+         offer_id = #{offerId,jdbcType=BIGINT},
+      </if>
+      <if test="grossProfitModelId != null">
+         gross_profit_model_id = #{grossProfitModelId,jdbcType=BIGINT},
+      </if>
+      <if test="paramValue != null">
+         param_value = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         create_staff = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           gross_profit_model_inst_id = #{grossProfitModelInstId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GROSS_PROFIT_MODEL_INST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.grossProfitModelInstId != null">
+        gross_profit_model_inst_id = #{record.grossProfitModelInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerId != null">
+        offer_id = #{record.offerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.grossProfitModelId != null">
+        gross_profit_model_id = #{record.grossProfitModelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paramValue != null">
+        param_value = #{record.paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        create_staff = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.grossProfitModelInstId != null ">
+        gross_profit_model_inst_id = #{condition.grossProfitModelInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerId != null ">
+        and offer_id = #{condition.offerId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.grossProfitModelId != null ">
+        and gross_profit_model_id = #{condition.grossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paramValue != null and condition.paramValue != ''">
+        and param_value = #{condition.paramValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and create_staff = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and remark = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

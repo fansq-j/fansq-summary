@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SaleOppContactMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SaleOppContactDO">
+    <id column="SALE_OPP_CONTACT_ID" jdbcType="BIGINT" property="saleOppContactId"/>
+    <result column="SALE_OPP_ID" jdbcType="BIGINT" property="saleOppId"/>
+    <result column="CONTACT_NAME" jdbcType="VARCHAR" property="contactName"/>
+    <result column="CONTACT_PHONE" jdbcType="VARCHAR" property="contactPhone"/>
+    <result column="FISRT_CHANGE" jdbcType="VARCHAR" property="fisrtChange"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SALE_OPP_CONTACT_ID, 
+          SALE_OPP_ID, 
+          CONTACT_NAME, 
+          CONTACT_PHONE, 
+          FISRT_CHANGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SALE_OPP_ID, 
+          CONTACT_NAME, 
+          CONTACT_PHONE, 
+          FISRT_CHANGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="saleOppContactId != null ">
+        SALE_OPP_CONTACT_ID = #{saleOppContactId, jdbcType=BIGINT }
+      </if>
+      <if test="saleOppId != null ">
+        and SALE_OPP_ID = #{saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="contactName != null and contactName != ''">
+        and CONTACT_NAME = #{contactName, jdbcType=VARCHAR }
+      </if>
+      <if test="contactPhone != null and contactPhone != ''">
+        and CONTACT_PHONE = #{contactPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="fisrtChange != null and fisrtChange != ''">
+        and FISRT_CHANGE = #{fisrtChange, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SaleOppContactDO" resultType="java.lang.Integer">
+      select count(*) from SALE_OPP_CONTACT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SALE_OPP_CONTACT
+        where 
+           SALE_OPP_CONTACT_ID = #{saleOppContactId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SALE_OPP_CONTACT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="saleOppContactId">
+      insert into  SALE_OPP_CONTACT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{contactName,jdbcType=VARCHAR}, 
+        #{contactPhone,jdbcType=VARCHAR}, 
+        #{fisrtChange,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SALE_OPP_CONTACT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{saleOppContactId,jdbcType=BIGINT}, 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{contactName,jdbcType=VARCHAR}, 
+        #{contactPhone,jdbcType=VARCHAR}, 
+        #{fisrtChange,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SALE_OPP_CONTACT  
+        where
+           SALE_OPP_CONTACT_ID = #{saleOppContactId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SALE_OPP_CONTACT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SALE_OPP_CONTACT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="saleOppId != null">
+         SALE_OPP_ID = #{saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null">
+         CONTACT_NAME = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+         CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fisrtChange != null">
+         FISRT_CHANGE = #{fisrtChange,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SALE_OPP_CONTACT_ID = #{saleOppContactId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SALE_OPP_CONTACT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.saleOppContactId != null">
+        SALE_OPP_CONTACT_ID = #{record.saleOppContactId,jdbcType=BIGINT},
+      </if>
+      <if test="record.saleOppId != null">
+        SALE_OPP_ID = #{record.saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactName != null">
+        CONTACT_NAME = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null">
+        CONTACT_PHONE = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fisrtChange != null">
+        FISRT_CHANGE = #{record.fisrtChange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.saleOppContactId != null ">
+        SALE_OPP_CONTACT_ID = #{condition.saleOppContactId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.saleOppId != null ">
+        and SALE_OPP_ID = #{condition.saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.contactName != null and condition.contactName != ''">
+        and CONTACT_NAME = #{condition.contactName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactPhone != null and condition.contactPhone != ''">
+        and CONTACT_PHONE = #{condition.contactPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.fisrtChange != null and condition.fisrtChange != ''">
+        and FISRT_CHANGE = #{condition.fisrtChange, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

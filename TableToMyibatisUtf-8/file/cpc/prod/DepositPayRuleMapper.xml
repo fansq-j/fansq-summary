@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.DepositPayRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.DepositPayRuleDO">
+    <id column="DEPOSIT_PAY_ROLE_ID" jdbcType="INTEGER" property="depositPayRoleId"/>
+    <result column="DEPOSIT_TYPE_ID" jdbcType="INTEGER" property="depositTypeId"/>
+    <result column="DELAY_DAY" jdbcType="INTEGER" property="delayDay"/>
+    <result column="IF_SAVE_BALANCE" jdbcType="INTEGER" property="ifSaveBalance"/>
+    <result column="BALANCE_TYPE_ID" jdbcType="INTEGER" property="balanceTypeId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          DEPOSIT_PAY_ROLE_ID, 
+          DEPOSIT_TYPE_ID, 
+          DELAY_DAY, 
+          IF_SAVE_BALANCE, 
+          BALANCE_TYPE_ID, 
+          OPER_TYPE, 
+          LAN_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          DEPOSIT_TYPE_ID, 
+          DELAY_DAY, 
+          IF_SAVE_BALANCE, 
+          BALANCE_TYPE_ID, 
+          OPER_TYPE, 
+          LAN_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="depositPayRoleId != null ">
+        DEPOSIT_PAY_ROLE_ID = #{depositPayRoleId, jdbcType=INTEGER }
+      </if>
+      <if test="depositTypeId != null ">
+        and DEPOSIT_TYPE_ID = #{depositTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="delayDay != null ">
+        and DELAY_DAY = #{delayDay, jdbcType=INTEGER }
+      </if>
+      <if test="ifSaveBalance != null ">
+        and IF_SAVE_BALANCE = #{ifSaveBalance, jdbcType=INTEGER }
+      </if>
+      <if test="balanceTypeId != null ">
+        and BALANCE_TYPE_ID = #{balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.DepositPayRuleDO" resultType="java.lang.Integer">
+      select count(*) from DEPOSIT_PAY_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from DEPOSIT_PAY_RULE
+        where 
+           DEPOSIT_PAY_ROLE_ID = #{depositPayRoleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DEPOSIT_PAY_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="depositPayRoleId">
+      insert into  DEPOSIT_PAY_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{depositTypeId,jdbcType=INTEGER}, 
+        #{delayDay,jdbcType=INTEGER}, 
+        #{ifSaveBalance,jdbcType=INTEGER}, 
+        #{balanceTypeId,jdbcType=INTEGER}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  DEPOSIT_PAY_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{depositPayRoleId,jdbcType=INTEGER}, 
+        #{depositTypeId,jdbcType=INTEGER}, 
+        #{delayDay,jdbcType=INTEGER}, 
+        #{ifSaveBalance,jdbcType=INTEGER}, 
+        #{balanceTypeId,jdbcType=INTEGER}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from DEPOSIT_PAY_RULE  
+        where
+           DEPOSIT_PAY_ROLE_ID = #{depositPayRoleId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from DEPOSIT_PAY_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  DEPOSIT_PAY_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="depositTypeId != null">
+         DEPOSIT_TYPE_ID = #{depositTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="delayDay != null">
+         DELAY_DAY = #{delayDay,jdbcType=INTEGER},
+      </if>
+      <if test="ifSaveBalance != null">
+         IF_SAVE_BALANCE = #{ifSaveBalance,jdbcType=INTEGER},
+      </if>
+      <if test="balanceTypeId != null">
+         BALANCE_TYPE_ID = #{balanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           DEPOSIT_PAY_ROLE_ID = #{depositPayRoleId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update DEPOSIT_PAY_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.depositPayRoleId != null">
+        DEPOSIT_PAY_ROLE_ID = #{record.depositPayRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.depositTypeId != null">
+        DEPOSIT_TYPE_ID = #{record.depositTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.delayDay != null">
+        DELAY_DAY = #{record.delayDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifSaveBalance != null">
+        IF_SAVE_BALANCE = #{record.ifSaveBalance,jdbcType=INTEGER},
+      </if>
+      <if test="record.balanceTypeId != null">
+        BALANCE_TYPE_ID = #{record.balanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.depositPayRoleId != null ">
+        DEPOSIT_PAY_ROLE_ID = #{condition.depositPayRoleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.depositTypeId != null ">
+        and DEPOSIT_TYPE_ID = #{condition.depositTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.delayDay != null ">
+        and DELAY_DAY = #{condition.delayDay, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifSaveBalance != null ">
+        and IF_SAVE_BALANCE = #{condition.ifSaveBalance, jdbcType=INTEGER }
+      </if>
+      <if test="condition.balanceTypeId != null ">
+        and BALANCE_TYPE_ID = #{condition.balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

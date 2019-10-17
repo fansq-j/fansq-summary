@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BalanceRelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BalanceRelDO">
+    <id column="BALANCE_RELATION_ID" jdbcType="BIGINT" property="balanceRelationId"/>
+    <result column="ACCT_BALANCE_ID" jdbcType="BIGINT" property="acctBalanceId"/>
+    <result column="OBJECT_TYPE" jdbcType="INTEGER" property="objectType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BALANCE_RELATION_ID, 
+          ACCT_BALANCE_ID, 
+          OBJECT_TYPE, 
+          OBJ_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_BALANCE_ID, 
+          OBJECT_TYPE, 
+          OBJ_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="balanceRelationId != null ">
+        BALANCE_RELATION_ID = #{balanceRelationId, jdbcType=BIGINT }
+      </if>
+      <if test="acctBalanceId != null ">
+        and ACCT_BALANCE_ID = #{acctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="objectType != null ">
+        and OBJECT_TYPE = #{objectType, jdbcType=INTEGER }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BalanceRelDO" resultType="java.lang.Integer">
+      select count(*) from BALANCE_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BALANCE_REL
+        where 
+           BALANCE_RELATION_ID = #{balanceRelationId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BALANCE_REL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="balanceRelationId">
+      insert into  BALANCE_REL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctBalanceId,jdbcType=BIGINT}, 
+        #{objectType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BALANCE_REL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{balanceRelationId,jdbcType=BIGINT}, 
+        #{acctBalanceId,jdbcType=BIGINT}, 
+        #{objectType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BALANCE_REL  
+        where
+           BALANCE_RELATION_ID = #{balanceRelationId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BALANCE_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BALANCE_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctBalanceId != null">
+         ACCT_BALANCE_ID = #{acctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="objectType != null">
+         OBJECT_TYPE = #{objectType,jdbcType=INTEGER},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           BALANCE_RELATION_ID = #{balanceRelationId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BALANCE_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.balanceRelationId != null">
+        BALANCE_RELATION_ID = #{record.balanceRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctBalanceId != null">
+        ACCT_BALANCE_ID = #{record.acctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objectType != null">
+        OBJECT_TYPE = #{record.objectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.balanceRelationId != null ">
+        BALANCE_RELATION_ID = #{condition.balanceRelationId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctBalanceId != null ">
+        and ACCT_BALANCE_ID = #{condition.acctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objectType != null ">
+        and OBJECT_TYPE = #{condition.objectType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

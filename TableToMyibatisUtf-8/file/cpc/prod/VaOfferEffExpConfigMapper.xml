@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.VaOfferEffExpConfigMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.VaOfferEffExpConfigDO">
+    <id column="OFFER_EFF_EXP_CONFIG_ID" jdbcType="BIGINT" property="offerEffExpConfigId"/>
+    <result column="VA_OFFER_ID" jdbcType="BIGINT" property="vaOfferId"/>
+    <result column="SERVICE_OFFER_ID" jdbcType="INTEGER" property="serviceOfferId"/>
+    <result column="EFF_BASE_TYPE" jdbcType="VARCHAR" property="effBaseType"/>
+    <result column="EFF_TYPE" jdbcType="VARCHAR" property="effType"/>
+    <result column="EXP_TYPE" jdbcType="VARCHAR" property="expType"/>
+    <result column="PERIOD_TIME_TYPE" jdbcType="VARCHAR" property="periodTimeType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="PERIOD_UNIT" jdbcType="VARCHAR" property="periodUnit"/>
+    <result column="PERIOD_TIME" jdbcType="INTEGER" property="periodTime"/>
+    <result column="TRIAL_TYPE" jdbcType="INTEGER" property="trialType"/>
+    <result column="TRIAL_PERIOD_UNIT" jdbcType="VARCHAR" property="trialPeriodUnit"/>
+    <result column="TRIAL_PERIOD_TIME" jdbcType="INTEGER" property="trialPeriodTime"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          OFFER_EFF_EXP_CONFIG_ID, 
+          VA_OFFER_ID, 
+          SERVICE_OFFER_ID, 
+          EFF_BASE_TYPE, 
+          EFF_TYPE, 
+          EXP_TYPE, 
+          PERIOD_TIME_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          PERIOD_UNIT, 
+          PERIOD_TIME, 
+          TRIAL_TYPE, 
+          TRIAL_PERIOD_UNIT, 
+          TRIAL_PERIOD_TIME, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          VA_OFFER_ID, 
+          SERVICE_OFFER_ID, 
+          EFF_BASE_TYPE, 
+          EFF_TYPE, 
+          EXP_TYPE, 
+          PERIOD_TIME_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          PERIOD_UNIT, 
+          PERIOD_TIME, 
+          TRIAL_TYPE, 
+          TRIAL_PERIOD_UNIT, 
+          TRIAL_PERIOD_TIME, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="offerEffExpConfigId != null ">
+        OFFER_EFF_EXP_CONFIG_ID = #{offerEffExpConfigId, jdbcType=BIGINT }
+      </if>
+      <if test="vaOfferId != null ">
+        and VA_OFFER_ID = #{vaOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="effBaseType != null and effBaseType != ''">
+        and EFF_BASE_TYPE = #{effBaseType, jdbcType=VARCHAR }
+      </if>
+      <if test="effType != null and effType != ''">
+        and EFF_TYPE = #{effType, jdbcType=VARCHAR }
+      </if>
+      <if test="expType != null and expType != ''">
+        and EXP_TYPE = #{expType, jdbcType=VARCHAR }
+      </if>
+      <if test="periodTimeType != null and periodTimeType != ''">
+        and PERIOD_TIME_TYPE = #{periodTimeType, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="periodUnit != null and periodUnit != ''">
+        and PERIOD_UNIT = #{periodUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="periodTime != null ">
+        and PERIOD_TIME = #{periodTime, jdbcType=INTEGER }
+      </if>
+      <if test="trialType != null ">
+        and TRIAL_TYPE = #{trialType, jdbcType=INTEGER }
+      </if>
+      <if test="trialPeriodUnit != null and trialPeriodUnit != ''">
+        and TRIAL_PERIOD_UNIT = #{trialPeriodUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="trialPeriodTime != null ">
+        and TRIAL_PERIOD_TIME = #{trialPeriodTime, jdbcType=INTEGER }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.VaOfferEffExpConfigDO" resultType="java.lang.Integer">
+      select count(*) from VA_OFFER_EFF_EXP_CONFIG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from VA_OFFER_EFF_EXP_CONFIG
+        where 
+           OFFER_EFF_EXP_CONFIG_ID = #{offerEffExpConfigId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  VA_OFFER_EFF_EXP_CONFIG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="offerEffExpConfigId">
+      insert into  VA_OFFER_EFF_EXP_CONFIG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{vaOfferId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{effBaseType,jdbcType=VARCHAR}, 
+        #{effType,jdbcType=VARCHAR}, 
+        #{expType,jdbcType=VARCHAR}, 
+        #{periodTimeType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{periodUnit,jdbcType=VARCHAR}, 
+        #{periodTime,jdbcType=INTEGER}, 
+        #{trialType,jdbcType=INTEGER}, 
+        #{trialPeriodUnit,jdbcType=VARCHAR}, 
+        #{trialPeriodTime,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  VA_OFFER_EFF_EXP_CONFIG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{offerEffExpConfigId,jdbcType=BIGINT}, 
+        #{vaOfferId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{effBaseType,jdbcType=VARCHAR}, 
+        #{effType,jdbcType=VARCHAR}, 
+        #{expType,jdbcType=VARCHAR}, 
+        #{periodTimeType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{periodUnit,jdbcType=VARCHAR}, 
+        #{periodTime,jdbcType=INTEGER}, 
+        #{trialType,jdbcType=INTEGER}, 
+        #{trialPeriodUnit,jdbcType=VARCHAR}, 
+        #{trialPeriodTime,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from VA_OFFER_EFF_EXP_CONFIG  
+        where
+           OFFER_EFF_EXP_CONFIG_ID = #{offerEffExpConfigId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from VA_OFFER_EFF_EXP_CONFIG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  VA_OFFER_EFF_EXP_CONFIG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="vaOfferId != null">
+         VA_OFFER_ID = #{vaOfferId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceOfferId != null">
+         SERVICE_OFFER_ID = #{serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="effBaseType != null">
+         EFF_BASE_TYPE = #{effBaseType,jdbcType=VARCHAR},
+      </if>
+      <if test="effType != null">
+         EFF_TYPE = #{effType,jdbcType=VARCHAR},
+      </if>
+      <if test="expType != null">
+         EXP_TYPE = #{expType,jdbcType=VARCHAR},
+      </if>
+      <if test="periodTimeType != null">
+         PERIOD_TIME_TYPE = #{periodTimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="periodUnit != null">
+         PERIOD_UNIT = #{periodUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="periodTime != null">
+         PERIOD_TIME = #{periodTime,jdbcType=INTEGER},
+      </if>
+      <if test="trialType != null">
+         TRIAL_TYPE = #{trialType,jdbcType=INTEGER},
+      </if>
+      <if test="trialPeriodUnit != null">
+         TRIAL_PERIOD_UNIT = #{trialPeriodUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="trialPeriodTime != null">
+         TRIAL_PERIOD_TIME = #{trialPeriodTime,jdbcType=INTEGER},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           OFFER_EFF_EXP_CONFIG_ID = #{offerEffExpConfigId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update VA_OFFER_EFF_EXP_CONFIG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.offerEffExpConfigId != null">
+        OFFER_EFF_EXP_CONFIG_ID = #{record.offerEffExpConfigId,jdbcType=BIGINT},
+      </if>
+      <if test="record.vaOfferId != null">
+        VA_OFFER_ID = #{record.vaOfferId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceOfferId != null">
+        SERVICE_OFFER_ID = #{record.serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="record.effBaseType != null">
+        EFF_BASE_TYPE = #{record.effBaseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effType != null">
+        EFF_TYPE = #{record.effType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expType != null">
+        EXP_TYPE = #{record.expType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.periodTimeType != null">
+        PERIOD_TIME_TYPE = #{record.periodTimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.periodUnit != null">
+        PERIOD_UNIT = #{record.periodUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.periodTime != null">
+        PERIOD_TIME = #{record.periodTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.trialType != null">
+        TRIAL_TYPE = #{record.trialType,jdbcType=INTEGER},
+      </if>
+      <if test="record.trialPeriodUnit != null">
+        TRIAL_PERIOD_UNIT = #{record.trialPeriodUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trialPeriodTime != null">
+        TRIAL_PERIOD_TIME = #{record.trialPeriodTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.offerEffExpConfigId != null ">
+        OFFER_EFF_EXP_CONFIG_ID = #{condition.offerEffExpConfigId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.vaOfferId != null ">
+        and VA_OFFER_ID = #{condition.vaOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{condition.serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effBaseType != null and condition.effBaseType != ''">
+        and EFF_BASE_TYPE = #{condition.effBaseType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effType != null and condition.effType != ''">
+        and EFF_TYPE = #{condition.effType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.expType != null and condition.expType != ''">
+        and EXP_TYPE = #{condition.expType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.periodTimeType != null and condition.periodTimeType != ''">
+        and PERIOD_TIME_TYPE = #{condition.periodTimeType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.periodUnit != null and condition.periodUnit != ''">
+        and PERIOD_UNIT = #{condition.periodUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.periodTime != null ">
+        and PERIOD_TIME = #{condition.periodTime, jdbcType=INTEGER }
+      </if>
+      <if test="condition.trialType != null ">
+        and TRIAL_TYPE = #{condition.trialType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.trialPeriodUnit != null and condition.trialPeriodUnit != ''">
+        and TRIAL_PERIOD_UNIT = #{condition.trialPeriodUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.trialPeriodTime != null ">
+        and TRIAL_PERIOD_TIME = #{condition.trialPeriodTime, jdbcType=INTEGER }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

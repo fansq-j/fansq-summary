@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TrafficIdentifyMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TrafficIdentifyDO">
+    <id column="TRAFFIC_IDENTIFY_ID" jdbcType="BIGINT" property="trafficIdentifyId"/>
+    <result column="TRAFFIC_IDENTIFY_NBR" jdbcType="VARCHAR" property="trafficIdentifyNbr"/>
+    <result column="TRAFFIC_IDENTIFY_NAME" jdbcType="VARCHAR" property="trafficIdentifyName"/>
+    <result column="TRAFFIC_IDENTIFY_DESC" jdbcType="VARCHAR" property="trafficIdentifyDesc"/>
+    <result column="BILL_CONTENT" jdbcType="VARCHAR" property="billContent"/>
+    <result column="CONTENT_RANK" jdbcType="INTEGER" property="contentRank"/>
+    <result column="MANAGE_GRADE" jdbcType="VARCHAR" property="manageGrade"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="APP_SYS" jdbcType="VARCHAR" property="appSys"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TRAFFIC_IDENTIFY_ID, 
+          TRAFFIC_IDENTIFY_NBR, 
+          TRAFFIC_IDENTIFY_NAME, 
+          TRAFFIC_IDENTIFY_DESC, 
+          BILL_CONTENT, 
+          CONTENT_RANK, 
+          MANAGE_GRADE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          APP_SYS, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TRAFFIC_IDENTIFY_NBR, 
+          TRAFFIC_IDENTIFY_NAME, 
+          TRAFFIC_IDENTIFY_DESC, 
+          BILL_CONTENT, 
+          CONTENT_RANK, 
+          MANAGE_GRADE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          APP_SYS, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="trafficIdentifyId != null ">
+        TRAFFIC_IDENTIFY_ID = #{trafficIdentifyId, jdbcType=BIGINT }
+      </if>
+      <if test="trafficIdentifyNbr != null and trafficIdentifyNbr != ''">
+        and TRAFFIC_IDENTIFY_NBR = #{trafficIdentifyNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="trafficIdentifyName != null and trafficIdentifyName != ''">
+        and TRAFFIC_IDENTIFY_NAME = #{trafficIdentifyName, jdbcType=VARCHAR }
+      </if>
+      <if test="trafficIdentifyDesc != null and trafficIdentifyDesc != ''">
+        and TRAFFIC_IDENTIFY_DESC = #{trafficIdentifyDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="billContent != null and billContent != ''">
+        and BILL_CONTENT = #{billContent, jdbcType=VARCHAR }
+      </if>
+      <if test="contentRank != null ">
+        and CONTENT_RANK = #{contentRank, jdbcType=INTEGER }
+      </if>
+      <if test="manageGrade != null and manageGrade != ''">
+        and MANAGE_GRADE = #{manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="appSys != null and appSys != ''">
+        and APP_SYS = #{appSys, jdbcType=VARCHAR }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TrafficIdentifyDO" resultType="java.lang.Integer">
+      select count(*) from TRAFFIC_IDENTIFY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TRAFFIC_IDENTIFY
+        where 
+           TRAFFIC_IDENTIFY_ID = #{trafficIdentifyId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TRAFFIC_IDENTIFY 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="trafficIdentifyId">
+      insert into  TRAFFIC_IDENTIFY ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{trafficIdentifyNbr,jdbcType=VARCHAR}, 
+        #{trafficIdentifyName,jdbcType=VARCHAR}, 
+        #{trafficIdentifyDesc,jdbcType=VARCHAR}, 
+        #{billContent,jdbcType=VARCHAR}, 
+        #{contentRank,jdbcType=INTEGER}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{appSys,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TRAFFIC_IDENTIFY ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{trafficIdentifyId,jdbcType=BIGINT}, 
+        #{trafficIdentifyNbr,jdbcType=VARCHAR}, 
+        #{trafficIdentifyName,jdbcType=VARCHAR}, 
+        #{trafficIdentifyDesc,jdbcType=VARCHAR}, 
+        #{billContent,jdbcType=VARCHAR}, 
+        #{contentRank,jdbcType=INTEGER}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{appSys,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TRAFFIC_IDENTIFY  
+        where
+           TRAFFIC_IDENTIFY_ID = #{trafficIdentifyId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TRAFFIC_IDENTIFY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TRAFFIC_IDENTIFY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="trafficIdentifyNbr != null">
+         TRAFFIC_IDENTIFY_NBR = #{trafficIdentifyNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficIdentifyName != null">
+         TRAFFIC_IDENTIFY_NAME = #{trafficIdentifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficIdentifyDesc != null">
+         TRAFFIC_IDENTIFY_DESC = #{trafficIdentifyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="billContent != null">
+         BILL_CONTENT = #{billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="contentRank != null">
+         CONTENT_RANK = #{contentRank,jdbcType=INTEGER},
+      </if>
+      <if test="manageGrade != null">
+         MANAGE_GRADE = #{manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appSys != null">
+         APP_SYS = #{appSys,jdbcType=VARCHAR},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           TRAFFIC_IDENTIFY_ID = #{trafficIdentifyId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TRAFFIC_IDENTIFY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.trafficIdentifyId != null">
+        TRAFFIC_IDENTIFY_ID = #{record.trafficIdentifyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.trafficIdentifyNbr != null">
+        TRAFFIC_IDENTIFY_NBR = #{record.trafficIdentifyNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trafficIdentifyName != null">
+        TRAFFIC_IDENTIFY_NAME = #{record.trafficIdentifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trafficIdentifyDesc != null">
+        TRAFFIC_IDENTIFY_DESC = #{record.trafficIdentifyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billContent != null">
+        BILL_CONTENT = #{record.billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentRank != null">
+        CONTENT_RANK = #{record.contentRank,jdbcType=INTEGER},
+      </if>
+      <if test="record.manageGrade != null">
+        MANAGE_GRADE = #{record.manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.appSys != null">
+        APP_SYS = #{record.appSys,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.trafficIdentifyId != null ">
+        TRAFFIC_IDENTIFY_ID = #{condition.trafficIdentifyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.trafficIdentifyNbr != null and condition.trafficIdentifyNbr != ''">
+        and TRAFFIC_IDENTIFY_NBR = #{condition.trafficIdentifyNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.trafficIdentifyName != null and condition.trafficIdentifyName != ''">
+        and TRAFFIC_IDENTIFY_NAME = #{condition.trafficIdentifyName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.trafficIdentifyDesc != null and condition.trafficIdentifyDesc != ''">
+        and TRAFFIC_IDENTIFY_DESC = #{condition.trafficIdentifyDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.billContent != null and condition.billContent != ''">
+        and BILL_CONTENT = #{condition.billContent, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contentRank != null ">
+        and CONTENT_RANK = #{condition.contentRank, jdbcType=INTEGER }
+      </if>
+      <if test="condition.manageGrade != null and condition.manageGrade != ''">
+        and MANAGE_GRADE = #{condition.manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.appSys != null and condition.appSys != ''">
+        and APP_SYS = #{condition.appSys, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

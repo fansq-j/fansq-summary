@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.SalesPromotionItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.SalesPromotionItemDO">
+    <id column="ITEM_ID" jdbcType="INTEGER" property="itemId"/>
+    <result column="PROMOTION_ID" jdbcType="INTEGER" property="promotionId"/>
+    <result column="ITEM_ATTR_GROUP" jdbcType="INTEGER" property="itemAttrGroup"/>
+    <result column="ITEM_ATTR_ID" jdbcType="INTEGER" property="itemAttrId"/>
+    <result column="ATTR_VALUE" jdbcType="VARCHAR" property="attrValue"/>
+    <result column="ATTR_VALUE_DESC" jdbcType="VARCHAR" property="attrValueDesc"/>
+    <result column="ITEM_KIND" jdbcType="INTEGER" property="itemKind"/>
+    <result column="ITEM_FUNC_TYPE" jdbcType="INTEGER" property="itemFuncType"/>
+    <result column="IF_VISIBLE" jdbcType="VARCHAR" property="ifVisible"/>
+    <result column="IF_READONLY" jdbcType="VARCHAR" property="ifReadonly"/>
+    <result column="IF_NECESSARY" jdbcType="VARCHAR" property="ifNecessary"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ITEM_ID, 
+          PROMOTION_ID, 
+          ITEM_ATTR_GROUP, 
+          ITEM_ATTR_ID, 
+          ATTR_VALUE, 
+          ATTR_VALUE_DESC, 
+          ITEM_KIND, 
+          ITEM_FUNC_TYPE, 
+          IF_VISIBLE, 
+          IF_READONLY, 
+          IF_NECESSARY, 
+          STATUS_CD, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROMOTION_ID, 
+          ITEM_ATTR_GROUP, 
+          ITEM_ATTR_ID, 
+          ATTR_VALUE, 
+          ATTR_VALUE_DESC, 
+          ITEM_KIND, 
+          ITEM_FUNC_TYPE, 
+          IF_VISIBLE, 
+          IF_READONLY, 
+          IF_NECESSARY, 
+          STATUS_CD, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="itemId != null ">
+        ITEM_ID = #{itemId, jdbcType=INTEGER }
+      </if>
+      <if test="promotionId != null ">
+        and PROMOTION_ID = #{promotionId, jdbcType=INTEGER }
+      </if>
+      <if test="itemAttrGroup != null ">
+        and ITEM_ATTR_GROUP = #{itemAttrGroup, jdbcType=INTEGER }
+      </if>
+      <if test="itemAttrId != null ">
+        and ITEM_ATTR_ID = #{itemAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="attrValue != null and attrValue != ''">
+        and ATTR_VALUE = #{attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="attrValueDesc != null and attrValueDesc != ''">
+        and ATTR_VALUE_DESC = #{attrValueDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="itemKind != null ">
+        and ITEM_KIND = #{itemKind, jdbcType=INTEGER }
+      </if>
+      <if test="itemFuncType != null ">
+        and ITEM_FUNC_TYPE = #{itemFuncType, jdbcType=INTEGER }
+      </if>
+      <if test="ifVisible != null and ifVisible != ''">
+        and IF_VISIBLE = #{ifVisible, jdbcType=VARCHAR }
+      </if>
+      <if test="ifReadonly != null and ifReadonly != ''">
+        and IF_READONLY = #{ifReadonly, jdbcType=VARCHAR }
+      </if>
+      <if test="ifNecessary != null and ifNecessary != ''">
+        and IF_NECESSARY = #{ifNecessary, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.SalesPromotionItemDO" resultType="java.lang.Integer">
+      select count(*) from SALES_PROMOTION_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SALES_PROMOTION_ITEM
+        where 
+           ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SALES_PROMOTION_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="itemId">
+      insert into  SALES_PROMOTION_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{promotionId,jdbcType=INTEGER}, 
+        #{itemAttrGroup,jdbcType=INTEGER}, 
+        #{itemAttrId,jdbcType=INTEGER}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{attrValueDesc,jdbcType=VARCHAR}, 
+        #{itemKind,jdbcType=INTEGER}, 
+        #{itemFuncType,jdbcType=INTEGER}, 
+        #{ifVisible,jdbcType=VARCHAR}, 
+        #{ifReadonly,jdbcType=VARCHAR}, 
+        #{ifNecessary,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SALES_PROMOTION_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{itemId,jdbcType=INTEGER}, 
+        #{promotionId,jdbcType=INTEGER}, 
+        #{itemAttrGroup,jdbcType=INTEGER}, 
+        #{itemAttrId,jdbcType=INTEGER}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{attrValueDesc,jdbcType=VARCHAR}, 
+        #{itemKind,jdbcType=INTEGER}, 
+        #{itemFuncType,jdbcType=INTEGER}, 
+        #{ifVisible,jdbcType=VARCHAR}, 
+        #{ifReadonly,jdbcType=VARCHAR}, 
+        #{ifNecessary,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SALES_PROMOTION_ITEM  
+        where
+           ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from SALES_PROMOTION_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SALES_PROMOTION_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="promotionId != null">
+         PROMOTION_ID = #{promotionId,jdbcType=INTEGER},
+      </if>
+      <if test="itemAttrGroup != null">
+         ITEM_ATTR_GROUP = #{itemAttrGroup,jdbcType=INTEGER},
+      </if>
+      <if test="itemAttrId != null">
+         ITEM_ATTR_ID = #{itemAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="attrValue != null">
+         ATTR_VALUE = #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="attrValueDesc != null">
+         ATTR_VALUE_DESC = #{attrValueDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="itemKind != null">
+         ITEM_KIND = #{itemKind,jdbcType=INTEGER},
+      </if>
+      <if test="itemFuncType != null">
+         ITEM_FUNC_TYPE = #{itemFuncType,jdbcType=INTEGER},
+      </if>
+      <if test="ifVisible != null">
+         IF_VISIBLE = #{ifVisible,jdbcType=VARCHAR},
+      </if>
+      <if test="ifReadonly != null">
+         IF_READONLY = #{ifReadonly,jdbcType=VARCHAR},
+      </if>
+      <if test="ifNecessary != null">
+         IF_NECESSARY = #{ifNecessary,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update SALES_PROMOTION_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.itemId != null">
+        ITEM_ID = #{record.itemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.promotionId != null">
+        PROMOTION_ID = #{record.promotionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemAttrGroup != null">
+        ITEM_ATTR_GROUP = #{record.itemAttrGroup,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemAttrId != null">
+        ITEM_ATTR_ID = #{record.itemAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrValue != null">
+        ATTR_VALUE = #{record.attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrValueDesc != null">
+        ATTR_VALUE_DESC = #{record.attrValueDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemKind != null">
+        ITEM_KIND = #{record.itemKind,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemFuncType != null">
+        ITEM_FUNC_TYPE = #{record.itemFuncType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifVisible != null">
+        IF_VISIBLE = #{record.ifVisible,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifReadonly != null">
+        IF_READONLY = #{record.ifReadonly,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifNecessary != null">
+        IF_NECESSARY = #{record.ifNecessary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.itemId != null ">
+        ITEM_ID = #{condition.itemId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.promotionId != null ">
+        and PROMOTION_ID = #{condition.promotionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.itemAttrGroup != null ">
+        and ITEM_ATTR_GROUP = #{condition.itemAttrGroup, jdbcType=INTEGER }
+      </if>
+      <if test="condition.itemAttrId != null ">
+        and ITEM_ATTR_ID = #{condition.itemAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrValue != null and condition.attrValue != ''">
+        and ATTR_VALUE = #{condition.attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrValueDesc != null and condition.attrValueDesc != ''">
+        and ATTR_VALUE_DESC = #{condition.attrValueDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.itemKind != null ">
+        and ITEM_KIND = #{condition.itemKind, jdbcType=INTEGER }
+      </if>
+      <if test="condition.itemFuncType != null ">
+        and ITEM_FUNC_TYPE = #{condition.itemFuncType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifVisible != null and condition.ifVisible != ''">
+        and IF_VISIBLE = #{condition.ifVisible, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifReadonly != null and condition.ifReadonly != ''">
+        and IF_READONLY = #{condition.ifReadonly, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifNecessary != null and condition.ifNecessary != ''">
+        and IF_NECESSARY = #{condition.ifNecessary, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

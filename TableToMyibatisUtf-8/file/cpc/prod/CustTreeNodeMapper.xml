@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CustTreeNodeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CustTreeNodeDO">
+    <id column="CUST_TREE_NODE_ID" jdbcType="BIGINT" property="custTreeNodeId"/>
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+    <result column="CUST_TREE_ID" jdbcType="BIGINT" property="custTreeId"/>
+    <result column="CUST_TREE_NODE_CODE" jdbcType="VARCHAR" property="custTreeNodeCode"/>
+    <result column="CUST_TREE_NODE_NAME" jdbcType="VARCHAR" property="custTreeNodeName"/>
+    <result column="PARENT_NODE_ID" jdbcType="BIGINT" property="parentNodeId"/>
+    <result column="CUST_TREE_LEVEL" jdbcType="INTEGER" property="custTreeLevel"/>
+    <result column="LEAF_FLAG" jdbcType="INTEGER" property="leafFlag"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CUST_TREE_NODE_ID, 
+          CUST_ID, 
+          CUST_TREE_ID, 
+          CUST_TREE_NODE_CODE, 
+          CUST_TREE_NODE_NAME, 
+          PARENT_NODE_ID, 
+          CUST_TREE_LEVEL, 
+          LEAF_FLAG, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CUST_ID, 
+          CUST_TREE_ID, 
+          CUST_TREE_NODE_CODE, 
+          CUST_TREE_NODE_NAME, 
+          PARENT_NODE_ID, 
+          CUST_TREE_LEVEL, 
+          LEAF_FLAG, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="custTreeNodeId != null ">
+        CUST_TREE_NODE_ID = #{custTreeNodeId, jdbcType=BIGINT }
+      </if>
+      <if test="custId != null ">
+        and CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+      <if test="custTreeId != null ">
+        and CUST_TREE_ID = #{custTreeId, jdbcType=BIGINT }
+      </if>
+      <if test="custTreeNodeCode != null and custTreeNodeCode != ''">
+        and CUST_TREE_NODE_CODE = #{custTreeNodeCode, jdbcType=VARCHAR }
+      </if>
+      <if test="custTreeNodeName != null and custTreeNodeName != ''">
+        and CUST_TREE_NODE_NAME = #{custTreeNodeName, jdbcType=VARCHAR }
+      </if>
+      <if test="parentNodeId != null ">
+        and PARENT_NODE_ID = #{parentNodeId, jdbcType=BIGINT }
+      </if>
+      <if test="custTreeLevel != null ">
+        and CUST_TREE_LEVEL = #{custTreeLevel, jdbcType=INTEGER }
+      </if>
+      <if test="leafFlag != null ">
+        and LEAF_FLAG = #{leafFlag, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CustTreeNodeDO" resultType="java.lang.Integer">
+      select count(*) from CUST_TREE_NODE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CUST_TREE_NODE
+        where 
+           CUST_TREE_NODE_ID = #{custTreeNodeId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CUST_TREE_NODE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="custTreeNodeId">
+      insert into  CUST_TREE_NODE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{custId,jdbcType=BIGINT}, 
+        #{custTreeId,jdbcType=BIGINT}, 
+        #{custTreeNodeCode,jdbcType=VARCHAR}, 
+        #{custTreeNodeName,jdbcType=VARCHAR}, 
+        #{parentNodeId,jdbcType=BIGINT}, 
+        #{custTreeLevel,jdbcType=INTEGER}, 
+        #{leafFlag,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CUST_TREE_NODE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{custTreeNodeId,jdbcType=BIGINT}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{custTreeId,jdbcType=BIGINT}, 
+        #{custTreeNodeCode,jdbcType=VARCHAR}, 
+        #{custTreeNodeName,jdbcType=VARCHAR}, 
+        #{parentNodeId,jdbcType=BIGINT}, 
+        #{custTreeLevel,jdbcType=INTEGER}, 
+        #{leafFlag,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CUST_TREE_NODE  
+        where
+           CUST_TREE_NODE_ID = #{custTreeNodeId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CUST_TREE_NODE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CUST_TREE_NODE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="custTreeId != null">
+         CUST_TREE_ID = #{custTreeId,jdbcType=BIGINT},
+      </if>
+      <if test="custTreeNodeCode != null">
+         CUST_TREE_NODE_CODE = #{custTreeNodeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="custTreeNodeName != null">
+         CUST_TREE_NODE_NAME = #{custTreeNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentNodeId != null">
+         PARENT_NODE_ID = #{parentNodeId,jdbcType=BIGINT},
+      </if>
+      <if test="custTreeLevel != null">
+         CUST_TREE_LEVEL = #{custTreeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="leafFlag != null">
+         LEAF_FLAG = #{leafFlag,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CUST_TREE_NODE_ID = #{custTreeNodeId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CUST_TREE_NODE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.custTreeNodeId != null">
+        CUST_TREE_NODE_ID = #{record.custTreeNodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custTreeId != null">
+        CUST_TREE_ID = #{record.custTreeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custTreeNodeCode != null">
+        CUST_TREE_NODE_CODE = #{record.custTreeNodeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custTreeNodeName != null">
+        CUST_TREE_NODE_NAME = #{record.custTreeNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentNodeId != null">
+        PARENT_NODE_ID = #{record.parentNodeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custTreeLevel != null">
+        CUST_TREE_LEVEL = #{record.custTreeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.leafFlag != null">
+        LEAF_FLAG = #{record.leafFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.custTreeNodeId != null ">
+        CUST_TREE_NODE_ID = #{condition.custTreeNodeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custId != null ">
+        and CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custTreeId != null ">
+        and CUST_TREE_ID = #{condition.custTreeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custTreeNodeCode != null and condition.custTreeNodeCode != ''">
+        and CUST_TREE_NODE_CODE = #{condition.custTreeNodeCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custTreeNodeName != null and condition.custTreeNodeName != ''">
+        and CUST_TREE_NODE_NAME = #{condition.custTreeNodeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parentNodeId != null ">
+        and PARENT_NODE_ID = #{condition.parentNodeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custTreeLevel != null ">
+        and CUST_TREE_LEVEL = #{condition.custTreeLevel, jdbcType=INTEGER }
+      </if>
+      <if test="condition.leafFlag != null ">
+        and LEAF_FLAG = #{condition.leafFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

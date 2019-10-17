@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AddressMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AddressDO">
+    <id column="ADDRESS_ID" jdbcType="BIGINT" property="addressId"/>
+    <result column="LOC_ID" jdbcType="BIGINT" property="locId"/>
+    <result column="DETAIL_ADDR" jdbcType="VARCHAR" property="detailAddr"/>
+    <result column="FORMAT_ADDR" jdbcType="VARCHAR" property="formatAddr"/>
+    <result column="ADDR_ABBR" jdbcType="VARCHAR" property="addrAbbr"/>
+    <result column="ADDR_PY_NAME" jdbcType="VARCHAR" property="addrPyName"/>
+    <result column="POST_ADDR" jdbcType="VARCHAR" property="postAddr"/>
+    <result column="POSTCODE" jdbcType="VARCHAR" property="postcode"/>
+    <result column="EXCH_ID" jdbcType="BIGINT" property="exchId"/>
+    <result column="TML_NAME" jdbcType="VARCHAR" property="tmlName"/>
+    <result column="TML_CODE" jdbcType="VARCHAR" property="tmlCode"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ADDRESS_ID, 
+          LOC_ID, 
+          DETAIL_ADDR, 
+          FORMAT_ADDR, 
+          ADDR_ABBR, 
+          ADDR_PY_NAME, 
+          POST_ADDR, 
+          POSTCODE, 
+          EXCH_ID, 
+          TML_NAME, 
+          TML_CODE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          LOC_ID, 
+          DETAIL_ADDR, 
+          FORMAT_ADDR, 
+          ADDR_ABBR, 
+          ADDR_PY_NAME, 
+          POST_ADDR, 
+          POSTCODE, 
+          EXCH_ID, 
+          TML_NAME, 
+          TML_CODE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="addressId != null ">
+        ADDRESS_ID = #{addressId, jdbcType=BIGINT }
+      </if>
+      <if test="locId != null ">
+        and LOC_ID = #{locId, jdbcType=BIGINT }
+      </if>
+      <if test="detailAddr != null and detailAddr != ''">
+        and DETAIL_ADDR = #{detailAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="formatAddr != null and formatAddr != ''">
+        and FORMAT_ADDR = #{formatAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="addrAbbr != null and addrAbbr != ''">
+        and ADDR_ABBR = #{addrAbbr, jdbcType=VARCHAR }
+      </if>
+      <if test="addrPyName != null and addrPyName != ''">
+        and ADDR_PY_NAME = #{addrPyName, jdbcType=VARCHAR }
+      </if>
+      <if test="postAddr != null and postAddr != ''">
+        and POST_ADDR = #{postAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="postcode != null and postcode != ''">
+        and POSTCODE = #{postcode, jdbcType=VARCHAR }
+      </if>
+      <if test="exchId != null ">
+        and EXCH_ID = #{exchId, jdbcType=BIGINT }
+      </if>
+      <if test="tmlName != null and tmlName != ''">
+        and TML_NAME = #{tmlName, jdbcType=VARCHAR }
+      </if>
+      <if test="tmlCode != null and tmlCode != ''">
+        and TML_CODE = #{tmlCode, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AddressDO" resultType="java.lang.Integer">
+      select count(*) from ADDRESS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ADDRESS
+        where 
+           ADDRESS_ID = #{addressId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ADDRESS 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="addressId">
+      insert into  ADDRESS ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{locId,jdbcType=BIGINT}, 
+        #{detailAddr,jdbcType=VARCHAR}, 
+        #{formatAddr,jdbcType=VARCHAR}, 
+        #{addrAbbr,jdbcType=VARCHAR}, 
+        #{addrPyName,jdbcType=VARCHAR}, 
+        #{postAddr,jdbcType=VARCHAR}, 
+        #{postcode,jdbcType=VARCHAR}, 
+        #{exchId,jdbcType=BIGINT}, 
+        #{tmlName,jdbcType=VARCHAR}, 
+        #{tmlCode,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ADDRESS ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{addressId,jdbcType=BIGINT}, 
+        #{locId,jdbcType=BIGINT}, 
+        #{detailAddr,jdbcType=VARCHAR}, 
+        #{formatAddr,jdbcType=VARCHAR}, 
+        #{addrAbbr,jdbcType=VARCHAR}, 
+        #{addrPyName,jdbcType=VARCHAR}, 
+        #{postAddr,jdbcType=VARCHAR}, 
+        #{postcode,jdbcType=VARCHAR}, 
+        #{exchId,jdbcType=BIGINT}, 
+        #{tmlName,jdbcType=VARCHAR}, 
+        #{tmlCode,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ADDRESS  
+        where
+           ADDRESS_ID = #{addressId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ADDRESS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ADDRESS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="locId != null">
+         LOC_ID = #{locId,jdbcType=BIGINT},
+      </if>
+      <if test="detailAddr != null">
+         DETAIL_ADDR = #{detailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="formatAddr != null">
+         FORMAT_ADDR = #{formatAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="addrAbbr != null">
+         ADDR_ABBR = #{addrAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="addrPyName != null">
+         ADDR_PY_NAME = #{addrPyName,jdbcType=VARCHAR},
+      </if>
+      <if test="postAddr != null">
+         POST_ADDR = #{postAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+         POSTCODE = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="exchId != null">
+         EXCH_ID = #{exchId,jdbcType=BIGINT},
+      </if>
+      <if test="tmlName != null">
+         TML_NAME = #{tmlName,jdbcType=VARCHAR},
+      </if>
+      <if test="tmlCode != null">
+         TML_CODE = #{tmlCode,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ADDRESS_ID = #{addressId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ADDRESS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.addressId != null">
+        ADDRESS_ID = #{record.addressId,jdbcType=BIGINT},
+      </if>
+      <if test="record.locId != null">
+        LOC_ID = #{record.locId,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailAddr != null">
+        DETAIL_ADDR = #{record.detailAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formatAddr != null">
+        FORMAT_ADDR = #{record.formatAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrAbbr != null">
+        ADDR_ABBR = #{record.addrAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrPyName != null">
+        ADDR_PY_NAME = #{record.addrPyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postAddr != null">
+        POST_ADDR = #{record.postAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null">
+        POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchId != null">
+        EXCH_ID = #{record.exchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tmlName != null">
+        TML_NAME = #{record.tmlName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tmlCode != null">
+        TML_CODE = #{record.tmlCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.addressId != null ">
+        ADDRESS_ID = #{condition.addressId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.locId != null ">
+        and LOC_ID = #{condition.locId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.detailAddr != null and condition.detailAddr != ''">
+        and DETAIL_ADDR = #{condition.detailAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.formatAddr != null and condition.formatAddr != ''">
+        and FORMAT_ADDR = #{condition.formatAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.addrAbbr != null and condition.addrAbbr != ''">
+        and ADDR_ABBR = #{condition.addrAbbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.addrPyName != null and condition.addrPyName != ''">
+        and ADDR_PY_NAME = #{condition.addrPyName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.postAddr != null and condition.postAddr != ''">
+        and POST_ADDR = #{condition.postAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.postcode != null and condition.postcode != ''">
+        and POSTCODE = #{condition.postcode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exchId != null ">
+        and EXCH_ID = #{condition.exchId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tmlName != null and condition.tmlName != ''">
+        and TML_NAME = #{condition.tmlName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.tmlCode != null and condition.tmlCode != ''">
+        and TML_CODE = #{condition.tmlCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

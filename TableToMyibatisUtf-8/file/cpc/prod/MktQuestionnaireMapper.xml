@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktQuestionnaireMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktQuestionnaireDO">
+    <id column="NAIRE_ID" jdbcType="BIGINT" property="naireId"/>
+    <result column="NAIRE_NAME" jdbcType="VARCHAR" property="naireName"/>
+    <result column="NAIRE_TYPE" jdbcType="VARCHAR" property="naireType"/>
+    <result column="MARK_TYPE" jdbcType="VARCHAR" property="markType"/>
+    <result column="NAIRE_POINTS" jdbcType="INTEGER" property="nairePoints"/>
+    <result column="NAIRE_DESC" jdbcType="VARCHAR" property="naireDesc"/>
+    <result column="START_TIP" jdbcType="VARCHAR" property="startTip"/>
+    <result column="END_TIP" jdbcType="VARCHAR" property="endTip"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          NAIRE_ID, 
+          NAIRE_NAME, 
+          NAIRE_TYPE, 
+          MARK_TYPE, 
+          NAIRE_POINTS, 
+          NAIRE_DESC, 
+          START_TIP, 
+          END_TIP, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          NAIRE_NAME, 
+          NAIRE_TYPE, 
+          MARK_TYPE, 
+          NAIRE_POINTS, 
+          NAIRE_DESC, 
+          START_TIP, 
+          END_TIP, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="naireId != null ">
+        NAIRE_ID = #{naireId, jdbcType=BIGINT }
+      </if>
+      <if test="naireName != null and naireName != ''">
+        and NAIRE_NAME = #{naireName, jdbcType=VARCHAR }
+      </if>
+      <if test="naireType != null and naireType != ''">
+        and NAIRE_TYPE = #{naireType, jdbcType=VARCHAR }
+      </if>
+      <if test="markType != null and markType != ''">
+        and MARK_TYPE = #{markType, jdbcType=VARCHAR }
+      </if>
+      <if test="nairePoints != null ">
+        and NAIRE_POINTS = #{nairePoints, jdbcType=INTEGER }
+      </if>
+      <if test="naireDesc != null and naireDesc != ''">
+        and NAIRE_DESC = #{naireDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="startTip != null and startTip != ''">
+        and START_TIP = #{startTip, jdbcType=VARCHAR }
+      </if>
+      <if test="endTip != null and endTip != ''">
+        and END_TIP = #{endTip, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktQuestionnaireDO" resultType="java.lang.Integer">
+      select count(*) from MKT_QUESTIONNAIRE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_QUESTIONNAIRE
+        where 
+           NAIRE_ID = #{naireId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_QUESTIONNAIRE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="naireId">
+      insert into  MKT_QUESTIONNAIRE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{naireName,jdbcType=VARCHAR}, 
+        #{naireType,jdbcType=VARCHAR}, 
+        #{markType,jdbcType=VARCHAR}, 
+        #{nairePoints,jdbcType=INTEGER}, 
+        #{naireDesc,jdbcType=VARCHAR}, 
+        #{startTip,jdbcType=VARCHAR}, 
+        #{endTip,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_QUESTIONNAIRE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{naireId,jdbcType=BIGINT}, 
+        #{naireName,jdbcType=VARCHAR}, 
+        #{naireType,jdbcType=VARCHAR}, 
+        #{markType,jdbcType=VARCHAR}, 
+        #{nairePoints,jdbcType=INTEGER}, 
+        #{naireDesc,jdbcType=VARCHAR}, 
+        #{startTip,jdbcType=VARCHAR}, 
+        #{endTip,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_QUESTIONNAIRE  
+        where
+           NAIRE_ID = #{naireId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_QUESTIONNAIRE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_QUESTIONNAIRE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="naireName != null">
+         NAIRE_NAME = #{naireName,jdbcType=VARCHAR},
+      </if>
+      <if test="naireType != null">
+         NAIRE_TYPE = #{naireType,jdbcType=VARCHAR},
+      </if>
+      <if test="markType != null">
+         MARK_TYPE = #{markType,jdbcType=VARCHAR},
+      </if>
+      <if test="nairePoints != null">
+         NAIRE_POINTS = #{nairePoints,jdbcType=INTEGER},
+      </if>
+      <if test="naireDesc != null">
+         NAIRE_DESC = #{naireDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="startTip != null">
+         START_TIP = #{startTip,jdbcType=VARCHAR},
+      </if>
+      <if test="endTip != null">
+         END_TIP = #{endTip,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           NAIRE_ID = #{naireId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_QUESTIONNAIRE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.naireId != null">
+        NAIRE_ID = #{record.naireId,jdbcType=BIGINT},
+      </if>
+      <if test="record.naireName != null">
+        NAIRE_NAME = #{record.naireName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.naireType != null">
+        NAIRE_TYPE = #{record.naireType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.markType != null">
+        MARK_TYPE = #{record.markType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nairePoints != null">
+        NAIRE_POINTS = #{record.nairePoints,jdbcType=INTEGER},
+      </if>
+      <if test="record.naireDesc != null">
+        NAIRE_DESC = #{record.naireDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTip != null">
+        START_TIP = #{record.startTip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTip != null">
+        END_TIP = #{record.endTip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.naireId != null ">
+        NAIRE_ID = #{condition.naireId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.naireName != null and condition.naireName != ''">
+        and NAIRE_NAME = #{condition.naireName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.naireType != null and condition.naireType != ''">
+        and NAIRE_TYPE = #{condition.naireType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.markType != null and condition.markType != ''">
+        and MARK_TYPE = #{condition.markType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.nairePoints != null ">
+        and NAIRE_POINTS = #{condition.nairePoints, jdbcType=INTEGER }
+      </if>
+      <if test="condition.naireDesc != null and condition.naireDesc != ''">
+        and NAIRE_DESC = #{condition.naireDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.startTip != null and condition.startTip != ''">
+        and START_TIP = #{condition.startTip, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.endTip != null and condition.endTip != ''">
+        and END_TIP = #{condition.endTip, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

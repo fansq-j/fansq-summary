@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BookOrderMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BookOrderDO">
+    <id column="BOOK_ORDER_ID" jdbcType="BIGINT" property="bookOrderId"/>
+    <result column="BOOK_ORDER_NBR" jdbcType="VARCHAR" property="bookOrderNbr"/>
+    <result column="SERV_TYPE_ID" jdbcType="BIGINT" property="servTypeId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="LAN_ID" jdbcType="INTEGER" property="lanId"/>
+    <result column="BOOK_DATE" jdbcType="TIMESTAMP" property="bookDate"/>
+    <result column="BOOK_TIME_ID" jdbcType="BIGINT" property="bookTimeId"/>
+    <result column="CHANNEL_ID" jdbcType="VARCHAR" property="channelId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="VARCHAR" property="objId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BOOK_ORDER_ID, 
+          BOOK_ORDER_NBR, 
+          SERV_TYPE_ID, 
+          ORG_ID, 
+          REGION_ID, 
+          LAN_ID, 
+          BOOK_DATE, 
+          BOOK_TIME_ID, 
+          CHANNEL_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BOOK_ORDER_NBR, 
+          SERV_TYPE_ID, 
+          ORG_ID, 
+          REGION_ID, 
+          LAN_ID, 
+          BOOK_DATE, 
+          BOOK_TIME_ID, 
+          CHANNEL_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="bookOrderId != null ">
+        BOOK_ORDER_ID = #{bookOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="bookOrderNbr != null and bookOrderNbr != ''">
+        and BOOK_ORDER_NBR = #{bookOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="servTypeId != null ">
+        and SERV_TYPE_ID = #{servTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=INTEGER }
+      </if>
+      <if test="bookDate != null ">
+        and BOOK_DATE = #{bookDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="bookTimeId != null ">
+        and BOOK_TIME_ID = #{bookTimeId, jdbcType=BIGINT }
+      </if>
+      <if test="channelId != null and channelId != ''">
+        and CHANNEL_ID = #{channelId, jdbcType=VARCHAR }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null and objId != ''">
+        and OBJ_ID = #{objId, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BookOrderDO" resultType="java.lang.Integer">
+      select count(*) from BOOK_ORDER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BOOK_ORDER
+        where 
+           BOOK_ORDER_ID = #{bookOrderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BOOK_ORDER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="bookOrderId">
+      insert into  BOOK_ORDER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{bookOrderNbr,jdbcType=VARCHAR}, 
+        #{servTypeId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=INTEGER}, 
+        #{bookDate,jdbcType=TIMESTAMP}, 
+        #{bookTimeId,jdbcType=BIGINT}, 
+        #{channelId,jdbcType=VARCHAR}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BOOK_ORDER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{bookOrderId,jdbcType=BIGINT}, 
+        #{bookOrderNbr,jdbcType=VARCHAR}, 
+        #{servTypeId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=INTEGER}, 
+        #{bookDate,jdbcType=TIMESTAMP}, 
+        #{bookTimeId,jdbcType=BIGINT}, 
+        #{channelId,jdbcType=VARCHAR}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BOOK_ORDER  
+        where
+           BOOK_ORDER_ID = #{bookOrderId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BOOK_ORDER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BOOK_ORDER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="bookOrderNbr != null">
+         BOOK_ORDER_NBR = #{bookOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="servTypeId != null">
+         SERV_TYPE_ID = #{servTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=INTEGER},
+      </if>
+      <if test="bookDate != null">
+         BOOK_DATE = #{bookDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookTimeId != null">
+         BOOK_TIME_ID = #{bookTimeId,jdbcType=BIGINT},
+      </if>
+      <if test="channelId != null">
+         CHANNEL_ID = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           BOOK_ORDER_ID = #{bookOrderId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BOOK_ORDER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.bookOrderId != null">
+        BOOK_ORDER_ID = #{record.bookOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bookOrderNbr != null">
+        BOOK_ORDER_NBR = #{record.bookOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servTypeId != null">
+        SERV_TYPE_ID = #{record.servTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookDate != null">
+        BOOK_DATE = #{record.bookDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bookTimeId != null">
+        BOOK_TIME_ID = #{record.bookTimeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelId != null">
+        CHANNEL_ID = #{record.channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.bookOrderId != null ">
+        BOOK_ORDER_ID = #{condition.bookOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.bookOrderNbr != null and condition.bookOrderNbr != ''">
+        and BOOK_ORDER_NBR = #{condition.bookOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.servTypeId != null ">
+        and SERV_TYPE_ID = #{condition.servTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.bookDate != null ">
+        and BOOK_DATE = #{condition.bookDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.bookTimeId != null ">
+        and BOOK_TIME_ID = #{condition.bookTimeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.channelId != null and condition.channelId != ''">
+        and CHANNEL_ID = #{condition.channelId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null and condition.objId != ''">
+        and OBJ_ID = #{condition.objId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

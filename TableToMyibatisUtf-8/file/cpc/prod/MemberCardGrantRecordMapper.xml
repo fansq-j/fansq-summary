@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MemberCardGrantRecordMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MemberCardGrantRecordDO">
+    <id column="RECORD_ID" jdbcType="BIGINT" property="recordId"/>
+    <result column="CLUB_MEMBER_ID" jdbcType="BIGINT" property="clubMemberId"/>
+    <result column="MKT_RES_INST_ID" jdbcType="BIGINT" property="mktResInstId"/>
+    <result column="DELIVER_DATE" jdbcType="TIMESTAMP" property="deliverDate"/>
+    <result column="DELIVER_PLACE" jdbcType="VARCHAR" property="deliverPlace"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RECORD_ID, 
+          CLUB_MEMBER_ID, 
+          MKT_RES_INST_ID, 
+          DELIVER_DATE, 
+          DELIVER_PLACE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CLUB_MEMBER_ID, 
+          MKT_RES_INST_ID, 
+          DELIVER_DATE, 
+          DELIVER_PLACE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="recordId != null ">
+        RECORD_ID = #{recordId, jdbcType=BIGINT }
+      </if>
+      <if test="clubMemberId != null ">
+        and CLUB_MEMBER_ID = #{clubMemberId, jdbcType=BIGINT }
+      </if>
+      <if test="mktResInstId != null ">
+        and MKT_RES_INST_ID = #{mktResInstId, jdbcType=BIGINT }
+      </if>
+      <if test="deliverDate != null ">
+        and DELIVER_DATE = #{deliverDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="deliverPlace != null and deliverPlace != ''">
+        and DELIVER_PLACE = #{deliverPlace, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MemberCardGrantRecordDO" resultType="java.lang.Integer">
+      select count(*) from MEMBER_CARD_GRANT_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MEMBER_CARD_GRANT_RECORD
+        where 
+           RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MEMBER_CARD_GRANT_RECORD 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="recordId">
+      insert into  MEMBER_CARD_GRANT_RECORD ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{clubMemberId,jdbcType=BIGINT}, 
+        #{mktResInstId,jdbcType=BIGINT}, 
+        #{deliverDate,jdbcType=TIMESTAMP}, 
+        #{deliverPlace,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MEMBER_CARD_GRANT_RECORD ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{recordId,jdbcType=BIGINT}, 
+        #{clubMemberId,jdbcType=BIGINT}, 
+        #{mktResInstId,jdbcType=BIGINT}, 
+        #{deliverDate,jdbcType=TIMESTAMP}, 
+        #{deliverPlace,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MEMBER_CARD_GRANT_RECORD  
+        where
+           RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MEMBER_CARD_GRANT_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MEMBER_CARD_GRANT_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="clubMemberId != null">
+         CLUB_MEMBER_ID = #{clubMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="mktResInstId != null">
+         MKT_RES_INST_ID = #{mktResInstId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverDate != null">
+         DELIVER_DATE = #{deliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliverPlace != null">
+         DELIVER_PLACE = #{deliverPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           RECORD_ID = #{recordId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MEMBER_CARD_GRANT_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.recordId != null">
+        RECORD_ID = #{record.recordId,jdbcType=BIGINT},
+      </if>
+      <if test="record.clubMemberId != null">
+        CLUB_MEMBER_ID = #{record.clubMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mktResInstId != null">
+        MKT_RES_INST_ID = #{record.mktResInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliverDate != null">
+        DELIVER_DATE = #{record.deliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliverPlace != null">
+        DELIVER_PLACE = #{record.deliverPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.recordId != null ">
+        RECORD_ID = #{condition.recordId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.clubMemberId != null ">
+        and CLUB_MEMBER_ID = #{condition.clubMemberId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.mktResInstId != null ">
+        and MKT_RES_INST_ID = #{condition.mktResInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.deliverDate != null ">
+        and DELIVER_DATE = #{condition.deliverDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.deliverPlace != null and condition.deliverPlace != ''">
+        and DELIVER_PLACE = #{condition.deliverPlace, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

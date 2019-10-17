@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PointBalanceSourceMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PointBalanceSourceDO">
+    <id column="POINT_BALANCE_SOURCE_ID" jdbcType="BIGINT" property="pointBalanceSourceId"/>
+    <result column="POINT_ACCT_BALANCE_ID" jdbcType="BIGINT" property="pointAcctBalanceId"/>
+    <result column="POINT_TARIFF_ID" jdbcType="BIGINT" property="pointTariffId"/>
+    <result column="POINT_SOURCE_TYPE" jdbcType="VARCHAR" property="pointSourceType"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="BIGINT" property="billingCycleId"/>
+    <result column="AMOUNT" jdbcType="INTEGER" property="amount"/>
+    <result column="BASE_POINT_VALUE" jdbcType="INTEGER" property="basePointValue"/>
+    <result column="POINT_BALANCE" jdbcType="INTEGER" property="pointBalance"/>
+    <result column="EXT_SYS_ID" jdbcType="VARCHAR" property="extSysId"/>
+    <result column="EXT_SERIAL_ID" jdbcType="VARCHAR" property="extSerialId"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_ORG_ID" jdbcType="BIGINT" property="createOrgId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          POINT_BALANCE_SOURCE_ID, 
+          POINT_ACCT_BALANCE_ID, 
+          POINT_TARIFF_ID, 
+          POINT_SOURCE_TYPE, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          BILLING_CYCLE_ID, 
+          AMOUNT, 
+          BASE_POINT_VALUE, 
+          POINT_BALANCE, 
+          EXT_SYS_ID, 
+          EXT_SERIAL_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_ORG_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          POINT_ACCT_BALANCE_ID, 
+          POINT_TARIFF_ID, 
+          POINT_SOURCE_TYPE, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          BILLING_CYCLE_ID, 
+          AMOUNT, 
+          BASE_POINT_VALUE, 
+          POINT_BALANCE, 
+          EXT_SYS_ID, 
+          EXT_SERIAL_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_ORG_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pointBalanceSourceId != null ">
+        POINT_BALANCE_SOURCE_ID = #{pointBalanceSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="pointAcctBalanceId != null ">
+        and POINT_ACCT_BALANCE_ID = #{pointAcctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="pointTariffId != null ">
+        and POINT_TARIFF_ID = #{pointTariffId, jdbcType=BIGINT }
+      </if>
+      <if test="pointSourceType != null and pointSourceType != ''">
+        and POINT_SOURCE_TYPE = #{pointSourceType, jdbcType=VARCHAR }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=INTEGER }
+      </if>
+      <if test="basePointValue != null ">
+        and BASE_POINT_VALUE = #{basePointValue, jdbcType=INTEGER }
+      </if>
+      <if test="pointBalance != null ">
+        and POINT_BALANCE = #{pointBalance, jdbcType=INTEGER }
+      </if>
+      <if test="extSysId != null and extSysId != ''">
+        and EXT_SYS_ID = #{extSysId, jdbcType=VARCHAR }
+      </if>
+      <if test="extSerialId != null and extSerialId != ''">
+        and EXT_SERIAL_ID = #{extSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createOrgId != null ">
+        and CREATE_ORG_ID = #{createOrgId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PointBalanceSourceDO" resultType="java.lang.Integer">
+      select count(*) from POINT_BALANCE_SOURCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POINT_BALANCE_SOURCE
+        where 
+           POINT_BALANCE_SOURCE_ID = #{pointBalanceSourceId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POINT_BALANCE_SOURCE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pointBalanceSourceId">
+      insert into  POINT_BALANCE_SOURCE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{pointAcctBalanceId,jdbcType=BIGINT}, 
+        #{pointTariffId,jdbcType=BIGINT}, 
+        #{pointSourceType,jdbcType=VARCHAR}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=INTEGER}, 
+        #{basePointValue,jdbcType=INTEGER}, 
+        #{pointBalance,jdbcType=INTEGER}, 
+        #{extSysId,jdbcType=VARCHAR}, 
+        #{extSerialId,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createOrgId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POINT_BALANCE_SOURCE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pointBalanceSourceId,jdbcType=BIGINT}, 
+        #{pointAcctBalanceId,jdbcType=BIGINT}, 
+        #{pointTariffId,jdbcType=BIGINT}, 
+        #{pointSourceType,jdbcType=VARCHAR}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=INTEGER}, 
+        #{basePointValue,jdbcType=INTEGER}, 
+        #{pointBalance,jdbcType=INTEGER}, 
+        #{extSysId,jdbcType=VARCHAR}, 
+        #{extSerialId,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createOrgId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POINT_BALANCE_SOURCE  
+        where
+           POINT_BALANCE_SOURCE_ID = #{pointBalanceSourceId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from POINT_BALANCE_SOURCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POINT_BALANCE_SOURCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="pointAcctBalanceId != null">
+         POINT_ACCT_BALANCE_ID = #{pointAcctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="pointTariffId != null">
+         POINT_TARIFF_ID = #{pointTariffId,jdbcType=BIGINT},
+      </if>
+      <if test="pointSourceType != null">
+         POINT_SOURCE_TYPE = #{pointSourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="basePointValue != null">
+         BASE_POINT_VALUE = #{basePointValue,jdbcType=INTEGER},
+      </if>
+      <if test="pointBalance != null">
+         POINT_BALANCE = #{pointBalance,jdbcType=INTEGER},
+      </if>
+      <if test="extSysId != null">
+         EXT_SYS_ID = #{extSysId,jdbcType=VARCHAR},
+      </if>
+      <if test="extSerialId != null">
+         EXT_SERIAL_ID = #{extSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOrgId != null">
+         CREATE_ORG_ID = #{createOrgId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           POINT_BALANCE_SOURCE_ID = #{pointBalanceSourceId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update POINT_BALANCE_SOURCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pointBalanceSourceId != null">
+        POINT_BALANCE_SOURCE_ID = #{record.pointBalanceSourceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pointAcctBalanceId != null">
+        POINT_ACCT_BALANCE_ID = #{record.pointAcctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pointTariffId != null">
+        POINT_TARIFF_ID = #{record.pointTariffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pointSourceType != null">
+        POINT_SOURCE_TYPE = #{record.pointSourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.basePointValue != null">
+        BASE_POINT_VALUE = #{record.basePointValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointBalance != null">
+        POINT_BALANCE = #{record.pointBalance,jdbcType=INTEGER},
+      </if>
+      <if test="record.extSysId != null">
+        EXT_SYS_ID = #{record.extSysId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extSerialId != null">
+        EXT_SERIAL_ID = #{record.extSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOrgId != null">
+        CREATE_ORG_ID = #{record.createOrgId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pointBalanceSourceId != null ">
+        POINT_BALANCE_SOURCE_ID = #{condition.pointBalanceSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pointAcctBalanceId != null ">
+        and POINT_ACCT_BALANCE_ID = #{condition.pointAcctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pointTariffId != null ">
+        and POINT_TARIFF_ID = #{condition.pointTariffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pointSourceType != null and condition.pointSourceType != ''">
+        and POINT_SOURCE_TYPE = #{condition.pointSourceType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.basePointValue != null ">
+        and BASE_POINT_VALUE = #{condition.basePointValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pointBalance != null ">
+        and POINT_BALANCE = #{condition.pointBalance, jdbcType=INTEGER }
+      </if>
+      <if test="condition.extSysId != null and condition.extSysId != ''">
+        and EXT_SYS_ID = #{condition.extSysId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.extSerialId != null and condition.extSerialId != ''">
+        and EXT_SERIAL_ID = #{condition.extSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createOrgId != null ">
+        and CREATE_ORG_ID = #{condition.createOrgId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

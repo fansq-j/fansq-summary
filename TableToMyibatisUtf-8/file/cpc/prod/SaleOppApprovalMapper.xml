@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SaleOppApprovalMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SaleOppApprovalDO">
+    <id column="SALE_OPP_APPROVAL_ID" jdbcType="BIGINT" property="saleOppApprovalId"/>
+    <result column="SALE_OPP_ID" jdbcType="BIGINT" property="saleOppId"/>
+    <result column="APPROVAL_CONTENT" jdbcType="VARCHAR" property="approvalContent"/>
+    <result column="APPROVAL_OPINION" jdbcType="VARCHAR" property="approvalOpinion"/>
+    <result column="APPROVAL_STAFF" jdbcType="BIGINT" property="approvalStaff"/>
+    <result column="APPROVAL_ORG_ID" jdbcType="BIGINT" property="approvalOrgId"/>
+    <result column="APPROVAL_ROLE" jdbcType="VARCHAR" property="approvalRole"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SALE_OPP_APPROVAL_ID, 
+          SALE_OPP_ID, 
+          APPROVAL_CONTENT, 
+          APPROVAL_OPINION, 
+          APPROVAL_STAFF, 
+          APPROVAL_ORG_ID, 
+          APPROVAL_ROLE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SALE_OPP_ID, 
+          APPROVAL_CONTENT, 
+          APPROVAL_OPINION, 
+          APPROVAL_STAFF, 
+          APPROVAL_ORG_ID, 
+          APPROVAL_ROLE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="saleOppApprovalId != null ">
+        SALE_OPP_APPROVAL_ID = #{saleOppApprovalId, jdbcType=BIGINT }
+      </if>
+      <if test="saleOppId != null ">
+        and SALE_OPP_ID = #{saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="approvalContent != null and approvalContent != ''">
+        and APPROVAL_CONTENT = #{approvalContent, jdbcType=VARCHAR }
+      </if>
+      <if test="approvalOpinion != null and approvalOpinion != ''">
+        and APPROVAL_OPINION = #{approvalOpinion, jdbcType=VARCHAR }
+      </if>
+      <if test="approvalStaff != null ">
+        and APPROVAL_STAFF = #{approvalStaff, jdbcType=BIGINT }
+      </if>
+      <if test="approvalOrgId != null ">
+        and APPROVAL_ORG_ID = #{approvalOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="approvalRole != null and approvalRole != ''">
+        and APPROVAL_ROLE = #{approvalRole, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SaleOppApprovalDO" resultType="java.lang.Integer">
+      select count(*) from SALE_OPP_APPROVAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SALE_OPP_APPROVAL
+        where 
+           SALE_OPP_APPROVAL_ID = #{saleOppApprovalId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SALE_OPP_APPROVAL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="saleOppApprovalId">
+      insert into  SALE_OPP_APPROVAL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{approvalContent,jdbcType=VARCHAR}, 
+        #{approvalOpinion,jdbcType=VARCHAR}, 
+        #{approvalStaff,jdbcType=BIGINT}, 
+        #{approvalOrgId,jdbcType=BIGINT}, 
+        #{approvalRole,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SALE_OPP_APPROVAL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{saleOppApprovalId,jdbcType=BIGINT}, 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{approvalContent,jdbcType=VARCHAR}, 
+        #{approvalOpinion,jdbcType=VARCHAR}, 
+        #{approvalStaff,jdbcType=BIGINT}, 
+        #{approvalOrgId,jdbcType=BIGINT}, 
+        #{approvalRole,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SALE_OPP_APPROVAL  
+        where
+           SALE_OPP_APPROVAL_ID = #{saleOppApprovalId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SALE_OPP_APPROVAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SALE_OPP_APPROVAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="saleOppId != null">
+         SALE_OPP_ID = #{saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="approvalContent != null">
+         APPROVAL_CONTENT = #{approvalContent,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalOpinion != null">
+         APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalStaff != null">
+         APPROVAL_STAFF = #{approvalStaff,jdbcType=BIGINT},
+      </if>
+      <if test="approvalOrgId != null">
+         APPROVAL_ORG_ID = #{approvalOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="approvalRole != null">
+         APPROVAL_ROLE = #{approvalRole,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SALE_OPP_APPROVAL_ID = #{saleOppApprovalId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SALE_OPP_APPROVAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.saleOppApprovalId != null">
+        SALE_OPP_APPROVAL_ID = #{record.saleOppApprovalId,jdbcType=BIGINT},
+      </if>
+      <if test="record.saleOppId != null">
+        SALE_OPP_ID = #{record.saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="record.approvalContent != null">
+        APPROVAL_CONTENT = #{record.approvalContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalOpinion != null">
+        APPROVAL_OPINION = #{record.approvalOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalStaff != null">
+        APPROVAL_STAFF = #{record.approvalStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.approvalOrgId != null">
+        APPROVAL_ORG_ID = #{record.approvalOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.approvalRole != null">
+        APPROVAL_ROLE = #{record.approvalRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.saleOppApprovalId != null ">
+        SALE_OPP_APPROVAL_ID = #{condition.saleOppApprovalId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.saleOppId != null ">
+        and SALE_OPP_ID = #{condition.saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.approvalContent != null and condition.approvalContent != ''">
+        and APPROVAL_CONTENT = #{condition.approvalContent, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.approvalOpinion != null and condition.approvalOpinion != ''">
+        and APPROVAL_OPINION = #{condition.approvalOpinion, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.approvalStaff != null ">
+        and APPROVAL_STAFF = #{condition.approvalStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.approvalOrgId != null ">
+        and APPROVAL_ORG_ID = #{condition.approvalOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.approvalRole != null and condition.approvalRole != ''">
+        and APPROVAL_ROLE = #{condition.approvalRole, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PrivGrantMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PrivGrantDO">
+    <id column="PRIV_GRANT_ID" jdbcType="BIGINT" property="privGrantId"/>
+    <result column="PRIV_ID" jdbcType="BIGINT" property="privId"/>
+    <result column="MANAGE_CLASS" jdbcType="VARCHAR" property="manageClass"/>
+    <result column="GRANT_OBJ_TYPE" jdbcType="VARCHAR" property="grantObjType"/>
+    <result column="GRANT_OBJ_ID" jdbcType="BIGINT" property="grantObjId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="PAR_PRIV_ID" jdbcType="BIGINT" property="parPrivId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRIV_GRANT_ID, 
+          PRIV_ID, 
+          MANAGE_CLASS, 
+          GRANT_OBJ_TYPE, 
+          GRANT_OBJ_ID, 
+          OPER_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          PAR_PRIV_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PRIV_ID, 
+          MANAGE_CLASS, 
+          GRANT_OBJ_TYPE, 
+          GRANT_OBJ_ID, 
+          OPER_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          PAR_PRIV_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="privGrantId != null ">
+        PRIV_GRANT_ID = #{privGrantId, jdbcType=BIGINT }
+      </if>
+      <if test="privId != null ">
+        and PRIV_ID = #{privId, jdbcType=BIGINT }
+      </if>
+      <if test="manageClass != null and manageClass != ''">
+        and MANAGE_CLASS = #{manageClass, jdbcType=VARCHAR }
+      </if>
+      <if test="grantObjType != null and grantObjType != ''">
+        and GRANT_OBJ_TYPE = #{grantObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="grantObjId != null ">
+        and GRANT_OBJ_ID = #{grantObjId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="parPrivId != null ">
+        and PAR_PRIV_ID = #{parPrivId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PrivGrantDO" resultType="java.lang.Integer">
+      select count(*) from PRIV_GRANT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRIV_GRANT
+        where 
+           PRIV_GRANT_ID = #{privGrantId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRIV_GRANT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="privGrantId">
+      insert into  PRIV_GRANT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{privId,jdbcType=BIGINT}, 
+        #{manageClass,jdbcType=VARCHAR}, 
+        #{grantObjType,jdbcType=VARCHAR}, 
+        #{grantObjId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{parPrivId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRIV_GRANT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{privGrantId,jdbcType=BIGINT}, 
+        #{privId,jdbcType=BIGINT}, 
+        #{manageClass,jdbcType=VARCHAR}, 
+        #{grantObjType,jdbcType=VARCHAR}, 
+        #{grantObjId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{parPrivId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRIV_GRANT  
+        where
+           PRIV_GRANT_ID = #{privGrantId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PRIV_GRANT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRIV_GRANT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="privId != null">
+         PRIV_ID = #{privId,jdbcType=BIGINT},
+      </if>
+      <if test="manageClass != null">
+         MANAGE_CLASS = #{manageClass,jdbcType=VARCHAR},
+      </if>
+      <if test="grantObjType != null">
+         GRANT_OBJ_TYPE = #{grantObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="grantObjId != null">
+         GRANT_OBJ_ID = #{grantObjId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="parPrivId != null">
+         PAR_PRIV_ID = #{parPrivId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           PRIV_GRANT_ID = #{privGrantId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PRIV_GRANT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.privGrantId != null">
+        PRIV_GRANT_ID = #{record.privGrantId,jdbcType=BIGINT},
+      </if>
+      <if test="record.privId != null">
+        PRIV_ID = #{record.privId,jdbcType=BIGINT},
+      </if>
+      <if test="record.manageClass != null">
+        MANAGE_CLASS = #{record.manageClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grantObjType != null">
+        GRANT_OBJ_TYPE = #{record.grantObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grantObjId != null">
+        GRANT_OBJ_ID = #{record.grantObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.parPrivId != null">
+        PAR_PRIV_ID = #{record.parPrivId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.privGrantId != null ">
+        PRIV_GRANT_ID = #{condition.privGrantId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.privId != null ">
+        and PRIV_ID = #{condition.privId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.manageClass != null and condition.manageClass != ''">
+        and MANAGE_CLASS = #{condition.manageClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.grantObjType != null and condition.grantObjType != ''">
+        and GRANT_OBJ_TYPE = #{condition.grantObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.grantObjId != null ">
+        and GRANT_OBJ_ID = #{condition.grantObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.parPrivId != null ">
+        and PAR_PRIV_ID = #{condition.parPrivId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

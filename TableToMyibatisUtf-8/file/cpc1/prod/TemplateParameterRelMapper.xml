@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.TemplateParameterRelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.TemplateParameterRelDO">
+    <id column="TEMPLATE_PARAMETER_REL_ID" jdbcType="BIGINT" property="templateParameterRelId"/>
+    <result column="TEMPLATE_PARAM_ID" jdbcType="BIGINT" property="templateParamId"/>
+    <result column="TARIFF_TEMPLATE_ID" jdbcType="BIGINT" property="tariffTemplateId"/>
+    <result column="PARAM_NBR" jdbcType="INTEGER" property="paramNbr"/>
+    <result column="CAN_MULTI" jdbcType="INTEGER" property="canMulti"/>
+    <result column="CAN_ATTR_FLAG" jdbcType="INTEGER" property="canAttrFlag"/>
+    <result column="PARAM_DESC" jdbcType="VARCHAR" property="paramDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="EXT_TEMPLATE_PARAMETER_REL_ID" jdbcType="BIGINT" property="extTemplateParameterRelId"/>
+    <result column="IF_HIDE" jdbcType="INTEGER" property="ifHide"/>
+    <result column="IF_VALID" jdbcType="INTEGER" property="ifValid"/>
+    <result column="IF_SORT" jdbcType="INTEGER" property="ifSort"/>
+    <result column="IF_DISPLAY" jdbcType="INTEGER" property="ifDisplay"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TEMPLATE_PARAMETER_REL_ID, 
+          TEMPLATE_PARAM_ID, 
+          TARIFF_TEMPLATE_ID, 
+          PARAM_NBR, 
+          CAN_MULTI, 
+          CAN_ATTR_FLAG, 
+          PARAM_DESC, 
+          STATUS_CD, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          EXT_TEMPLATE_PARAMETER_REL_ID, 
+          IF_HIDE, 
+          IF_VALID, 
+          IF_SORT, 
+          IF_DISPLAY
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TEMPLATE_PARAM_ID, 
+          TARIFF_TEMPLATE_ID, 
+          PARAM_NBR, 
+          CAN_MULTI, 
+          CAN_ATTR_FLAG, 
+          PARAM_DESC, 
+          STATUS_CD, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          EXT_TEMPLATE_PARAMETER_REL_ID, 
+          IF_HIDE, 
+          IF_VALID, 
+          IF_SORT, 
+          IF_DISPLAY
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="templateParameterRelId != null ">
+        TEMPLATE_PARAMETER_REL_ID = #{templateParameterRelId, jdbcType=BIGINT }
+      </if>
+      <if test="templateParamId != null ">
+        and TEMPLATE_PARAM_ID = #{templateParamId, jdbcType=BIGINT }
+      </if>
+      <if test="tariffTemplateId != null ">
+        and TARIFF_TEMPLATE_ID = #{tariffTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="paramNbr != null ">
+        and PARAM_NBR = #{paramNbr, jdbcType=INTEGER }
+      </if>
+      <if test="canMulti != null ">
+        and CAN_MULTI = #{canMulti, jdbcType=INTEGER }
+      </if>
+      <if test="canAttrFlag != null ">
+        and CAN_ATTR_FLAG = #{canAttrFlag, jdbcType=INTEGER }
+      </if>
+      <if test="paramDesc != null and paramDesc != ''">
+        and PARAM_DESC = #{paramDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="extTemplateParameterRelId != null ">
+        and EXT_TEMPLATE_PARAMETER_REL_ID = #{extTemplateParameterRelId, jdbcType=BIGINT }
+      </if>
+      <if test="ifHide != null ">
+        and IF_HIDE = #{ifHide, jdbcType=INTEGER }
+      </if>
+      <if test="ifValid != null ">
+        and IF_VALID = #{ifValid, jdbcType=INTEGER }
+      </if>
+      <if test="ifSort != null ">
+        and IF_SORT = #{ifSort, jdbcType=INTEGER }
+      </if>
+      <if test="ifDisplay != null ">
+        and IF_DISPLAY = #{ifDisplay, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.TemplateParameterRelDO" resultType="java.lang.Integer">
+      select count(*) from TEMPLATE_PARAMETER_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TEMPLATE_PARAMETER_REL
+        where 
+           TEMPLATE_PARAMETER_REL_ID = #{templateParameterRelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TEMPLATE_PARAMETER_REL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="templateParameterRelId">
+      insert into  TEMPLATE_PARAMETER_REL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{templateParamId,jdbcType=BIGINT}, 
+        #{tariffTemplateId,jdbcType=BIGINT}, 
+        #{paramNbr,jdbcType=INTEGER}, 
+        #{canMulti,jdbcType=INTEGER}, 
+        #{canAttrFlag,jdbcType=INTEGER}, 
+        #{paramDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{extTemplateParameterRelId,jdbcType=BIGINT}, 
+        #{ifHide,jdbcType=INTEGER}, 
+        #{ifValid,jdbcType=INTEGER}, 
+        #{ifSort,jdbcType=INTEGER}, 
+        #{ifDisplay,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TEMPLATE_PARAMETER_REL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{templateParameterRelId,jdbcType=BIGINT}, 
+        #{templateParamId,jdbcType=BIGINT}, 
+        #{tariffTemplateId,jdbcType=BIGINT}, 
+        #{paramNbr,jdbcType=INTEGER}, 
+        #{canMulti,jdbcType=INTEGER}, 
+        #{canAttrFlag,jdbcType=INTEGER}, 
+        #{paramDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{extTemplateParameterRelId,jdbcType=BIGINT}, 
+        #{ifHide,jdbcType=INTEGER}, 
+        #{ifValid,jdbcType=INTEGER}, 
+        #{ifSort,jdbcType=INTEGER}, 
+        #{ifDisplay,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TEMPLATE_PARAMETER_REL  
+        where
+           TEMPLATE_PARAMETER_REL_ID = #{templateParameterRelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TEMPLATE_PARAMETER_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TEMPLATE_PARAMETER_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="templateParamId != null">
+         TEMPLATE_PARAM_ID = #{templateParamId,jdbcType=BIGINT},
+      </if>
+      <if test="tariffTemplateId != null">
+         TARIFF_TEMPLATE_ID = #{tariffTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="paramNbr != null">
+         PARAM_NBR = #{paramNbr,jdbcType=INTEGER},
+      </if>
+      <if test="canMulti != null">
+         CAN_MULTI = #{canMulti,jdbcType=INTEGER},
+      </if>
+      <if test="canAttrFlag != null">
+         CAN_ATTR_FLAG = #{canAttrFlag,jdbcType=INTEGER},
+      </if>
+      <if test="paramDesc != null">
+         PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extTemplateParameterRelId != null">
+         EXT_TEMPLATE_PARAMETER_REL_ID = #{extTemplateParameterRelId,jdbcType=BIGINT},
+      </if>
+      <if test="ifHide != null">
+         IF_HIDE = #{ifHide,jdbcType=INTEGER},
+      </if>
+      <if test="ifValid != null">
+         IF_VALID = #{ifValid,jdbcType=INTEGER},
+      </if>
+      <if test="ifSort != null">
+         IF_SORT = #{ifSort,jdbcType=INTEGER},
+      </if>
+      <if test="ifDisplay != null">
+         IF_DISPLAY = #{ifDisplay,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           TEMPLATE_PARAMETER_REL_ID = #{templateParameterRelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TEMPLATE_PARAMETER_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.templateParameterRelId != null">
+        TEMPLATE_PARAMETER_REL_ID = #{record.templateParameterRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.templateParamId != null">
+        TEMPLATE_PARAM_ID = #{record.templateParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tariffTemplateId != null">
+        TARIFF_TEMPLATE_ID = #{record.tariffTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paramNbr != null">
+        PARAM_NBR = #{record.paramNbr,jdbcType=INTEGER},
+      </if>
+      <if test="record.canMulti != null">
+        CAN_MULTI = #{record.canMulti,jdbcType=INTEGER},
+      </if>
+      <if test="record.canAttrFlag != null">
+        CAN_ATTR_FLAG = #{record.canAttrFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.paramDesc != null">
+        PARAM_DESC = #{record.paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.extTemplateParameterRelId != null">
+        EXT_TEMPLATE_PARAMETER_REL_ID = #{record.extTemplateParameterRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ifHide != null">
+        IF_HIDE = #{record.ifHide,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifValid != null">
+        IF_VALID = #{record.ifValid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifSort != null">
+        IF_SORT = #{record.ifSort,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifDisplay != null">
+        IF_DISPLAY = #{record.ifDisplay,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.templateParameterRelId != null ">
+        TEMPLATE_PARAMETER_REL_ID = #{condition.templateParameterRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.templateParamId != null ">
+        and TEMPLATE_PARAM_ID = #{condition.templateParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tariffTemplateId != null ">
+        and TARIFF_TEMPLATE_ID = #{condition.tariffTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paramNbr != null ">
+        and PARAM_NBR = #{condition.paramNbr, jdbcType=INTEGER }
+      </if>
+      <if test="condition.canMulti != null ">
+        and CAN_MULTI = #{condition.canMulti, jdbcType=INTEGER }
+      </if>
+      <if test="condition.canAttrFlag != null ">
+        and CAN_ATTR_FLAG = #{condition.canAttrFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.paramDesc != null and condition.paramDesc != ''">
+        and PARAM_DESC = #{condition.paramDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.extTemplateParameterRelId != null ">
+        and EXT_TEMPLATE_PARAMETER_REL_ID = #{condition.extTemplateParameterRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ifHide != null ">
+        and IF_HIDE = #{condition.ifHide, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifValid != null ">
+        and IF_VALID = #{condition.ifValid, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifSort != null ">
+        and IF_SORT = #{condition.ifSort, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifDisplay != null ">
+        and IF_DISPLAY = #{condition.ifDisplay, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

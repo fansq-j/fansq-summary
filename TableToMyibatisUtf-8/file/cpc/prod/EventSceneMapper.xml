@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.EventSceneMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.EventSceneDO">
+    <id column="EVENT_SCENE_ID" jdbcType="BIGINT" property="eventSceneId"/>
+    <result column="EVENT_SCENE_NBR" jdbcType="VARCHAR" property="eventSceneNbr"/>
+    <result column="EVENT_SCENE_NAME" jdbcType="VARCHAR" property="eventSceneName"/>
+    <result column="EVENT_ID" jdbcType="BIGINT" property="eventId"/>
+    <result column="EXT_EVENT_SCENE_ID" jdbcType="BIGINT" property="extEventSceneId"/>
+    <result column="EVENT_SCENE_DESC" jdbcType="VARCHAR" property="eventSceneDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EVENT_SCENE_ID, 
+          EVENT_SCENE_NBR, 
+          EVENT_SCENE_NAME, 
+          EVENT_ID, 
+          EXT_EVENT_SCENE_ID, 
+          EVENT_SCENE_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EVENT_SCENE_NBR, 
+          EVENT_SCENE_NAME, 
+          EVENT_ID, 
+          EXT_EVENT_SCENE_ID, 
+          EVENT_SCENE_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="eventSceneId != null ">
+        EVENT_SCENE_ID = #{eventSceneId, jdbcType=BIGINT }
+      </if>
+      <if test="eventSceneNbr != null and eventSceneNbr != ''">
+        and EVENT_SCENE_NBR = #{eventSceneNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="eventSceneName != null and eventSceneName != ''">
+        and EVENT_SCENE_NAME = #{eventSceneName, jdbcType=VARCHAR }
+      </if>
+      <if test="eventId != null ">
+        and EVENT_ID = #{eventId, jdbcType=BIGINT }
+      </if>
+      <if test="extEventSceneId != null ">
+        and EXT_EVENT_SCENE_ID = #{extEventSceneId, jdbcType=BIGINT }
+      </if>
+      <if test="eventSceneDesc != null and eventSceneDesc != ''">
+        and EVENT_SCENE_DESC = #{eventSceneDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.EventSceneDO" resultType="java.lang.Integer">
+      select count(*) from EVENT_SCENE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from EVENT_SCENE
+        where 
+           EVENT_SCENE_ID = #{eventSceneId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EVENT_SCENE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="eventSceneId">
+      insert into  EVENT_SCENE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{eventSceneNbr,jdbcType=VARCHAR}, 
+        #{eventSceneName,jdbcType=VARCHAR}, 
+        #{eventId,jdbcType=BIGINT}, 
+        #{extEventSceneId,jdbcType=BIGINT}, 
+        #{eventSceneDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  EVENT_SCENE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{eventSceneId,jdbcType=BIGINT}, 
+        #{eventSceneNbr,jdbcType=VARCHAR}, 
+        #{eventSceneName,jdbcType=VARCHAR}, 
+        #{eventId,jdbcType=BIGINT}, 
+        #{extEventSceneId,jdbcType=BIGINT}, 
+        #{eventSceneDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from EVENT_SCENE  
+        where
+           EVENT_SCENE_ID = #{eventSceneId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from EVENT_SCENE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  EVENT_SCENE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="eventSceneNbr != null">
+         EVENT_SCENE_NBR = #{eventSceneNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="eventSceneName != null">
+         EVENT_SCENE_NAME = #{eventSceneName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventId != null">
+         EVENT_ID = #{eventId,jdbcType=BIGINT},
+      </if>
+      <if test="extEventSceneId != null">
+         EXT_EVENT_SCENE_ID = #{extEventSceneId,jdbcType=BIGINT},
+      </if>
+      <if test="eventSceneDesc != null">
+         EVENT_SCENE_DESC = #{eventSceneDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           EVENT_SCENE_ID = #{eventSceneId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update EVENT_SCENE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.eventSceneId != null">
+        EVENT_SCENE_ID = #{record.eventSceneId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eventSceneNbr != null">
+        EVENT_SCENE_NBR = #{record.eventSceneNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventSceneName != null">
+        EVENT_SCENE_NAME = #{record.eventSceneName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventId != null">
+        EVENT_ID = #{record.eventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.extEventSceneId != null">
+        EXT_EVENT_SCENE_ID = #{record.extEventSceneId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eventSceneDesc != null">
+        EVENT_SCENE_DESC = #{record.eventSceneDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.eventSceneId != null ">
+        EVENT_SCENE_ID = #{condition.eventSceneId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.eventSceneNbr != null and condition.eventSceneNbr != ''">
+        and EVENT_SCENE_NBR = #{condition.eventSceneNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventSceneName != null and condition.eventSceneName != ''">
+        and EVENT_SCENE_NAME = #{condition.eventSceneName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventId != null ">
+        and EVENT_ID = #{condition.eventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.extEventSceneId != null ">
+        and EXT_EVENT_SCENE_ID = #{condition.extEventSceneId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.eventSceneDesc != null and condition.eventSceneDesc != ''">
+        and EVENT_SCENE_DESC = #{condition.eventSceneDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

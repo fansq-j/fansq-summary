@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.CommonSpecDataMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.CommonSpecDataDO">
+    <id column="COMMON_SPEC_DATA_ID" jdbcType="BIGINT" property="commonSpecDataId"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="SPEC_DATA_TYPE" jdbcType="VARCHAR" property="specDataType"/>
+    <result column="USAGE_COUNT" jdbcType="BIGINT" property="usageCount"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="EXP1" jdbcType="VARCHAR" property="exp1"/>
+    <result column="EXP2" jdbcType="VARCHAR" property="exp2"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          COMMON_SPEC_DATA_ID, 
+          OBJ_ID, 
+          OBJ_TYPE, 
+          SPEC_DATA_TYPE, 
+          USAGE_COUNT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          EXP1, 
+          EXP2, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OBJ_ID, 
+          OBJ_TYPE, 
+          SPEC_DATA_TYPE, 
+          USAGE_COUNT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          EXP1, 
+          EXP2, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="commonSpecDataId != null ">
+        COMMON_SPEC_DATA_ID = #{commonSpecDataId, jdbcType=BIGINT }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="specDataType != null and specDataType != ''">
+        and SPEC_DATA_TYPE = #{specDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="usageCount != null ">
+        and USAGE_COUNT = #{usageCount, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="exp1 != null and exp1 != ''">
+        and EXP1 = #{exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="exp2 != null and exp2 != ''">
+        and EXP2 = #{exp2, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.CommonSpecDataDO" resultType="java.lang.Integer">
+      select count(*) from COMMON_SPEC_DATA
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from COMMON_SPEC_DATA
+        where 
+           COMMON_SPEC_DATA_ID = #{commonSpecDataId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  COMMON_SPEC_DATA 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="commonSpecDataId">
+      insert into  COMMON_SPEC_DATA ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{objId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{specDataType,jdbcType=VARCHAR}, 
+        #{usageCount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  COMMON_SPEC_DATA ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{commonSpecDataId,jdbcType=BIGINT}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{specDataType,jdbcType=VARCHAR}, 
+        #{usageCount,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from COMMON_SPEC_DATA  
+        where
+           COMMON_SPEC_DATA_ID = #{commonSpecDataId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from COMMON_SPEC_DATA
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  COMMON_SPEC_DATA
+    <trim prefix="set" suffixOverrides=",">
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="specDataType != null">
+         SPEC_DATA_TYPE = #{specDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="usageCount != null">
+         USAGE_COUNT = #{usageCount,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exp1 != null">
+         EXP1 = #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null">
+         EXP2 = #{exp2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           COMMON_SPEC_DATA_ID = #{commonSpecDataId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update COMMON_SPEC_DATA
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.commonSpecDataId != null">
+        COMMON_SPEC_DATA_ID = #{record.commonSpecDataId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specDataType != null">
+        SPEC_DATA_TYPE = #{record.specDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usageCount != null">
+        USAGE_COUNT = #{record.usageCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exp1 != null">
+        EXP1 = #{record.exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp2 != null">
+        EXP2 = #{record.exp2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.commonSpecDataId != null ">
+        COMMON_SPEC_DATA_ID = #{condition.commonSpecDataId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.specDataType != null and condition.specDataType != ''">
+        and SPEC_DATA_TYPE = #{condition.specDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.usageCount != null ">
+        and USAGE_COUNT = #{condition.usageCount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.exp1 != null and condition.exp1 != ''">
+        and EXP1 = #{condition.exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exp2 != null and condition.exp2 != ''">
+        and EXP2 = #{condition.exp2, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

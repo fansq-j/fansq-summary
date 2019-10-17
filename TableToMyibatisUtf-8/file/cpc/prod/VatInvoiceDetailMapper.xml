@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.VatInvoiceDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.VatInvoiceDetailDO">
+    <id column="VAT_INVOICE_DTL_ID" jdbcType="BIGINT" property="vatInvoiceDtlId"/>
+    <result column="VAT_INVOICE_ID" jdbcType="BIGINT" property="vatInvoiceId"/>
+    <result column="ROW_FLAG" jdbcType="VARCHAR" property="rowFlag"/>
+    <result column="TAX_ITEM_ID" jdbcType="INTEGER" property="taxItemId"/>
+    <result column="TAX_ITEM_NAME" jdbcType="VARCHAR" property="taxItemName"/>
+    <result column="SPECIFICATION" jdbcType="VARCHAR" property="specification"/>
+    <result column="UNIT" jdbcType="VARCHAR" property="unit"/>
+    <result column="QUANTITY" jdbcType="BIGINT" property="quantity"/>
+    <result column="PRICE_MODE" jdbcType="VARCHAR" property="priceMode"/>
+    <result column="TAX_RATE" jdbcType="DOUBLE" property="taxRate"/>
+    <result column="TAX" jdbcType="BIGINT" property="tax"/>
+    <result column="PRICE" jdbcType="BIGINT" property="price"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          VAT_INVOICE_DTL_ID, 
+          VAT_INVOICE_ID, 
+          ROW_FLAG, 
+          TAX_ITEM_ID, 
+          TAX_ITEM_NAME, 
+          SPECIFICATION, 
+          UNIT, 
+          QUANTITY, 
+          PRICE_MODE, 
+          TAX_RATE, 
+          TAX, 
+          PRICE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          VAT_INVOICE_ID, 
+          ROW_FLAG, 
+          TAX_ITEM_ID, 
+          TAX_ITEM_NAME, 
+          SPECIFICATION, 
+          UNIT, 
+          QUANTITY, 
+          PRICE_MODE, 
+          TAX_RATE, 
+          TAX, 
+          PRICE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="vatInvoiceDtlId != null ">
+        VAT_INVOICE_DTL_ID = #{vatInvoiceDtlId, jdbcType=BIGINT }
+      </if>
+      <if test="vatInvoiceId != null ">
+        and VAT_INVOICE_ID = #{vatInvoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="rowFlag != null and rowFlag != ''">
+        and ROW_FLAG = #{rowFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="taxItemId != null ">
+        and TAX_ITEM_ID = #{taxItemId, jdbcType=INTEGER }
+      </if>
+      <if test="taxItemName != null and taxItemName != ''">
+        and TAX_ITEM_NAME = #{taxItemName, jdbcType=VARCHAR }
+      </if>
+      <if test="specification != null and specification != ''">
+        and SPECIFICATION = #{specification, jdbcType=VARCHAR }
+      </if>
+      <if test="unit != null and unit != ''">
+        and UNIT = #{unit, jdbcType=VARCHAR }
+      </if>
+      <if test="quantity != null ">
+        and QUANTITY = #{quantity, jdbcType=BIGINT }
+      </if>
+      <if test="priceMode != null and priceMode != ''">
+        and PRICE_MODE = #{priceMode, jdbcType=VARCHAR }
+      </if>
+      <if test="taxRate != null ">
+        and TAX_RATE = #{taxRate, jdbcType=DOUBLE }
+      </if>
+      <if test="tax != null ">
+        and TAX = #{tax, jdbcType=BIGINT }
+      </if>
+      <if test="price != null ">
+        and PRICE = #{price, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.VatInvoiceDetailDO" resultType="java.lang.Integer">
+      select count(*) from VAT_INVOICE_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from VAT_INVOICE_DETAIL
+        where 
+           VAT_INVOICE_DTL_ID = #{vatInvoiceDtlId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  VAT_INVOICE_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="vatInvoiceDtlId">
+      insert into  VAT_INVOICE_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{vatInvoiceId,jdbcType=BIGINT}, 
+        #{rowFlag,jdbcType=VARCHAR}, 
+        #{taxItemId,jdbcType=INTEGER}, 
+        #{taxItemName,jdbcType=VARCHAR}, 
+        #{specification,jdbcType=VARCHAR}, 
+        #{unit,jdbcType=VARCHAR}, 
+        #{quantity,jdbcType=BIGINT}, 
+        #{priceMode,jdbcType=VARCHAR}, 
+        #{taxRate,jdbcType=DOUBLE}, 
+        #{tax,jdbcType=BIGINT}, 
+        #{price,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  VAT_INVOICE_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{vatInvoiceDtlId,jdbcType=BIGINT}, 
+        #{vatInvoiceId,jdbcType=BIGINT}, 
+        #{rowFlag,jdbcType=VARCHAR}, 
+        #{taxItemId,jdbcType=INTEGER}, 
+        #{taxItemName,jdbcType=VARCHAR}, 
+        #{specification,jdbcType=VARCHAR}, 
+        #{unit,jdbcType=VARCHAR}, 
+        #{quantity,jdbcType=BIGINT}, 
+        #{priceMode,jdbcType=VARCHAR}, 
+        #{taxRate,jdbcType=DOUBLE}, 
+        #{tax,jdbcType=BIGINT}, 
+        #{price,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from VAT_INVOICE_DETAIL  
+        where
+           VAT_INVOICE_DTL_ID = #{vatInvoiceDtlId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from VAT_INVOICE_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  VAT_INVOICE_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="vatInvoiceId != null">
+         VAT_INVOICE_ID = #{vatInvoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="rowFlag != null">
+         ROW_FLAG = #{rowFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="taxItemId != null">
+         TAX_ITEM_ID = #{taxItemId,jdbcType=INTEGER},
+      </if>
+      <if test="taxItemName != null">
+         TAX_ITEM_NAME = #{taxItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+         SPECIFICATION = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+         UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+         QUANTITY = #{quantity,jdbcType=BIGINT},
+      </if>
+      <if test="priceMode != null">
+         PRICE_MODE = #{priceMode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRate != null">
+         TAX_RATE = #{taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="tax != null">
+         TAX = #{tax,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+         PRICE = #{price,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           VAT_INVOICE_DTL_ID = #{vatInvoiceDtlId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update VAT_INVOICE_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.vatInvoiceDtlId != null">
+        VAT_INVOICE_DTL_ID = #{record.vatInvoiceDtlId,jdbcType=BIGINT},
+      </if>
+      <if test="record.vatInvoiceId != null">
+        VAT_INVOICE_ID = #{record.vatInvoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rowFlag != null">
+        ROW_FLAG = #{record.rowFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxItemId != null">
+        TAX_ITEM_ID = #{record.taxItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.taxItemName != null">
+        TAX_ITEM_NAME = #{record.taxItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specification != null">
+        SPECIFICATION = #{record.specification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        UNIT = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null">
+        QUANTITY = #{record.quantity,jdbcType=BIGINT},
+      </if>
+      <if test="record.priceMode != null">
+        PRICE_MODE = #{record.priceMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxRate != null">
+        TAX_RATE = #{record.taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.tax != null">
+        TAX = #{record.tax,jdbcType=BIGINT},
+      </if>
+      <if test="record.price != null">
+        PRICE = #{record.price,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.vatInvoiceDtlId != null ">
+        VAT_INVOICE_DTL_ID = #{condition.vatInvoiceDtlId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.vatInvoiceId != null ">
+        and VAT_INVOICE_ID = #{condition.vatInvoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.rowFlag != null and condition.rowFlag != ''">
+        and ROW_FLAG = #{condition.rowFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxItemId != null ">
+        and TAX_ITEM_ID = #{condition.taxItemId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.taxItemName != null and condition.taxItemName != ''">
+        and TAX_ITEM_NAME = #{condition.taxItemName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.specification != null and condition.specification != ''">
+        and SPECIFICATION = #{condition.specification, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.unit != null and condition.unit != ''">
+        and UNIT = #{condition.unit, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.quantity != null ">
+        and QUANTITY = #{condition.quantity, jdbcType=BIGINT }
+      </if>
+      <if test="condition.priceMode != null and condition.priceMode != ''">
+        and PRICE_MODE = #{condition.priceMode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxRate != null ">
+        and TAX_RATE = #{condition.taxRate, jdbcType=DOUBLE }
+      </if>
+      <if test="condition.tax != null ">
+        and TAX = #{condition.tax, jdbcType=BIGINT }
+      </if>
+      <if test="condition.price != null ">
+        and PRICE = #{condition.price, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

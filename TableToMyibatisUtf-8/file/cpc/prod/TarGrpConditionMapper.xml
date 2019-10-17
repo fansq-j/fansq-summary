@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TarGrpConditionMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TarGrpConditionDO">
+    <id column="CONDITION_ID" jdbcType="BIGINT" property="conditionId"/>
+    <result column="TAR_GRP_ID" jdbcType="BIGINT" property="tarGrpId"/>
+    <result column="ROOT_FLAG" jdbcType="INTEGER" property="rootFlag"/>
+    <result column="LEFT_PARAM" jdbcType="VARCHAR" property="leftParam"/>
+    <result column="LEFT_PARAM_TYPE" jdbcType="VARCHAR" property="leftParamType"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="RIGHT_PARAM" jdbcType="VARCHAR" property="rightParam"/>
+    <result column="RIGHT_PARAM_TYPE" jdbcType="VARCHAR" property="rightParamType"/>
+    <result column="CONDITION_TEXT" jdbcType="VARCHAR" property="conditionText"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CONDITION_ID, 
+          TAR_GRP_ID, 
+          ROOT_FLAG, 
+          LEFT_PARAM, 
+          LEFT_PARAM_TYPE, 
+          OPER_TYPE, 
+          RIGHT_PARAM, 
+          RIGHT_PARAM_TYPE, 
+          CONDITION_TEXT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TAR_GRP_ID, 
+          ROOT_FLAG, 
+          LEFT_PARAM, 
+          LEFT_PARAM_TYPE, 
+          OPER_TYPE, 
+          RIGHT_PARAM, 
+          RIGHT_PARAM_TYPE, 
+          CONDITION_TEXT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="conditionId != null ">
+        CONDITION_ID = #{conditionId, jdbcType=BIGINT }
+      </if>
+      <if test="tarGrpId != null ">
+        and TAR_GRP_ID = #{tarGrpId, jdbcType=BIGINT }
+      </if>
+      <if test="rootFlag != null ">
+        and ROOT_FLAG = #{rootFlag, jdbcType=INTEGER }
+      </if>
+      <if test="leftParam != null and leftParam != ''">
+        and LEFT_PARAM = #{leftParam, jdbcType=VARCHAR }
+      </if>
+      <if test="leftParamType != null and leftParamType != ''">
+        and LEFT_PARAM_TYPE = #{leftParamType, jdbcType=VARCHAR }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="rightParam != null and rightParam != ''">
+        and RIGHT_PARAM = #{rightParam, jdbcType=VARCHAR }
+      </if>
+      <if test="rightParamType != null and rightParamType != ''">
+        and RIGHT_PARAM_TYPE = #{rightParamType, jdbcType=VARCHAR }
+      </if>
+      <if test="conditionText != null and conditionText != ''">
+        and CONDITION_TEXT = #{conditionText, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TarGrpConditionDO" resultType="java.lang.Integer">
+      select count(*) from TAR_GRP_CONDITION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TAR_GRP_CONDITION
+        where 
+           CONDITION_ID = #{conditionId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TAR_GRP_CONDITION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="conditionId">
+      insert into  TAR_GRP_CONDITION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{tarGrpId,jdbcType=BIGINT}, 
+        #{rootFlag,jdbcType=INTEGER}, 
+        #{leftParam,jdbcType=VARCHAR}, 
+        #{leftParamType,jdbcType=VARCHAR}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{rightParam,jdbcType=VARCHAR}, 
+        #{rightParamType,jdbcType=VARCHAR}, 
+        #{conditionText,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TAR_GRP_CONDITION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{conditionId,jdbcType=BIGINT}, 
+        #{tarGrpId,jdbcType=BIGINT}, 
+        #{rootFlag,jdbcType=INTEGER}, 
+        #{leftParam,jdbcType=VARCHAR}, 
+        #{leftParamType,jdbcType=VARCHAR}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{rightParam,jdbcType=VARCHAR}, 
+        #{rightParamType,jdbcType=VARCHAR}, 
+        #{conditionText,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TAR_GRP_CONDITION  
+        where
+           CONDITION_ID = #{conditionId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TAR_GRP_CONDITION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TAR_GRP_CONDITION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="tarGrpId != null">
+         TAR_GRP_ID = #{tarGrpId,jdbcType=BIGINT},
+      </if>
+      <if test="rootFlag != null">
+         ROOT_FLAG = #{rootFlag,jdbcType=INTEGER},
+      </if>
+      <if test="leftParam != null">
+         LEFT_PARAM = #{leftParam,jdbcType=VARCHAR},
+      </if>
+      <if test="leftParamType != null">
+         LEFT_PARAM_TYPE = #{leftParamType,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="rightParam != null">
+         RIGHT_PARAM = #{rightParam,jdbcType=VARCHAR},
+      </if>
+      <if test="rightParamType != null">
+         RIGHT_PARAM_TYPE = #{rightParamType,jdbcType=VARCHAR},
+      </if>
+      <if test="conditionText != null">
+         CONDITION_TEXT = #{conditionText,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CONDITION_ID = #{conditionId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TAR_GRP_CONDITION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.conditionId != null">
+        CONDITION_ID = #{record.conditionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tarGrpId != null">
+        TAR_GRP_ID = #{record.tarGrpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rootFlag != null">
+        ROOT_FLAG = #{record.rootFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.leftParam != null">
+        LEFT_PARAM = #{record.leftParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leftParamType != null">
+        LEFT_PARAM_TYPE = #{record.leftParamType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightParam != null">
+        RIGHT_PARAM = #{record.rightParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightParamType != null">
+        RIGHT_PARAM_TYPE = #{record.rightParamType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.conditionText != null">
+        CONDITION_TEXT = #{record.conditionText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.conditionId != null ">
+        CONDITION_ID = #{condition.conditionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tarGrpId != null ">
+        and TAR_GRP_ID = #{condition.tarGrpId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.rootFlag != null ">
+        and ROOT_FLAG = #{condition.rootFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.leftParam != null and condition.leftParam != ''">
+        and LEFT_PARAM = #{condition.leftParam, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.leftParamType != null and condition.leftParamType != ''">
+        and LEFT_PARAM_TYPE = #{condition.leftParamType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.rightParam != null and condition.rightParam != ''">
+        and RIGHT_PARAM = #{condition.rightParam, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.rightParamType != null and condition.rightParamType != ''">
+        and RIGHT_PARAM_TYPE = #{condition.rightParamType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.conditionText != null and condition.conditionText != ''">
+        and CONDITION_TEXT = #{condition.conditionText, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

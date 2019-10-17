@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CommercialTenantAccountMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CommercialTenantAccountDO">
+    <id column="TENANT_ACCOUNT_ID" jdbcType="INTEGER" property="tenantAccountId"/>
+    <result column="PAY_CHANNEL_ID" jdbcType="INTEGER" property="payChannelId"/>
+    <result column="SIGN_TYPE_ID" jdbcType="INTEGER" property="signTypeId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account"/>
+    <result column="CHANNEL_APPID" jdbcType="VARCHAR" property="channelAppid"/>
+    <result column="SUB_ACCOUNT" jdbcType="VARCHAR" property="subAccount"/>
+    <result column="CHANNEL_SUB_APPID" jdbcType="VARCHAR" property="channelSubAppid"/>
+    <result column="CHANNEL_PRIVATE_KEY" jdbcType="CLOB" property="channelPrivateKey"/>
+    <result column="CHANNEL_PUBLICE_KEY" jdbcType="CLOB" property="channelPubliceKey"/>
+    <result column="SSLCERT_PATH" jdbcType="VARCHAR" property="sslcertPath"/>
+    <result column="SSLCERT_PASSWORD" jdbcType="VARCHAR" property="sslcertPassword"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TENANT_ACCOUNT_ID, 
+          PAY_CHANNEL_ID, 
+          SIGN_TYPE_ID, 
+          ORG_ID, 
+          ACCOUNT, 
+          CHANNEL_APPID, 
+          SUB_ACCOUNT, 
+          CHANNEL_SUB_APPID, 
+          CHANNEL_PRIVATE_KEY, 
+          CHANNEL_PUBLICE_KEY, 
+          SSLCERT_PATH, 
+          SSLCERT_PASSWORD, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PAY_CHANNEL_ID, 
+          SIGN_TYPE_ID, 
+          ORG_ID, 
+          ACCOUNT, 
+          CHANNEL_APPID, 
+          SUB_ACCOUNT, 
+          CHANNEL_SUB_APPID, 
+          CHANNEL_PRIVATE_KEY, 
+          CHANNEL_PUBLICE_KEY, 
+          SSLCERT_PATH, 
+          SSLCERT_PASSWORD, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="tenantAccountId != null ">
+        TENANT_ACCOUNT_ID = #{tenantAccountId, jdbcType=INTEGER }
+      </if>
+      <if test="payChannelId != null ">
+        and PAY_CHANNEL_ID = #{payChannelId, jdbcType=INTEGER }
+      </if>
+      <if test="signTypeId != null ">
+        and SIGN_TYPE_ID = #{signTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="account != null and account != ''">
+        and ACCOUNT = #{account, jdbcType=VARCHAR }
+      </if>
+      <if test="channelAppid != null and channelAppid != ''">
+        and CHANNEL_APPID = #{channelAppid, jdbcType=VARCHAR }
+      </if>
+      <if test="subAccount != null and subAccount != ''">
+        and SUB_ACCOUNT = #{subAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="channelSubAppid != null and channelSubAppid != ''">
+        and CHANNEL_SUB_APPID = #{channelSubAppid, jdbcType=VARCHAR }
+      </if>
+      <if test="channelPrivateKey != null and channelPrivateKey != ''">
+        and CHANNEL_PRIVATE_KEY = #{channelPrivateKey, jdbcType=CLOB }
+      </if>
+      <if test="channelPubliceKey != null and channelPubliceKey != ''">
+        and CHANNEL_PUBLICE_KEY = #{channelPubliceKey, jdbcType=CLOB }
+      </if>
+      <if test="sslcertPath != null and sslcertPath != ''">
+        and SSLCERT_PATH = #{sslcertPath, jdbcType=VARCHAR }
+      </if>
+      <if test="sslcertPassword != null and sslcertPassword != ''">
+        and SSLCERT_PASSWORD = #{sslcertPassword, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CommercialTenantAccountDO" resultType="java.lang.Integer">
+      select count(*) from COMMERCIAL_TENANT_ACCOUNT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from COMMERCIAL_TENANT_ACCOUNT
+        where 
+           TENANT_ACCOUNT_ID = #{tenantAccountId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  COMMERCIAL_TENANT_ACCOUNT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="tenantAccountId">
+      insert into  COMMERCIAL_TENANT_ACCOUNT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{payChannelId,jdbcType=INTEGER}, 
+        #{signTypeId,jdbcType=INTEGER}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{account,jdbcType=VARCHAR}, 
+        #{channelAppid,jdbcType=VARCHAR}, 
+        #{subAccount,jdbcType=VARCHAR}, 
+        #{channelSubAppid,jdbcType=VARCHAR}, 
+        #{channelPrivateKey,jdbcType=CLOB}, 
+        #{channelPubliceKey,jdbcType=CLOB}, 
+        #{sslcertPath,jdbcType=VARCHAR}, 
+        #{sslcertPassword,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  COMMERCIAL_TENANT_ACCOUNT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{tenantAccountId,jdbcType=INTEGER}, 
+        #{payChannelId,jdbcType=INTEGER}, 
+        #{signTypeId,jdbcType=INTEGER}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{account,jdbcType=VARCHAR}, 
+        #{channelAppid,jdbcType=VARCHAR}, 
+        #{subAccount,jdbcType=VARCHAR}, 
+        #{channelSubAppid,jdbcType=VARCHAR}, 
+        #{channelPrivateKey,jdbcType=CLOB}, 
+        #{channelPubliceKey,jdbcType=CLOB}, 
+        #{sslcertPath,jdbcType=VARCHAR}, 
+        #{sslcertPassword,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from COMMERCIAL_TENANT_ACCOUNT  
+        where
+           TENANT_ACCOUNT_ID = #{tenantAccountId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from COMMERCIAL_TENANT_ACCOUNT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  COMMERCIAL_TENANT_ACCOUNT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="payChannelId != null">
+         PAY_CHANNEL_ID = #{payChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="signTypeId != null">
+         SIGN_TYPE_ID = #{signTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="account != null">
+         ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="channelAppid != null">
+         CHANNEL_APPID = #{channelAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="subAccount != null">
+         SUB_ACCOUNT = #{subAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="channelSubAppid != null">
+         CHANNEL_SUB_APPID = #{channelSubAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="channelPrivateKey != null">
+         CHANNEL_PRIVATE_KEY = #{channelPrivateKey,jdbcType=CLOB},
+      </if>
+      <if test="channelPubliceKey != null">
+         CHANNEL_PUBLICE_KEY = #{channelPubliceKey,jdbcType=CLOB},
+      </if>
+      <if test="sslcertPath != null">
+         SSLCERT_PATH = #{sslcertPath,jdbcType=VARCHAR},
+      </if>
+      <if test="sslcertPassword != null">
+         SSLCERT_PASSWORD = #{sslcertPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           TENANT_ACCOUNT_ID = #{tenantAccountId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update COMMERCIAL_TENANT_ACCOUNT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.tenantAccountId != null">
+        TENANT_ACCOUNT_ID = #{record.tenantAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payChannelId != null">
+        PAY_CHANNEL_ID = #{record.payChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.signTypeId != null">
+        SIGN_TYPE_ID = #{record.signTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.account != null">
+        ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelAppid != null">
+        CHANNEL_APPID = #{record.channelAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subAccount != null">
+        SUB_ACCOUNT = #{record.subAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelSubAppid != null">
+        CHANNEL_SUB_APPID = #{record.channelSubAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelPrivateKey != null">
+        CHANNEL_PRIVATE_KEY = #{record.channelPrivateKey,jdbcType=CLOB},
+      </if>
+      <if test="record.channelPubliceKey != null">
+        CHANNEL_PUBLICE_KEY = #{record.channelPubliceKey,jdbcType=CLOB},
+      </if>
+      <if test="record.sslcertPath != null">
+        SSLCERT_PATH = #{record.sslcertPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sslcertPassword != null">
+        SSLCERT_PASSWORD = #{record.sslcertPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.tenantAccountId != null ">
+        TENANT_ACCOUNT_ID = #{condition.tenantAccountId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payChannelId != null ">
+        and PAY_CHANNEL_ID = #{condition.payChannelId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.signTypeId != null ">
+        and SIGN_TYPE_ID = #{condition.signTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.account != null and condition.account != ''">
+        and ACCOUNT = #{condition.account, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.channelAppid != null and condition.channelAppid != ''">
+        and CHANNEL_APPID = #{condition.channelAppid, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.subAccount != null and condition.subAccount != ''">
+        and SUB_ACCOUNT = #{condition.subAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.channelSubAppid != null and condition.channelSubAppid != ''">
+        and CHANNEL_SUB_APPID = #{condition.channelSubAppid, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.channelPrivateKey != null and condition.channelPrivateKey != ''">
+        and CHANNEL_PRIVATE_KEY = #{condition.channelPrivateKey, jdbcType=CLOB }
+      </if>
+      <if test="condition.channelPubliceKey != null and condition.channelPubliceKey != ''">
+        and CHANNEL_PUBLICE_KEY = #{condition.channelPubliceKey, jdbcType=CLOB }
+      </if>
+      <if test="condition.sslcertPath != null and condition.sslcertPath != ''">
+        and SSLCERT_PATH = #{condition.sslcertPath, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sslcertPassword != null and condition.sslcertPassword != ''">
+        and SSLCERT_PASSWORD = #{condition.sslcertPassword, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

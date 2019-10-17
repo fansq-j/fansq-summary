@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SettleItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SettleItemDO">
+    <id column="SETTLE_ITEM_ID" jdbcType="BIGINT" property="settleItemId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="SETTLE_OBJ_TYPE" jdbcType="INTEGER" property="settleObjType"/>
+    <result column="SETTLE_OBJ_ID" jdbcType="BIGINT" property="settleObjId"/>
+    <result column="SETT_CHARGE_PARTY_ID" jdbcType="INTEGER" property="settChargePartyId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="PAY_STATE" jdbcType="INTEGER" property="payState"/>
+    <result column="PAY_STATE_DATE" jdbcType="TIMESTAMP" property="payStateDate"/>
+    <result column="ADJUST_FLAG" jdbcType="INTEGER" property="adjustFlag"/>
+    <result column="ORG_BILLING_CYCLE_ID" jdbcType="INTEGER" property="orgBillingCycleId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="COST_FLAG" jdbcType="INTEGER" property="costFlag"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SETTLE_ITEM_ID, 
+          BILLING_CYCLE_ID, 
+          SETTLE_OBJ_TYPE, 
+          SETTLE_OBJ_ID, 
+          SETT_CHARGE_PARTY_ID, 
+          AMOUNT, 
+          PAY_STATE, 
+          PAY_STATE_DATE, 
+          ADJUST_FLAG, 
+          ORG_BILLING_CYCLE_ID, 
+          LAN_ID, 
+          COST_FLAG
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BILLING_CYCLE_ID, 
+          SETTLE_OBJ_TYPE, 
+          SETTLE_OBJ_ID, 
+          SETT_CHARGE_PARTY_ID, 
+          AMOUNT, 
+          PAY_STATE, 
+          PAY_STATE_DATE, 
+          ADJUST_FLAG, 
+          ORG_BILLING_CYCLE_ID, 
+          LAN_ID, 
+          COST_FLAG
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="settleItemId != null ">
+        SETTLE_ITEM_ID = #{settleItemId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="settleObjType != null ">
+        and SETTLE_OBJ_TYPE = #{settleObjType, jdbcType=INTEGER }
+      </if>
+      <if test="settleObjId != null ">
+        and SETTLE_OBJ_ID = #{settleObjId, jdbcType=BIGINT }
+      </if>
+      <if test="settChargePartyId != null ">
+        and SETT_CHARGE_PARTY_ID = #{settChargePartyId, jdbcType=INTEGER }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="payState != null ">
+        and PAY_STATE = #{payState, jdbcType=INTEGER }
+      </if>
+      <if test="payStateDate != null ">
+        and PAY_STATE_DATE = #{payStateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="adjustFlag != null ">
+        and ADJUST_FLAG = #{adjustFlag, jdbcType=INTEGER }
+      </if>
+      <if test="orgBillingCycleId != null ">
+        and ORG_BILLING_CYCLE_ID = #{orgBillingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="costFlag != null ">
+        and COST_FLAG = #{costFlag, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SettleItemDO" resultType="java.lang.Integer">
+      select count(*) from SETTLE_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SETTLE_ITEM
+        where 
+           SETTLE_ITEM_ID = #{settleItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SETTLE_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="settleItemId">
+      insert into  SETTLE_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{settleObjType,jdbcType=INTEGER}, 
+        #{settleObjId,jdbcType=BIGINT}, 
+        #{settChargePartyId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{payState,jdbcType=INTEGER}, 
+        #{payStateDate,jdbcType=TIMESTAMP}, 
+        #{adjustFlag,jdbcType=INTEGER}, 
+        #{orgBillingCycleId,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{costFlag,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SETTLE_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{settleItemId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{settleObjType,jdbcType=INTEGER}, 
+        #{settleObjId,jdbcType=BIGINT}, 
+        #{settChargePartyId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{payState,jdbcType=INTEGER}, 
+        #{payStateDate,jdbcType=TIMESTAMP}, 
+        #{adjustFlag,jdbcType=INTEGER}, 
+        #{orgBillingCycleId,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{costFlag,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SETTLE_ITEM  
+        where
+           SETTLE_ITEM_ID = #{settleItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SETTLE_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SETTLE_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="settleObjType != null">
+         SETTLE_OBJ_TYPE = #{settleObjType,jdbcType=INTEGER},
+      </if>
+      <if test="settleObjId != null">
+         SETTLE_OBJ_ID = #{settleObjId,jdbcType=BIGINT},
+      </if>
+      <if test="settChargePartyId != null">
+         SETT_CHARGE_PARTY_ID = #{settChargePartyId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="payState != null">
+         PAY_STATE = #{payState,jdbcType=INTEGER},
+      </if>
+      <if test="payStateDate != null">
+         PAY_STATE_DATE = #{payStateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adjustFlag != null">
+         ADJUST_FLAG = #{adjustFlag,jdbcType=INTEGER},
+      </if>
+      <if test="orgBillingCycleId != null">
+         ORG_BILLING_CYCLE_ID = #{orgBillingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="costFlag != null">
+         COST_FLAG = #{costFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           SETTLE_ITEM_ID = #{settleItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SETTLE_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.settleItemId != null">
+        SETTLE_ITEM_ID = #{record.settleItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.settleObjType != null">
+        SETTLE_OBJ_TYPE = #{record.settleObjType,jdbcType=INTEGER},
+      </if>
+      <if test="record.settleObjId != null">
+        SETTLE_OBJ_ID = #{record.settleObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.settChargePartyId != null">
+        SETT_CHARGE_PARTY_ID = #{record.settChargePartyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.payState != null">
+        PAY_STATE = #{record.payState,jdbcType=INTEGER},
+      </if>
+      <if test="record.payStateDate != null">
+        PAY_STATE_DATE = #{record.payStateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adjustFlag != null">
+        ADJUST_FLAG = #{record.adjustFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgBillingCycleId != null">
+        ORG_BILLING_CYCLE_ID = #{record.orgBillingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.costFlag != null">
+        COST_FLAG = #{record.costFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.settleItemId != null ">
+        SETTLE_ITEM_ID = #{condition.settleItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.settleObjType != null ">
+        and SETTLE_OBJ_TYPE = #{condition.settleObjType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.settleObjId != null ">
+        and SETTLE_OBJ_ID = #{condition.settleObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.settChargePartyId != null ">
+        and SETT_CHARGE_PARTY_ID = #{condition.settChargePartyId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payState != null ">
+        and PAY_STATE = #{condition.payState, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payStateDate != null ">
+        and PAY_STATE_DATE = #{condition.payStateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.adjustFlag != null ">
+        and ADJUST_FLAG = #{condition.adjustFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orgBillingCycleId != null ">
+        and ORG_BILLING_CYCLE_ID = #{condition.orgBillingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.costFlag != null ">
+        and COST_FLAG = #{condition.costFlag, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

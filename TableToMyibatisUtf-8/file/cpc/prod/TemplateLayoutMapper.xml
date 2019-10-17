@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TemplateLayoutMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TemplateLayoutDO">
+    <id column="TEMPLATE_LAYOUT_ID" jdbcType="BIGINT" property="templateLayoutId"/>
+    <result column="X_POSITION" jdbcType="VARCHAR" property="xPosition"/>
+    <result column="Y_POSITION" jdbcType="VARCHAR" property="yPosition"/>
+    <result column="MIN_HEIGHT" jdbcType="VARCHAR" property="minHeight"/>
+    <result column="MIN_WIDTH" jdbcType="VARCHAR" property="minWidth"/>
+    <result column="COL_NUM" jdbcType="INTEGER" property="colNum"/>
+    <result column="FONT_SIZE" jdbcType="INTEGER" property="fontSize"/>
+    <result column="FONT_FAMILY" jdbcType="VARCHAR" property="fontFamily"/>
+    <result column="MARGIN_LEFT" jdbcType="VARCHAR" property="marginLeft"/>
+    <result column="MARGIN_RIGHT" jdbcType="VARCHAR" property="marginRight"/>
+    <result column="MARGIN_TOP" jdbcType="VARCHAR" property="marginTop"/>
+    <result column="MARGIN_BOTTOM" jdbcType="VARCHAR" property="marginBottom"/>
+    <result column="GAP_LINE" jdbcType="VARCHAR" property="gapLine"/>
+    <result column="CSS_CLASS" jdbcType="VARCHAR" property="cssClass"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TEMPLATE_LAYOUT_ID, 
+          X_POSITION, 
+          Y_POSITION, 
+          MIN_HEIGHT, 
+          MIN_WIDTH, 
+          COL_NUM, 
+          FONT_SIZE, 
+          FONT_FAMILY, 
+          MARGIN_LEFT, 
+          MARGIN_RIGHT, 
+          MARGIN_TOP, 
+          MARGIN_BOTTOM, 
+          GAP_LINE, 
+          CSS_CLASS, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          X_POSITION, 
+          Y_POSITION, 
+          MIN_HEIGHT, 
+          MIN_WIDTH, 
+          COL_NUM, 
+          FONT_SIZE, 
+          FONT_FAMILY, 
+          MARGIN_LEFT, 
+          MARGIN_RIGHT, 
+          MARGIN_TOP, 
+          MARGIN_BOTTOM, 
+          GAP_LINE, 
+          CSS_CLASS, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="templateLayoutId != null ">
+        TEMPLATE_LAYOUT_ID = #{templateLayoutId, jdbcType=BIGINT }
+      </if>
+      <if test="xPosition != null and xPosition != ''">
+        and X_POSITION = #{xPosition, jdbcType=VARCHAR }
+      </if>
+      <if test="yPosition != null and yPosition != ''">
+        and Y_POSITION = #{yPosition, jdbcType=VARCHAR }
+      </if>
+      <if test="minHeight != null and minHeight != ''">
+        and MIN_HEIGHT = #{minHeight, jdbcType=VARCHAR }
+      </if>
+      <if test="minWidth != null and minWidth != ''">
+        and MIN_WIDTH = #{minWidth, jdbcType=VARCHAR }
+      </if>
+      <if test="colNum != null ">
+        and COL_NUM = #{colNum, jdbcType=INTEGER }
+      </if>
+      <if test="fontSize != null ">
+        and FONT_SIZE = #{fontSize, jdbcType=INTEGER }
+      </if>
+      <if test="fontFamily != null and fontFamily != ''">
+        and FONT_FAMILY = #{fontFamily, jdbcType=VARCHAR }
+      </if>
+      <if test="marginLeft != null and marginLeft != ''">
+        and MARGIN_LEFT = #{marginLeft, jdbcType=VARCHAR }
+      </if>
+      <if test="marginRight != null and marginRight != ''">
+        and MARGIN_RIGHT = #{marginRight, jdbcType=VARCHAR }
+      </if>
+      <if test="marginTop != null and marginTop != ''">
+        and MARGIN_TOP = #{marginTop, jdbcType=VARCHAR }
+      </if>
+      <if test="marginBottom != null and marginBottom != ''">
+        and MARGIN_BOTTOM = #{marginBottom, jdbcType=VARCHAR }
+      </if>
+      <if test="gapLine != null and gapLine != ''">
+        and GAP_LINE = #{gapLine, jdbcType=VARCHAR }
+      </if>
+      <if test="cssClass != null and cssClass != ''">
+        and CSS_CLASS = #{cssClass, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TemplateLayoutDO" resultType="java.lang.Integer">
+      select count(*) from TEMPLATE_LAYOUT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TEMPLATE_LAYOUT
+        where 
+           TEMPLATE_LAYOUT_ID = #{templateLayoutId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TEMPLATE_LAYOUT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="templateLayoutId">
+      insert into  TEMPLATE_LAYOUT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{xPosition,jdbcType=VARCHAR}, 
+        #{yPosition,jdbcType=VARCHAR}, 
+        #{minHeight,jdbcType=VARCHAR}, 
+        #{minWidth,jdbcType=VARCHAR}, 
+        #{colNum,jdbcType=INTEGER}, 
+        #{fontSize,jdbcType=INTEGER}, 
+        #{fontFamily,jdbcType=VARCHAR}, 
+        #{marginLeft,jdbcType=VARCHAR}, 
+        #{marginRight,jdbcType=VARCHAR}, 
+        #{marginTop,jdbcType=VARCHAR}, 
+        #{marginBottom,jdbcType=VARCHAR}, 
+        #{gapLine,jdbcType=VARCHAR}, 
+        #{cssClass,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TEMPLATE_LAYOUT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{templateLayoutId,jdbcType=BIGINT}, 
+        #{xPosition,jdbcType=VARCHAR}, 
+        #{yPosition,jdbcType=VARCHAR}, 
+        #{minHeight,jdbcType=VARCHAR}, 
+        #{minWidth,jdbcType=VARCHAR}, 
+        #{colNum,jdbcType=INTEGER}, 
+        #{fontSize,jdbcType=INTEGER}, 
+        #{fontFamily,jdbcType=VARCHAR}, 
+        #{marginLeft,jdbcType=VARCHAR}, 
+        #{marginRight,jdbcType=VARCHAR}, 
+        #{marginTop,jdbcType=VARCHAR}, 
+        #{marginBottom,jdbcType=VARCHAR}, 
+        #{gapLine,jdbcType=VARCHAR}, 
+        #{cssClass,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TEMPLATE_LAYOUT  
+        where
+           TEMPLATE_LAYOUT_ID = #{templateLayoutId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TEMPLATE_LAYOUT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TEMPLATE_LAYOUT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="xPosition != null">
+         X_POSITION = #{xPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="yPosition != null">
+         Y_POSITION = #{yPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="minHeight != null">
+         MIN_HEIGHT = #{minHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="minWidth != null">
+         MIN_WIDTH = #{minWidth,jdbcType=VARCHAR},
+      </if>
+      <if test="colNum != null">
+         COL_NUM = #{colNum,jdbcType=INTEGER},
+      </if>
+      <if test="fontSize != null">
+         FONT_SIZE = #{fontSize,jdbcType=INTEGER},
+      </if>
+      <if test="fontFamily != null">
+         FONT_FAMILY = #{fontFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="marginLeft != null">
+         MARGIN_LEFT = #{marginLeft,jdbcType=VARCHAR},
+      </if>
+      <if test="marginRight != null">
+         MARGIN_RIGHT = #{marginRight,jdbcType=VARCHAR},
+      </if>
+      <if test="marginTop != null">
+         MARGIN_TOP = #{marginTop,jdbcType=VARCHAR},
+      </if>
+      <if test="marginBottom != null">
+         MARGIN_BOTTOM = #{marginBottom,jdbcType=VARCHAR},
+      </if>
+      <if test="gapLine != null">
+         GAP_LINE = #{gapLine,jdbcType=VARCHAR},
+      </if>
+      <if test="cssClass != null">
+         CSS_CLASS = #{cssClass,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           TEMPLATE_LAYOUT_ID = #{templateLayoutId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TEMPLATE_LAYOUT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.templateLayoutId != null">
+        TEMPLATE_LAYOUT_ID = #{record.templateLayoutId,jdbcType=BIGINT},
+      </if>
+      <if test="record.xPosition != null">
+        X_POSITION = #{record.xPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yPosition != null">
+        Y_POSITION = #{record.yPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minHeight != null">
+        MIN_HEIGHT = #{record.minHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minWidth != null">
+        MIN_WIDTH = #{record.minWidth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.colNum != null">
+        COL_NUM = #{record.colNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.fontSize != null">
+        FONT_SIZE = #{record.fontSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.fontFamily != null">
+        FONT_FAMILY = #{record.fontFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marginLeft != null">
+        MARGIN_LEFT = #{record.marginLeft,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marginRight != null">
+        MARGIN_RIGHT = #{record.marginRight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marginTop != null">
+        MARGIN_TOP = #{record.marginTop,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marginBottom != null">
+        MARGIN_BOTTOM = #{record.marginBottom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gapLine != null">
+        GAP_LINE = #{record.gapLine,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cssClass != null">
+        CSS_CLASS = #{record.cssClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.templateLayoutId != null ">
+        TEMPLATE_LAYOUT_ID = #{condition.templateLayoutId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.xPosition != null and condition.xPosition != ''">
+        and X_POSITION = #{condition.xPosition, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.yPosition != null and condition.yPosition != ''">
+        and Y_POSITION = #{condition.yPosition, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.minHeight != null and condition.minHeight != ''">
+        and MIN_HEIGHT = #{condition.minHeight, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.minWidth != null and condition.minWidth != ''">
+        and MIN_WIDTH = #{condition.minWidth, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.colNum != null ">
+        and COL_NUM = #{condition.colNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fontSize != null ">
+        and FONT_SIZE = #{condition.fontSize, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fontFamily != null and condition.fontFamily != ''">
+        and FONT_FAMILY = #{condition.fontFamily, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.marginLeft != null and condition.marginLeft != ''">
+        and MARGIN_LEFT = #{condition.marginLeft, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.marginRight != null and condition.marginRight != ''">
+        and MARGIN_RIGHT = #{condition.marginRight, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.marginTop != null and condition.marginTop != ''">
+        and MARGIN_TOP = #{condition.marginTop, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.marginBottom != null and condition.marginBottom != ''">
+        and MARGIN_BOTTOM = #{condition.marginBottom, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gapLine != null and condition.gapLine != ''">
+        and GAP_LINE = #{condition.gapLine, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.cssClass != null and condition.cssClass != ''">
+        and CSS_CLASS = #{condition.cssClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ClubMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ClubDO">
+    <id column="CLUB_ID" jdbcType="INTEGER" property="clubId"/>
+    <result column="CLUB_NAME" jdbcType="VARCHAR" property="clubName"/>
+    <result column="CLUB_CODE" jdbcType="VARCHAR" property="clubCode"/>
+    <result column="CLUB_DESC" jdbcType="VARCHAR" property="clubDesc"/>
+    <result column="CLUB_TYPE" jdbcType="VARCHAR" property="clubType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CLUB_ID, 
+          CLUB_NAME, 
+          CLUB_CODE, 
+          CLUB_DESC, 
+          CLUB_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CLUB_NAME, 
+          CLUB_CODE, 
+          CLUB_DESC, 
+          CLUB_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="clubId != null ">
+        CLUB_ID = #{clubId, jdbcType=INTEGER }
+      </if>
+      <if test="clubName != null and clubName != ''">
+        and CLUB_NAME = #{clubName, jdbcType=VARCHAR }
+      </if>
+      <if test="clubCode != null and clubCode != ''">
+        and CLUB_CODE = #{clubCode, jdbcType=VARCHAR }
+      </if>
+      <if test="clubDesc != null and clubDesc != ''">
+        and CLUB_DESC = #{clubDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="clubType != null and clubType != ''">
+        and CLUB_TYPE = #{clubType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ClubDO" resultType="java.lang.Integer">
+      select count(*) from CLUB
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CLUB
+        where 
+           CLUB_ID = #{clubId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CLUB 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="clubId">
+      insert into  CLUB ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{clubName,jdbcType=VARCHAR}, 
+        #{clubCode,jdbcType=VARCHAR}, 
+        #{clubDesc,jdbcType=VARCHAR}, 
+        #{clubType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CLUB ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{clubId,jdbcType=INTEGER}, 
+        #{clubName,jdbcType=VARCHAR}, 
+        #{clubCode,jdbcType=VARCHAR}, 
+        #{clubDesc,jdbcType=VARCHAR}, 
+        #{clubType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CLUB  
+        where
+           CLUB_ID = #{clubId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from CLUB
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CLUB
+    <trim prefix="set" suffixOverrides=",">
+      <if test="clubName != null">
+         CLUB_NAME = #{clubName,jdbcType=VARCHAR},
+      </if>
+      <if test="clubCode != null">
+         CLUB_CODE = #{clubCode,jdbcType=VARCHAR},
+      </if>
+      <if test="clubDesc != null">
+         CLUB_DESC = #{clubDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="clubType != null">
+         CLUB_TYPE = #{clubType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CLUB_ID = #{clubId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update CLUB
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.clubId != null">
+        CLUB_ID = #{record.clubId,jdbcType=INTEGER},
+      </if>
+      <if test="record.clubName != null">
+        CLUB_NAME = #{record.clubName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clubCode != null">
+        CLUB_CODE = #{record.clubCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clubDesc != null">
+        CLUB_DESC = #{record.clubDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clubType != null">
+        CLUB_TYPE = #{record.clubType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.clubId != null ">
+        CLUB_ID = #{condition.clubId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.clubName != null and condition.clubName != ''">
+        and CLUB_NAME = #{condition.clubName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.clubCode != null and condition.clubCode != ''">
+        and CLUB_CODE = #{condition.clubCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.clubDesc != null and condition.clubDesc != ''">
+        and CLUB_DESC = #{condition.clubDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.clubType != null and condition.clubType != ''">
+        and CLUB_TYPE = #{condition.clubType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

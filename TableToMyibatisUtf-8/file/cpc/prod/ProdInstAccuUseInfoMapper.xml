@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ProdInstAccuUseInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ProdInstAccuUseInfoDO">
+    <id column="ACCU_USE_ID" jdbcType="BIGINT" property="accuUseId"/>
+    <result column="ACCU_ID" jdbcType="BIGINT" property="accuId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="USAGE_AMOUNT" jdbcType="BIGINT" property="usageAmount"/>
+    <result column="USAGE_VOICE" jdbcType="BIGINT" property="usageVoice"/>
+    <result column="USAGE_SMS" jdbcType="BIGINT" property="usageSms"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCU_USE_ID, 
+          ACCU_ID, 
+          PROD_INST_ID, 
+          OFFER_INST_ID, 
+          BILLING_CYCLE_ID, 
+          USAGE_AMOUNT, 
+          USAGE_VOICE, 
+          USAGE_SMS, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCU_ID, 
+          PROD_INST_ID, 
+          OFFER_INST_ID, 
+          BILLING_CYCLE_ID, 
+          USAGE_AMOUNT, 
+          USAGE_VOICE, 
+          USAGE_SMS, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="accuUseId != null ">
+        ACCU_USE_ID = #{accuUseId, jdbcType=BIGINT }
+      </if>
+      <if test="accuId != null ">
+        and ACCU_ID = #{accuId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="usageAmount != null ">
+        and USAGE_AMOUNT = #{usageAmount, jdbcType=BIGINT }
+      </if>
+      <if test="usageVoice != null ">
+        and USAGE_VOICE = #{usageVoice, jdbcType=BIGINT }
+      </if>
+      <if test="usageSms != null ">
+        and USAGE_SMS = #{usageSms, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ProdInstAccuUseInfoDO" resultType="java.lang.Integer">
+      select count(*) from PROD_INST_ACCU_USE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PROD_INST_ACCU_USE_INFO
+        where 
+           ACCU_USE_ID = #{accuUseId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PROD_INST_ACCU_USE_INFO 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="accuUseId">
+      insert into  PROD_INST_ACCU_USE_INFO ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{accuId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{usageAmount,jdbcType=BIGINT}, 
+        #{usageVoice,jdbcType=BIGINT}, 
+        #{usageSms,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PROD_INST_ACCU_USE_INFO ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{accuUseId,jdbcType=BIGINT}, 
+        #{accuId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{usageAmount,jdbcType=BIGINT}, 
+        #{usageVoice,jdbcType=BIGINT}, 
+        #{usageSms,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PROD_INST_ACCU_USE_INFO  
+        where
+           ACCU_USE_ID = #{accuUseId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PROD_INST_ACCU_USE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PROD_INST_ACCU_USE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="accuId != null">
+         ACCU_ID = #{accuId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="usageAmount != null">
+         USAGE_AMOUNT = #{usageAmount,jdbcType=BIGINT},
+      </if>
+      <if test="usageVoice != null">
+         USAGE_VOICE = #{usageVoice,jdbcType=BIGINT},
+      </if>
+      <if test="usageSms != null">
+         USAGE_SMS = #{usageSms,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ACCU_USE_ID = #{accuUseId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PROD_INST_ACCU_USE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.accuUseId != null">
+        ACCU_USE_ID = #{record.accuUseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.accuId != null">
+        ACCU_ID = #{record.accuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.usageAmount != null">
+        USAGE_AMOUNT = #{record.usageAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.usageVoice != null">
+        USAGE_VOICE = #{record.usageVoice,jdbcType=BIGINT},
+      </if>
+      <if test="record.usageSms != null">
+        USAGE_SMS = #{record.usageSms,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.accuUseId != null ">
+        ACCU_USE_ID = #{condition.accuUseId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.accuId != null ">
+        and ACCU_ID = #{condition.accuId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.usageAmount != null ">
+        and USAGE_AMOUNT = #{condition.usageAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.usageVoice != null ">
+        and USAGE_VOICE = #{condition.usageVoice, jdbcType=BIGINT }
+      </if>
+      <if test="condition.usageSms != null ">
+        and USAGE_SMS = #{condition.usageSms, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

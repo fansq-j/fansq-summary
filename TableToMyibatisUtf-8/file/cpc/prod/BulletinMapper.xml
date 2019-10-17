@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BulletinMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BulletinDO">
+    <id column="BULLETIN_ID" jdbcType="BIGINT" property="bulletinId"/>
+    <result column="BULLETIN_TITLE" jdbcType="VARCHAR" property="bulletinTitle"/>
+    <result column="BULLETIN_CONTENT" jdbcType="VARCHAR" property="bulletinContent"/>
+    <result column="BULLETIN_TYPE" jdbcType="VARCHAR" property="bulletinType"/>
+    <result column="BULLETIN_LEVEL" jdbcType="VARCHAR" property="bulletinLevel"/>
+    <result column="IS_TOP" jdbcType="INTEGER" property="isTop"/>
+    <result column="LAUNCH_STAFF" jdbcType="BIGINT" property="launchStaff"/>
+    <result column="LAUNCH_ORG" jdbcType="BIGINT" property="launchOrg"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BULLETIN_ID, 
+          BULLETIN_TITLE, 
+          BULLETIN_CONTENT, 
+          BULLETIN_TYPE, 
+          BULLETIN_LEVEL, 
+          IS_TOP, 
+          LAUNCH_STAFF, 
+          LAUNCH_ORG, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BULLETIN_TITLE, 
+          BULLETIN_CONTENT, 
+          BULLETIN_TYPE, 
+          BULLETIN_LEVEL, 
+          IS_TOP, 
+          LAUNCH_STAFF, 
+          LAUNCH_ORG, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="bulletinId != null ">
+        BULLETIN_ID = #{bulletinId, jdbcType=BIGINT }
+      </if>
+      <if test="bulletinTitle != null and bulletinTitle != ''">
+        and BULLETIN_TITLE = #{bulletinTitle, jdbcType=VARCHAR }
+      </if>
+      <if test="bulletinContent != null and bulletinContent != ''">
+        and BULLETIN_CONTENT = #{bulletinContent, jdbcType=VARCHAR }
+      </if>
+      <if test="bulletinType != null and bulletinType != ''">
+        and BULLETIN_TYPE = #{bulletinType, jdbcType=VARCHAR }
+      </if>
+      <if test="bulletinLevel != null and bulletinLevel != ''">
+        and BULLETIN_LEVEL = #{bulletinLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="isTop != null ">
+        and IS_TOP = #{isTop, jdbcType=INTEGER }
+      </if>
+      <if test="launchStaff != null ">
+        and LAUNCH_STAFF = #{launchStaff, jdbcType=BIGINT }
+      </if>
+      <if test="launchOrg != null ">
+        and LAUNCH_ORG = #{launchOrg, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BulletinDO" resultType="java.lang.Integer">
+      select count(*) from BULLETIN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BULLETIN
+        where 
+           BULLETIN_ID = #{bulletinId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BULLETIN 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="bulletinId">
+      insert into  BULLETIN ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{bulletinTitle,jdbcType=VARCHAR}, 
+        #{bulletinContent,jdbcType=VARCHAR}, 
+        #{bulletinType,jdbcType=VARCHAR}, 
+        #{bulletinLevel,jdbcType=VARCHAR}, 
+        #{isTop,jdbcType=INTEGER}, 
+        #{launchStaff,jdbcType=BIGINT}, 
+        #{launchOrg,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BULLETIN ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{bulletinId,jdbcType=BIGINT}, 
+        #{bulletinTitle,jdbcType=VARCHAR}, 
+        #{bulletinContent,jdbcType=VARCHAR}, 
+        #{bulletinType,jdbcType=VARCHAR}, 
+        #{bulletinLevel,jdbcType=VARCHAR}, 
+        #{isTop,jdbcType=INTEGER}, 
+        #{launchStaff,jdbcType=BIGINT}, 
+        #{launchOrg,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BULLETIN  
+        where
+           BULLETIN_ID = #{bulletinId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BULLETIN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BULLETIN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="bulletinTitle != null">
+         BULLETIN_TITLE = #{bulletinTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bulletinContent != null">
+         BULLETIN_CONTENT = #{bulletinContent,jdbcType=VARCHAR},
+      </if>
+      <if test="bulletinType != null">
+         BULLETIN_TYPE = #{bulletinType,jdbcType=VARCHAR},
+      </if>
+      <if test="bulletinLevel != null">
+         BULLETIN_LEVEL = #{bulletinLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null">
+         IS_TOP = #{isTop,jdbcType=INTEGER},
+      </if>
+      <if test="launchStaff != null">
+         LAUNCH_STAFF = #{launchStaff,jdbcType=BIGINT},
+      </if>
+      <if test="launchOrg != null">
+         LAUNCH_ORG = #{launchOrg,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           BULLETIN_ID = #{bulletinId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BULLETIN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.bulletinId != null">
+        BULLETIN_ID = #{record.bulletinId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bulletinTitle != null">
+        BULLETIN_TITLE = #{record.bulletinTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bulletinContent != null">
+        BULLETIN_CONTENT = #{record.bulletinContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bulletinType != null">
+        BULLETIN_TYPE = #{record.bulletinType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bulletinLevel != null">
+        BULLETIN_LEVEL = #{record.bulletinLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTop != null">
+        IS_TOP = #{record.isTop,jdbcType=INTEGER},
+      </if>
+      <if test="record.launchStaff != null">
+        LAUNCH_STAFF = #{record.launchStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.launchOrg != null">
+        LAUNCH_ORG = #{record.launchOrg,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.bulletinId != null ">
+        BULLETIN_ID = #{condition.bulletinId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.bulletinTitle != null and condition.bulletinTitle != ''">
+        and BULLETIN_TITLE = #{condition.bulletinTitle, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bulletinContent != null and condition.bulletinContent != ''">
+        and BULLETIN_CONTENT = #{condition.bulletinContent, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bulletinType != null and condition.bulletinType != ''">
+        and BULLETIN_TYPE = #{condition.bulletinType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bulletinLevel != null and condition.bulletinLevel != ''">
+        and BULLETIN_LEVEL = #{condition.bulletinLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isTop != null ">
+        and IS_TOP = #{condition.isTop, jdbcType=INTEGER }
+      </if>
+      <if test="condition.launchStaff != null ">
+        and LAUNCH_STAFF = #{condition.launchStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.launchOrg != null ">
+        and LAUNCH_ORG = #{condition.launchOrg, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

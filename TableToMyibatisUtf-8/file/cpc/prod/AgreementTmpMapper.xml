@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AgreementTmpMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AgreementTmpDO">
+    <id column="AGREEMENT_TMP_ID" jdbcType="BIGINT" property="agreementTmpId"/>
+    <result column="AGREEMENT_TMP_NBR" jdbcType="VARCHAR" property="agreementTmpNbr"/>
+    <result column="TEMPLET_NAME" jdbcType="VARCHAR" property="templetName"/>
+    <result column="AGREEMENT_TMP_DESC" jdbcType="VARCHAR" property="agreementTmpDesc"/>
+    <result column="AGREE_TYPE" jdbcType="VARCHAR" property="agreeType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="MANAGE_REGION_ID" jdbcType="BIGINT" property="manageRegionId"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="MANAGE_LEVEL" jdbcType="VARCHAR" property="manageLevel"/>
+    <result column="MANAGE_ORG" jdbcType="BIGINT" property="manageOrg"/>
+    <result column="BRAND_ID" jdbcType="INTEGER" property="brandId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          AGREEMENT_TMP_ID, 
+          AGREEMENT_TMP_NBR, 
+          TEMPLET_NAME, 
+          AGREEMENT_TMP_DESC, 
+          AGREE_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          APPLY_REGION_ID, 
+          MANAGE_REGION_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          MANAGE_LEVEL, 
+          MANAGE_ORG, 
+          BRAND_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          AGREEMENT_TMP_NBR, 
+          TEMPLET_NAME, 
+          AGREEMENT_TMP_DESC, 
+          AGREE_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          APPLY_REGION_ID, 
+          MANAGE_REGION_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          MANAGE_LEVEL, 
+          MANAGE_ORG, 
+          BRAND_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="agreementTmpId != null ">
+        AGREEMENT_TMP_ID = #{agreementTmpId, jdbcType=BIGINT }
+      </if>
+      <if test="agreementTmpNbr != null and agreementTmpNbr != ''">
+        and AGREEMENT_TMP_NBR = #{agreementTmpNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="templetName != null and templetName != ''">
+        and TEMPLET_NAME = #{templetName, jdbcType=VARCHAR }
+      </if>
+      <if test="agreementTmpDesc != null and agreementTmpDesc != ''">
+        and AGREEMENT_TMP_DESC = #{agreementTmpDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="agreeType != null and agreeType != ''">
+        and AGREE_TYPE = #{agreeType, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="manageRegionId != null ">
+        and MANAGE_REGION_ID = #{manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="manageLevel != null and manageLevel != ''">
+        and MANAGE_LEVEL = #{manageLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="manageOrg != null ">
+        and MANAGE_ORG = #{manageOrg, jdbcType=BIGINT }
+      </if>
+      <if test="brandId != null ">
+        and BRAND_ID = #{brandId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AgreementTmpDO" resultType="java.lang.Integer">
+      select count(*) from AGREEMENT_TMP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from AGREEMENT_TMP
+        where 
+           AGREEMENT_TMP_ID = #{agreementTmpId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  AGREEMENT_TMP 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="agreementTmpId">
+      insert into  AGREEMENT_TMP ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{agreementTmpNbr,jdbcType=VARCHAR}, 
+        #{templetName,jdbcType=VARCHAR}, 
+        #{agreementTmpDesc,jdbcType=VARCHAR}, 
+        #{agreeType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{manageLevel,jdbcType=VARCHAR}, 
+        #{manageOrg,jdbcType=BIGINT}, 
+        #{brandId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  AGREEMENT_TMP ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{agreementTmpId,jdbcType=BIGINT}, 
+        #{agreementTmpNbr,jdbcType=VARCHAR}, 
+        #{templetName,jdbcType=VARCHAR}, 
+        #{agreementTmpDesc,jdbcType=VARCHAR}, 
+        #{agreeType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{manageLevel,jdbcType=VARCHAR}, 
+        #{manageOrg,jdbcType=BIGINT}, 
+        #{brandId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from AGREEMENT_TMP  
+        where
+           AGREEMENT_TMP_ID = #{agreementTmpId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from AGREEMENT_TMP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  AGREEMENT_TMP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="agreementTmpNbr != null">
+         AGREEMENT_TMP_NBR = #{agreementTmpNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="templetName != null">
+         TEMPLET_NAME = #{templetName,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementTmpDesc != null">
+         AGREEMENT_TMP_DESC = #{agreementTmpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="agreeType != null">
+         AGREE_TYPE = #{agreeType,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="manageRegionId != null">
+         MANAGE_REGION_ID = #{manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manageLevel != null">
+         MANAGE_LEVEL = #{manageLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="manageOrg != null">
+         MANAGE_ORG = #{manageOrg,jdbcType=BIGINT},
+      </if>
+      <if test="brandId != null">
+         BRAND_ID = #{brandId,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           AGREEMENT_TMP_ID = #{agreementTmpId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update AGREEMENT_TMP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.agreementTmpId != null">
+        AGREEMENT_TMP_ID = #{record.agreementTmpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreementTmpNbr != null">
+        AGREEMENT_TMP_NBR = #{record.agreementTmpNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templetName != null">
+        TEMPLET_NAME = #{record.templetName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementTmpDesc != null">
+        AGREEMENT_TMP_DESC = #{record.agreementTmpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreeType != null">
+        AGREE_TYPE = #{record.agreeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.manageRegionId != null">
+        MANAGE_REGION_ID = #{record.manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.manageLevel != null">
+        MANAGE_LEVEL = #{record.manageLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageOrg != null">
+        MANAGE_ORG = #{record.manageOrg,jdbcType=BIGINT},
+      </if>
+      <if test="record.brandId != null">
+        BRAND_ID = #{record.brandId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.agreementTmpId != null ">
+        AGREEMENT_TMP_ID = #{condition.agreementTmpId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreementTmpNbr != null and condition.agreementTmpNbr != ''">
+        and AGREEMENT_TMP_NBR = #{condition.agreementTmpNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.templetName != null and condition.templetName != ''">
+        and TEMPLET_NAME = #{condition.templetName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.agreementTmpDesc != null and condition.agreementTmpDesc != ''">
+        and AGREEMENT_TMP_DESC = #{condition.agreementTmpDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.agreeType != null and condition.agreeType != ''">
+        and AGREE_TYPE = #{condition.agreeType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.manageRegionId != null ">
+        and MANAGE_REGION_ID = #{condition.manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.manageLevel != null and condition.manageLevel != ''">
+        and MANAGE_LEVEL = #{condition.manageLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.manageOrg != null ">
+        and MANAGE_ORG = #{condition.manageOrg, jdbcType=BIGINT }
+      </if>
+      <if test="condition.brandId != null ">
+        and BRAND_ID = #{condition.brandId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

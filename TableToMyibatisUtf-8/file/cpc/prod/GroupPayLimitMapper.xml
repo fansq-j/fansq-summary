@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.GroupPayLimitMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.GroupPayLimitDO">
+    <id column="GROUP_PAY_LIMIT_ID" jdbcType="BIGINT" property="groupPayLimitId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="ACCT_ITEM_GROUP_ID" jdbcType="INTEGER" property="acctItemGroupId"/>
+    <result column="PAYMENT_LIMIT_TYPE" jdbcType="INTEGER" property="paymentLimitType"/>
+    <result column="PAYMENT_LIMIT" jdbcType="BIGINT" property="paymentLimit"/>
+    <result column="UPPER_AMOUNT" jdbcType="BIGINT" property="upperAmount"/>
+    <result column="IF_SAVEBACK" jdbcType="INTEGER" property="ifSaveback"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="COMMENTS" jdbcType="VARCHAR" property="comments"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          GROUP_PAY_LIMIT_ID, 
+          ACCT_ID, 
+          ACCT_ITEM_GROUP_ID, 
+          PAYMENT_LIMIT_TYPE, 
+          PAYMENT_LIMIT, 
+          UPPER_AMOUNT, 
+          IF_SAVEBACK, 
+          EFF_DATE, 
+          EXP_DATE, 
+          COMMENTS, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_ID, 
+          ACCT_ITEM_GROUP_ID, 
+          PAYMENT_LIMIT_TYPE, 
+          PAYMENT_LIMIT, 
+          UPPER_AMOUNT, 
+          IF_SAVEBACK, 
+          EFF_DATE, 
+          EXP_DATE, 
+          COMMENTS, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="groupPayLimitId != null ">
+        GROUP_PAY_LIMIT_ID = #{groupPayLimitId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="acctItemGroupId != null ">
+        and ACCT_ITEM_GROUP_ID = #{acctItemGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="paymentLimitType != null ">
+        and PAYMENT_LIMIT_TYPE = #{paymentLimitType, jdbcType=INTEGER }
+      </if>
+      <if test="paymentLimit != null ">
+        and PAYMENT_LIMIT = #{paymentLimit, jdbcType=BIGINT }
+      </if>
+      <if test="upperAmount != null ">
+        and UPPER_AMOUNT = #{upperAmount, jdbcType=BIGINT }
+      </if>
+      <if test="ifSaveback != null ">
+        and IF_SAVEBACK = #{ifSaveback, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="comments != null and comments != ''">
+        and COMMENTS = #{comments, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.GroupPayLimitDO" resultType="java.lang.Integer">
+      select count(*) from GROUP_PAY_LIMIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GROUP_PAY_LIMIT
+        where 
+           GROUP_PAY_LIMIT_ID = #{groupPayLimitId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GROUP_PAY_LIMIT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="groupPayLimitId">
+      insert into  GROUP_PAY_LIMIT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctId,jdbcType=BIGINT}, 
+        #{acctItemGroupId,jdbcType=INTEGER}, 
+        #{paymentLimitType,jdbcType=INTEGER}, 
+        #{paymentLimit,jdbcType=BIGINT}, 
+        #{upperAmount,jdbcType=BIGINT}, 
+        #{ifSaveback,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{comments,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GROUP_PAY_LIMIT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{groupPayLimitId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{acctItemGroupId,jdbcType=INTEGER}, 
+        #{paymentLimitType,jdbcType=INTEGER}, 
+        #{paymentLimit,jdbcType=BIGINT}, 
+        #{upperAmount,jdbcType=BIGINT}, 
+        #{ifSaveback,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{comments,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GROUP_PAY_LIMIT  
+        where
+           GROUP_PAY_LIMIT_ID = #{groupPayLimitId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GROUP_PAY_LIMIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GROUP_PAY_LIMIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="acctItemGroupId != null">
+         ACCT_ITEM_GROUP_ID = #{acctItemGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="paymentLimitType != null">
+         PAYMENT_LIMIT_TYPE = #{paymentLimitType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentLimit != null">
+         PAYMENT_LIMIT = #{paymentLimit,jdbcType=BIGINT},
+      </if>
+      <if test="upperAmount != null">
+         UPPER_AMOUNT = #{upperAmount,jdbcType=BIGINT},
+      </if>
+      <if test="ifSaveback != null">
+         IF_SAVEBACK = #{ifSaveback,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null">
+         COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           GROUP_PAY_LIMIT_ID = #{groupPayLimitId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GROUP_PAY_LIMIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.groupPayLimitId != null">
+        GROUP_PAY_LIMIT_ID = #{record.groupPayLimitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctItemGroupId != null">
+        ACCT_ITEM_GROUP_ID = #{record.acctItemGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentLimitType != null">
+        PAYMENT_LIMIT_TYPE = #{record.paymentLimitType,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentLimit != null">
+        PAYMENT_LIMIT = #{record.paymentLimit,jdbcType=BIGINT},
+      </if>
+      <if test="record.upperAmount != null">
+        UPPER_AMOUNT = #{record.upperAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.ifSaveback != null">
+        IF_SAVEBACK = #{record.ifSaveback,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.comments != null">
+        COMMENTS = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.groupPayLimitId != null ">
+        GROUP_PAY_LIMIT_ID = #{condition.groupPayLimitId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctItemGroupId != null ">
+        and ACCT_ITEM_GROUP_ID = #{condition.acctItemGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.paymentLimitType != null ">
+        and PAYMENT_LIMIT_TYPE = #{condition.paymentLimitType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.paymentLimit != null ">
+        and PAYMENT_LIMIT = #{condition.paymentLimit, jdbcType=BIGINT }
+      </if>
+      <if test="condition.upperAmount != null ">
+        and UPPER_AMOUNT = #{condition.upperAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ifSaveback != null ">
+        and IF_SAVEBACK = #{condition.ifSaveback, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.comments != null and condition.comments != ''">
+        and COMMENTS = #{condition.comments, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

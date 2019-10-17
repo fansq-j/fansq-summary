@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CouponDiscountRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CouponDiscountRuleDO">
+    <id column="DISCOUNT_RULE_ID" jdbcType="BIGINT" property="discountRuleId"/>
+    <result column="MKT_RES_ID" jdbcType="INTEGER" property="mktResId"/>
+    <result column="DISCOUNT_VALUE" jdbcType="INTEGER" property="discountValue"/>
+    <result column="MAX_VALUE" jdbcType="INTEGER" property="maxValue"/>
+    <result column="MIN_VALUE" jdbcType="INTEGER" property="minValue"/>
+    <result column="RULE_AMOUNT" jdbcType="INTEGER" property="ruleAmount"/>
+    <result column="USE_TYPE" jdbcType="VARCHAR" property="useType"/>
+    <result column="REUSE_FLAG" jdbcType="VARCHAR" property="reuseFlag"/>
+    <result column="MIX_USE_FLAG" jdbcType="VARCHAR" property="mixUseFlag"/>
+    <result column="DISCOUNT_RULE_DESC" jdbcType="VARCHAR" property="discountRuleDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          DISCOUNT_RULE_ID, 
+          MKT_RES_ID, 
+          DISCOUNT_VALUE, 
+          MAX_VALUE, 
+          MIN_VALUE, 
+          RULE_AMOUNT, 
+          USE_TYPE, 
+          REUSE_FLAG, 
+          MIX_USE_FLAG, 
+          DISCOUNT_RULE_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MKT_RES_ID, 
+          DISCOUNT_VALUE, 
+          MAX_VALUE, 
+          MIN_VALUE, 
+          RULE_AMOUNT, 
+          USE_TYPE, 
+          REUSE_FLAG, 
+          MIX_USE_FLAG, 
+          DISCOUNT_RULE_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="discountRuleId != null ">
+        DISCOUNT_RULE_ID = #{discountRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="mktResId != null ">
+        and MKT_RES_ID = #{mktResId, jdbcType=INTEGER }
+      </if>
+      <if test="discountValue != null ">
+        and DISCOUNT_VALUE = #{discountValue, jdbcType=INTEGER }
+      </if>
+      <if test="maxValue != null ">
+        and MAX_VALUE = #{maxValue, jdbcType=INTEGER }
+      </if>
+      <if test="minValue != null ">
+        and MIN_VALUE = #{minValue, jdbcType=INTEGER }
+      </if>
+      <if test="ruleAmount != null ">
+        and RULE_AMOUNT = #{ruleAmount, jdbcType=INTEGER }
+      </if>
+      <if test="useType != null and useType != ''">
+        and USE_TYPE = #{useType, jdbcType=VARCHAR }
+      </if>
+      <if test="reuseFlag != null and reuseFlag != ''">
+        and REUSE_FLAG = #{reuseFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="mixUseFlag != null and mixUseFlag != ''">
+        and MIX_USE_FLAG = #{mixUseFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="discountRuleDesc != null and discountRuleDesc != ''">
+        and DISCOUNT_RULE_DESC = #{discountRuleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CouponDiscountRuleDO" resultType="java.lang.Integer">
+      select count(*) from COUPON_DISCOUNT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from COUPON_DISCOUNT_RULE
+        where 
+           DISCOUNT_RULE_ID = #{discountRuleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  COUPON_DISCOUNT_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="discountRuleId">
+      insert into  COUPON_DISCOUNT_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{mktResId,jdbcType=INTEGER}, 
+        #{discountValue,jdbcType=INTEGER}, 
+        #{maxValue,jdbcType=INTEGER}, 
+        #{minValue,jdbcType=INTEGER}, 
+        #{ruleAmount,jdbcType=INTEGER}, 
+        #{useType,jdbcType=VARCHAR}, 
+        #{reuseFlag,jdbcType=VARCHAR}, 
+        #{mixUseFlag,jdbcType=VARCHAR}, 
+        #{discountRuleDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  COUPON_DISCOUNT_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{discountRuleId,jdbcType=BIGINT}, 
+        #{mktResId,jdbcType=INTEGER}, 
+        #{discountValue,jdbcType=INTEGER}, 
+        #{maxValue,jdbcType=INTEGER}, 
+        #{minValue,jdbcType=INTEGER}, 
+        #{ruleAmount,jdbcType=INTEGER}, 
+        #{useType,jdbcType=VARCHAR}, 
+        #{reuseFlag,jdbcType=VARCHAR}, 
+        #{mixUseFlag,jdbcType=VARCHAR}, 
+        #{discountRuleDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from COUPON_DISCOUNT_RULE  
+        where
+           DISCOUNT_RULE_ID = #{discountRuleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from COUPON_DISCOUNT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  COUPON_DISCOUNT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="mktResId != null">
+         MKT_RES_ID = #{mktResId,jdbcType=INTEGER},
+      </if>
+      <if test="discountValue != null">
+         DISCOUNT_VALUE = #{discountValue,jdbcType=INTEGER},
+      </if>
+      <if test="maxValue != null">
+         MAX_VALUE = #{maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="minValue != null">
+         MIN_VALUE = #{minValue,jdbcType=INTEGER},
+      </if>
+      <if test="ruleAmount != null">
+         RULE_AMOUNT = #{ruleAmount,jdbcType=INTEGER},
+      </if>
+      <if test="useType != null">
+         USE_TYPE = #{useType,jdbcType=VARCHAR},
+      </if>
+      <if test="reuseFlag != null">
+         REUSE_FLAG = #{reuseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mixUseFlag != null">
+         MIX_USE_FLAG = #{mixUseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="discountRuleDesc != null">
+         DISCOUNT_RULE_DESC = #{discountRuleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           DISCOUNT_RULE_ID = #{discountRuleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update COUPON_DISCOUNT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.discountRuleId != null">
+        DISCOUNT_RULE_ID = #{record.discountRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mktResId != null">
+        MKT_RES_ID = #{record.mktResId,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountValue != null">
+        DISCOUNT_VALUE = #{record.discountValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxValue != null">
+        MAX_VALUE = #{record.maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.minValue != null">
+        MIN_VALUE = #{record.minValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleAmount != null">
+        RULE_AMOUNT = #{record.ruleAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.useType != null">
+        USE_TYPE = #{record.useType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reuseFlag != null">
+        REUSE_FLAG = #{record.reuseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mixUseFlag != null">
+        MIX_USE_FLAG = #{record.mixUseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountRuleDesc != null">
+        DISCOUNT_RULE_DESC = #{record.discountRuleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.discountRuleId != null ">
+        DISCOUNT_RULE_ID = #{condition.discountRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.mktResId != null ">
+        and MKT_RES_ID = #{condition.mktResId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.discountValue != null ">
+        and DISCOUNT_VALUE = #{condition.discountValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.maxValue != null ">
+        and MAX_VALUE = #{condition.maxValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.minValue != null ">
+        and MIN_VALUE = #{condition.minValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ruleAmount != null ">
+        and RULE_AMOUNT = #{condition.ruleAmount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.useType != null and condition.useType != ''">
+        and USE_TYPE = #{condition.useType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.reuseFlag != null and condition.reuseFlag != ''">
+        and REUSE_FLAG = #{condition.reuseFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mixUseFlag != null and condition.mixUseFlag != ''">
+        and MIX_USE_FLAG = #{condition.mixUseFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.discountRuleDesc != null and condition.discountRuleDesc != ''">
+        and DISCOUNT_RULE_DESC = #{condition.discountRuleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

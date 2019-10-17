@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SaleOppEvalMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SaleOppEvalDO">
+    <id column="SALE_OPP_EVAL_ID" jdbcType="BIGINT" property="saleOppEvalId"/>
+    <result column="SALE_OPP_ID" jdbcType="BIGINT" property="saleOppId"/>
+    <result column="EVAL_SCORE" jdbcType="DOUBLE" property="evalScore"/>
+    <result column="EVAL_LEVEL" jdbcType="VARCHAR" property="evalLevel"/>
+    <result column="EVAL_DESC" jdbcType="VARCHAR" property="evalDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SALE_OPP_EVAL_ID, 
+          SALE_OPP_ID, 
+          EVAL_SCORE, 
+          EVAL_LEVEL, 
+          EVAL_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SALE_OPP_ID, 
+          EVAL_SCORE, 
+          EVAL_LEVEL, 
+          EVAL_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="saleOppEvalId != null ">
+        SALE_OPP_EVAL_ID = #{saleOppEvalId, jdbcType=BIGINT }
+      </if>
+      <if test="saleOppId != null ">
+        and SALE_OPP_ID = #{saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="evalScore != null ">
+        and EVAL_SCORE = #{evalScore, jdbcType=DOUBLE }
+      </if>
+      <if test="evalLevel != null and evalLevel != ''">
+        and EVAL_LEVEL = #{evalLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="evalDesc != null and evalDesc != ''">
+        and EVAL_DESC = #{evalDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SaleOppEvalDO" resultType="java.lang.Integer">
+      select count(*) from SALE_OPP_EVAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SALE_OPP_EVAL
+        where 
+           SALE_OPP_EVAL_ID = #{saleOppEvalId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SALE_OPP_EVAL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="saleOppEvalId">
+      insert into  SALE_OPP_EVAL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{evalScore,jdbcType=DOUBLE}, 
+        #{evalLevel,jdbcType=VARCHAR}, 
+        #{evalDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SALE_OPP_EVAL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{saleOppEvalId,jdbcType=BIGINT}, 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{evalScore,jdbcType=DOUBLE}, 
+        #{evalLevel,jdbcType=VARCHAR}, 
+        #{evalDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SALE_OPP_EVAL  
+        where
+           SALE_OPP_EVAL_ID = #{saleOppEvalId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SALE_OPP_EVAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SALE_OPP_EVAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="saleOppId != null">
+         SALE_OPP_ID = #{saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="evalScore != null">
+         EVAL_SCORE = #{evalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="evalLevel != null">
+         EVAL_LEVEL = #{evalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="evalDesc != null">
+         EVAL_DESC = #{evalDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SALE_OPP_EVAL_ID = #{saleOppEvalId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SALE_OPP_EVAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.saleOppEvalId != null">
+        SALE_OPP_EVAL_ID = #{record.saleOppEvalId,jdbcType=BIGINT},
+      </if>
+      <if test="record.saleOppId != null">
+        SALE_OPP_ID = #{record.saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="record.evalScore != null">
+        EVAL_SCORE = #{record.evalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.evalLevel != null">
+        EVAL_LEVEL = #{record.evalLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evalDesc != null">
+        EVAL_DESC = #{record.evalDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.saleOppEvalId != null ">
+        SALE_OPP_EVAL_ID = #{condition.saleOppEvalId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.saleOppId != null ">
+        and SALE_OPP_ID = #{condition.saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.evalScore != null ">
+        and EVAL_SCORE = #{condition.evalScore, jdbcType=DOUBLE }
+      </if>
+      <if test="condition.evalLevel != null and condition.evalLevel != ''">
+        and EVAL_LEVEL = #{condition.evalLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evalDesc != null and condition.evalDesc != ''">
+        and EVAL_DESC = #{condition.evalDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

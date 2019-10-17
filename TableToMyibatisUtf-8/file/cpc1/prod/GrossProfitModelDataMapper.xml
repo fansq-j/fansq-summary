@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.GrossProfitModelDataMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.GrossProfitModelDataDO">
+    <id column="gross_profit_model_data_id" jdbcType="BIGINT" property="grossProfitModelDataId"/>
+    <result column="gross_profit_model_id" jdbcType="BIGINT" property="grossProfitModelId"/>
+    <result column="gross_profit_param_name" jdbcType="VARCHAR" property="grossProfitParamName"/>
+    <result column="gross_profit_param_value" jdbcType="VARCHAR" property="grossProfitParamValue"/>
+    <result column="common_region_id" jdbcType="VARCHAR" property="commonRegionId"/>
+    <result column="common_region_value" jdbcType="VARCHAR" property="commonRegionValue"/>
+    <result column="model_type" jdbcType="VARCHAR" property="modelType"/>
+    <result column="status" jdbcType="VARCHAR" property="status"/>
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="remark" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          gross_profit_model_data_id, 
+          gross_profit_model_id, 
+          gross_profit_param_name, 
+          gross_profit_param_value, 
+          common_region_id, 
+          common_region_value, 
+          model_type, 
+          status, 
+          create_date, 
+          remark
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          gross_profit_model_id, 
+          gross_profit_param_name, 
+          gross_profit_param_value, 
+          common_region_id, 
+          common_region_value, 
+          model_type, 
+          status, 
+          create_date, 
+          remark
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="grossProfitModelDataId != null ">
+        gross_profit_model_data_id = #{grossProfitModelDataId, jdbcType=BIGINT }
+      </if>
+      <if test="grossProfitModelId != null ">
+        and gross_profit_model_id = #{grossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="grossProfitParamName != null and grossProfitParamName != ''">
+        and gross_profit_param_name = #{grossProfitParamName, jdbcType=VARCHAR }
+      </if>
+      <if test="grossProfitParamValue != null and grossProfitParamValue != ''">
+        and gross_profit_param_value = #{grossProfitParamValue, jdbcType=VARCHAR }
+      </if>
+      <if test="commonRegionId != null and commonRegionId != ''">
+        and common_region_id = #{commonRegionId, jdbcType=VARCHAR }
+      </if>
+      <if test="commonRegionValue != null and commonRegionValue != ''">
+        and common_region_value = #{commonRegionValue, jdbcType=VARCHAR }
+      </if>
+      <if test="modelType != null and modelType != ''">
+        and model_type = #{modelType, jdbcType=VARCHAR }
+      </if>
+      <if test="status != null and status != ''">
+        and status = #{status, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and create_date = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and remark = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.GrossProfitModelDataDO" resultType="java.lang.Integer">
+      select count(*) from GROSS_PROFIT_MODEL_DATA
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GROSS_PROFIT_MODEL_DATA
+        where 
+           gross_profit_model_data_id = #{grossProfitModelDataId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GROSS_PROFIT_MODEL_DATA 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="grossProfitModelDataId">
+      insert into  GROSS_PROFIT_MODEL_DATA ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{grossProfitModelId,jdbcType=BIGINT}, 
+        #{grossProfitParamName,jdbcType=VARCHAR}, 
+        #{grossProfitParamValue,jdbcType=VARCHAR}, 
+        #{commonRegionId,jdbcType=VARCHAR}, 
+        #{commonRegionValue,jdbcType=VARCHAR}, 
+        #{modelType,jdbcType=VARCHAR}, 
+        #{status,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GROSS_PROFIT_MODEL_DATA ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{grossProfitModelDataId,jdbcType=BIGINT}, 
+        #{grossProfitModelId,jdbcType=BIGINT}, 
+        #{grossProfitParamName,jdbcType=VARCHAR}, 
+        #{grossProfitParamValue,jdbcType=VARCHAR}, 
+        #{commonRegionId,jdbcType=VARCHAR}, 
+        #{commonRegionValue,jdbcType=VARCHAR}, 
+        #{modelType,jdbcType=VARCHAR}, 
+        #{status,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GROSS_PROFIT_MODEL_DATA  
+        where
+           gross_profit_model_data_id = #{grossProfitModelDataId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GROSS_PROFIT_MODEL_DATA
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GROSS_PROFIT_MODEL_DATA
+    <trim prefix="set" suffixOverrides=",">
+      <if test="grossProfitModelId != null">
+         gross_profit_model_id = #{grossProfitModelId,jdbcType=BIGINT},
+      </if>
+      <if test="grossProfitParamName != null">
+         gross_profit_param_name = #{grossProfitParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="grossProfitParamValue != null">
+         gross_profit_param_value = #{grossProfitParamValue,jdbcType=VARCHAR},
+      </if>
+      <if test="commonRegionId != null">
+         common_region_id = #{commonRegionId,jdbcType=VARCHAR},
+      </if>
+      <if test="commonRegionValue != null">
+         common_region_value = #{commonRegionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="modelType != null">
+         model_type = #{modelType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+         status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           gross_profit_model_data_id = #{grossProfitModelDataId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GROSS_PROFIT_MODEL_DATA
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.grossProfitModelDataId != null">
+        gross_profit_model_data_id = #{record.grossProfitModelDataId,jdbcType=BIGINT},
+      </if>
+      <if test="record.grossProfitModelId != null">
+        gross_profit_model_id = #{record.grossProfitModelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.grossProfitParamName != null">
+        gross_profit_param_name = #{record.grossProfitParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grossProfitParamValue != null">
+        gross_profit_param_value = #{record.grossProfitParamValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commonRegionId != null">
+        common_region_id = #{record.commonRegionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commonRegionValue != null">
+        common_region_value = #{record.commonRegionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelType != null">
+        model_type = #{record.modelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.grossProfitModelDataId != null ">
+        gross_profit_model_data_id = #{condition.grossProfitModelDataId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.grossProfitModelId != null ">
+        and gross_profit_model_id = #{condition.grossProfitModelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.grossProfitParamName != null and condition.grossProfitParamName != ''">
+        and gross_profit_param_name = #{condition.grossProfitParamName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.grossProfitParamValue != null and condition.grossProfitParamValue != ''">
+        and gross_profit_param_value = #{condition.grossProfitParamValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.commonRegionId != null and condition.commonRegionId != ''">
+        and common_region_id = #{condition.commonRegionId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.commonRegionValue != null and condition.commonRegionValue != ''">
+        and common_region_value = #{condition.commonRegionValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.modelType != null and condition.modelType != ''">
+        and model_type = #{condition.modelType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.status != null and condition.status != ''">
+        and status = #{condition.status, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and create_date = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and remark = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

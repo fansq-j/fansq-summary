@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AgreementPerformMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AgreementPerformDO">
+    <id column="PERFORM_ID" jdbcType="BIGINT" property="performId"/>
+    <result column="AGREE_ID" jdbcType="BIGINT" property="agreeId"/>
+    <result column="RECORD_CYCLE" jdbcType="VARCHAR" property="recordCycle"/>
+    <result column="PERFORM_TYPE" jdbcType="VARCHAR" property="performType"/>
+    <result column="PERFORM_DESC" jdbcType="VARCHAR" property="performDesc"/>
+    <result column="RECORD_DATE" jdbcType="TIMESTAMP" property="recordDate"/>
+    <result column="RECORD_PERSON" jdbcType="VARCHAR" property="recordPerson"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PERFORM_ID, 
+          AGREE_ID, 
+          RECORD_CYCLE, 
+          PERFORM_TYPE, 
+          PERFORM_DESC, 
+          RECORD_DATE, 
+          RECORD_PERSON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          AGREE_ID, 
+          RECORD_CYCLE, 
+          PERFORM_TYPE, 
+          PERFORM_DESC, 
+          RECORD_DATE, 
+          RECORD_PERSON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="performId != null ">
+        PERFORM_ID = #{performId, jdbcType=BIGINT }
+      </if>
+      <if test="agreeId != null ">
+        and AGREE_ID = #{agreeId, jdbcType=BIGINT }
+      </if>
+      <if test="recordCycle != null and recordCycle != ''">
+        and RECORD_CYCLE = #{recordCycle, jdbcType=VARCHAR }
+      </if>
+      <if test="performType != null and performType != ''">
+        and PERFORM_TYPE = #{performType, jdbcType=VARCHAR }
+      </if>
+      <if test="performDesc != null and performDesc != ''">
+        and PERFORM_DESC = #{performDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="recordDate != null ">
+        and RECORD_DATE = #{recordDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="recordPerson != null and recordPerson != ''">
+        and RECORD_PERSON = #{recordPerson, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AgreementPerformDO" resultType="java.lang.Integer">
+      select count(*) from AGREEMENT_PERFORM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from AGREEMENT_PERFORM
+        where 
+           PERFORM_ID = #{performId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  AGREEMENT_PERFORM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="performId">
+      insert into  AGREEMENT_PERFORM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{agreeId,jdbcType=BIGINT}, 
+        #{recordCycle,jdbcType=VARCHAR}, 
+        #{performType,jdbcType=VARCHAR}, 
+        #{performDesc,jdbcType=VARCHAR}, 
+        #{recordDate,jdbcType=TIMESTAMP}, 
+        #{recordPerson,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  AGREEMENT_PERFORM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{performId,jdbcType=BIGINT}, 
+        #{agreeId,jdbcType=BIGINT}, 
+        #{recordCycle,jdbcType=VARCHAR}, 
+        #{performType,jdbcType=VARCHAR}, 
+        #{performDesc,jdbcType=VARCHAR}, 
+        #{recordDate,jdbcType=TIMESTAMP}, 
+        #{recordPerson,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from AGREEMENT_PERFORM  
+        where
+           PERFORM_ID = #{performId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from AGREEMENT_PERFORM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  AGREEMENT_PERFORM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="agreeId != null">
+         AGREE_ID = #{agreeId,jdbcType=BIGINT},
+      </if>
+      <if test="recordCycle != null">
+         RECORD_CYCLE = #{recordCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="performType != null">
+         PERFORM_TYPE = #{performType,jdbcType=VARCHAR},
+      </if>
+      <if test="performDesc != null">
+         PERFORM_DESC = #{performDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDate != null">
+         RECORD_DATE = #{recordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordPerson != null">
+         RECORD_PERSON = #{recordPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PERFORM_ID = #{performId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update AGREEMENT_PERFORM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.performId != null">
+        PERFORM_ID = #{record.performId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeId != null">
+        AGREE_ID = #{record.agreeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.recordCycle != null">
+        RECORD_CYCLE = #{record.recordCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performType != null">
+        PERFORM_TYPE = #{record.performType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performDesc != null">
+        PERFORM_DESC = #{record.performDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordDate != null">
+        RECORD_DATE = #{record.recordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recordPerson != null">
+        RECORD_PERSON = #{record.recordPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.performId != null ">
+        PERFORM_ID = #{condition.performId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeId != null ">
+        and AGREE_ID = #{condition.agreeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.recordCycle != null and condition.recordCycle != ''">
+        and RECORD_CYCLE = #{condition.recordCycle, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.performType != null and condition.performType != ''">
+        and PERFORM_TYPE = #{condition.performType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.performDesc != null and condition.performDesc != ''">
+        and PERFORM_DESC = #{condition.performDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.recordDate != null ">
+        and RECORD_DATE = #{condition.recordDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.recordPerson != null and condition.recordPerson != ''">
+        and RECORD_PERSON = #{condition.recordPerson, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

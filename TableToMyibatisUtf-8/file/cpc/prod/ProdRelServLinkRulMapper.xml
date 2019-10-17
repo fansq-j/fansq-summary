@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ProdRelServLinkRulMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ProdRelServLinkRulDO">
+    <id column="PROD_REL_SERV_LINK_RUL_ID" jdbcType="BIGINT" property="prodRelServLinkRulId"/>
+    <result column="PROD_REL_ID" jdbcType="BIGINT" property="prodRelId"/>
+    <result column="A_SERVICE_OFFER" jdbcType="BIGINT" property="aServiceOffer"/>
+    <result column="Z_SERVICE_OFFER" jdbcType="BIGINT" property="zServiceOffer"/>
+    <result column="RSTR_TYPE" jdbcType="VARCHAR" property="rstrType"/>
+    <result column="DEFAULT_FLAG" jdbcType="INTEGER" property="defaultFlag"/>
+    <result column="OPER_DIRECT" jdbcType="VARCHAR" property="operDirect"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PROD_REL_SERV_LINK_RUL_ID, 
+          PROD_REL_ID, 
+          A_SERVICE_OFFER, 
+          Z_SERVICE_OFFER, 
+          RSTR_TYPE, 
+          DEFAULT_FLAG, 
+          OPER_DIRECT, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROD_REL_ID, 
+          A_SERVICE_OFFER, 
+          Z_SERVICE_OFFER, 
+          RSTR_TYPE, 
+          DEFAULT_FLAG, 
+          OPER_DIRECT, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="prodRelServLinkRulId != null ">
+        PROD_REL_SERV_LINK_RUL_ID = #{prodRelServLinkRulId, jdbcType=BIGINT }
+      </if>
+      <if test="prodRelId != null ">
+        and PROD_REL_ID = #{prodRelId, jdbcType=BIGINT }
+      </if>
+      <if test="aServiceOffer != null ">
+        and A_SERVICE_OFFER = #{aServiceOffer, jdbcType=BIGINT }
+      </if>
+      <if test="zServiceOffer != null ">
+        and Z_SERVICE_OFFER = #{zServiceOffer, jdbcType=BIGINT }
+      </if>
+      <if test="rstrType != null and rstrType != ''">
+        and RSTR_TYPE = #{rstrType, jdbcType=VARCHAR }
+      </if>
+      <if test="defaultFlag != null ">
+        and DEFAULT_FLAG = #{defaultFlag, jdbcType=INTEGER }
+      </if>
+      <if test="operDirect != null and operDirect != ''">
+        and OPER_DIRECT = #{operDirect, jdbcType=VARCHAR }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ProdRelServLinkRulDO" resultType="java.lang.Integer">
+      select count(*) from PROD_REL_SERV_LINK_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PROD_REL_SERV_LINK_RUL
+        where 
+           PROD_REL_SERV_LINK_RUL_ID = #{prodRelServLinkRulId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PROD_REL_SERV_LINK_RUL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="prodRelServLinkRulId">
+      insert into  PROD_REL_SERV_LINK_RUL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{prodRelId,jdbcType=BIGINT}, 
+        #{aServiceOffer,jdbcType=BIGINT}, 
+        #{zServiceOffer,jdbcType=BIGINT}, 
+        #{rstrType,jdbcType=VARCHAR}, 
+        #{defaultFlag,jdbcType=INTEGER}, 
+        #{operDirect,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PROD_REL_SERV_LINK_RUL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{prodRelServLinkRulId,jdbcType=BIGINT}, 
+        #{prodRelId,jdbcType=BIGINT}, 
+        #{aServiceOffer,jdbcType=BIGINT}, 
+        #{zServiceOffer,jdbcType=BIGINT}, 
+        #{rstrType,jdbcType=VARCHAR}, 
+        #{defaultFlag,jdbcType=INTEGER}, 
+        #{operDirect,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PROD_REL_SERV_LINK_RUL  
+        where
+           PROD_REL_SERV_LINK_RUL_ID = #{prodRelServLinkRulId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PROD_REL_SERV_LINK_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PROD_REL_SERV_LINK_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="prodRelId != null">
+         PROD_REL_ID = #{prodRelId,jdbcType=BIGINT},
+      </if>
+      <if test="aServiceOffer != null">
+         A_SERVICE_OFFER = #{aServiceOffer,jdbcType=BIGINT},
+      </if>
+      <if test="zServiceOffer != null">
+         Z_SERVICE_OFFER = #{zServiceOffer,jdbcType=BIGINT},
+      </if>
+      <if test="rstrType != null">
+         RSTR_TYPE = #{rstrType,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null">
+         DEFAULT_FLAG = #{defaultFlag,jdbcType=INTEGER},
+      </if>
+      <if test="operDirect != null">
+         OPER_DIRECT = #{operDirect,jdbcType=VARCHAR},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PROD_REL_SERV_LINK_RUL_ID = #{prodRelServLinkRulId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PROD_REL_SERV_LINK_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.prodRelServLinkRulId != null">
+        PROD_REL_SERV_LINK_RUL_ID = #{record.prodRelServLinkRulId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodRelId != null">
+        PROD_REL_ID = #{record.prodRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aServiceOffer != null">
+        A_SERVICE_OFFER = #{record.aServiceOffer,jdbcType=BIGINT},
+      </if>
+      <if test="record.zServiceOffer != null">
+        Z_SERVICE_OFFER = #{record.zServiceOffer,jdbcType=BIGINT},
+      </if>
+      <if test="record.rstrType != null">
+        RSTR_TYPE = #{record.rstrType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultFlag != null">
+        DEFAULT_FLAG = #{record.defaultFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.operDirect != null">
+        OPER_DIRECT = #{record.operDirect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.prodRelServLinkRulId != null ">
+        PROD_REL_SERV_LINK_RUL_ID = #{condition.prodRelServLinkRulId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodRelId != null ">
+        and PROD_REL_ID = #{condition.prodRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.aServiceOffer != null ">
+        and A_SERVICE_OFFER = #{condition.aServiceOffer, jdbcType=BIGINT }
+      </if>
+      <if test="condition.zServiceOffer != null ">
+        and Z_SERVICE_OFFER = #{condition.zServiceOffer, jdbcType=BIGINT }
+      </if>
+      <if test="condition.rstrType != null and condition.rstrType != ''">
+        and RSTR_TYPE = #{condition.rstrType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.defaultFlag != null ">
+        and DEFAULT_FLAG = #{condition.defaultFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operDirect != null and condition.operDirect != ''">
+        and OPER_DIRECT = #{condition.operDirect, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

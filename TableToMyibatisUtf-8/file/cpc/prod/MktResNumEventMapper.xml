@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktResNumEventMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktResNumEventDO">
+    <id column="MKT_RES_EVENT_ID" jdbcType="BIGINT" property="mktResEventId"/>
+    <result column="MKT_RES_EVENT_NAME" jdbcType="VARCHAR" property="mktResEventName"/>
+    <result column="MKT_RES_EVENT_NBR" jdbcType="VARCHAR" property="mktResEventNbr"/>
+    <result column="MKT_RES_STORE_ID" jdbcType="INTEGER" property="mktResStoreId"/>
+    <result column="DEST_STORE_ID" jdbcType="INTEGER" property="destStoreId"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="EVENT_TYPE" jdbcType="VARCHAR" property="eventType"/>
+    <result column="EVENT_DESC" jdbcType="VARCHAR" property="eventDesc"/>
+    <result column="MKT_RES_INST_ID" jdbcType="BIGINT" property="mktResInstId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="CONTACT_ID" jdbcType="BIGINT" property="contactId"/>
+    <result column="PARTY_CERT_ID" jdbcType="BIGINT" property="partyCertId"/>
+    <result column="ACCEPT_DATE" jdbcType="TIMESTAMP" property="acceptDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_POST" jdbcType="BIGINT" property="createPost"/>
+    <result column="CREATE_ORG_ID" jdbcType="BIGINT" property="createOrgId"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MKT_RES_EVENT_ID, 
+          MKT_RES_EVENT_NAME, 
+          MKT_RES_EVENT_NBR, 
+          MKT_RES_STORE_ID, 
+          DEST_STORE_ID, 
+          OBJ_ID, 
+          OBJ_TYPE, 
+          EVENT_TYPE, 
+          EVENT_DESC, 
+          MKT_RES_INST_ID, 
+          PARTY_ID, 
+          CONTACT_ID, 
+          PARTY_CERT_ID, 
+          ACCEPT_DATE, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          REMARK, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MKT_RES_EVENT_NAME, 
+          MKT_RES_EVENT_NBR, 
+          MKT_RES_STORE_ID, 
+          DEST_STORE_ID, 
+          OBJ_ID, 
+          OBJ_TYPE, 
+          EVENT_TYPE, 
+          EVENT_DESC, 
+          MKT_RES_INST_ID, 
+          PARTY_ID, 
+          CONTACT_ID, 
+          PARTY_CERT_ID, 
+          ACCEPT_DATE, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          REMARK, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="mktResEventId != null ">
+        MKT_RES_EVENT_ID = #{mktResEventId, jdbcType=BIGINT }
+      </if>
+      <if test="mktResEventName != null and mktResEventName != ''">
+        and MKT_RES_EVENT_NAME = #{mktResEventName, jdbcType=VARCHAR }
+      </if>
+      <if test="mktResEventNbr != null and mktResEventNbr != ''">
+        and MKT_RES_EVENT_NBR = #{mktResEventNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="mktResStoreId != null ">
+        and MKT_RES_STORE_ID = #{mktResStoreId, jdbcType=INTEGER }
+      </if>
+      <if test="destStoreId != null ">
+        and DEST_STORE_ID = #{destStoreId, jdbcType=INTEGER }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="eventType != null and eventType != ''">
+        and EVENT_TYPE = #{eventType, jdbcType=VARCHAR }
+      </if>
+      <if test="eventDesc != null and eventDesc != ''">
+        and EVENT_DESC = #{eventDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="mktResInstId != null ">
+        and MKT_RES_INST_ID = #{mktResInstId, jdbcType=BIGINT }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="contactId != null ">
+        and CONTACT_ID = #{contactId, jdbcType=BIGINT }
+      </if>
+      <if test="partyCertId != null ">
+        and PARTY_CERT_ID = #{partyCertId, jdbcType=BIGINT }
+      </if>
+      <if test="acceptDate != null ">
+        and ACCEPT_DATE = #{acceptDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createPost != null ">
+        and CREATE_POST = #{createPost, jdbcType=BIGINT }
+      </if>
+      <if test="createOrgId != null ">
+        and CREATE_ORG_ID = #{createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktResNumEventDO" resultType="java.lang.Integer">
+      select count(*) from MKT_RES_NUM_EVENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_RES_NUM_EVENT
+        where 
+           MKT_RES_EVENT_ID = #{mktResEventId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_RES_NUM_EVENT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="mktResEventId">
+      insert into  MKT_RES_NUM_EVENT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{mktResEventName,jdbcType=VARCHAR}, 
+        #{mktResEventNbr,jdbcType=VARCHAR}, 
+        #{mktResStoreId,jdbcType=INTEGER}, 
+        #{destStoreId,jdbcType=INTEGER}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{eventType,jdbcType=VARCHAR}, 
+        #{eventDesc,jdbcType=VARCHAR}, 
+        #{mktResInstId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{contactId,jdbcType=BIGINT}, 
+        #{partyCertId,jdbcType=BIGINT}, 
+        #{acceptDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_RES_NUM_EVENT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{mktResEventId,jdbcType=BIGINT}, 
+        #{mktResEventName,jdbcType=VARCHAR}, 
+        #{mktResEventNbr,jdbcType=VARCHAR}, 
+        #{mktResStoreId,jdbcType=INTEGER}, 
+        #{destStoreId,jdbcType=INTEGER}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{eventType,jdbcType=VARCHAR}, 
+        #{eventDesc,jdbcType=VARCHAR}, 
+        #{mktResInstId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{contactId,jdbcType=BIGINT}, 
+        #{partyCertId,jdbcType=BIGINT}, 
+        #{acceptDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_RES_NUM_EVENT  
+        where
+           MKT_RES_EVENT_ID = #{mktResEventId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_RES_NUM_EVENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_RES_NUM_EVENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="mktResEventName != null">
+         MKT_RES_EVENT_NAME = #{mktResEventName,jdbcType=VARCHAR},
+      </if>
+      <if test="mktResEventNbr != null">
+         MKT_RES_EVENT_NBR = #{mktResEventNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="mktResStoreId != null">
+         MKT_RES_STORE_ID = #{mktResStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="destStoreId != null">
+         DEST_STORE_ID = #{destStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+         EVENT_TYPE = #{eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDesc != null">
+         EVENT_DESC = #{eventDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="mktResInstId != null">
+         MKT_RES_INST_ID = #{mktResInstId,jdbcType=BIGINT},
+      </if>
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="contactId != null">
+         CONTACT_ID = #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="partyCertId != null">
+         PARTY_CERT_ID = #{partyCertId,jdbcType=BIGINT},
+      </if>
+      <if test="acceptDate != null">
+         ACCEPT_DATE = #{acceptDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createPost != null">
+         CREATE_POST = #{createPost,jdbcType=BIGINT},
+      </if>
+      <if test="createOrgId != null">
+         CREATE_ORG_ID = #{createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           MKT_RES_EVENT_ID = #{mktResEventId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_RES_NUM_EVENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.mktResEventId != null">
+        MKT_RES_EVENT_ID = #{record.mktResEventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mktResEventName != null">
+        MKT_RES_EVENT_NAME = #{record.mktResEventName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktResEventNbr != null">
+        MKT_RES_EVENT_NBR = #{record.mktResEventNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktResStoreId != null">
+        MKT_RES_STORE_ID = #{record.mktResStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="record.destStoreId != null">
+        DEST_STORE_ID = #{record.destStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventType != null">
+        EVENT_TYPE = #{record.eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventDesc != null">
+        EVENT_DESC = #{record.eventDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mktResInstId != null">
+        MKT_RES_INST_ID = #{record.mktResInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactId != null">
+        CONTACT_ID = #{record.contactId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyCertId != null">
+        PARTY_CERT_ID = #{record.partyCertId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acceptDate != null">
+        ACCEPT_DATE = #{record.acceptDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createPost != null">
+        CREATE_POST = #{record.createPost,jdbcType=BIGINT},
+      </if>
+      <if test="record.createOrgId != null">
+        CREATE_ORG_ID = #{record.createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.mktResEventId != null ">
+        MKT_RES_EVENT_ID = #{condition.mktResEventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.mktResEventName != null and condition.mktResEventName != ''">
+        and MKT_RES_EVENT_NAME = #{condition.mktResEventName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktResEventNbr != null and condition.mktResEventNbr != ''">
+        and MKT_RES_EVENT_NBR = #{condition.mktResEventNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktResStoreId != null ">
+        and MKT_RES_STORE_ID = #{condition.mktResStoreId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.destStoreId != null ">
+        and DEST_STORE_ID = #{condition.destStoreId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventType != null and condition.eventType != ''">
+        and EVENT_TYPE = #{condition.eventType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventDesc != null and condition.eventDesc != ''">
+        and EVENT_DESC = #{condition.eventDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mktResInstId != null ">
+        and MKT_RES_INST_ID = #{condition.mktResInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.contactId != null ">
+        and CONTACT_ID = #{condition.contactId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyCertId != null ">
+        and PARTY_CERT_ID = #{condition.partyCertId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acceptDate != null ">
+        and ACCEPT_DATE = #{condition.acceptDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createPost != null ">
+        and CREATE_POST = #{condition.createPost, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createOrgId != null ">
+        and CREATE_ORG_ID = #{condition.createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

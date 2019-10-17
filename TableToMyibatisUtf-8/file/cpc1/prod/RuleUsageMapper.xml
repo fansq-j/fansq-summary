@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.RuleUsageMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.RuleUsageDO">
+    <id column="RULE_USAGE_ID" jdbcType="BIGINT" property="ruleUsageId"/>
+    <result column="RULE_ID" jdbcType="BIGINT" property="ruleId"/>
+    <result column="USAGE_TYPE" jdbcType="INTEGER" property="usageType"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="AREA_ID" jdbcType="VARCHAR" property="areaId"/>
+    <result column="SERVICE_KIND" jdbcType="INTEGER" property="serviceKind"/>
+    <result column="PRODUCT_ID" jdbcType="INTEGER" property="productId"/>
+    <result column="SERVICE_OFFER_ID" jdbcType="BIGINT" property="serviceOfferId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RULE_USAGE_ID, 
+          RULE_ID, 
+          USAGE_TYPE, 
+          LAN_ID, 
+          AREA_ID, 
+          SERVICE_KIND, 
+          PRODUCT_ID, 
+          SERVICE_OFFER_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RULE_ID, 
+          USAGE_TYPE, 
+          LAN_ID, 
+          AREA_ID, 
+          SERVICE_KIND, 
+          PRODUCT_ID, 
+          SERVICE_OFFER_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="ruleUsageId != null ">
+        RULE_USAGE_ID = #{ruleUsageId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleId != null ">
+        and RULE_ID = #{ruleId, jdbcType=BIGINT }
+      </if>
+      <if test="usageType != null ">
+        and USAGE_TYPE = #{usageType, jdbcType=INTEGER }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="areaId != null and areaId != ''">
+        and AREA_ID = #{areaId, jdbcType=VARCHAR }
+      </if>
+      <if test="serviceKind != null ">
+        and SERVICE_KIND = #{serviceKind, jdbcType=INTEGER }
+      </if>
+      <if test="productId != null ">
+        and PRODUCT_ID = #{productId, jdbcType=INTEGER }
+      </if>
+      <if test="serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{serviceOfferId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.RuleUsageDO" resultType="java.lang.Integer">
+      select count(*) from RULE_USAGE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RULE_USAGE
+        where 
+           RULE_USAGE_ID = #{ruleUsageId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RULE_USAGE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="ruleUsageId">
+      insert into  RULE_USAGE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ruleId,jdbcType=BIGINT}, 
+        #{usageType,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{areaId,jdbcType=VARCHAR}, 
+        #{serviceKind,jdbcType=INTEGER}, 
+        #{productId,jdbcType=INTEGER}, 
+        #{serviceOfferId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RULE_USAGE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{ruleUsageId,jdbcType=BIGINT}, 
+        #{ruleId,jdbcType=BIGINT}, 
+        #{usageType,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{areaId,jdbcType=VARCHAR}, 
+        #{serviceKind,jdbcType=INTEGER}, 
+        #{productId,jdbcType=INTEGER}, 
+        #{serviceOfferId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RULE_USAGE  
+        where
+           RULE_USAGE_ID = #{ruleUsageId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RULE_USAGE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RULE_USAGE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ruleId != null">
+         RULE_ID = #{ruleId,jdbcType=BIGINT},
+      </if>
+      <if test="usageType != null">
+         USAGE_TYPE = #{usageType,jdbcType=INTEGER},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="areaId != null">
+         AREA_ID = #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceKind != null">
+         SERVICE_KIND = #{serviceKind,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+         PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceOfferId != null">
+         SERVICE_OFFER_ID = #{serviceOfferId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           RULE_USAGE_ID = #{ruleUsageId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RULE_USAGE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.ruleUsageId != null">
+        RULE_USAGE_ID = #{record.ruleUsageId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleId != null">
+        RULE_ID = #{record.ruleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.usageType != null">
+        USAGE_TYPE = #{record.usageType,jdbcType=INTEGER},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.areaId != null">
+        AREA_ID = #{record.areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceKind != null">
+        SERVICE_KIND = #{record.serviceKind,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceOfferId != null">
+        SERVICE_OFFER_ID = #{record.serviceOfferId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.ruleUsageId != null ">
+        RULE_USAGE_ID = #{condition.ruleUsageId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleId != null ">
+        and RULE_ID = #{condition.ruleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.usageType != null ">
+        and USAGE_TYPE = #{condition.usageType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.areaId != null and condition.areaId != ''">
+        and AREA_ID = #{condition.areaId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.serviceKind != null ">
+        and SERVICE_KIND = #{condition.serviceKind, jdbcType=INTEGER }
+      </if>
+      <if test="condition.productId != null ">
+        and PRODUCT_ID = #{condition.productId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{condition.serviceOfferId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BadDebtProcTaskMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BadDebtProcTaskDO">
+    <id column="TASK_ID" jdbcType="BIGINT" property="taskId"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="GENERATE_CHARGE" jdbcType="BIGINT" property="generateCharge"/>
+    <result column="GENERATE_COUNT" jdbcType="INTEGER" property="generateCount"/>
+    <result column="APPROVE_CHARGE" jdbcType="BIGINT" property="approveCharge"/>
+    <result column="APPROVE_COUNT" jdbcType="INTEGER" property="approveCount"/>
+    <result column="PROCESS_CHARGE" jdbcType="BIGINT" property="processCharge"/>
+    <result column="PROCESS_COUNT" jdbcType="INTEGER" property="processCount"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="TASK_TYPE" jdbcType="INTEGER" property="taskType"/>
+    <result column="DEAL_TYPE" jdbcType="INTEGER" property="dealType"/>
+    <result column="FEE_CYCLE_ID" jdbcType="INTEGER" property="feeCycleId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TASK_ID, 
+          REGION_ID, 
+          STATUS_CD, 
+          GENERATE_CHARGE, 
+          GENERATE_COUNT, 
+          APPROVE_CHARGE, 
+          APPROVE_COUNT, 
+          PROCESS_CHARGE, 
+          PROCESS_COUNT, 
+          BILLING_CYCLE_ID, 
+          TASK_TYPE, 
+          DEAL_TYPE, 
+          FEE_CYCLE_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          REGION_ID, 
+          STATUS_CD, 
+          GENERATE_CHARGE, 
+          GENERATE_COUNT, 
+          APPROVE_CHARGE, 
+          APPROVE_COUNT, 
+          PROCESS_CHARGE, 
+          PROCESS_COUNT, 
+          BILLING_CYCLE_ID, 
+          TASK_TYPE, 
+          DEAL_TYPE, 
+          FEE_CYCLE_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="taskId != null ">
+        TASK_ID = #{taskId, jdbcType=BIGINT }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="generateCharge != null ">
+        and GENERATE_CHARGE = #{generateCharge, jdbcType=BIGINT }
+      </if>
+      <if test="generateCount != null ">
+        and GENERATE_COUNT = #{generateCount, jdbcType=INTEGER }
+      </if>
+      <if test="approveCharge != null ">
+        and APPROVE_CHARGE = #{approveCharge, jdbcType=BIGINT }
+      </if>
+      <if test="approveCount != null ">
+        and APPROVE_COUNT = #{approveCount, jdbcType=INTEGER }
+      </if>
+      <if test="processCharge != null ">
+        and PROCESS_CHARGE = #{processCharge, jdbcType=BIGINT }
+      </if>
+      <if test="processCount != null ">
+        and PROCESS_COUNT = #{processCount, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="taskType != null ">
+        and TASK_TYPE = #{taskType, jdbcType=INTEGER }
+      </if>
+      <if test="dealType != null ">
+        and DEAL_TYPE = #{dealType, jdbcType=INTEGER }
+      </if>
+      <if test="feeCycleId != null ">
+        and FEE_CYCLE_ID = #{feeCycleId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BadDebtProcTaskDO" resultType="java.lang.Integer">
+      select count(*) from BAD_DEBT_PROC_TASK
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BAD_DEBT_PROC_TASK
+        where 
+           TASK_ID = #{taskId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BAD_DEBT_PROC_TASK 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="taskId">
+      insert into  BAD_DEBT_PROC_TASK ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{generateCharge,jdbcType=BIGINT}, 
+        #{generateCount,jdbcType=INTEGER}, 
+        #{approveCharge,jdbcType=BIGINT}, 
+        #{approveCount,jdbcType=INTEGER}, 
+        #{processCharge,jdbcType=BIGINT}, 
+        #{processCount,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{taskType,jdbcType=INTEGER}, 
+        #{dealType,jdbcType=INTEGER}, 
+        #{feeCycleId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BAD_DEBT_PROC_TASK ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{taskId,jdbcType=BIGINT}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{generateCharge,jdbcType=BIGINT}, 
+        #{generateCount,jdbcType=INTEGER}, 
+        #{approveCharge,jdbcType=BIGINT}, 
+        #{approveCount,jdbcType=INTEGER}, 
+        #{processCharge,jdbcType=BIGINT}, 
+        #{processCount,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{taskType,jdbcType=INTEGER}, 
+        #{dealType,jdbcType=INTEGER}, 
+        #{feeCycleId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BAD_DEBT_PROC_TASK  
+        where
+           TASK_ID = #{taskId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BAD_DEBT_PROC_TASK
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BAD_DEBT_PROC_TASK
+    <trim prefix="set" suffixOverrides=",">
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="generateCharge != null">
+         GENERATE_CHARGE = #{generateCharge,jdbcType=BIGINT},
+      </if>
+      <if test="generateCount != null">
+         GENERATE_COUNT = #{generateCount,jdbcType=INTEGER},
+      </if>
+      <if test="approveCharge != null">
+         APPROVE_CHARGE = #{approveCharge,jdbcType=BIGINT},
+      </if>
+      <if test="approveCount != null">
+         APPROVE_COUNT = #{approveCount,jdbcType=INTEGER},
+      </if>
+      <if test="processCharge != null">
+         PROCESS_CHARGE = #{processCharge,jdbcType=BIGINT},
+      </if>
+      <if test="processCount != null">
+         PROCESS_COUNT = #{processCount,jdbcType=INTEGER},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="taskType != null">
+         TASK_TYPE = #{taskType,jdbcType=INTEGER},
+      </if>
+      <if test="dealType != null">
+         DEAL_TYPE = #{dealType,jdbcType=INTEGER},
+      </if>
+      <if test="feeCycleId != null">
+         FEE_CYCLE_ID = #{feeCycleId,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           TASK_ID = #{taskId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BAD_DEBT_PROC_TASK
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.taskId != null">
+        TASK_ID = #{record.taskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.generateCharge != null">
+        GENERATE_CHARGE = #{record.generateCharge,jdbcType=BIGINT},
+      </if>
+      <if test="record.generateCount != null">
+        GENERATE_COUNT = #{record.generateCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.approveCharge != null">
+        APPROVE_CHARGE = #{record.approveCharge,jdbcType=BIGINT},
+      </if>
+      <if test="record.approveCount != null">
+        APPROVE_COUNT = #{record.approveCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.processCharge != null">
+        PROCESS_CHARGE = #{record.processCharge,jdbcType=BIGINT},
+      </if>
+      <if test="record.processCount != null">
+        PROCESS_COUNT = #{record.processCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskType != null">
+        TASK_TYPE = #{record.taskType,jdbcType=INTEGER},
+      </if>
+      <if test="record.dealType != null">
+        DEAL_TYPE = #{record.dealType,jdbcType=INTEGER},
+      </if>
+      <if test="record.feeCycleId != null">
+        FEE_CYCLE_ID = #{record.feeCycleId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.taskId != null ">
+        TASK_ID = #{condition.taskId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.generateCharge != null ">
+        and GENERATE_CHARGE = #{condition.generateCharge, jdbcType=BIGINT }
+      </if>
+      <if test="condition.generateCount != null ">
+        and GENERATE_COUNT = #{condition.generateCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.approveCharge != null ">
+        and APPROVE_CHARGE = #{condition.approveCharge, jdbcType=BIGINT }
+      </if>
+      <if test="condition.approveCount != null ">
+        and APPROVE_COUNT = #{condition.approveCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.processCharge != null ">
+        and PROCESS_CHARGE = #{condition.processCharge, jdbcType=BIGINT }
+      </if>
+      <if test="condition.processCount != null ">
+        and PROCESS_COUNT = #{condition.processCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.taskType != null ">
+        and TASK_TYPE = #{condition.taskType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.dealType != null ">
+        and DEAL_TYPE = #{condition.dealType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.feeCycleId != null ">
+        and FEE_CYCLE_ID = #{condition.feeCycleId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

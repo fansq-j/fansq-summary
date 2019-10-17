@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.EventMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.EventDO">
+    <id column="EVENT_ID" jdbcType="BIGINT" property="eventId"/>
+    <result column="INTERFACE_CFG_ID" jdbcType="BIGINT" property="interfaceCfgId"/>
+    <result column="EVENT_NBR" jdbcType="VARCHAR" property="eventNbr"/>
+    <result column="EVENT_NAME" jdbcType="VARCHAR" property="eventName"/>
+    <result column="EVT_MAPPED_ADDR" jdbcType="VARCHAR" property="evtMappedAddr"/>
+    <result column="EVT_MAPPED_IP" jdbcType="VARCHAR" property="evtMappedIp"/>
+    <result column="EVT_PROCOTOL_TYPE" jdbcType="VARCHAR" property="evtProcotolType"/>
+    <result column="EVT_MAPPED_FUN_NAME" jdbcType="VARCHAR" property="evtMappedFunName"/>
+    <result column="EVENT_DESC" jdbcType="VARCHAR" property="eventDesc"/>
+    <result column="EVT_TYPE_ID" jdbcType="BIGINT" property="evtTypeId"/>
+    <result column="EVENT_TRIG_TYPE" jdbcType="VARCHAR" property="eventTrigType"/>
+    <result column="EXT_EVENT_ID" jdbcType="BIGINT" property="extEventId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EVENT_ID, 
+          INTERFACE_CFG_ID, 
+          EVENT_NBR, 
+          EVENT_NAME, 
+          EVT_MAPPED_ADDR, 
+          EVT_MAPPED_IP, 
+          EVT_PROCOTOL_TYPE, 
+          EVT_MAPPED_FUN_NAME, 
+          EVENT_DESC, 
+          EVT_TYPE_ID, 
+          EVENT_TRIG_TYPE, 
+          EXT_EVENT_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          INTERFACE_CFG_ID, 
+          EVENT_NBR, 
+          EVENT_NAME, 
+          EVT_MAPPED_ADDR, 
+          EVT_MAPPED_IP, 
+          EVT_PROCOTOL_TYPE, 
+          EVT_MAPPED_FUN_NAME, 
+          EVENT_DESC, 
+          EVT_TYPE_ID, 
+          EVENT_TRIG_TYPE, 
+          EXT_EVENT_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="eventId != null ">
+        EVENT_ID = #{eventId, jdbcType=BIGINT }
+      </if>
+      <if test="interfaceCfgId != null ">
+        and INTERFACE_CFG_ID = #{interfaceCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="eventNbr != null and eventNbr != ''">
+        and EVENT_NBR = #{eventNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="eventName != null and eventName != ''">
+        and EVENT_NAME = #{eventName, jdbcType=VARCHAR }
+      </if>
+      <if test="evtMappedAddr != null and evtMappedAddr != ''">
+        and EVT_MAPPED_ADDR = #{evtMappedAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="evtMappedIp != null and evtMappedIp != ''">
+        and EVT_MAPPED_IP = #{evtMappedIp, jdbcType=VARCHAR }
+      </if>
+      <if test="evtProcotolType != null and evtProcotolType != ''">
+        and EVT_PROCOTOL_TYPE = #{evtProcotolType, jdbcType=VARCHAR }
+      </if>
+      <if test="evtMappedFunName != null and evtMappedFunName != ''">
+        and EVT_MAPPED_FUN_NAME = #{evtMappedFunName, jdbcType=VARCHAR }
+      </if>
+      <if test="eventDesc != null and eventDesc != ''">
+        and EVENT_DESC = #{eventDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="evtTypeId != null ">
+        and EVT_TYPE_ID = #{evtTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="eventTrigType != null and eventTrigType != ''">
+        and EVENT_TRIG_TYPE = #{eventTrigType, jdbcType=VARCHAR }
+      </if>
+      <if test="extEventId != null ">
+        and EXT_EVENT_ID = #{extEventId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.EventDO" resultType="java.lang.Integer">
+      select count(*) from EVENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from EVENT
+        where 
+           EVENT_ID = #{eventId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EVENT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="eventId">
+      insert into  EVENT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{interfaceCfgId,jdbcType=BIGINT}, 
+        #{eventNbr,jdbcType=VARCHAR}, 
+        #{eventName,jdbcType=VARCHAR}, 
+        #{evtMappedAddr,jdbcType=VARCHAR}, 
+        #{evtMappedIp,jdbcType=VARCHAR}, 
+        #{evtProcotolType,jdbcType=VARCHAR}, 
+        #{evtMappedFunName,jdbcType=VARCHAR}, 
+        #{eventDesc,jdbcType=VARCHAR}, 
+        #{evtTypeId,jdbcType=BIGINT}, 
+        #{eventTrigType,jdbcType=VARCHAR}, 
+        #{extEventId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  EVENT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{eventId,jdbcType=BIGINT}, 
+        #{interfaceCfgId,jdbcType=BIGINT}, 
+        #{eventNbr,jdbcType=VARCHAR}, 
+        #{eventName,jdbcType=VARCHAR}, 
+        #{evtMappedAddr,jdbcType=VARCHAR}, 
+        #{evtMappedIp,jdbcType=VARCHAR}, 
+        #{evtProcotolType,jdbcType=VARCHAR}, 
+        #{evtMappedFunName,jdbcType=VARCHAR}, 
+        #{eventDesc,jdbcType=VARCHAR}, 
+        #{evtTypeId,jdbcType=BIGINT}, 
+        #{eventTrigType,jdbcType=VARCHAR}, 
+        #{extEventId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from EVENT  
+        where
+           EVENT_ID = #{eventId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from EVENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  EVENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="interfaceCfgId != null">
+         INTERFACE_CFG_ID = #{interfaceCfgId,jdbcType=BIGINT},
+      </if>
+      <if test="eventNbr != null">
+         EVENT_NBR = #{eventNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="eventName != null">
+         EVENT_NAME = #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="evtMappedAddr != null">
+         EVT_MAPPED_ADDR = #{evtMappedAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="evtMappedIp != null">
+         EVT_MAPPED_IP = #{evtMappedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="evtProcotolType != null">
+         EVT_PROCOTOL_TYPE = #{evtProcotolType,jdbcType=VARCHAR},
+      </if>
+      <if test="evtMappedFunName != null">
+         EVT_MAPPED_FUN_NAME = #{evtMappedFunName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDesc != null">
+         EVENT_DESC = #{eventDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="evtTypeId != null">
+         EVT_TYPE_ID = #{evtTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="eventTrigType != null">
+         EVENT_TRIG_TYPE = #{eventTrigType,jdbcType=VARCHAR},
+      </if>
+      <if test="extEventId != null">
+         EXT_EVENT_ID = #{extEventId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           EVENT_ID = #{eventId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update EVENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.eventId != null">
+        EVENT_ID = #{record.eventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.interfaceCfgId != null">
+        INTERFACE_CFG_ID = #{record.interfaceCfgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eventNbr != null">
+        EVENT_NBR = #{record.eventNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventName != null">
+        EVENT_NAME = #{record.eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evtMappedAddr != null">
+        EVT_MAPPED_ADDR = #{record.evtMappedAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evtMappedIp != null">
+        EVT_MAPPED_IP = #{record.evtMappedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evtProcotolType != null">
+        EVT_PROCOTOL_TYPE = #{record.evtProcotolType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evtMappedFunName != null">
+        EVT_MAPPED_FUN_NAME = #{record.evtMappedFunName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventDesc != null">
+        EVENT_DESC = #{record.eventDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evtTypeId != null">
+        EVT_TYPE_ID = #{record.evtTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eventTrigType != null">
+        EVENT_TRIG_TYPE = #{record.eventTrigType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extEventId != null">
+        EXT_EVENT_ID = #{record.extEventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.eventId != null ">
+        EVENT_ID = #{condition.eventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.interfaceCfgId != null ">
+        and INTERFACE_CFG_ID = #{condition.interfaceCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.eventNbr != null and condition.eventNbr != ''">
+        and EVENT_NBR = #{condition.eventNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventName != null and condition.eventName != ''">
+        and EVENT_NAME = #{condition.eventName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evtMappedAddr != null and condition.evtMappedAddr != ''">
+        and EVT_MAPPED_ADDR = #{condition.evtMappedAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evtMappedIp != null and condition.evtMappedIp != ''">
+        and EVT_MAPPED_IP = #{condition.evtMappedIp, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evtProcotolType != null and condition.evtProcotolType != ''">
+        and EVT_PROCOTOL_TYPE = #{condition.evtProcotolType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evtMappedFunName != null and condition.evtMappedFunName != ''">
+        and EVT_MAPPED_FUN_NAME = #{condition.evtMappedFunName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventDesc != null and condition.eventDesc != ''">
+        and EVENT_DESC = #{condition.eventDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evtTypeId != null ">
+        and EVT_TYPE_ID = #{condition.evtTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.eventTrigType != null and condition.eventTrigType != ''">
+        and EVENT_TRIG_TYPE = #{condition.eventTrigType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.extEventId != null ">
+        and EXT_EVENT_ID = #{condition.extEventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

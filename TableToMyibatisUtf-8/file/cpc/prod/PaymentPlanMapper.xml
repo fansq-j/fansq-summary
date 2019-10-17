@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PaymentPlanMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PaymentPlanDO">
+    <id column="PAYMENT_PLAN_ID" jdbcType="BIGINT" property="paymentPlanId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PAY_ACCT_TYPE" jdbcType="INTEGER" property="payAcctType"/>
+    <result column="PAY_ACCT_ID" jdbcType="BIGINT" property="payAcctId"/>
+    <result column="PAYMENT_METHOD" jdbcType="INTEGER" property="paymentMethod"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="PAYMENT_LIMIT_TYPE" jdbcType="INTEGER" property="paymentLimitType"/>
+    <result column="PAYMENT_LIMIT" jdbcType="BIGINT" property="paymentLimit"/>
+    <result column="UPPER_AMOUNT" jdbcType="BIGINT" property="upperAmount"/>
+    <result column="IF_ONLINE_PAY" jdbcType="INTEGER" property="ifOnlinePay"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PAYMENT_PLAN_ID, 
+          ACCT_ID, 
+          PAY_ACCT_TYPE, 
+          PAY_ACCT_ID, 
+          PAYMENT_METHOD, 
+          PRIORITY, 
+          PAYMENT_LIMIT_TYPE, 
+          PAYMENT_LIMIT, 
+          UPPER_AMOUNT, 
+          IF_ONLINE_PAY, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_ID, 
+          PAY_ACCT_TYPE, 
+          PAY_ACCT_ID, 
+          PAYMENT_METHOD, 
+          PRIORITY, 
+          PAYMENT_LIMIT_TYPE, 
+          PAYMENT_LIMIT, 
+          UPPER_AMOUNT, 
+          IF_ONLINE_PAY, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="paymentPlanId != null ">
+        PAYMENT_PLAN_ID = #{paymentPlanId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="payAcctType != null ">
+        and PAY_ACCT_TYPE = #{payAcctType, jdbcType=INTEGER }
+      </if>
+      <if test="payAcctId != null ">
+        and PAY_ACCT_ID = #{payAcctId, jdbcType=BIGINT }
+      </if>
+      <if test="paymentMethod != null ">
+        and PAYMENT_METHOD = #{paymentMethod, jdbcType=INTEGER }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="paymentLimitType != null ">
+        and PAYMENT_LIMIT_TYPE = #{paymentLimitType, jdbcType=INTEGER }
+      </if>
+      <if test="paymentLimit != null ">
+        and PAYMENT_LIMIT = #{paymentLimit, jdbcType=BIGINT }
+      </if>
+      <if test="upperAmount != null ">
+        and UPPER_AMOUNT = #{upperAmount, jdbcType=BIGINT }
+      </if>
+      <if test="ifOnlinePay != null ">
+        and IF_ONLINE_PAY = #{ifOnlinePay, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PaymentPlanDO" resultType="java.lang.Integer">
+      select count(*) from PAYMENT_PLAN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PAYMENT_PLAN
+        where 
+           PAYMENT_PLAN_ID = #{paymentPlanId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PAYMENT_PLAN 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="paymentPlanId">
+      insert into  PAYMENT_PLAN ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctId,jdbcType=BIGINT}, 
+        #{payAcctType,jdbcType=INTEGER}, 
+        #{payAcctId,jdbcType=BIGINT}, 
+        #{paymentMethod,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{paymentLimitType,jdbcType=INTEGER}, 
+        #{paymentLimit,jdbcType=BIGINT}, 
+        #{upperAmount,jdbcType=BIGINT}, 
+        #{ifOnlinePay,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PAYMENT_PLAN ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{paymentPlanId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{payAcctType,jdbcType=INTEGER}, 
+        #{payAcctId,jdbcType=BIGINT}, 
+        #{paymentMethod,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{paymentLimitType,jdbcType=INTEGER}, 
+        #{paymentLimit,jdbcType=BIGINT}, 
+        #{upperAmount,jdbcType=BIGINT}, 
+        #{ifOnlinePay,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PAYMENT_PLAN  
+        where
+           PAYMENT_PLAN_ID = #{paymentPlanId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PAYMENT_PLAN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PAYMENT_PLAN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="payAcctType != null">
+         PAY_ACCT_TYPE = #{payAcctType,jdbcType=INTEGER},
+      </if>
+      <if test="payAcctId != null">
+         PAY_ACCT_ID = #{payAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentMethod != null">
+         PAYMENT_METHOD = #{paymentMethod,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="paymentLimitType != null">
+         PAYMENT_LIMIT_TYPE = #{paymentLimitType,jdbcType=INTEGER},
+      </if>
+      <if test="paymentLimit != null">
+         PAYMENT_LIMIT = #{paymentLimit,jdbcType=BIGINT},
+      </if>
+      <if test="upperAmount != null">
+         UPPER_AMOUNT = #{upperAmount,jdbcType=BIGINT},
+      </if>
+      <if test="ifOnlinePay != null">
+         IF_ONLINE_PAY = #{ifOnlinePay,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PAYMENT_PLAN_ID = #{paymentPlanId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PAYMENT_PLAN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.paymentPlanId != null">
+        PAYMENT_PLAN_ID = #{record.paymentPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.payAcctType != null">
+        PAY_ACCT_TYPE = #{record.payAcctType,jdbcType=INTEGER},
+      </if>
+      <if test="record.payAcctId != null">
+        PAY_ACCT_ID = #{record.payAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentMethod != null">
+        PAYMENT_METHOD = #{record.paymentMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentLimitType != null">
+        PAYMENT_LIMIT_TYPE = #{record.paymentLimitType,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentLimit != null">
+        PAYMENT_LIMIT = #{record.paymentLimit,jdbcType=BIGINT},
+      </if>
+      <if test="record.upperAmount != null">
+        UPPER_AMOUNT = #{record.upperAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.ifOnlinePay != null">
+        IF_ONLINE_PAY = #{record.ifOnlinePay,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.paymentPlanId != null ">
+        PAYMENT_PLAN_ID = #{condition.paymentPlanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payAcctType != null ">
+        and PAY_ACCT_TYPE = #{condition.payAcctType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payAcctId != null ">
+        and PAY_ACCT_ID = #{condition.payAcctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paymentMethod != null ">
+        and PAYMENT_METHOD = #{condition.paymentMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.paymentLimitType != null ">
+        and PAYMENT_LIMIT_TYPE = #{condition.paymentLimitType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.paymentLimit != null ">
+        and PAYMENT_LIMIT = #{condition.paymentLimit, jdbcType=BIGINT }
+      </if>
+      <if test="condition.upperAmount != null ">
+        and UPPER_AMOUNT = #{condition.upperAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ifOnlinePay != null ">
+        and IF_ONLINE_PAY = #{condition.ifOnlinePay, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

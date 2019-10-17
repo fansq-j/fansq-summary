@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.FairCatalogMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.FairCatalogDO">
+    <id column="FAIR_CATALOG_ID" jdbcType="INTEGER" property="fairCatalogId"/>
+    <result column="FAIR_CATALOG_NAME" jdbcType="VARCHAR" property="fairCatalogName"/>
+    <result column="FAIR_VALUE_CLASS" jdbcType="INTEGER" property="fairValueClass"/>
+    <result column="FAIR_VALUE_TYPE_ID" jdbcType="INTEGER" property="fairValueTypeId"/>
+    <result column="FAIR_VALUE" jdbcType="BIGINT" property="fairValue"/>
+    <result column="ADJUST_RATE" jdbcType="DOUBLE" property="adjustRate"/>
+    <result column="SHARE_BUSI_FLAG" jdbcType="INTEGER" property="shareBusiFlag"/>
+    <result column="APPORTION_ID" jdbcType="INTEGER" property="apportionId"/>
+    <result column="PRODUCT_ID" jdbcType="INTEGER" property="productId"/>
+    <result column="APPORTION_OBJECT_ID" jdbcType="INTEGER" property="apportionObjectId"/>
+    <result column="PRIORITY_VALUE" jdbcType="INTEGER" property="priorityValue"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          FAIR_CATALOG_ID, 
+          FAIR_CATALOG_NAME, 
+          FAIR_VALUE_CLASS, 
+          FAIR_VALUE_TYPE_ID, 
+          FAIR_VALUE, 
+          ADJUST_RATE, 
+          SHARE_BUSI_FLAG, 
+          APPORTION_ID, 
+          PRODUCT_ID, 
+          APPORTION_OBJECT_ID, 
+          PRIORITY_VALUE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          FAIR_CATALOG_NAME, 
+          FAIR_VALUE_CLASS, 
+          FAIR_VALUE_TYPE_ID, 
+          FAIR_VALUE, 
+          ADJUST_RATE, 
+          SHARE_BUSI_FLAG, 
+          APPORTION_ID, 
+          PRODUCT_ID, 
+          APPORTION_OBJECT_ID, 
+          PRIORITY_VALUE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="fairCatalogId != null ">
+        FAIR_CATALOG_ID = #{fairCatalogId, jdbcType=INTEGER }
+      </if>
+      <if test="fairCatalogName != null and fairCatalogName != ''">
+        and FAIR_CATALOG_NAME = #{fairCatalogName, jdbcType=VARCHAR }
+      </if>
+      <if test="fairValueClass != null ">
+        and FAIR_VALUE_CLASS = #{fairValueClass, jdbcType=INTEGER }
+      </if>
+      <if test="fairValueTypeId != null ">
+        and FAIR_VALUE_TYPE_ID = #{fairValueTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="fairValue != null ">
+        and FAIR_VALUE = #{fairValue, jdbcType=BIGINT }
+      </if>
+      <if test="adjustRate != null ">
+        and ADJUST_RATE = #{adjustRate, jdbcType=DOUBLE }
+      </if>
+      <if test="shareBusiFlag != null ">
+        and SHARE_BUSI_FLAG = #{shareBusiFlag, jdbcType=INTEGER }
+      </if>
+      <if test="apportionId != null ">
+        and APPORTION_ID = #{apportionId, jdbcType=INTEGER }
+      </if>
+      <if test="productId != null ">
+        and PRODUCT_ID = #{productId, jdbcType=INTEGER }
+      </if>
+      <if test="apportionObjectId != null ">
+        and APPORTION_OBJECT_ID = #{apportionObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="priorityValue != null ">
+        and PRIORITY_VALUE = #{priorityValue, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.FairCatalogDO" resultType="java.lang.Integer">
+      select count(*) from FAIR_CATALOG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from FAIR_CATALOG
+        where 
+           FAIR_CATALOG_ID = #{fairCatalogId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  FAIR_CATALOG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="fairCatalogId">
+      insert into  FAIR_CATALOG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{fairCatalogName,jdbcType=VARCHAR}, 
+        #{fairValueClass,jdbcType=INTEGER}, 
+        #{fairValueTypeId,jdbcType=INTEGER}, 
+        #{fairValue,jdbcType=BIGINT}, 
+        #{adjustRate,jdbcType=DOUBLE}, 
+        #{shareBusiFlag,jdbcType=INTEGER}, 
+        #{apportionId,jdbcType=INTEGER}, 
+        #{productId,jdbcType=INTEGER}, 
+        #{apportionObjectId,jdbcType=INTEGER}, 
+        #{priorityValue,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  FAIR_CATALOG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{fairCatalogId,jdbcType=INTEGER}, 
+        #{fairCatalogName,jdbcType=VARCHAR}, 
+        #{fairValueClass,jdbcType=INTEGER}, 
+        #{fairValueTypeId,jdbcType=INTEGER}, 
+        #{fairValue,jdbcType=BIGINT}, 
+        #{adjustRate,jdbcType=DOUBLE}, 
+        #{shareBusiFlag,jdbcType=INTEGER}, 
+        #{apportionId,jdbcType=INTEGER}, 
+        #{productId,jdbcType=INTEGER}, 
+        #{apportionObjectId,jdbcType=INTEGER}, 
+        #{priorityValue,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from FAIR_CATALOG  
+        where
+           FAIR_CATALOG_ID = #{fairCatalogId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from FAIR_CATALOG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  FAIR_CATALOG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="fairCatalogName != null">
+         FAIR_CATALOG_NAME = #{fairCatalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="fairValueClass != null">
+         FAIR_VALUE_CLASS = #{fairValueClass,jdbcType=INTEGER},
+      </if>
+      <if test="fairValueTypeId != null">
+         FAIR_VALUE_TYPE_ID = #{fairValueTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="fairValue != null">
+         FAIR_VALUE = #{fairValue,jdbcType=BIGINT},
+      </if>
+      <if test="adjustRate != null">
+         ADJUST_RATE = #{adjustRate,jdbcType=DOUBLE},
+      </if>
+      <if test="shareBusiFlag != null">
+         SHARE_BUSI_FLAG = #{shareBusiFlag,jdbcType=INTEGER},
+      </if>
+      <if test="apportionId != null">
+         APPORTION_ID = #{apportionId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+         PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="apportionObjectId != null">
+         APPORTION_OBJECT_ID = #{apportionObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="priorityValue != null">
+         PRIORITY_VALUE = #{priorityValue,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           FAIR_CATALOG_ID = #{fairCatalogId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update FAIR_CATALOG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.fairCatalogId != null">
+        FAIR_CATALOG_ID = #{record.fairCatalogId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fairCatalogName != null">
+        FAIR_CATALOG_NAME = #{record.fairCatalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fairValueClass != null">
+        FAIR_VALUE_CLASS = #{record.fairValueClass,jdbcType=INTEGER},
+      </if>
+      <if test="record.fairValueTypeId != null">
+        FAIR_VALUE_TYPE_ID = #{record.fairValueTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fairValue != null">
+        FAIR_VALUE = #{record.fairValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.adjustRate != null">
+        ADJUST_RATE = #{record.adjustRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.shareBusiFlag != null">
+        SHARE_BUSI_FLAG = #{record.shareBusiFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.apportionId != null">
+        APPORTION_ID = #{record.apportionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.apportionObjectId != null">
+        APPORTION_OBJECT_ID = #{record.apportionObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.priorityValue != null">
+        PRIORITY_VALUE = #{record.priorityValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.fairCatalogId != null ">
+        FAIR_CATALOG_ID = #{condition.fairCatalogId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fairCatalogName != null and condition.fairCatalogName != ''">
+        and FAIR_CATALOG_NAME = #{condition.fairCatalogName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.fairValueClass != null ">
+        and FAIR_VALUE_CLASS = #{condition.fairValueClass, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fairValueTypeId != null ">
+        and FAIR_VALUE_TYPE_ID = #{condition.fairValueTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fairValue != null ">
+        and FAIR_VALUE = #{condition.fairValue, jdbcType=BIGINT }
+      </if>
+      <if test="condition.adjustRate != null ">
+        and ADJUST_RATE = #{condition.adjustRate, jdbcType=DOUBLE }
+      </if>
+      <if test="condition.shareBusiFlag != null ">
+        and SHARE_BUSI_FLAG = #{condition.shareBusiFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.apportionId != null ">
+        and APPORTION_ID = #{condition.apportionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.productId != null ">
+        and PRODUCT_ID = #{condition.productId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.apportionObjectId != null ">
+        and APPORTION_OBJECT_ID = #{condition.apportionObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priorityValue != null ">
+        and PRIORITY_VALUE = #{condition.priorityValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

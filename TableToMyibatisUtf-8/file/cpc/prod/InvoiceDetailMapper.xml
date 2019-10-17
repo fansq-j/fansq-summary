@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.InvoiceDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.InvoiceDetailDO">
+    <id column="INVOICE_DETAIL_ID" jdbcType="BIGINT" property="invoiceDetailId"/>
+    <result column="INVOICE_ITEM_ID" jdbcType="INTEGER" property="invoiceItemId"/>
+    <result column="INVOICE_ID" jdbcType="BIGINT" property="invoiceId"/>
+    <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+    <result column="ITEM_VALUE" jdbcType="BIGINT" property="itemValue"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          INVOICE_DETAIL_ID, 
+          INVOICE_ITEM_ID, 
+          INVOICE_ID, 
+          ITEM_NAME, 
+          ITEM_VALUE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          INVOICE_ITEM_ID, 
+          INVOICE_ID, 
+          ITEM_NAME, 
+          ITEM_VALUE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="invoiceDetailId != null ">
+        INVOICE_DETAIL_ID = #{invoiceDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="invoiceItemId != null ">
+        and INVOICE_ITEM_ID = #{invoiceItemId, jdbcType=INTEGER }
+      </if>
+      <if test="invoiceId != null ">
+        and INVOICE_ID = #{invoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="itemName != null and itemName != ''">
+        and ITEM_NAME = #{itemName, jdbcType=VARCHAR }
+      </if>
+      <if test="itemValue != null ">
+        and ITEM_VALUE = #{itemValue, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.InvoiceDetailDO" resultType="java.lang.Integer">
+      select count(*) from INVOICE_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from INVOICE_DETAIL
+        where 
+           INVOICE_DETAIL_ID = #{invoiceDetailId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  INVOICE_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="invoiceDetailId">
+      insert into  INVOICE_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{invoiceItemId,jdbcType=INTEGER}, 
+        #{invoiceId,jdbcType=BIGINT}, 
+        #{itemName,jdbcType=VARCHAR}, 
+        #{itemValue,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  INVOICE_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{invoiceDetailId,jdbcType=BIGINT}, 
+        #{invoiceItemId,jdbcType=INTEGER}, 
+        #{invoiceId,jdbcType=BIGINT}, 
+        #{itemName,jdbcType=VARCHAR}, 
+        #{itemValue,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from INVOICE_DETAIL  
+        where
+           INVOICE_DETAIL_ID = #{invoiceDetailId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from INVOICE_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  INVOICE_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="invoiceItemId != null">
+         INVOICE_ITEM_ID = #{invoiceItemId,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceId != null">
+         INVOICE_ID = #{invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="itemName != null">
+         ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemValue != null">
+         ITEM_VALUE = #{itemValue,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           INVOICE_DETAIL_ID = #{invoiceDetailId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update INVOICE_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.invoiceDetailId != null">
+        INVOICE_DETAIL_ID = #{record.invoiceDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoiceItemId != null">
+        INVOICE_ITEM_ID = #{record.invoiceItemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceId != null">
+        INVOICE_ID = #{record.invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemName != null">
+        ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemValue != null">
+        ITEM_VALUE = #{record.itemValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.invoiceDetailId != null ">
+        INVOICE_DETAIL_ID = #{condition.invoiceDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.invoiceItemId != null ">
+        and INVOICE_ITEM_ID = #{condition.invoiceItemId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.invoiceId != null ">
+        and INVOICE_ID = #{condition.invoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.itemName != null and condition.itemName != ''">
+        and ITEM_NAME = #{condition.itemName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.itemValue != null ">
+        and ITEM_VALUE = #{condition.itemValue, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

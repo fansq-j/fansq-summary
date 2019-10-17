@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PointTariffMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PointTariffDO">
+    <id column="POINT_TARIFF_ID" jdbcType="BIGINT" property="pointTariffId"/>
+    <result column="POINT_CALC_RULE_ID" jdbcType="INTEGER" property="pointCalcRuleId"/>
+    <result column="CALC_TYPE" jdbcType="VARCHAR" property="calcType"/>
+    <result column="POINT_CALC_FACTOR_ID" jdbcType="INTEGER" property="pointCalcFactorId"/>
+    <result column="WEIGHT_COEFFICIENT" jdbcType="INTEGER" property="weightCoefficient"/>
+    <result column="FIXED_VALUE" jdbcType="INTEGER" property="fixedValue"/>
+    <result column="POINT_TYPE_ID" jdbcType="INTEGER" property="pointTypeId"/>
+    <result column="CALC_PRECISION_METHOD" jdbcType="VARCHAR" property="calcPrecisionMethod"/>
+    <result column="POINT_CYCLE_TYPE" jdbcType="VARCHAR" property="pointCycleType"/>
+    <result column="POINT_CYCLE_COUNT" jdbcType="INTEGER" property="pointCycleCount"/>
+    <result column="POINT_CYCLE_END_TYPE" jdbcType="VARCHAR" property="pointCycleEndType"/>
+    <result column="MAX_VALUE" jdbcType="INTEGER" property="maxValue"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          POINT_TARIFF_ID, 
+          POINT_CALC_RULE_ID, 
+          CALC_TYPE, 
+          POINT_CALC_FACTOR_ID, 
+          WEIGHT_COEFFICIENT, 
+          FIXED_VALUE, 
+          POINT_TYPE_ID, 
+          CALC_PRECISION_METHOD, 
+          POINT_CYCLE_TYPE, 
+          POINT_CYCLE_COUNT, 
+          POINT_CYCLE_END_TYPE, 
+          MAX_VALUE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          POINT_CALC_RULE_ID, 
+          CALC_TYPE, 
+          POINT_CALC_FACTOR_ID, 
+          WEIGHT_COEFFICIENT, 
+          FIXED_VALUE, 
+          POINT_TYPE_ID, 
+          CALC_PRECISION_METHOD, 
+          POINT_CYCLE_TYPE, 
+          POINT_CYCLE_COUNT, 
+          POINT_CYCLE_END_TYPE, 
+          MAX_VALUE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pointTariffId != null ">
+        POINT_TARIFF_ID = #{pointTariffId, jdbcType=BIGINT }
+      </if>
+      <if test="pointCalcRuleId != null ">
+        and POINT_CALC_RULE_ID = #{pointCalcRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="calcType != null and calcType != ''">
+        and CALC_TYPE = #{calcType, jdbcType=VARCHAR }
+      </if>
+      <if test="pointCalcFactorId != null ">
+        and POINT_CALC_FACTOR_ID = #{pointCalcFactorId, jdbcType=INTEGER }
+      </if>
+      <if test="weightCoefficient != null ">
+        and WEIGHT_COEFFICIENT = #{weightCoefficient, jdbcType=INTEGER }
+      </if>
+      <if test="fixedValue != null ">
+        and FIXED_VALUE = #{fixedValue, jdbcType=INTEGER }
+      </if>
+      <if test="pointTypeId != null ">
+        and POINT_TYPE_ID = #{pointTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="calcPrecisionMethod != null and calcPrecisionMethod != ''">
+        and CALC_PRECISION_METHOD = #{calcPrecisionMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="pointCycleType != null and pointCycleType != ''">
+        and POINT_CYCLE_TYPE = #{pointCycleType, jdbcType=VARCHAR }
+      </if>
+      <if test="pointCycleCount != null ">
+        and POINT_CYCLE_COUNT = #{pointCycleCount, jdbcType=INTEGER }
+      </if>
+      <if test="pointCycleEndType != null and pointCycleEndType != ''">
+        and POINT_CYCLE_END_TYPE = #{pointCycleEndType, jdbcType=VARCHAR }
+      </if>
+      <if test="maxValue != null ">
+        and MAX_VALUE = #{maxValue, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PointTariffDO" resultType="java.lang.Integer">
+      select count(*) from POINT_TARIFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POINT_TARIFF
+        where 
+           POINT_TARIFF_ID = #{pointTariffId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POINT_TARIFF 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pointTariffId">
+      insert into  POINT_TARIFF ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{pointCalcRuleId,jdbcType=INTEGER}, 
+        #{calcType,jdbcType=VARCHAR}, 
+        #{pointCalcFactorId,jdbcType=INTEGER}, 
+        #{weightCoefficient,jdbcType=INTEGER}, 
+        #{fixedValue,jdbcType=INTEGER}, 
+        #{pointTypeId,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=VARCHAR}, 
+        #{pointCycleType,jdbcType=VARCHAR}, 
+        #{pointCycleCount,jdbcType=INTEGER}, 
+        #{pointCycleEndType,jdbcType=VARCHAR}, 
+        #{maxValue,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POINT_TARIFF ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pointTariffId,jdbcType=BIGINT}, 
+        #{pointCalcRuleId,jdbcType=INTEGER}, 
+        #{calcType,jdbcType=VARCHAR}, 
+        #{pointCalcFactorId,jdbcType=INTEGER}, 
+        #{weightCoefficient,jdbcType=INTEGER}, 
+        #{fixedValue,jdbcType=INTEGER}, 
+        #{pointTypeId,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=VARCHAR}, 
+        #{pointCycleType,jdbcType=VARCHAR}, 
+        #{pointCycleCount,jdbcType=INTEGER}, 
+        #{pointCycleEndType,jdbcType=VARCHAR}, 
+        #{maxValue,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POINT_TARIFF  
+        where
+           POINT_TARIFF_ID = #{pointTariffId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from POINT_TARIFF
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POINT_TARIFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="pointCalcRuleId != null">
+         POINT_CALC_RULE_ID = #{pointCalcRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="calcType != null">
+         CALC_TYPE = #{calcType,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCalcFactorId != null">
+         POINT_CALC_FACTOR_ID = #{pointCalcFactorId,jdbcType=INTEGER},
+      </if>
+      <if test="weightCoefficient != null">
+         WEIGHT_COEFFICIENT = #{weightCoefficient,jdbcType=INTEGER},
+      </if>
+      <if test="fixedValue != null">
+         FIXED_VALUE = #{fixedValue,jdbcType=INTEGER},
+      </if>
+      <if test="pointTypeId != null">
+         POINT_TYPE_ID = #{pointTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="calcPrecisionMethod != null">
+         CALC_PRECISION_METHOD = #{calcPrecisionMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCycleType != null">
+         POINT_CYCLE_TYPE = #{pointCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCycleCount != null">
+         POINT_CYCLE_COUNT = #{pointCycleCount,jdbcType=INTEGER},
+      </if>
+      <if test="pointCycleEndType != null">
+         POINT_CYCLE_END_TYPE = #{pointCycleEndType,jdbcType=VARCHAR},
+      </if>
+      <if test="maxValue != null">
+         MAX_VALUE = #{maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           POINT_TARIFF_ID = #{pointTariffId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update POINT_TARIFF
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pointTariffId != null">
+        POINT_TARIFF_ID = #{record.pointTariffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pointCalcRuleId != null">
+        POINT_CALC_RULE_ID = #{record.pointCalcRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcType != null">
+        CALC_TYPE = #{record.calcType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointCalcFactorId != null">
+        POINT_CALC_FACTOR_ID = #{record.pointCalcFactorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.weightCoefficient != null">
+        WEIGHT_COEFFICIENT = #{record.weightCoefficient,jdbcType=INTEGER},
+      </if>
+      <if test="record.fixedValue != null">
+        FIXED_VALUE = #{record.fixedValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointTypeId != null">
+        POINT_TYPE_ID = #{record.pointTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPrecisionMethod != null">
+        CALC_PRECISION_METHOD = #{record.calcPrecisionMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointCycleType != null">
+        POINT_CYCLE_TYPE = #{record.pointCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointCycleCount != null">
+        POINT_CYCLE_COUNT = #{record.pointCycleCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointCycleEndType != null">
+        POINT_CYCLE_END_TYPE = #{record.pointCycleEndType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxValue != null">
+        MAX_VALUE = #{record.maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pointTariffId != null ">
+        POINT_TARIFF_ID = #{condition.pointTariffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pointCalcRuleId != null ">
+        and POINT_CALC_RULE_ID = #{condition.pointCalcRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcType != null and condition.calcType != ''">
+        and CALC_TYPE = #{condition.calcType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointCalcFactorId != null ">
+        and POINT_CALC_FACTOR_ID = #{condition.pointCalcFactorId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.weightCoefficient != null ">
+        and WEIGHT_COEFFICIENT = #{condition.weightCoefficient, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fixedValue != null ">
+        and FIXED_VALUE = #{condition.fixedValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pointTypeId != null ">
+        and POINT_TYPE_ID = #{condition.pointTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPrecisionMethod != null and condition.calcPrecisionMethod != ''">
+        and CALC_PRECISION_METHOD = #{condition.calcPrecisionMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointCycleType != null and condition.pointCycleType != ''">
+        and POINT_CYCLE_TYPE = #{condition.pointCycleType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointCycleCount != null ">
+        and POINT_CYCLE_COUNT = #{condition.pointCycleCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pointCycleEndType != null and condition.pointCycleEndType != ''">
+        and POINT_CYCLE_END_TYPE = #{condition.pointCycleEndType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.maxValue != null ">
+        and MAX_VALUE = #{condition.maxValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

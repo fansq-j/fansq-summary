@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CheckFilePathMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CheckFilePathDO">
+    <id column="PATH_ID" jdbcType="INTEGER" property="pathId"/>
+    <result column="PROTOCAL_ID" jdbcType="INTEGER" property="protocalId"/>
+    <result column="OBJ_TYPE" jdbcType="INTEGER" property="objType"/>
+    <result column="OBJ_ID" jdbcType="INTEGER" property="objId"/>
+    <result column="DIRECTION" jdbcType="INTEGER" property="direction"/>
+    <result column="PERCENT_TIMES" jdbcType="INTEGER" property="percentTimes"/>
+    <result column="GATHER_IP" jdbcType="VARCHAR" property="gatherIp"/>
+    <result column="GATHER_PORT" jdbcType="VARCHAR" property="gatherPort"/>
+    <result column="GATHER_USER" jdbcType="VARCHAR" property="gatherUser"/>
+    <result column="GATHER_PASSWORD" jdbcType="VARCHAR" property="gatherPassword"/>
+    <result column="GATHER_PATH" jdbcType="VARCHAR" property="gatherPath"/>
+    <result column="BACKUP_PATH" jdbcType="VARCHAR" property="backupPath"/>
+    <result column="GATHER_URL" jdbcType="VARCHAR" property="gatherUrl"/>
+    <result column="FILENAME_PREFIX" jdbcType="VARCHAR" property="filenamePrefix"/>
+    <result column="SEND_IP" jdbcType="VARCHAR" property="sendIp"/>
+    <result column="SEND_PORT" jdbcType="VARCHAR" property="sendPort"/>
+    <result column="SEND_USER" jdbcType="VARCHAR" property="sendUser"/>
+    <result column="SEND_PASSWORD" jdbcType="VARCHAR" property="sendPassword"/>
+    <result column="SEND_PATH" jdbcType="VARCHAR" property="sendPath"/>
+    <result column="SEND_URL" jdbcType="VARCHAR" property="sendUrl"/>
+    <result column="LAST_GATHER_DATE" jdbcType="TIMESTAMP" property="lastGatherDate"/>
+    <result column="LAST_SEND_DATE" jdbcType="TIMESTAMP" property="lastSendDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PATH_ID, 
+          PROTOCAL_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          DIRECTION, 
+          PERCENT_TIMES, 
+          GATHER_IP, 
+          GATHER_PORT, 
+          GATHER_USER, 
+          GATHER_PASSWORD, 
+          GATHER_PATH, 
+          BACKUP_PATH, 
+          GATHER_URL, 
+          FILENAME_PREFIX, 
+          SEND_IP, 
+          SEND_PORT, 
+          SEND_USER, 
+          SEND_PASSWORD, 
+          SEND_PATH, 
+          SEND_URL, 
+          LAST_GATHER_DATE, 
+          LAST_SEND_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROTOCAL_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          DIRECTION, 
+          PERCENT_TIMES, 
+          GATHER_IP, 
+          GATHER_PORT, 
+          GATHER_USER, 
+          GATHER_PASSWORD, 
+          GATHER_PATH, 
+          BACKUP_PATH, 
+          GATHER_URL, 
+          FILENAME_PREFIX, 
+          SEND_IP, 
+          SEND_PORT, 
+          SEND_USER, 
+          SEND_PASSWORD, 
+          SEND_PATH, 
+          SEND_URL, 
+          LAST_GATHER_DATE, 
+          LAST_SEND_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pathId != null ">
+        PATH_ID = #{pathId, jdbcType=INTEGER }
+      </if>
+      <if test="protocalId != null ">
+        and PROTOCAL_ID = #{protocalId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null ">
+        and OBJ_TYPE = #{objType, jdbcType=INTEGER }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=INTEGER }
+      </if>
+      <if test="direction != null ">
+        and DIRECTION = #{direction, jdbcType=INTEGER }
+      </if>
+      <if test="percentTimes != null ">
+        and PERCENT_TIMES = #{percentTimes, jdbcType=INTEGER }
+      </if>
+      <if test="gatherIp != null and gatherIp != ''">
+        and GATHER_IP = #{gatherIp, jdbcType=VARCHAR }
+      </if>
+      <if test="gatherPort != null and gatherPort != ''">
+        and GATHER_PORT = #{gatherPort, jdbcType=VARCHAR }
+      </if>
+      <if test="gatherUser != null and gatherUser != ''">
+        and GATHER_USER = #{gatherUser, jdbcType=VARCHAR }
+      </if>
+      <if test="gatherPassword != null and gatherPassword != ''">
+        and GATHER_PASSWORD = #{gatherPassword, jdbcType=VARCHAR }
+      </if>
+      <if test="gatherPath != null and gatherPath != ''">
+        and GATHER_PATH = #{gatherPath, jdbcType=VARCHAR }
+      </if>
+      <if test="backupPath != null and backupPath != ''">
+        and BACKUP_PATH = #{backupPath, jdbcType=VARCHAR }
+      </if>
+      <if test="gatherUrl != null and gatherUrl != ''">
+        and GATHER_URL = #{gatherUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="filenamePrefix != null and filenamePrefix != ''">
+        and FILENAME_PREFIX = #{filenamePrefix, jdbcType=VARCHAR }
+      </if>
+      <if test="sendIp != null and sendIp != ''">
+        and SEND_IP = #{sendIp, jdbcType=VARCHAR }
+      </if>
+      <if test="sendPort != null and sendPort != ''">
+        and SEND_PORT = #{sendPort, jdbcType=VARCHAR }
+      </if>
+      <if test="sendUser != null and sendUser != ''">
+        and SEND_USER = #{sendUser, jdbcType=VARCHAR }
+      </if>
+      <if test="sendPassword != null and sendPassword != ''">
+        and SEND_PASSWORD = #{sendPassword, jdbcType=VARCHAR }
+      </if>
+      <if test="sendPath != null and sendPath != ''">
+        and SEND_PATH = #{sendPath, jdbcType=VARCHAR }
+      </if>
+      <if test="sendUrl != null and sendUrl != ''">
+        and SEND_URL = #{sendUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="lastGatherDate != null ">
+        and LAST_GATHER_DATE = #{lastGatherDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="lastSendDate != null ">
+        and LAST_SEND_DATE = #{lastSendDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CheckFilePathDO" resultType="java.lang.Integer">
+      select count(*) from CHECK_FILE_PATH
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CHECK_FILE_PATH
+        where 
+           PATH_ID = #{pathId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CHECK_FILE_PATH 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pathId">
+      insert into  CHECK_FILE_PATH ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{protocalId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{direction,jdbcType=INTEGER}, 
+        #{percentTimes,jdbcType=INTEGER}, 
+        #{gatherIp,jdbcType=VARCHAR}, 
+        #{gatherPort,jdbcType=VARCHAR}, 
+        #{gatherUser,jdbcType=VARCHAR}, 
+        #{gatherPassword,jdbcType=VARCHAR}, 
+        #{gatherPath,jdbcType=VARCHAR}, 
+        #{backupPath,jdbcType=VARCHAR}, 
+        #{gatherUrl,jdbcType=VARCHAR}, 
+        #{filenamePrefix,jdbcType=VARCHAR}, 
+        #{sendIp,jdbcType=VARCHAR}, 
+        #{sendPort,jdbcType=VARCHAR}, 
+        #{sendUser,jdbcType=VARCHAR}, 
+        #{sendPassword,jdbcType=VARCHAR}, 
+        #{sendPath,jdbcType=VARCHAR}, 
+        #{sendUrl,jdbcType=VARCHAR}, 
+        #{lastGatherDate,jdbcType=TIMESTAMP}, 
+        #{lastSendDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CHECK_FILE_PATH ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pathId,jdbcType=INTEGER}, 
+        #{protocalId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{direction,jdbcType=INTEGER}, 
+        #{percentTimes,jdbcType=INTEGER}, 
+        #{gatherIp,jdbcType=VARCHAR}, 
+        #{gatherPort,jdbcType=VARCHAR}, 
+        #{gatherUser,jdbcType=VARCHAR}, 
+        #{gatherPassword,jdbcType=VARCHAR}, 
+        #{gatherPath,jdbcType=VARCHAR}, 
+        #{backupPath,jdbcType=VARCHAR}, 
+        #{gatherUrl,jdbcType=VARCHAR}, 
+        #{filenamePrefix,jdbcType=VARCHAR}, 
+        #{sendIp,jdbcType=VARCHAR}, 
+        #{sendPort,jdbcType=VARCHAR}, 
+        #{sendUser,jdbcType=VARCHAR}, 
+        #{sendPassword,jdbcType=VARCHAR}, 
+        #{sendPath,jdbcType=VARCHAR}, 
+        #{sendUrl,jdbcType=VARCHAR}, 
+        #{lastGatherDate,jdbcType=TIMESTAMP}, 
+        #{lastSendDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CHECK_FILE_PATH  
+        where
+           PATH_ID = #{pathId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from CHECK_FILE_PATH
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CHECK_FILE_PATH
+    <trim prefix="set" suffixOverrides=",">
+      <if test="protocalId != null">
+         PROTOCAL_ID = #{protocalId,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+         DIRECTION = #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="percentTimes != null">
+         PERCENT_TIMES = #{percentTimes,jdbcType=INTEGER},
+      </if>
+      <if test="gatherIp != null">
+         GATHER_IP = #{gatherIp,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherPort != null">
+         GATHER_PORT = #{gatherPort,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherUser != null">
+         GATHER_USER = #{gatherUser,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherPassword != null">
+         GATHER_PASSWORD = #{gatherPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherPath != null">
+         GATHER_PATH = #{gatherPath,jdbcType=VARCHAR},
+      </if>
+      <if test="backupPath != null">
+         BACKUP_PATH = #{backupPath,jdbcType=VARCHAR},
+      </if>
+      <if test="gatherUrl != null">
+         GATHER_URL = #{gatherUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="filenamePrefix != null">
+         FILENAME_PREFIX = #{filenamePrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="sendIp != null">
+         SEND_IP = #{sendIp,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPort != null">
+         SEND_PORT = #{sendPort,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUser != null">
+         SEND_USER = #{sendUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPassword != null">
+         SEND_PASSWORD = #{sendPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPath != null">
+         SEND_PATH = #{sendPath,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUrl != null">
+         SEND_URL = #{sendUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="lastGatherDate != null">
+         LAST_GATHER_DATE = #{lastGatherDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastSendDate != null">
+         LAST_SEND_DATE = #{lastSendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PATH_ID = #{pathId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update CHECK_FILE_PATH
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pathId != null">
+        PATH_ID = #{record.pathId,jdbcType=INTEGER},
+      </if>
+      <if test="record.protocalId != null">
+        PROTOCAL_ID = #{record.protocalId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=INTEGER},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=INTEGER},
+      </if>
+      <if test="record.direction != null">
+        DIRECTION = #{record.direction,jdbcType=INTEGER},
+      </if>
+      <if test="record.percentTimes != null">
+        PERCENT_TIMES = #{record.percentTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.gatherIp != null">
+        GATHER_IP = #{record.gatherIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherPort != null">
+        GATHER_PORT = #{record.gatherPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherUser != null">
+        GATHER_USER = #{record.gatherUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherPassword != null">
+        GATHER_PASSWORD = #{record.gatherPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherPath != null">
+        GATHER_PATH = #{record.gatherPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backupPath != null">
+        BACKUP_PATH = #{record.backupPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gatherUrl != null">
+        GATHER_URL = #{record.gatherUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filenamePrefix != null">
+        FILENAME_PREFIX = #{record.filenamePrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendIp != null">
+        SEND_IP = #{record.sendIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendPort != null">
+        SEND_PORT = #{record.sendPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendUser != null">
+        SEND_USER = #{record.sendUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendPassword != null">
+        SEND_PASSWORD = #{record.sendPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendPath != null">
+        SEND_PATH = #{record.sendPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendUrl != null">
+        SEND_URL = #{record.sendUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastGatherDate != null">
+        LAST_GATHER_DATE = #{record.lastGatherDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastSendDate != null">
+        LAST_SEND_DATE = #{record.lastSendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pathId != null ">
+        PATH_ID = #{condition.pathId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.protocalId != null ">
+        and PROTOCAL_ID = #{condition.protocalId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null ">
+        and OBJ_TYPE = #{condition.objType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.direction != null ">
+        and DIRECTION = #{condition.direction, jdbcType=INTEGER }
+      </if>
+      <if test="condition.percentTimes != null ">
+        and PERCENT_TIMES = #{condition.percentTimes, jdbcType=INTEGER }
+      </if>
+      <if test="condition.gatherIp != null and condition.gatherIp != ''">
+        and GATHER_IP = #{condition.gatherIp, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gatherPort != null and condition.gatherPort != ''">
+        and GATHER_PORT = #{condition.gatherPort, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gatherUser != null and condition.gatherUser != ''">
+        and GATHER_USER = #{condition.gatherUser, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gatherPassword != null and condition.gatherPassword != ''">
+        and GATHER_PASSWORD = #{condition.gatherPassword, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gatherPath != null and condition.gatherPath != ''">
+        and GATHER_PATH = #{condition.gatherPath, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.backupPath != null and condition.backupPath != ''">
+        and BACKUP_PATH = #{condition.backupPath, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gatherUrl != null and condition.gatherUrl != ''">
+        and GATHER_URL = #{condition.gatherUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.filenamePrefix != null and condition.filenamePrefix != ''">
+        and FILENAME_PREFIX = #{condition.filenamePrefix, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sendIp != null and condition.sendIp != ''">
+        and SEND_IP = #{condition.sendIp, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sendPort != null and condition.sendPort != ''">
+        and SEND_PORT = #{condition.sendPort, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sendUser != null and condition.sendUser != ''">
+        and SEND_USER = #{condition.sendUser, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sendPassword != null and condition.sendPassword != ''">
+        and SEND_PASSWORD = #{condition.sendPassword, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sendPath != null and condition.sendPath != ''">
+        and SEND_PATH = #{condition.sendPath, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sendUrl != null and condition.sendUrl != ''">
+        and SEND_URL = #{condition.sendUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.lastGatherDate != null ">
+        and LAST_GATHER_DATE = #{condition.lastGatherDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.lastSendDate != null ">
+        and LAST_SEND_DATE = #{condition.lastSendDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

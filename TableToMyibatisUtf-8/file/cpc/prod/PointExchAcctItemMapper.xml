@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PointExchAcctItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PointExchAcctItemDO">
+    <id column="EXCH_ACCT_ITEM_ID" jdbcType="BIGINT" property="exchAcctItemId"/>
+    <result column="POINT_EXCH_RECORD_ID" jdbcType="BIGINT" property="pointExchRecordId"/>
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId"/>
+    <result column="PAYMENT_ID" jdbcType="BIGINT" property="paymentId"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="BIGINT" property="billingCycleId"/>
+    <result column="ITEM_SOURCE_ID" jdbcType="INTEGER" property="itemSourceId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="REAL_AMOUNT" jdbcType="BIGINT" property="realAmount"/>
+    <result column="TAX_RATE_CONFIG_ID" jdbcType="INTEGER" property="taxRateConfigId"/>
+    <result column="TAX_RATE" jdbcType="DOUBLE" property="taxRate"/>
+    <result column="TAX" jdbcType="BIGINT" property="tax"/>
+    <result column="PRICE" jdbcType="BIGINT" property="price"/>
+    <result column="CHARGE_METHOD" jdbcType="VARCHAR" property="chargeMethod"/>
+    <result column="ORI_ACCT_ITEM_ID" jdbcType="BIGINT" property="oriAcctItemId"/>
+    <result column="IF_CHARGE_OFF" jdbcType="INTEGER" property="ifChargeOff"/>
+    <result column="MERGE_ACCT_DEAL_TIME" jdbcType="TIMESTAMP" property="mergeAcctDealTime"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_ORG_ID" jdbcType="BIGINT" property="createOrgId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EXCH_ACCT_ITEM_ID, 
+          POINT_EXCH_RECORD_ID, 
+          BILL_ID, 
+          PAYMENT_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          BILLING_CYCLE_ID, 
+          ITEM_SOURCE_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          REAL_AMOUNT, 
+          TAX_RATE_CONFIG_ID, 
+          TAX_RATE, 
+          TAX, 
+          PRICE, 
+          CHARGE_METHOD, 
+          ORI_ACCT_ITEM_ID, 
+          IF_CHARGE_OFF, 
+          MERGE_ACCT_DEAL_TIME, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_ORG_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          POINT_EXCH_RECORD_ID, 
+          BILL_ID, 
+          PAYMENT_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          BILLING_CYCLE_ID, 
+          ITEM_SOURCE_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          REAL_AMOUNT, 
+          TAX_RATE_CONFIG_ID, 
+          TAX_RATE, 
+          TAX, 
+          PRICE, 
+          CHARGE_METHOD, 
+          ORI_ACCT_ITEM_ID, 
+          IF_CHARGE_OFF, 
+          MERGE_ACCT_DEAL_TIME, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_ORG_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="exchAcctItemId != null ">
+        EXCH_ACCT_ITEM_ID = #{exchAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="pointExchRecordId != null ">
+        and POINT_EXCH_RECORD_ID = #{pointExchRecordId, jdbcType=BIGINT }
+      </if>
+      <if test="billId != null ">
+        and BILL_ID = #{billId, jdbcType=BIGINT }
+      </if>
+      <if test="paymentId != null ">
+        and PAYMENT_ID = #{paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=BIGINT }
+      </if>
+      <if test="itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="realAmount != null ">
+        and REAL_AMOUNT = #{realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="taxRateConfigId != null ">
+        and TAX_RATE_CONFIG_ID = #{taxRateConfigId, jdbcType=INTEGER }
+      </if>
+      <if test="taxRate != null ">
+        and TAX_RATE = #{taxRate, jdbcType=DOUBLE }
+      </if>
+      <if test="tax != null ">
+        and TAX = #{tax, jdbcType=BIGINT }
+      </if>
+      <if test="price != null ">
+        and PRICE = #{price, jdbcType=BIGINT }
+      </if>
+      <if test="chargeMethod != null and chargeMethod != ''">
+        and CHARGE_METHOD = #{chargeMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="oriAcctItemId != null ">
+        and ORI_ACCT_ITEM_ID = #{oriAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="ifChargeOff != null ">
+        and IF_CHARGE_OFF = #{ifChargeOff, jdbcType=INTEGER }
+      </if>
+      <if test="mergeAcctDealTime != null ">
+        and MERGE_ACCT_DEAL_TIME = #{mergeAcctDealTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createOrgId != null ">
+        and CREATE_ORG_ID = #{createOrgId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PointExchAcctItemDO" resultType="java.lang.Integer">
+      select count(*) from POINT_EXCH_ACCT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POINT_EXCH_ACCT_ITEM
+        where 
+           EXCH_ACCT_ITEM_ID = #{exchAcctItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POINT_EXCH_ACCT_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="exchAcctItemId">
+      insert into  POINT_EXCH_ACCT_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{pointExchRecordId,jdbcType=BIGINT}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=BIGINT}, 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{taxRateConfigId,jdbcType=INTEGER}, 
+        #{taxRate,jdbcType=DOUBLE}, 
+        #{tax,jdbcType=BIGINT}, 
+        #{price,jdbcType=BIGINT}, 
+        #{chargeMethod,jdbcType=VARCHAR}, 
+        #{oriAcctItemId,jdbcType=BIGINT}, 
+        #{ifChargeOff,jdbcType=INTEGER}, 
+        #{mergeAcctDealTime,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createOrgId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POINT_EXCH_ACCT_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{exchAcctItemId,jdbcType=BIGINT}, 
+        #{pointExchRecordId,jdbcType=BIGINT}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=BIGINT}, 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{taxRateConfigId,jdbcType=INTEGER}, 
+        #{taxRate,jdbcType=DOUBLE}, 
+        #{tax,jdbcType=BIGINT}, 
+        #{price,jdbcType=BIGINT}, 
+        #{chargeMethod,jdbcType=VARCHAR}, 
+        #{oriAcctItemId,jdbcType=BIGINT}, 
+        #{ifChargeOff,jdbcType=INTEGER}, 
+        #{mergeAcctDealTime,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createOrgId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POINT_EXCH_ACCT_ITEM  
+        where
+           EXCH_ACCT_ITEM_ID = #{exchAcctItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from POINT_EXCH_ACCT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POINT_EXCH_ACCT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="pointExchRecordId != null">
+         POINT_EXCH_RECORD_ID = #{pointExchRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null">
+         BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentId != null">
+         PAYMENT_ID = #{paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=BIGINT},
+      </if>
+      <if test="itemSourceId != null">
+         ITEM_SOURCE_ID = #{itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="realAmount != null">
+         REAL_AMOUNT = #{realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="taxRateConfigId != null">
+         TAX_RATE_CONFIG_ID = #{taxRateConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="taxRate != null">
+         TAX_RATE = #{taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="tax != null">
+         TAX = #{tax,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+         PRICE = #{price,jdbcType=BIGINT},
+      </if>
+      <if test="chargeMethod != null">
+         CHARGE_METHOD = #{chargeMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="oriAcctItemId != null">
+         ORI_ACCT_ITEM_ID = #{oriAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="ifChargeOff != null">
+         IF_CHARGE_OFF = #{ifChargeOff,jdbcType=INTEGER},
+      </if>
+      <if test="mergeAcctDealTime != null">
+         MERGE_ACCT_DEAL_TIME = #{mergeAcctDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOrgId != null">
+         CREATE_ORG_ID = #{createOrgId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           EXCH_ACCT_ITEM_ID = #{exchAcctItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update POINT_EXCH_ACCT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.exchAcctItemId != null">
+        EXCH_ACCT_ITEM_ID = #{record.exchAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pointExchRecordId != null">
+        POINT_EXCH_RECORD_ID = #{record.pointExchRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentId != null">
+        PAYMENT_ID = #{record.paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemSourceId != null">
+        ITEM_SOURCE_ID = #{record.itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.realAmount != null">
+        REAL_AMOUNT = #{record.realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.taxRateConfigId != null">
+        TAX_RATE_CONFIG_ID = #{record.taxRateConfigId,jdbcType=INTEGER},
+      </if>
+      <if test="record.taxRate != null">
+        TAX_RATE = #{record.taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.tax != null">
+        TAX = #{record.tax,jdbcType=BIGINT},
+      </if>
+      <if test="record.price != null">
+        PRICE = #{record.price,jdbcType=BIGINT},
+      </if>
+      <if test="record.chargeMethod != null">
+        CHARGE_METHOD = #{record.chargeMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oriAcctItemId != null">
+        ORI_ACCT_ITEM_ID = #{record.oriAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ifChargeOff != null">
+        IF_CHARGE_OFF = #{record.ifChargeOff,jdbcType=INTEGER},
+      </if>
+      <if test="record.mergeAcctDealTime != null">
+        MERGE_ACCT_DEAL_TIME = #{record.mergeAcctDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createOrgId != null">
+        CREATE_ORG_ID = #{record.createOrgId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.exchAcctItemId != null ">
+        EXCH_ACCT_ITEM_ID = #{condition.exchAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pointExchRecordId != null ">
+        and POINT_EXCH_RECORD_ID = #{condition.pointExchRecordId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billId != null ">
+        and BILL_ID = #{condition.billId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paymentId != null ">
+        and PAYMENT_ID = #{condition.paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{condition.itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.realAmount != null ">
+        and REAL_AMOUNT = #{condition.realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.taxRateConfigId != null ">
+        and TAX_RATE_CONFIG_ID = #{condition.taxRateConfigId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.taxRate != null ">
+        and TAX_RATE = #{condition.taxRate, jdbcType=DOUBLE }
+      </if>
+      <if test="condition.tax != null ">
+        and TAX = #{condition.tax, jdbcType=BIGINT }
+      </if>
+      <if test="condition.price != null ">
+        and PRICE = #{condition.price, jdbcType=BIGINT }
+      </if>
+      <if test="condition.chargeMethod != null and condition.chargeMethod != ''">
+        and CHARGE_METHOD = #{condition.chargeMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.oriAcctItemId != null ">
+        and ORI_ACCT_ITEM_ID = #{condition.oriAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ifChargeOff != null ">
+        and IF_CHARGE_OFF = #{condition.ifChargeOff, jdbcType=INTEGER }
+      </if>
+      <if test="condition.mergeAcctDealTime != null ">
+        and MERGE_ACCT_DEAL_TIME = #{condition.mergeAcctDealTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createOrgId != null ">
+        and CREATE_ORG_ID = #{condition.createOrgId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

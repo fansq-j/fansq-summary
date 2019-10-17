@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.InvFormatCustomizeDtlMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.InvFormatCustomizeDtlDO">
+    <id column="INV_FORMAT_CUST_DTL_ID" jdbcType="BIGINT" property="invFormatCustDtlId"/>
+    <result column="INV_FORMAT_CUSTOMIZE_ID" jdbcType="BIGINT" property="invFormatCustomizeId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="CUST_ORDER_NBR" jdbcType="VARCHAR" property="custOrderNbr"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          INV_FORMAT_CUST_DTL_ID, 
+          INV_FORMAT_CUSTOMIZE_ID, 
+          PROD_INST_ID, 
+          CUST_ORDER_NBR, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          INV_FORMAT_CUSTOMIZE_ID, 
+          PROD_INST_ID, 
+          CUST_ORDER_NBR, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="invFormatCustDtlId != null ">
+        INV_FORMAT_CUST_DTL_ID = #{invFormatCustDtlId, jdbcType=BIGINT }
+      </if>
+      <if test="invFormatCustomizeId != null ">
+        and INV_FORMAT_CUSTOMIZE_ID = #{invFormatCustomizeId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="custOrderNbr != null and custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.InvFormatCustomizeDtlDO" resultType="java.lang.Integer">
+      select count(*) from INV_FORMAT_CUSTOMIZE_DTL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from INV_FORMAT_CUSTOMIZE_DTL
+        where 
+           INV_FORMAT_CUST_DTL_ID = #{invFormatCustDtlId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  INV_FORMAT_CUSTOMIZE_DTL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="invFormatCustDtlId">
+      insert into  INV_FORMAT_CUSTOMIZE_DTL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{invFormatCustomizeId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  INV_FORMAT_CUSTOMIZE_DTL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{invFormatCustDtlId,jdbcType=BIGINT}, 
+        #{invFormatCustomizeId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from INV_FORMAT_CUSTOMIZE_DTL  
+        where
+           INV_FORMAT_CUST_DTL_ID = #{invFormatCustDtlId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from INV_FORMAT_CUSTOMIZE_DTL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  INV_FORMAT_CUSTOMIZE_DTL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="invFormatCustomizeId != null">
+         INV_FORMAT_CUSTOMIZE_ID = #{invFormatCustomizeId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="custOrderNbr != null">
+         CUST_ORDER_NBR = #{custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           INV_FORMAT_CUST_DTL_ID = #{invFormatCustDtlId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update INV_FORMAT_CUSTOMIZE_DTL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.invFormatCustDtlId != null">
+        INV_FORMAT_CUST_DTL_ID = #{record.invFormatCustDtlId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invFormatCustomizeId != null">
+        INV_FORMAT_CUSTOMIZE_ID = #{record.invFormatCustomizeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custOrderNbr != null">
+        CUST_ORDER_NBR = #{record.custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.invFormatCustDtlId != null ">
+        INV_FORMAT_CUST_DTL_ID = #{condition.invFormatCustDtlId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.invFormatCustomizeId != null ">
+        and INV_FORMAT_CUSTOMIZE_ID = #{condition.invFormatCustomizeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custOrderNbr != null and condition.custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{condition.custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

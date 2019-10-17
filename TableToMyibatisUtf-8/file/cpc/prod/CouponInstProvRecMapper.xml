@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CouponInstProvRecMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CouponInstProvRecDO">
+    <id column="PROV_REC_ID" jdbcType="BIGINT" property="provRecId"/>
+    <result column="COUPON_INST_ID" jdbcType="BIGINT" property="couponInstId"/>
+    <result column="PROV_CHANNEL_TYPE" jdbcType="VARCHAR" property="provChannelType"/>
+    <result column="PROV_ORDER_ID" jdbcType="VARCHAR" property="provOrderId"/>
+    <result column="PROV_OBJ_TYPE" jdbcType="VARCHAR" property="provObjType"/>
+    <result column="PROV_OBJ_ID" jdbcType="VARCHAR" property="provObjId"/>
+    <result column="PROV_DESC" jdbcType="VARCHAR" property="provDesc"/>
+    <result column="PROV_DATE" jdbcType="TIMESTAMP" property="provDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PROV_REC_ID, 
+          COUPON_INST_ID, 
+          PROV_CHANNEL_TYPE, 
+          PROV_ORDER_ID, 
+          PROV_OBJ_TYPE, 
+          PROV_OBJ_ID, 
+          PROV_DESC, 
+          PROV_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          COUPON_INST_ID, 
+          PROV_CHANNEL_TYPE, 
+          PROV_ORDER_ID, 
+          PROV_OBJ_TYPE, 
+          PROV_OBJ_ID, 
+          PROV_DESC, 
+          PROV_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="provRecId != null ">
+        PROV_REC_ID = #{provRecId, jdbcType=BIGINT }
+      </if>
+      <if test="couponInstId != null ">
+        and COUPON_INST_ID = #{couponInstId, jdbcType=BIGINT }
+      </if>
+      <if test="provChannelType != null and provChannelType != ''">
+        and PROV_CHANNEL_TYPE = #{provChannelType, jdbcType=VARCHAR }
+      </if>
+      <if test="provOrderId != null and provOrderId != ''">
+        and PROV_ORDER_ID = #{provOrderId, jdbcType=VARCHAR }
+      </if>
+      <if test="provObjType != null and provObjType != ''">
+        and PROV_OBJ_TYPE = #{provObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="provObjId != null and provObjId != ''">
+        and PROV_OBJ_ID = #{provObjId, jdbcType=VARCHAR }
+      </if>
+      <if test="provDesc != null and provDesc != ''">
+        and PROV_DESC = #{provDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="provDate != null ">
+        and PROV_DATE = #{provDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CouponInstProvRecDO" resultType="java.lang.Integer">
+      select count(*) from COUPON_INST_PROV_REC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from COUPON_INST_PROV_REC
+        where 
+           PROV_REC_ID = #{provRecId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  COUPON_INST_PROV_REC 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="provRecId">
+      insert into  COUPON_INST_PROV_REC ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{couponInstId,jdbcType=BIGINT}, 
+        #{provChannelType,jdbcType=VARCHAR}, 
+        #{provOrderId,jdbcType=VARCHAR}, 
+        #{provObjType,jdbcType=VARCHAR}, 
+        #{provObjId,jdbcType=VARCHAR}, 
+        #{provDesc,jdbcType=VARCHAR}, 
+        #{provDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  COUPON_INST_PROV_REC ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{provRecId,jdbcType=BIGINT}, 
+        #{couponInstId,jdbcType=BIGINT}, 
+        #{provChannelType,jdbcType=VARCHAR}, 
+        #{provOrderId,jdbcType=VARCHAR}, 
+        #{provObjType,jdbcType=VARCHAR}, 
+        #{provObjId,jdbcType=VARCHAR}, 
+        #{provDesc,jdbcType=VARCHAR}, 
+        #{provDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from COUPON_INST_PROV_REC  
+        where
+           PROV_REC_ID = #{provRecId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from COUPON_INST_PROV_REC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  COUPON_INST_PROV_REC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="couponInstId != null">
+         COUPON_INST_ID = #{couponInstId,jdbcType=BIGINT},
+      </if>
+      <if test="provChannelType != null">
+         PROV_CHANNEL_TYPE = #{provChannelType,jdbcType=VARCHAR},
+      </if>
+      <if test="provOrderId != null">
+         PROV_ORDER_ID = #{provOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="provObjType != null">
+         PROV_OBJ_TYPE = #{provObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="provObjId != null">
+         PROV_OBJ_ID = #{provObjId,jdbcType=VARCHAR},
+      </if>
+      <if test="provDesc != null">
+         PROV_DESC = #{provDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="provDate != null">
+         PROV_DATE = #{provDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PROV_REC_ID = #{provRecId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update COUPON_INST_PROV_REC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.provRecId != null">
+        PROV_REC_ID = #{record.provRecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.couponInstId != null">
+        COUPON_INST_ID = #{record.couponInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.provChannelType != null">
+        PROV_CHANNEL_TYPE = #{record.provChannelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provOrderId != null">
+        PROV_ORDER_ID = #{record.provOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provObjType != null">
+        PROV_OBJ_TYPE = #{record.provObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provObjId != null">
+        PROV_OBJ_ID = #{record.provObjId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provDesc != null">
+        PROV_DESC = #{record.provDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provDate != null">
+        PROV_DATE = #{record.provDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.provRecId != null ">
+        PROV_REC_ID = #{condition.provRecId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.couponInstId != null ">
+        and COUPON_INST_ID = #{condition.couponInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.provChannelType != null and condition.provChannelType != ''">
+        and PROV_CHANNEL_TYPE = #{condition.provChannelType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.provOrderId != null and condition.provOrderId != ''">
+        and PROV_ORDER_ID = #{condition.provOrderId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.provObjType != null and condition.provObjType != ''">
+        and PROV_OBJ_TYPE = #{condition.provObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.provObjId != null and condition.provObjId != ''">
+        and PROV_OBJ_ID = #{condition.provObjId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.provDesc != null and condition.provDesc != ''">
+        and PROV_DESC = #{condition.provDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.provDate != null ">
+        and PROV_DATE = #{condition.provDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

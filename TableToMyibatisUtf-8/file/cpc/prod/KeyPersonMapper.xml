@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.KeyPersonMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.KeyPersonDO">
+    <id column="KEY_PERSON_ID" jdbcType="BIGINT" property="keyPersonId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="KEY_PERSON_TYPE" jdbcType="VARCHAR" property="keyPersonType"/>
+    <result column="KEY_PERSON_NAME" jdbcType="VARCHAR" property="keyPersonName"/>
+    <result column="CONTACT_PHONE" jdbcType="VARCHAR" property="contactPhone"/>
+    <result column="CONTACT_EMAIL" jdbcType="VARCHAR" property="contactEmail"/>
+    <result column="KEY_PERSON_DESC" jdbcType="VARCHAR" property="keyPersonDesc"/>
+    <result column="DEPT" jdbcType="VARCHAR" property="dept"/>
+    <result column="POSITION" jdbcType="VARCHAR" property="position"/>
+    <result column="DECISION_AFFECT" jdbcType="VARCHAR" property="decisionAffect"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          KEY_PERSON_ID, 
+          PARTY_ID, 
+          KEY_PERSON_TYPE, 
+          KEY_PERSON_NAME, 
+          CONTACT_PHONE, 
+          CONTACT_EMAIL, 
+          KEY_PERSON_DESC, 
+          DEPT, 
+          POSITION, 
+          DECISION_AFFECT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PARTY_ID, 
+          KEY_PERSON_TYPE, 
+          KEY_PERSON_NAME, 
+          CONTACT_PHONE, 
+          CONTACT_EMAIL, 
+          KEY_PERSON_DESC, 
+          DEPT, 
+          POSITION, 
+          DECISION_AFFECT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="keyPersonId != null ">
+        KEY_PERSON_ID = #{keyPersonId, jdbcType=BIGINT }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="keyPersonType != null and keyPersonType != ''">
+        and KEY_PERSON_TYPE = #{keyPersonType, jdbcType=VARCHAR }
+      </if>
+      <if test="keyPersonName != null and keyPersonName != ''">
+        and KEY_PERSON_NAME = #{keyPersonName, jdbcType=VARCHAR }
+      </if>
+      <if test="contactPhone != null and contactPhone != ''">
+        and CONTACT_PHONE = #{contactPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="contactEmail != null and contactEmail != ''">
+        and CONTACT_EMAIL = #{contactEmail, jdbcType=VARCHAR }
+      </if>
+      <if test="keyPersonDesc != null and keyPersonDesc != ''">
+        and KEY_PERSON_DESC = #{keyPersonDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="dept != null and dept != ''">
+        and DEPT = #{dept, jdbcType=VARCHAR }
+      </if>
+      <if test="position != null and position != ''">
+        and POSITION = #{position, jdbcType=VARCHAR }
+      </if>
+      <if test="decisionAffect != null and decisionAffect != ''">
+        and DECISION_AFFECT = #{decisionAffect, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.KeyPersonDO" resultType="java.lang.Integer">
+      select count(*) from KEY_PERSON
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from KEY_PERSON
+        where 
+           KEY_PERSON_ID = #{keyPersonId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  KEY_PERSON 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="keyPersonId">
+      insert into  KEY_PERSON ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{partyId,jdbcType=BIGINT}, 
+        #{keyPersonType,jdbcType=VARCHAR}, 
+        #{keyPersonName,jdbcType=VARCHAR}, 
+        #{contactPhone,jdbcType=VARCHAR}, 
+        #{contactEmail,jdbcType=VARCHAR}, 
+        #{keyPersonDesc,jdbcType=VARCHAR}, 
+        #{dept,jdbcType=VARCHAR}, 
+        #{position,jdbcType=VARCHAR}, 
+        #{decisionAffect,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  KEY_PERSON ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{keyPersonId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{keyPersonType,jdbcType=VARCHAR}, 
+        #{keyPersonName,jdbcType=VARCHAR}, 
+        #{contactPhone,jdbcType=VARCHAR}, 
+        #{contactEmail,jdbcType=VARCHAR}, 
+        #{keyPersonDesc,jdbcType=VARCHAR}, 
+        #{dept,jdbcType=VARCHAR}, 
+        #{position,jdbcType=VARCHAR}, 
+        #{decisionAffect,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from KEY_PERSON  
+        where
+           KEY_PERSON_ID = #{keyPersonId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from KEY_PERSON
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  KEY_PERSON
+    <trim prefix="set" suffixOverrides=",">
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="keyPersonType != null">
+         KEY_PERSON_TYPE = #{keyPersonType,jdbcType=VARCHAR},
+      </if>
+      <if test="keyPersonName != null">
+         KEY_PERSON_NAME = #{keyPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+         CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null">
+         CONTACT_EMAIL = #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="keyPersonDesc != null">
+         KEY_PERSON_DESC = #{keyPersonDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null">
+         DEPT = #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+         POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="decisionAffect != null">
+         DECISION_AFFECT = #{decisionAffect,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           KEY_PERSON_ID = #{keyPersonId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update KEY_PERSON
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.keyPersonId != null">
+        KEY_PERSON_ID = #{record.keyPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.keyPersonType != null">
+        KEY_PERSON_TYPE = #{record.keyPersonType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyPersonName != null">
+        KEY_PERSON_NAME = #{record.keyPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null">
+        CONTACT_PHONE = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactEmail != null">
+        CONTACT_EMAIL = #{record.contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyPersonDesc != null">
+        KEY_PERSON_DESC = #{record.keyPersonDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept != null">
+        DEPT = #{record.dept,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        POSITION = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.decisionAffect != null">
+        DECISION_AFFECT = #{record.decisionAffect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.keyPersonId != null ">
+        KEY_PERSON_ID = #{condition.keyPersonId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.keyPersonType != null and condition.keyPersonType != ''">
+        and KEY_PERSON_TYPE = #{condition.keyPersonType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.keyPersonName != null and condition.keyPersonName != ''">
+        and KEY_PERSON_NAME = #{condition.keyPersonName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactPhone != null and condition.contactPhone != ''">
+        and CONTACT_PHONE = #{condition.contactPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactEmail != null and condition.contactEmail != ''">
+        and CONTACT_EMAIL = #{condition.contactEmail, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.keyPersonDesc != null and condition.keyPersonDesc != ''">
+        and KEY_PERSON_DESC = #{condition.keyPersonDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.dept != null and condition.dept != ''">
+        and DEPT = #{condition.dept, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.position != null and condition.position != ''">
+        and POSITION = #{condition.position, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.decisionAffect != null and condition.decisionAffect != ''">
+        and DECISION_AFFECT = #{condition.decisionAffect, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

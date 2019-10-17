@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CompareMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CompareDO">
+    <result column="id1" jdbcType="VARCHAR" property="id1"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          id1
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          id1
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="id1 != null and id1 != ''">
+        id1 = #{id1, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CompareDO" resultType="java.lang.Integer">
+      select count(*) from COMPARE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  COMPARE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insert">
+      insert into  COMPARE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{id1,jdbcType=VARCHAR}
+         )
+  </insert>
+
+
+  <delete id="delete">
+      delete from COMPARE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+
+  <update id="updateBySelective">
+      update COMPARE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.id1 != null">
+        id1 = #{record.id1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.id1 != null and condition.id1 != ''">
+        id1 = #{condition.id1, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TUserMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TUserDO">
+    <id column="uid" jdbcType="INTEGER" property="uid"/>
+    <result column="uname" jdbcType="VARCHAR" property="uname"/>
+    <result column="upwd" jdbcType="VARCHAR" property="upwd"/>
+    <result column="umessage" jdbcType="VARCHAR" property="umessage"/>
+    <result column="utime" jdbcType="TIMESTAMP" property="utime"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          uid, 
+          uname, 
+          upwd, 
+          umessage, 
+          utime
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          uname, 
+          upwd, 
+          umessage, 
+          utime
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="uid != null ">
+        uid = #{uid, jdbcType=INTEGER }
+      </if>
+      <if test="uname != null and uname != ''">
+        and uname = #{uname, jdbcType=VARCHAR }
+      </if>
+      <if test="upwd != null and upwd != ''">
+        and upwd = #{upwd, jdbcType=VARCHAR }
+      </if>
+      <if test="umessage != null and umessage != ''">
+        and umessage = #{umessage, jdbcType=VARCHAR }
+      </if>
+      <if test="utime != null ">
+        and utime = #{utime, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TUserDO" resultType="java.lang.Integer">
+      select count(*) from T_USER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from T_USER
+        where 
+           uid = #{uid,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  T_USER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="uid">
+      insert into  T_USER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{uname,jdbcType=VARCHAR}, 
+        #{upwd,jdbcType=VARCHAR}, 
+        #{umessage,jdbcType=VARCHAR}, 
+        #{utime,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  T_USER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{uid,jdbcType=INTEGER}, 
+        #{uname,jdbcType=VARCHAR}, 
+        #{upwd,jdbcType=VARCHAR}, 
+        #{umessage,jdbcType=VARCHAR}, 
+        #{utime,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from T_USER  
+        where
+           uid = #{uid,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from T_USER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  T_USER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="uname != null">
+         uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="upwd != null">
+         upwd = #{upwd,jdbcType=VARCHAR},
+      </if>
+      <if test="umessage != null">
+         umessage = #{umessage,jdbcType=VARCHAR},
+      </if>
+      <if test="utime != null">
+         utime = #{utime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           uid = #{uid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update T_USER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uname != null">
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upwd != null">
+        upwd = #{record.upwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.umessage != null">
+        umessage = #{record.umessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utime != null">
+        utime = #{record.utime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.uid != null ">
+        uid = #{condition.uid, jdbcType=INTEGER }
+      </if>
+      <if test="condition.uname != null and condition.uname != ''">
+        and uname = #{condition.uname, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.upwd != null and condition.upwd != ''">
+        and upwd = #{condition.upwd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.umessage != null and condition.umessage != ''">
+        and umessage = #{condition.umessage, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.utime != null ">
+        and utime = #{condition.utime, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

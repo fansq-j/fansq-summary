@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.TariffTemplateMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.TariffTemplateDO">
+    <id column="TARIFF_TEMPLATE_ID" jdbcType="BIGINT" property="tariffTemplateId"/>
+    <result column="TEMPLATE_TYPE_ID" jdbcType="INTEGER" property="templateTypeId"/>
+    <result column="TEMPLATE_NAME" jdbcType="VARCHAR" property="templateName"/>
+    <result column="TEMPLATE_NBR" jdbcType="VARCHAR" property="templateNbr"/>
+    <result column="TEMPLATE_DESC" jdbcType="VARCHAR" property="templateDesc"/>
+    <result column="EXT_TARIFF_TEMPLATE_ID" jdbcType="BIGINT" property="extTariffTemplateId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATE_DATE" jdbcType="TIMESTAMP" property="stateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TARIFF_TEMPLATE_ID, 
+          TEMPLATE_TYPE_ID, 
+          TEMPLATE_NAME, 
+          TEMPLATE_NBR, 
+          TEMPLATE_DESC, 
+          EXT_TARIFF_TEMPLATE_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATE_DATE, 
+          UPDATE_STAFF, 
+          STATUS_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TEMPLATE_TYPE_ID, 
+          TEMPLATE_NAME, 
+          TEMPLATE_NBR, 
+          TEMPLATE_DESC, 
+          EXT_TARIFF_TEMPLATE_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATE_DATE, 
+          UPDATE_STAFF, 
+          STATUS_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="tariffTemplateId != null ">
+        TARIFF_TEMPLATE_ID = #{tariffTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="templateTypeId != null ">
+        and TEMPLATE_TYPE_ID = #{templateTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="templateName != null and templateName != ''">
+        and TEMPLATE_NAME = #{templateName, jdbcType=VARCHAR }
+      </if>
+      <if test="templateNbr != null and templateNbr != ''">
+        and TEMPLATE_NBR = #{templateNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="templateDesc != null and templateDesc != ''">
+        and TEMPLATE_DESC = #{templateDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="extTariffTemplateId != null ">
+        and EXT_TARIFF_TEMPLATE_ID = #{extTariffTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="stateDate != null ">
+        and STATE_DATE = #{stateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.TariffTemplateDO" resultType="java.lang.Integer">
+      select count(*) from TARIFF_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TARIFF_TEMPLATE
+        where 
+           TARIFF_TEMPLATE_ID = #{tariffTemplateId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TARIFF_TEMPLATE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="tariffTemplateId">
+      insert into  TARIFF_TEMPLATE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{templateTypeId,jdbcType=INTEGER}, 
+        #{templateName,jdbcType=VARCHAR}, 
+        #{templateNbr,jdbcType=VARCHAR}, 
+        #{templateDesc,jdbcType=VARCHAR}, 
+        #{extTariffTemplateId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{stateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TARIFF_TEMPLATE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{tariffTemplateId,jdbcType=BIGINT}, 
+        #{templateTypeId,jdbcType=INTEGER}, 
+        #{templateName,jdbcType=VARCHAR}, 
+        #{templateNbr,jdbcType=VARCHAR}, 
+        #{templateDesc,jdbcType=VARCHAR}, 
+        #{extTariffTemplateId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{stateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TARIFF_TEMPLATE  
+        where
+           TARIFF_TEMPLATE_ID = #{tariffTemplateId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TARIFF_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TARIFF_TEMPLATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="templateTypeId != null">
+         TEMPLATE_TYPE_ID = #{templateTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="templateName != null">
+         TEMPLATE_NAME = #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateNbr != null">
+         TEMPLATE_NBR = #{templateNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="templateDesc != null">
+         TEMPLATE_DESC = #{templateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="extTariffTemplateId != null">
+         EXT_TARIFF_TEMPLATE_ID = #{extTariffTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="stateDate != null">
+         STATE_DATE = #{stateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           TARIFF_TEMPLATE_ID = #{tariffTemplateId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TARIFF_TEMPLATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.tariffTemplateId != null">
+        TARIFF_TEMPLATE_ID = #{record.tariffTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.templateTypeId != null">
+        TEMPLATE_TYPE_ID = #{record.templateTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateName != null">
+        TEMPLATE_NAME = #{record.templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templateNbr != null">
+        TEMPLATE_NBR = #{record.templateNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templateDesc != null">
+        TEMPLATE_DESC = #{record.templateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extTariffTemplateId != null">
+        EXT_TARIFF_TEMPLATE_ID = #{record.extTariffTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.stateDate != null">
+        STATE_DATE = #{record.stateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.tariffTemplateId != null ">
+        TARIFF_TEMPLATE_ID = #{condition.tariffTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.templateTypeId != null ">
+        and TEMPLATE_TYPE_ID = #{condition.templateTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.templateName != null and condition.templateName != ''">
+        and TEMPLATE_NAME = #{condition.templateName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.templateNbr != null and condition.templateNbr != ''">
+        and TEMPLATE_NBR = #{condition.templateNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.templateDesc != null and condition.templateDesc != ''">
+        and TEMPLATE_DESC = #{condition.templateDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.extTariffTemplateId != null ">
+        and EXT_TARIFF_TEMPLATE_ID = #{condition.extTariffTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.stateDate != null ">
+        and STATE_DATE = #{condition.stateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

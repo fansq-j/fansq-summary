@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SettHighfeeMsgMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SettHighfeeMsgDO">
+    <id column="SETT_HIGHFEE_MSG_ID" jdbcType="BIGINT" property="settHighfeeMsgId"/>
+    <result column="HIGHFEE_PLAN_ID" jdbcType="INTEGER" property="highfeePlanId"/>
+    <result column="HIGHFEE_TYPE_ID" jdbcType="INTEGER" property="highfeeTypeId"/>
+    <result column="DEST_EVENT_TYPE_ID" jdbcType="INTEGER" property="destEventTypeId"/>
+    <result column="HIGHFEE_LEVEL_ID" jdbcType="INTEGER" property="highfeeLevelId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="OBJ_TYPE" jdbcType="INTEGER" property="objType"/>
+    <result column="OBJ_ID" jdbcType="INTEGER" property="objId"/>
+    <result column="CHARGE" jdbcType="INTEGER" property="charge"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SETT_HIGHFEE_MSG_ID, 
+          HIGHFEE_PLAN_ID, 
+          HIGHFEE_TYPE_ID, 
+          DEST_EVENT_TYPE_ID, 
+          HIGHFEE_LEVEL_ID, 
+          BILLING_CYCLE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          CHARGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          HIGHFEE_PLAN_ID, 
+          HIGHFEE_TYPE_ID, 
+          DEST_EVENT_TYPE_ID, 
+          HIGHFEE_LEVEL_ID, 
+          BILLING_CYCLE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          CHARGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="settHighfeeMsgId != null ">
+        SETT_HIGHFEE_MSG_ID = #{settHighfeeMsgId, jdbcType=BIGINT }
+      </if>
+      <if test="highfeePlanId != null ">
+        and HIGHFEE_PLAN_ID = #{highfeePlanId, jdbcType=INTEGER }
+      </if>
+      <if test="highfeeTypeId != null ">
+        and HIGHFEE_TYPE_ID = #{highfeeTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="destEventTypeId != null ">
+        and DEST_EVENT_TYPE_ID = #{destEventTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="highfeeLevelId != null ">
+        and HIGHFEE_LEVEL_ID = #{highfeeLevelId, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null ">
+        and OBJ_TYPE = #{objType, jdbcType=INTEGER }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=INTEGER }
+      </if>
+      <if test="charge != null ">
+        and CHARGE = #{charge, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SettHighfeeMsgDO" resultType="java.lang.Integer">
+      select count(*) from SETT_HIGHFEE_MSG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SETT_HIGHFEE_MSG
+        where 
+           SETT_HIGHFEE_MSG_ID = #{settHighfeeMsgId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SETT_HIGHFEE_MSG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="settHighfeeMsgId">
+      insert into  SETT_HIGHFEE_MSG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{highfeePlanId,jdbcType=INTEGER}, 
+        #{highfeeTypeId,jdbcType=INTEGER}, 
+        #{destEventTypeId,jdbcType=INTEGER}, 
+        #{highfeeLevelId,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{charge,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SETT_HIGHFEE_MSG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{settHighfeeMsgId,jdbcType=BIGINT}, 
+        #{highfeePlanId,jdbcType=INTEGER}, 
+        #{highfeeTypeId,jdbcType=INTEGER}, 
+        #{destEventTypeId,jdbcType=INTEGER}, 
+        #{highfeeLevelId,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{charge,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SETT_HIGHFEE_MSG  
+        where
+           SETT_HIGHFEE_MSG_ID = #{settHighfeeMsgId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SETT_HIGHFEE_MSG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SETT_HIGHFEE_MSG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="highfeePlanId != null">
+         HIGHFEE_PLAN_ID = #{highfeePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="highfeeTypeId != null">
+         HIGHFEE_TYPE_ID = #{highfeeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="destEventTypeId != null">
+         DEST_EVENT_TYPE_ID = #{destEventTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="highfeeLevelId != null">
+         HIGHFEE_LEVEL_ID = #{highfeeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=INTEGER},
+      </if>
+      <if test="charge != null">
+         CHARGE = #{charge,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           SETT_HIGHFEE_MSG_ID = #{settHighfeeMsgId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SETT_HIGHFEE_MSG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.settHighfeeMsgId != null">
+        SETT_HIGHFEE_MSG_ID = #{record.settHighfeeMsgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.highfeePlanId != null">
+        HIGHFEE_PLAN_ID = #{record.highfeePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.highfeeTypeId != null">
+        HIGHFEE_TYPE_ID = #{record.highfeeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.destEventTypeId != null">
+        DEST_EVENT_TYPE_ID = #{record.destEventTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.highfeeLevelId != null">
+        HIGHFEE_LEVEL_ID = #{record.highfeeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=INTEGER},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=INTEGER},
+      </if>
+      <if test="record.charge != null">
+        CHARGE = #{record.charge,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.settHighfeeMsgId != null ">
+        SETT_HIGHFEE_MSG_ID = #{condition.settHighfeeMsgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.highfeePlanId != null ">
+        and HIGHFEE_PLAN_ID = #{condition.highfeePlanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.highfeeTypeId != null ">
+        and HIGHFEE_TYPE_ID = #{condition.highfeeTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.destEventTypeId != null ">
+        and DEST_EVENT_TYPE_ID = #{condition.destEventTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.highfeeLevelId != null ">
+        and HIGHFEE_LEVEL_ID = #{condition.highfeeLevelId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null ">
+        and OBJ_TYPE = #{condition.objType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.charge != null ">
+        and CHARGE = #{condition.charge, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

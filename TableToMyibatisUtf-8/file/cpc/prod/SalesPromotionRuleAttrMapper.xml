@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SalesPromotionRuleAttrMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SalesPromotionRuleAttrDO">
+    <id column="SALES_PROMOTION_RULE_ATTR_ID" jdbcType="INTEGER" property="salesPromotionRuleAttrId"/>
+    <result column="SALES_PROMOTION_RULE_ID" jdbcType="INTEGER" property="salesPromotionRuleId"/>
+    <result column="RULE_ATTR_VALUE" jdbcType="VARCHAR" property="ruleAttrValue"/>
+    <result column="RULE_ATTR_ID" jdbcType="VARCHAR" property="ruleAttrId"/>
+    <result column="RULE_ATTR_VALUE_NAME" jdbcType="VARCHAR" property="ruleAttrValueName"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SALES_PROMOTION_RULE_ATTR_ID, 
+          SALES_PROMOTION_RULE_ID, 
+          RULE_ATTR_VALUE, 
+          RULE_ATTR_ID, 
+          RULE_ATTR_VALUE_NAME
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SALES_PROMOTION_RULE_ID, 
+          RULE_ATTR_VALUE, 
+          RULE_ATTR_ID, 
+          RULE_ATTR_VALUE_NAME
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="salesPromotionRuleAttrId != null ">
+        SALES_PROMOTION_RULE_ATTR_ID = #{salesPromotionRuleAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="salesPromotionRuleId != null ">
+        and SALES_PROMOTION_RULE_ID = #{salesPromotionRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="ruleAttrValue != null and ruleAttrValue != ''">
+        and RULE_ATTR_VALUE = #{ruleAttrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="ruleAttrId != null and ruleAttrId != ''">
+        and RULE_ATTR_ID = #{ruleAttrId, jdbcType=VARCHAR }
+      </if>
+      <if test="ruleAttrValueName != null and ruleAttrValueName != ''">
+        and RULE_ATTR_VALUE_NAME = #{ruleAttrValueName, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SalesPromotionRuleAttrDO" resultType="java.lang.Integer">
+      select count(*) from SALES_PROMOTION_RULE_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SALES_PROMOTION_RULE_ATTR
+        where 
+           SALES_PROMOTION_RULE_ATTR_ID = #{salesPromotionRuleAttrId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SALES_PROMOTION_RULE_ATTR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="salesPromotionRuleAttrId">
+      insert into  SALES_PROMOTION_RULE_ATTR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{salesPromotionRuleId,jdbcType=INTEGER}, 
+        #{ruleAttrValue,jdbcType=VARCHAR}, 
+        #{ruleAttrId,jdbcType=VARCHAR}, 
+        #{ruleAttrValueName,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SALES_PROMOTION_RULE_ATTR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{salesPromotionRuleAttrId,jdbcType=INTEGER}, 
+        #{salesPromotionRuleId,jdbcType=INTEGER}, 
+        #{ruleAttrValue,jdbcType=VARCHAR}, 
+        #{ruleAttrId,jdbcType=VARCHAR}, 
+        #{ruleAttrValueName,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SALES_PROMOTION_RULE_ATTR  
+        where
+           SALES_PROMOTION_RULE_ATTR_ID = #{salesPromotionRuleAttrId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from SALES_PROMOTION_RULE_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SALES_PROMOTION_RULE_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="salesPromotionRuleId != null">
+         SALES_PROMOTION_RULE_ID = #{salesPromotionRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="ruleAttrValue != null">
+         RULE_ATTR_VALUE = #{ruleAttrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleAttrId != null">
+         RULE_ATTR_ID = #{ruleAttrId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleAttrValueName != null">
+         RULE_ATTR_VALUE_NAME = #{ruleAttrValueName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SALES_PROMOTION_RULE_ATTR_ID = #{salesPromotionRuleAttrId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update SALES_PROMOTION_RULE_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.salesPromotionRuleAttrId != null">
+        SALES_PROMOTION_RULE_ATTR_ID = #{record.salesPromotionRuleAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesPromotionRuleId != null">
+        SALES_PROMOTION_RULE_ID = #{record.salesPromotionRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleAttrValue != null">
+        RULE_ATTR_VALUE = #{record.ruleAttrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleAttrId != null">
+        RULE_ATTR_ID = #{record.ruleAttrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleAttrValueName != null">
+        RULE_ATTR_VALUE_NAME = #{record.ruleAttrValueName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.salesPromotionRuleAttrId != null ">
+        SALES_PROMOTION_RULE_ATTR_ID = #{condition.salesPromotionRuleAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.salesPromotionRuleId != null ">
+        and SALES_PROMOTION_RULE_ID = #{condition.salesPromotionRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ruleAttrValue != null and condition.ruleAttrValue != ''">
+        and RULE_ATTR_VALUE = #{condition.ruleAttrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ruleAttrId != null and condition.ruleAttrId != ''">
+        and RULE_ATTR_ID = #{condition.ruleAttrId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ruleAttrValueName != null and condition.ruleAttrValueName != ''">
+        and RULE_ATTR_VALUE_NAME = #{condition.ruleAttrValueName, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

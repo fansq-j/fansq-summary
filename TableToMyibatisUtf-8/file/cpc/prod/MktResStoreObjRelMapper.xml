@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktResStoreObjRelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktResStoreObjRelDO">
+    <id column="MKT_RES_STORE_OBJ_REL_ID" jdbcType="BIGINT" property="mktResStoreObjRelId"/>
+    <result column="MKT_RES_STORE_ID" jdbcType="INTEGER" property="mktResStoreId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="IS_DEFAULT" jdbcType="INTEGER" property="isDefault"/>
+    <result column="USE_MKT_TYPE" jdbcType="VARCHAR" property="useMktType"/>
+    <result column="USE_MKT_ID" jdbcType="INTEGER" property="useMktId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MKT_RES_STORE_OBJ_REL_ID, 
+          MKT_RES_STORE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          IS_DEFAULT, 
+          USE_MKT_TYPE, 
+          USE_MKT_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MKT_RES_STORE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          IS_DEFAULT, 
+          USE_MKT_TYPE, 
+          USE_MKT_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="mktResStoreObjRelId != null ">
+        MKT_RES_STORE_OBJ_REL_ID = #{mktResStoreObjRelId, jdbcType=BIGINT }
+      </if>
+      <if test="mktResStoreId != null ">
+        and MKT_RES_STORE_ID = #{mktResStoreId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="isDefault != null ">
+        and IS_DEFAULT = #{isDefault, jdbcType=INTEGER }
+      </if>
+      <if test="useMktType != null and useMktType != ''">
+        and USE_MKT_TYPE = #{useMktType, jdbcType=VARCHAR }
+      </if>
+      <if test="useMktId != null ">
+        and USE_MKT_ID = #{useMktId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktResStoreObjRelDO" resultType="java.lang.Integer">
+      select count(*) from MKT_RES_STORE_OBJ_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_RES_STORE_OBJ_REL
+        where 
+           MKT_RES_STORE_OBJ_REL_ID = #{mktResStoreObjRelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_RES_STORE_OBJ_REL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="mktResStoreObjRelId">
+      insert into  MKT_RES_STORE_OBJ_REL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{mktResStoreId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{isDefault,jdbcType=INTEGER}, 
+        #{useMktType,jdbcType=VARCHAR}, 
+        #{useMktId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_RES_STORE_OBJ_REL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{mktResStoreObjRelId,jdbcType=BIGINT}, 
+        #{mktResStoreId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{isDefault,jdbcType=INTEGER}, 
+        #{useMktType,jdbcType=VARCHAR}, 
+        #{useMktId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_RES_STORE_OBJ_REL  
+        where
+           MKT_RES_STORE_OBJ_REL_ID = #{mktResStoreObjRelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_RES_STORE_OBJ_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_RES_STORE_OBJ_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="mktResStoreId != null">
+         MKT_RES_STORE_ID = #{mktResStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+         IS_DEFAULT = #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="useMktType != null">
+         USE_MKT_TYPE = #{useMktType,jdbcType=VARCHAR},
+      </if>
+      <if test="useMktId != null">
+         USE_MKT_ID = #{useMktId,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           MKT_RES_STORE_OBJ_REL_ID = #{mktResStoreObjRelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_RES_STORE_OBJ_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.mktResStoreObjRelId != null">
+        MKT_RES_STORE_OBJ_REL_ID = #{record.mktResStoreObjRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mktResStoreId != null">
+        MKT_RES_STORE_ID = #{record.mktResStoreId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDefault != null">
+        IS_DEFAULT = #{record.isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="record.useMktType != null">
+        USE_MKT_TYPE = #{record.useMktType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useMktId != null">
+        USE_MKT_ID = #{record.useMktId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.mktResStoreObjRelId != null ">
+        MKT_RES_STORE_OBJ_REL_ID = #{condition.mktResStoreObjRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.mktResStoreId != null ">
+        and MKT_RES_STORE_ID = #{condition.mktResStoreId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isDefault != null ">
+        and IS_DEFAULT = #{condition.isDefault, jdbcType=INTEGER }
+      </if>
+      <if test="condition.useMktType != null and condition.useMktType != ''">
+        and USE_MKT_TYPE = #{condition.useMktType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.useMktId != null ">
+        and USE_MKT_ID = #{condition.useMktId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

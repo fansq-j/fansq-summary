@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktQuestionMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktQuestionDO">
+    <id column="QUESTION_ID" jdbcType="BIGINT" property="questionId"/>
+    <result column="QUESTION_NAME" jdbcType="VARCHAR" property="questionName"/>
+    <result column="QUESTION_TYPE" jdbcType="VARCHAR" property="questionType"/>
+    <result column="QUESTION_DESC" jdbcType="VARCHAR" property="questionDesc"/>
+    <result column="ANSWER_TYPE" jdbcType="VARCHAR" property="answerType"/>
+    <result column="DEFAULT_ANSWER" jdbcType="VARCHAR" property="defaultAnswer"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          QUESTION_ID, 
+          QUESTION_NAME, 
+          QUESTION_TYPE, 
+          QUESTION_DESC, 
+          ANSWER_TYPE, 
+          DEFAULT_ANSWER, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          QUESTION_NAME, 
+          QUESTION_TYPE, 
+          QUESTION_DESC, 
+          ANSWER_TYPE, 
+          DEFAULT_ANSWER, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="questionId != null ">
+        QUESTION_ID = #{questionId, jdbcType=BIGINT }
+      </if>
+      <if test="questionName != null and questionName != ''">
+        and QUESTION_NAME = #{questionName, jdbcType=VARCHAR }
+      </if>
+      <if test="questionType != null and questionType != ''">
+        and QUESTION_TYPE = #{questionType, jdbcType=VARCHAR }
+      </if>
+      <if test="questionDesc != null and questionDesc != ''">
+        and QUESTION_DESC = #{questionDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="answerType != null and answerType != ''">
+        and ANSWER_TYPE = #{answerType, jdbcType=VARCHAR }
+      </if>
+      <if test="defaultAnswer != null and defaultAnswer != ''">
+        and DEFAULT_ANSWER = #{defaultAnswer, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktQuestionDO" resultType="java.lang.Integer">
+      select count(*) from MKT_QUESTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_QUESTION
+        where 
+           QUESTION_ID = #{questionId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_QUESTION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="questionId">
+      insert into  MKT_QUESTION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{questionName,jdbcType=VARCHAR}, 
+        #{questionType,jdbcType=VARCHAR}, 
+        #{questionDesc,jdbcType=VARCHAR}, 
+        #{answerType,jdbcType=VARCHAR}, 
+        #{defaultAnswer,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_QUESTION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{questionId,jdbcType=BIGINT}, 
+        #{questionName,jdbcType=VARCHAR}, 
+        #{questionType,jdbcType=VARCHAR}, 
+        #{questionDesc,jdbcType=VARCHAR}, 
+        #{answerType,jdbcType=VARCHAR}, 
+        #{defaultAnswer,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_QUESTION  
+        where
+           QUESTION_ID = #{questionId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_QUESTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_QUESTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="questionName != null">
+         QUESTION_NAME = #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null">
+         QUESTION_TYPE = #{questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="questionDesc != null">
+         QUESTION_DESC = #{questionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="answerType != null">
+         ANSWER_TYPE = #{answerType,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultAnswer != null">
+         DEFAULT_ANSWER = #{defaultAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           QUESTION_ID = #{questionId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_QUESTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.questionId != null">
+        QUESTION_ID = #{record.questionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.questionName != null">
+        QUESTION_NAME = #{record.questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionType != null">
+        QUESTION_TYPE = #{record.questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionDesc != null">
+        QUESTION_DESC = #{record.questionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerType != null">
+        ANSWER_TYPE = #{record.answerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultAnswer != null">
+        DEFAULT_ANSWER = #{record.defaultAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.questionId != null ">
+        QUESTION_ID = #{condition.questionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.questionName != null and condition.questionName != ''">
+        and QUESTION_NAME = #{condition.questionName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.questionType != null and condition.questionType != ''">
+        and QUESTION_TYPE = #{condition.questionType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.questionDesc != null and condition.questionDesc != ''">
+        and QUESTION_DESC = #{condition.questionDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.answerType != null and condition.answerType != ''">
+        and ANSWER_TYPE = #{condition.answerType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.defaultAnswer != null and condition.defaultAnswer != ''">
+        and DEFAULT_ANSWER = #{condition.defaultAnswer, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

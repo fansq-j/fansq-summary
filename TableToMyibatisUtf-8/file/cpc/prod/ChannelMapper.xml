@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ChannelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ChannelDO">
+    <id column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="CHANNEL_NBR" jdbcType="VARCHAR" property="channelNbr"/>
+    <result column="CHANNEL_NAME" jdbcType="VARCHAR" property="channelName"/>
+    <result column="CHANNEL_CLASS" jdbcType="VARCHAR" property="channelClass"/>
+    <result column="SALES_FIRST_TYPE" jdbcType="VARCHAR" property="salesFirstType"/>
+    <result column="SALES_SECOND_TYPE" jdbcType="VARCHAR" property="salesSecondType"/>
+    <result column="SALES_THIRD_TYPE" jdbcType="VARCHAR" property="salesThirdType"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="CHANNEL_DESC" jdbcType="VARCHAR" property="channelDesc"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ORG_ID, 
+          CHANNEL_NBR, 
+          CHANNEL_NAME, 
+          CHANNEL_CLASS, 
+          SALES_FIRST_TYPE, 
+          SALES_SECOND_TYPE, 
+          SALES_THIRD_TYPE, 
+          PARTY_ID, 
+          CHANNEL_DESC, 
+          REGION_ID, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CHANNEL_NBR, 
+          CHANNEL_NAME, 
+          CHANNEL_CLASS, 
+          SALES_FIRST_TYPE, 
+          SALES_SECOND_TYPE, 
+          SALES_THIRD_TYPE, 
+          PARTY_ID, 
+          CHANNEL_DESC, 
+          REGION_ID, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="orgId != null ">
+        ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="channelNbr != null and channelNbr != ''">
+        and CHANNEL_NBR = #{channelNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="channelName != null and channelName != ''">
+        and CHANNEL_NAME = #{channelName, jdbcType=VARCHAR }
+      </if>
+      <if test="channelClass != null and channelClass != ''">
+        and CHANNEL_CLASS = #{channelClass, jdbcType=VARCHAR }
+      </if>
+      <if test="salesFirstType != null and salesFirstType != ''">
+        and SALES_FIRST_TYPE = #{salesFirstType, jdbcType=VARCHAR }
+      </if>
+      <if test="salesSecondType != null and salesSecondType != ''">
+        and SALES_SECOND_TYPE = #{salesSecondType, jdbcType=VARCHAR }
+      </if>
+      <if test="salesThirdType != null and salesThirdType != ''">
+        and SALES_THIRD_TYPE = #{salesThirdType, jdbcType=VARCHAR }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="channelDesc != null and channelDesc != ''">
+        and CHANNEL_DESC = #{channelDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ChannelDO" resultType="java.lang.Integer">
+      select count(*) from CHANNEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CHANNEL
+        where 
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CHANNEL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="orgId">
+      insert into  CHANNEL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{channelNbr,jdbcType=VARCHAR}, 
+        #{channelName,jdbcType=VARCHAR}, 
+        #{channelClass,jdbcType=VARCHAR}, 
+        #{salesFirstType,jdbcType=VARCHAR}, 
+        #{salesSecondType,jdbcType=VARCHAR}, 
+        #{salesThirdType,jdbcType=VARCHAR}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{channelDesc,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CHANNEL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{orgId,jdbcType=BIGINT}, 
+        #{channelNbr,jdbcType=VARCHAR}, 
+        #{channelName,jdbcType=VARCHAR}, 
+        #{channelClass,jdbcType=VARCHAR}, 
+        #{salesFirstType,jdbcType=VARCHAR}, 
+        #{salesSecondType,jdbcType=VARCHAR}, 
+        #{salesThirdType,jdbcType=VARCHAR}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{channelDesc,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CHANNEL  
+        where
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CHANNEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CHANNEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="channelNbr != null">
+         CHANNEL_NBR = #{channelNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null">
+         CHANNEL_NAME = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelClass != null">
+         CHANNEL_CLASS = #{channelClass,jdbcType=VARCHAR},
+      </if>
+      <if test="salesFirstType != null">
+         SALES_FIRST_TYPE = #{salesFirstType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesSecondType != null">
+         SALES_SECOND_TYPE = #{salesSecondType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesThirdType != null">
+         SALES_THIRD_TYPE = #{salesThirdType,jdbcType=VARCHAR},
+      </if>
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="channelDesc != null">
+         CHANNEL_DESC = #{channelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CHANNEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelNbr != null">
+        CHANNEL_NBR = #{record.channelNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelName != null">
+        CHANNEL_NAME = #{record.channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelClass != null">
+        CHANNEL_CLASS = #{record.channelClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesFirstType != null">
+        SALES_FIRST_TYPE = #{record.salesFirstType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesSecondType != null">
+        SALES_SECOND_TYPE = #{record.salesSecondType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesThirdType != null">
+        SALES_THIRD_TYPE = #{record.salesThirdType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelDesc != null">
+        CHANNEL_DESC = #{record.channelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.orgId != null ">
+        ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.channelNbr != null and condition.channelNbr != ''">
+        and CHANNEL_NBR = #{condition.channelNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.channelName != null and condition.channelName != ''">
+        and CHANNEL_NAME = #{condition.channelName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.channelClass != null and condition.channelClass != ''">
+        and CHANNEL_CLASS = #{condition.channelClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.salesFirstType != null and condition.salesFirstType != ''">
+        and SALES_FIRST_TYPE = #{condition.salesFirstType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.salesSecondType != null and condition.salesSecondType != ''">
+        and SALES_SECOND_TYPE = #{condition.salesSecondType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.salesThirdType != null and condition.salesThirdType != ''">
+        and SALES_THIRD_TYPE = #{condition.salesThirdType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.channelDesc != null and condition.channelDesc != ''">
+        and CHANNEL_DESC = #{condition.channelDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

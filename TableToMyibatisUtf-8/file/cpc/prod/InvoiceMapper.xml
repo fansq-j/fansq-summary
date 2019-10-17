@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.InvoiceMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.InvoiceDO">
+    <id column="INVOICE_ID" jdbcType="BIGINT" property="invoiceId"/>
+    <result column="VAT_INVOICE_ID" jdbcType="BIGINT" property="vatInvoiceId"/>
+    <result column="OPER_ID" jdbcType="BIGINT" property="operId"/>
+    <result column="INVOICE_NUM" jdbcType="VARCHAR" property="invoiceNum"/>
+    <result column="INVOICE_CODE" jdbcType="VARCHAR" property="invoiceCode"/>
+    <result column="INVOICE_AMOUNT_TYPE" jdbcType="INTEGER" property="invoiceAmountType"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="COUNT" jdbcType="INTEGER" property="count"/>
+    <result column="PRINT_COUNT" jdbcType="INTEGER" property="printCount"/>
+    <result column="INV_FORMAT_CUSTOMIZE_ID" jdbcType="BIGINT" property="invFormatCustomizeId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PRN_DATE" jdbcType="TIMESTAMP" property="prnDate"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="SALE_ORDER_NBR" jdbcType="VARCHAR" property="saleOrderNbr"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="FEE_TYPE" jdbcType="VARCHAR" property="feeType"/>
+    <result column="PDF_URL" jdbcType="VARCHAR" property="pdfUrl"/>
+    <result column="SALE_COMPANY_ID" jdbcType="VARCHAR" property="saleCompanyId"/>
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          INVOICE_ID, 
+          VAT_INVOICE_ID, 
+          OPER_ID, 
+          INVOICE_NUM, 
+          INVOICE_CODE, 
+          INVOICE_AMOUNT_TYPE, 
+          AMOUNT, 
+          COUNT, 
+          PRINT_COUNT, 
+          INV_FORMAT_CUSTOMIZE_ID, 
+          BILLING_CYCLE_ID, 
+          PROD_INST_ID, 
+          ACCT_ID, 
+          PRN_DATE, 
+          REGION_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          SALE_ORDER_NBR, 
+          ORDER_ITEM_ID, 
+          FEE_TYPE, 
+          PDF_URL, 
+          SALE_COMPANY_ID, 
+          CUST_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          VAT_INVOICE_ID, 
+          OPER_ID, 
+          INVOICE_NUM, 
+          INVOICE_CODE, 
+          INVOICE_AMOUNT_TYPE, 
+          AMOUNT, 
+          COUNT, 
+          PRINT_COUNT, 
+          INV_FORMAT_CUSTOMIZE_ID, 
+          BILLING_CYCLE_ID, 
+          PROD_INST_ID, 
+          ACCT_ID, 
+          PRN_DATE, 
+          REGION_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          SALE_ORDER_NBR, 
+          ORDER_ITEM_ID, 
+          FEE_TYPE, 
+          PDF_URL, 
+          SALE_COMPANY_ID, 
+          CUST_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="invoiceId != null ">
+        INVOICE_ID = #{invoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="vatInvoiceId != null ">
+        and VAT_INVOICE_ID = #{vatInvoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="operId != null ">
+        and OPER_ID = #{operId, jdbcType=BIGINT }
+      </if>
+      <if test="invoiceNum != null and invoiceNum != ''">
+        and INVOICE_NUM = #{invoiceNum, jdbcType=VARCHAR }
+      </if>
+      <if test="invoiceCode != null and invoiceCode != ''">
+        and INVOICE_CODE = #{invoiceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="invoiceAmountType != null ">
+        and INVOICE_AMOUNT_TYPE = #{invoiceAmountType, jdbcType=INTEGER }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="count != null ">
+        and COUNT = #{count, jdbcType=INTEGER }
+      </if>
+      <if test="printCount != null ">
+        and PRINT_COUNT = #{printCount, jdbcType=INTEGER }
+      </if>
+      <if test="invFormatCustomizeId != null ">
+        and INV_FORMAT_CUSTOMIZE_ID = #{invFormatCustomizeId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="prnDate != null ">
+        and PRN_DATE = #{prnDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="saleOrderNbr != null and saleOrderNbr != ''">
+        and SALE_ORDER_NBR = #{saleOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="feeType != null and feeType != ''">
+        and FEE_TYPE = #{feeType, jdbcType=VARCHAR }
+      </if>
+      <if test="pdfUrl != null and pdfUrl != ''">
+        and PDF_URL = #{pdfUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="saleCompanyId != null and saleCompanyId != ''">
+        and SALE_COMPANY_ID = #{saleCompanyId, jdbcType=VARCHAR }
+      </if>
+      <if test="custId != null ">
+        and CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.InvoiceDO" resultType="java.lang.Integer">
+      select count(*) from INVOICE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from INVOICE
+        where 
+           INVOICE_ID = #{invoiceId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  INVOICE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="invoiceId">
+      insert into  INVOICE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{vatInvoiceId,jdbcType=BIGINT}, 
+        #{operId,jdbcType=BIGINT}, 
+        #{invoiceNum,jdbcType=VARCHAR}, 
+        #{invoiceCode,jdbcType=VARCHAR}, 
+        #{invoiceAmountType,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{count,jdbcType=INTEGER}, 
+        #{printCount,jdbcType=INTEGER}, 
+        #{invFormatCustomizeId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prnDate,jdbcType=TIMESTAMP}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{saleOrderNbr,jdbcType=VARCHAR}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{feeType,jdbcType=VARCHAR}, 
+        #{pdfUrl,jdbcType=VARCHAR}, 
+        #{saleCompanyId,jdbcType=VARCHAR}, 
+        #{custId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  INVOICE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{invoiceId,jdbcType=BIGINT}, 
+        #{vatInvoiceId,jdbcType=BIGINT}, 
+        #{operId,jdbcType=BIGINT}, 
+        #{invoiceNum,jdbcType=VARCHAR}, 
+        #{invoiceCode,jdbcType=VARCHAR}, 
+        #{invoiceAmountType,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{count,jdbcType=INTEGER}, 
+        #{printCount,jdbcType=INTEGER}, 
+        #{invFormatCustomizeId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prnDate,jdbcType=TIMESTAMP}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{saleOrderNbr,jdbcType=VARCHAR}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{feeType,jdbcType=VARCHAR}, 
+        #{pdfUrl,jdbcType=VARCHAR}, 
+        #{saleCompanyId,jdbcType=VARCHAR}, 
+        #{custId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from INVOICE  
+        where
+           INVOICE_ID = #{invoiceId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from INVOICE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  INVOICE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="vatInvoiceId != null">
+         VAT_INVOICE_ID = #{vatInvoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="operId != null">
+         OPER_ID = #{operId,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceNum != null">
+         INVOICE_NUM = #{invoiceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceCode != null">
+         INVOICE_CODE = #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceAmountType != null">
+         INVOICE_AMOUNT_TYPE = #{invoiceAmountType,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="count != null">
+         COUNT = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="printCount != null">
+         PRINT_COUNT = #{printCount,jdbcType=INTEGER},
+      </if>
+      <if test="invFormatCustomizeId != null">
+         INV_FORMAT_CUSTOMIZE_ID = #{invFormatCustomizeId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="prnDate != null">
+         PRN_DATE = #{prnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleOrderNbr != null">
+         SALE_ORDER_NBR = #{saleOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="feeType != null">
+         FEE_TYPE = #{feeType,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfUrl != null">
+         PDF_URL = #{pdfUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCompanyId != null">
+         SALE_COMPANY_ID = #{saleCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           INVOICE_ID = #{invoiceId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update INVOICE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.invoiceId != null">
+        INVOICE_ID = #{record.invoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.vatInvoiceId != null">
+        VAT_INVOICE_ID = #{record.vatInvoiceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operId != null">
+        OPER_ID = #{record.operId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoiceNum != null">
+        INVOICE_NUM = #{record.invoiceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceCode != null">
+        INVOICE_CODE = #{record.invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceAmountType != null">
+        INVOICE_AMOUNT_TYPE = #{record.invoiceAmountType,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.count != null">
+        COUNT = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.printCount != null">
+        PRINT_COUNT = #{record.printCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.invFormatCustomizeId != null">
+        INV_FORMAT_CUSTOMIZE_ID = #{record.invFormatCustomizeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prnDate != null">
+        PRN_DATE = #{record.prnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.saleOrderNbr != null">
+        SALE_ORDER_NBR = #{record.saleOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.feeType != null">
+        FEE_TYPE = #{record.feeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdfUrl != null">
+        PDF_URL = #{record.pdfUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleCompanyId != null">
+        SALE_COMPANY_ID = #{record.saleCompanyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.invoiceId != null ">
+        INVOICE_ID = #{condition.invoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.vatInvoiceId != null ">
+        and VAT_INVOICE_ID = #{condition.vatInvoiceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operId != null ">
+        and OPER_ID = #{condition.operId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.invoiceNum != null and condition.invoiceNum != ''">
+        and INVOICE_NUM = #{condition.invoiceNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.invoiceCode != null and condition.invoiceCode != ''">
+        and INVOICE_CODE = #{condition.invoiceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.invoiceAmountType != null ">
+        and INVOICE_AMOUNT_TYPE = #{condition.invoiceAmountType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.count != null ">
+        and COUNT = #{condition.count, jdbcType=INTEGER }
+      </if>
+      <if test="condition.printCount != null ">
+        and PRINT_COUNT = #{condition.printCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.invFormatCustomizeId != null ">
+        and INV_FORMAT_CUSTOMIZE_ID = #{condition.invFormatCustomizeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prnDate != null ">
+        and PRN_DATE = #{condition.prnDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.saleOrderNbr != null and condition.saleOrderNbr != ''">
+        and SALE_ORDER_NBR = #{condition.saleOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.feeType != null and condition.feeType != ''">
+        and FEE_TYPE = #{condition.feeType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pdfUrl != null and condition.pdfUrl != ''">
+        and PDF_URL = #{condition.pdfUrl, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.saleCompanyId != null and condition.saleCompanyId != ''">
+        and SALE_COMPANY_ID = #{condition.saleCompanyId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custId != null ">
+        and CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

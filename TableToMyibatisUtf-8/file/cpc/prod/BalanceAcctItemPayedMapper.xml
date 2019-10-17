@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BalanceAcctItemPayedMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BalanceAcctItemPayedDO">
+    <id column="OPER_PAYOUT_ID" jdbcType="BIGINT" property="operPayoutId"/>
+    <id column="ACCT_ITEM_ID" jdbcType="BIGINT" property="acctItemId"/>
+    <result column="BALANCE" jdbcType="BIGINT" property="balance"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          OPER_PAYOUT_ID, 
+          ACCT_ITEM_ID, 
+          BALANCE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BALANCE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="operPayoutId != null ">
+        OPER_PAYOUT_ID = #{operPayoutId, jdbcType=BIGINT }
+      </if>
+      <if test="acctItemId != null ">
+        and ACCT_ITEM_ID = #{acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="balance != null ">
+        and BALANCE = #{balance, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BalanceAcctItemPayedDO" resultType="java.lang.Integer">
+      select count(*) from BALANCE_ACCT_ITEM_PAYED
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BALANCE_ACCT_ITEM_PAYED
+        where 
+           OPER_PAYOUT_ID = #{operPayoutId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BALANCE_ACCT_ITEM_PAYED 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="operPayoutId">
+      insert into  BALANCE_ACCT_ITEM_PAYED ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{balance,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BALANCE_ACCT_ITEM_PAYED ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{operPayoutId,jdbcType=BIGINT}, 
+        #{acctItemId,jdbcType=BIGINT}, 
+        #{balance,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BALANCE_ACCT_ITEM_PAYED  
+        where
+           OPER_PAYOUT_ID = #{operPayoutId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BALANCE_ACCT_ITEM_PAYED
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BALANCE_ACCT_ITEM_PAYED
+    <trim prefix="set" suffixOverrides=",">
+      <if test="balance != null">
+         BALANCE = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           OPER_PAYOUT_ID = #{operPayoutId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BALANCE_ACCT_ITEM_PAYED
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.operPayoutId != null">
+        OPER_PAYOUT_ID = #{record.operPayoutId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctItemId != null">
+        ACCT_ITEM_ID = #{record.acctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.balance != null">
+        BALANCE = #{record.balance,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.operPayoutId != null ">
+        OPER_PAYOUT_ID = #{condition.operPayoutId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctItemId != null ">
+        and ACCT_ITEM_ID = #{condition.acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.balance != null ">
+        and BALANCE = #{condition.balance, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

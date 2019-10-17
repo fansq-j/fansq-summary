@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TemplateLabelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TemplateLabelDO">
+    <id column="TEMPLATE_LABEL_ID" jdbcType="INTEGER" property="templateLabelId"/>
+    <result column="LABEL_TYPE_ID" jdbcType="INTEGER" property="labelTypeId"/>
+    <result column="LABEL_NAME" jdbcType="VARCHAR" property="labelName"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATE_DATE" jdbcType="TIMESTAMP" property="stateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TEMPLATE_LABEL_ID, 
+          LABEL_TYPE_ID, 
+          LABEL_NAME, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATE_DATE, 
+          UPDATE_STAFF, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          LABEL_TYPE_ID, 
+          LABEL_NAME, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATE_DATE, 
+          UPDATE_STAFF, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="templateLabelId != null ">
+        TEMPLATE_LABEL_ID = #{templateLabelId, jdbcType=INTEGER }
+      </if>
+      <if test="labelTypeId != null ">
+        and LABEL_TYPE_ID = #{labelTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="labelName != null and labelName != ''">
+        and LABEL_NAME = #{labelName, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="stateDate != null ">
+        and STATE_DATE = #{stateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TemplateLabelDO" resultType="java.lang.Integer">
+      select count(*) from TEMPLATE_LABEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TEMPLATE_LABEL
+        where 
+           TEMPLATE_LABEL_ID = #{templateLabelId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TEMPLATE_LABEL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="templateLabelId">
+      insert into  TEMPLATE_LABEL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{labelTypeId,jdbcType=INTEGER}, 
+        #{labelName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{stateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TEMPLATE_LABEL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{templateLabelId,jdbcType=INTEGER}, 
+        #{labelTypeId,jdbcType=INTEGER}, 
+        #{labelName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{stateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TEMPLATE_LABEL  
+        where
+           TEMPLATE_LABEL_ID = #{templateLabelId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from TEMPLATE_LABEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TEMPLATE_LABEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="labelTypeId != null">
+         LABEL_TYPE_ID = #{labelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="labelName != null">
+         LABEL_NAME = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="stateDate != null">
+         STATE_DATE = #{stateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           TEMPLATE_LABEL_ID = #{templateLabelId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update TEMPLATE_LABEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.templateLabelId != null">
+        TEMPLATE_LABEL_ID = #{record.templateLabelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.labelTypeId != null">
+        LABEL_TYPE_ID = #{record.labelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.labelName != null">
+        LABEL_NAME = #{record.labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.stateDate != null">
+        STATE_DATE = #{record.stateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.templateLabelId != null ">
+        TEMPLATE_LABEL_ID = #{condition.templateLabelId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.labelTypeId != null ">
+        and LABEL_TYPE_ID = #{condition.labelTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.labelName != null and condition.labelName != ''">
+        and LABEL_NAME = #{condition.labelName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.stateDate != null ">
+        and STATE_DATE = #{condition.stateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

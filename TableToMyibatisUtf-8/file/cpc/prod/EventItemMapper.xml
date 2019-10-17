@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.EventItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.EventItemDO">
+    <id column="EVT_ITEM_ID" jdbcType="BIGINT" property="evtItemId"/>
+    <result column="EVENT_ID" jdbcType="BIGINT" property="eventId"/>
+    <result column="EVT_TYPE_ID" jdbcType="BIGINT" property="evtTypeId"/>
+    <result column="EVT_ITEM_NAME" jdbcType="VARCHAR" property="evtItemName"/>
+    <result column="EVT_ITEM_CODE" jdbcType="VARCHAR" property="evtItemCode"/>
+    <result column="VALUE_DATA_TYPE" jdbcType="VARCHAR" property="valueDataType"/>
+    <result column="EVT_ITEM_FORMAT" jdbcType="VARCHAR" property="evtItemFormat"/>
+    <result column="IS_NULLABLE" jdbcType="INTEGER" property="isNullable"/>
+    <result column="EVT_ITEM_LENGTH" jdbcType="INTEGER" property="evtItemLength"/>
+    <result column="STANDARD_SORT" jdbcType="INTEGER" property="standardSort"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EVT_ITEM_ID, 
+          EVENT_ID, 
+          EVT_TYPE_ID, 
+          EVT_ITEM_NAME, 
+          EVT_ITEM_CODE, 
+          VALUE_DATA_TYPE, 
+          EVT_ITEM_FORMAT, 
+          IS_NULLABLE, 
+          EVT_ITEM_LENGTH, 
+          STANDARD_SORT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EVENT_ID, 
+          EVT_TYPE_ID, 
+          EVT_ITEM_NAME, 
+          EVT_ITEM_CODE, 
+          VALUE_DATA_TYPE, 
+          EVT_ITEM_FORMAT, 
+          IS_NULLABLE, 
+          EVT_ITEM_LENGTH, 
+          STANDARD_SORT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="evtItemId != null ">
+        EVT_ITEM_ID = #{evtItemId, jdbcType=BIGINT }
+      </if>
+      <if test="eventId != null ">
+        and EVENT_ID = #{eventId, jdbcType=BIGINT }
+      </if>
+      <if test="evtTypeId != null ">
+        and EVT_TYPE_ID = #{evtTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="evtItemName != null and evtItemName != ''">
+        and EVT_ITEM_NAME = #{evtItemName, jdbcType=VARCHAR }
+      </if>
+      <if test="evtItemCode != null and evtItemCode != ''">
+        and EVT_ITEM_CODE = #{evtItemCode, jdbcType=VARCHAR }
+      </if>
+      <if test="valueDataType != null and valueDataType != ''">
+        and VALUE_DATA_TYPE = #{valueDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="evtItemFormat != null and evtItemFormat != ''">
+        and EVT_ITEM_FORMAT = #{evtItemFormat, jdbcType=VARCHAR }
+      </if>
+      <if test="isNullable != null ">
+        and IS_NULLABLE = #{isNullable, jdbcType=INTEGER }
+      </if>
+      <if test="evtItemLength != null ">
+        and EVT_ITEM_LENGTH = #{evtItemLength, jdbcType=INTEGER }
+      </if>
+      <if test="standardSort != null ">
+        and STANDARD_SORT = #{standardSort, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.EventItemDO" resultType="java.lang.Integer">
+      select count(*) from EVENT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from EVENT_ITEM
+        where 
+           EVT_ITEM_ID = #{evtItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EVENT_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="evtItemId">
+      insert into  EVENT_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{eventId,jdbcType=BIGINT}, 
+        #{evtTypeId,jdbcType=BIGINT}, 
+        #{evtItemName,jdbcType=VARCHAR}, 
+        #{evtItemCode,jdbcType=VARCHAR}, 
+        #{valueDataType,jdbcType=VARCHAR}, 
+        #{evtItemFormat,jdbcType=VARCHAR}, 
+        #{isNullable,jdbcType=INTEGER}, 
+        #{evtItemLength,jdbcType=INTEGER}, 
+        #{standardSort,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  EVENT_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{evtItemId,jdbcType=BIGINT}, 
+        #{eventId,jdbcType=BIGINT}, 
+        #{evtTypeId,jdbcType=BIGINT}, 
+        #{evtItemName,jdbcType=VARCHAR}, 
+        #{evtItemCode,jdbcType=VARCHAR}, 
+        #{valueDataType,jdbcType=VARCHAR}, 
+        #{evtItemFormat,jdbcType=VARCHAR}, 
+        #{isNullable,jdbcType=INTEGER}, 
+        #{evtItemLength,jdbcType=INTEGER}, 
+        #{standardSort,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from EVENT_ITEM  
+        where
+           EVT_ITEM_ID = #{evtItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from EVENT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  EVENT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="eventId != null">
+         EVENT_ID = #{eventId,jdbcType=BIGINT},
+      </if>
+      <if test="evtTypeId != null">
+         EVT_TYPE_ID = #{evtTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="evtItemName != null">
+         EVT_ITEM_NAME = #{evtItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="evtItemCode != null">
+         EVT_ITEM_CODE = #{evtItemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueDataType != null">
+         VALUE_DATA_TYPE = #{valueDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="evtItemFormat != null">
+         EVT_ITEM_FORMAT = #{evtItemFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="isNullable != null">
+         IS_NULLABLE = #{isNullable,jdbcType=INTEGER},
+      </if>
+      <if test="evtItemLength != null">
+         EVT_ITEM_LENGTH = #{evtItemLength,jdbcType=INTEGER},
+      </if>
+      <if test="standardSort != null">
+         STANDARD_SORT = #{standardSort,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           EVT_ITEM_ID = #{evtItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update EVENT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.evtItemId != null">
+        EVT_ITEM_ID = #{record.evtItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.eventId != null">
+        EVENT_ID = #{record.eventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.evtTypeId != null">
+        EVT_TYPE_ID = #{record.evtTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.evtItemName != null">
+        EVT_ITEM_NAME = #{record.evtItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evtItemCode != null">
+        EVT_ITEM_CODE = #{record.evtItemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueDataType != null">
+        VALUE_DATA_TYPE = #{record.valueDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evtItemFormat != null">
+        EVT_ITEM_FORMAT = #{record.evtItemFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isNullable != null">
+        IS_NULLABLE = #{record.isNullable,jdbcType=INTEGER},
+      </if>
+      <if test="record.evtItemLength != null">
+        EVT_ITEM_LENGTH = #{record.evtItemLength,jdbcType=INTEGER},
+      </if>
+      <if test="record.standardSort != null">
+        STANDARD_SORT = #{record.standardSort,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.evtItemId != null ">
+        EVT_ITEM_ID = #{condition.evtItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.eventId != null ">
+        and EVENT_ID = #{condition.eventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.evtTypeId != null ">
+        and EVT_TYPE_ID = #{condition.evtTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.evtItemName != null and condition.evtItemName != ''">
+        and EVT_ITEM_NAME = #{condition.evtItemName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evtItemCode != null and condition.evtItemCode != ''">
+        and EVT_ITEM_CODE = #{condition.evtItemCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueDataType != null and condition.valueDataType != ''">
+        and VALUE_DATA_TYPE = #{condition.valueDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.evtItemFormat != null and condition.evtItemFormat != ''">
+        and EVT_ITEM_FORMAT = #{condition.evtItemFormat, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isNullable != null ">
+        and IS_NULLABLE = #{condition.isNullable, jdbcType=INTEGER }
+      </if>
+      <if test="condition.evtItemLength != null ">
+        and EVT_ITEM_LENGTH = #{condition.evtItemLength, jdbcType=INTEGER }
+      </if>
+      <if test="condition.standardSort != null ">
+        and STANDARD_SORT = #{condition.standardSort, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

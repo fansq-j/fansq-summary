@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.HighfeeConditionMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.HighfeeConditionDO">
+    <id column="HIGHFEE_COND_ID" jdbcType="INTEGER" property="highfeeCondId"/>
+    <result column="HIGHFEE_TYPE_ID" jdbcType="INTEGER" property="highfeeTypeId"/>
+    <result column="REF_VALUE_ID" jdbcType="INTEGER" property="refValueId"/>
+    <result column="OPERATOR_ID" jdbcType="INTEGER" property="operatorId"/>
+    <result column="COMP_VALUE_ID" jdbcType="INTEGER" property="compValueId"/>
+    <result column="GROUP_ID" jdbcType="INTEGER" property="groupId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          HIGHFEE_COND_ID, 
+          HIGHFEE_TYPE_ID, 
+          REF_VALUE_ID, 
+          OPERATOR_ID, 
+          COMP_VALUE_ID, 
+          GROUP_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          HIGHFEE_TYPE_ID, 
+          REF_VALUE_ID, 
+          OPERATOR_ID, 
+          COMP_VALUE_ID, 
+          GROUP_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="highfeeCondId != null ">
+        HIGHFEE_COND_ID = #{highfeeCondId, jdbcType=INTEGER }
+      </if>
+      <if test="highfeeTypeId != null ">
+        and HIGHFEE_TYPE_ID = #{highfeeTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="refValueId != null ">
+        and REF_VALUE_ID = #{refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="operatorId != null ">
+        and OPERATOR_ID = #{operatorId, jdbcType=INTEGER }
+      </if>
+      <if test="compValueId != null ">
+        and COMP_VALUE_ID = #{compValueId, jdbcType=INTEGER }
+      </if>
+      <if test="groupId != null ">
+        and GROUP_ID = #{groupId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.HighfeeConditionDO" resultType="java.lang.Integer">
+      select count(*) from HIGHFEE_CONDITION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from HIGHFEE_CONDITION
+        where 
+           HIGHFEE_COND_ID = #{highfeeCondId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  HIGHFEE_CONDITION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="highfeeCondId">
+      insert into  HIGHFEE_CONDITION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{highfeeTypeId,jdbcType=INTEGER}, 
+        #{refValueId,jdbcType=INTEGER}, 
+        #{operatorId,jdbcType=INTEGER}, 
+        #{compValueId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  HIGHFEE_CONDITION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{highfeeCondId,jdbcType=INTEGER}, 
+        #{highfeeTypeId,jdbcType=INTEGER}, 
+        #{refValueId,jdbcType=INTEGER}, 
+        #{operatorId,jdbcType=INTEGER}, 
+        #{compValueId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from HIGHFEE_CONDITION  
+        where
+           HIGHFEE_COND_ID = #{highfeeCondId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from HIGHFEE_CONDITION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  HIGHFEE_CONDITION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="highfeeTypeId != null">
+         HIGHFEE_TYPE_ID = #{highfeeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="refValueId != null">
+         REF_VALUE_ID = #{refValueId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+         OPERATOR_ID = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="compValueId != null">
+         COMP_VALUE_ID = #{compValueId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+         GROUP_ID = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           HIGHFEE_COND_ID = #{highfeeCondId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update HIGHFEE_CONDITION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.highfeeCondId != null">
+        HIGHFEE_COND_ID = #{record.highfeeCondId,jdbcType=INTEGER},
+      </if>
+      <if test="record.highfeeTypeId != null">
+        HIGHFEE_TYPE_ID = #{record.highfeeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.refValueId != null">
+        REF_VALUE_ID = #{record.refValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorId != null">
+        OPERATOR_ID = #{record.operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.compValueId != null">
+        COMP_VALUE_ID = #{record.compValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.highfeeCondId != null ">
+        HIGHFEE_COND_ID = #{condition.highfeeCondId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.highfeeTypeId != null ">
+        and HIGHFEE_TYPE_ID = #{condition.highfeeTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.refValueId != null ">
+        and REF_VALUE_ID = #{condition.refValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operatorId != null ">
+        and OPERATOR_ID = #{condition.operatorId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.compValueId != null ">
+        and COMP_VALUE_ID = #{condition.compValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.groupId != null ">
+        and GROUP_ID = #{condition.groupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

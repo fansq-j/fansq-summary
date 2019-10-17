@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ProdInstMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ProdInstDO">
+    <id column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="PROD_ID" jdbcType="INTEGER" property="prodId"/>
+    <result column="ACC_PROD_INST_ID" jdbcType="BIGINT" property="accProdInstId"/>
+    <result column="PROD_USE_TYPE" jdbcType="VARCHAR" property="prodUseType"/>
+    <result column="ACC_NUM" jdbcType="VARCHAR" property="accNum"/>
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account"/>
+    <result column="PAYMENT_MODE_CD" jdbcType="VARCHAR" property="paymentModeCd"/>
+    <result column="ADDRESS_DESC" jdbcType="VARCHAR" property="addressDesc"/>
+    <result column="OWNER_CUST_ID" jdbcType="BIGINT" property="ownerCustId"/>
+    <result column="PROD_INST_PWD" jdbcType="VARCHAR" property="prodInstPwd"/>
+    <result column="EXCH_ID" jdbcType="INTEGER" property="exchId"/>
+    <result column="ADDRESS_ID" jdbcType="VARCHAR" property="addressId"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="ACT_DATE" jdbcType="TIMESTAMP" property="actDate"/>
+    <result column="BEGIN_RENT_DATE" jdbcType="TIMESTAMP" property="beginRentDate"/>
+    <result column="STOP_RENT_DATE" jdbcType="TIMESTAMP" property="stopRentDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_ORG_ID" jdbcType="BIGINT" property="createOrgId"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="FIRST_FINISH_DATE" jdbcType="TIMESTAMP" property="firstFinishDate"/>
+    <result column="BUSI_MOD_DATE" jdbcType="TIMESTAMP" property="busiModDate"/>
+    <result column="USE_CUST_ID" jdbcType="BIGINT" property="useCustId"/>
+    <result column="LAST_ORDER_ITEM_ID" jdbcType="BIGINT" property="lastOrderItemId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="POINT_OWNER_ID" jdbcType="BIGINT" property="pointOwnerId"/>
+    <result column="EXT_PROD_INST_ID" jdbcType="VARCHAR" property="extProdInstId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PROD_INST_ID, 
+          PROD_ID, 
+          ACC_PROD_INST_ID, 
+          PROD_USE_TYPE, 
+          ACC_NUM, 
+          ACCOUNT, 
+          PAYMENT_MODE_CD, 
+          ADDRESS_DESC, 
+          OWNER_CUST_ID, 
+          PROD_INST_PWD, 
+          EXCH_ID, 
+          ADDRESS_ID, 
+          REGION_ID, 
+          LAN_ID, 
+          ACT_DATE, 
+          BEGIN_RENT_DATE, 
+          STOP_RENT_DATE, 
+          STATUS_CD, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          FIRST_FINISH_DATE, 
+          BUSI_MOD_DATE, 
+          USE_CUST_ID, 
+          LAST_ORDER_ITEM_ID, 
+          REMARK, 
+          POINT_OWNER_ID, 
+          EXT_PROD_INST_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROD_ID, 
+          ACC_PROD_INST_ID, 
+          PROD_USE_TYPE, 
+          ACC_NUM, 
+          ACCOUNT, 
+          PAYMENT_MODE_CD, 
+          ADDRESS_DESC, 
+          OWNER_CUST_ID, 
+          PROD_INST_PWD, 
+          EXCH_ID, 
+          ADDRESS_ID, 
+          REGION_ID, 
+          LAN_ID, 
+          ACT_DATE, 
+          BEGIN_RENT_DATE, 
+          STOP_RENT_DATE, 
+          STATUS_CD, 
+          CREATE_ORG_ID, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          FIRST_FINISH_DATE, 
+          BUSI_MOD_DATE, 
+          USE_CUST_ID, 
+          LAST_ORDER_ITEM_ID, 
+          REMARK, 
+          POINT_OWNER_ID, 
+          EXT_PROD_INST_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="prodInstId != null ">
+        PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="prodId != null ">
+        and PROD_ID = #{prodId, jdbcType=INTEGER }
+      </if>
+      <if test="accProdInstId != null ">
+        and ACC_PROD_INST_ID = #{accProdInstId, jdbcType=BIGINT }
+      </if>
+      <if test="prodUseType != null and prodUseType != ''">
+        and PROD_USE_TYPE = #{prodUseType, jdbcType=VARCHAR }
+      </if>
+      <if test="accNum != null and accNum != ''">
+        and ACC_NUM = #{accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="account != null and account != ''">
+        and ACCOUNT = #{account, jdbcType=VARCHAR }
+      </if>
+      <if test="paymentModeCd != null and paymentModeCd != ''">
+        and PAYMENT_MODE_CD = #{paymentModeCd, jdbcType=VARCHAR }
+      </if>
+      <if test="addressDesc != null and addressDesc != ''">
+        and ADDRESS_DESC = #{addressDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="ownerCustId != null ">
+        and OWNER_CUST_ID = #{ownerCustId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstPwd != null and prodInstPwd != ''">
+        and PROD_INST_PWD = #{prodInstPwd, jdbcType=VARCHAR }
+      </if>
+      <if test="exchId != null ">
+        and EXCH_ID = #{exchId, jdbcType=INTEGER }
+      </if>
+      <if test="addressId != null and addressId != ''">
+        and ADDRESS_ID = #{addressId, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="actDate != null ">
+        and ACT_DATE = #{actDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="beginRentDate != null ">
+        and BEGIN_RENT_DATE = #{beginRentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="stopRentDate != null ">
+        and STOP_RENT_DATE = #{stopRentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createOrgId != null ">
+        and CREATE_ORG_ID = #{createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="firstFinishDate != null ">
+        and FIRST_FINISH_DATE = #{firstFinishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="busiModDate != null ">
+        and BUSI_MOD_DATE = #{busiModDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="useCustId != null ">
+        and USE_CUST_ID = #{useCustId, jdbcType=BIGINT }
+      </if>
+      <if test="lastOrderItemId != null ">
+        and LAST_ORDER_ITEM_ID = #{lastOrderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="pointOwnerId != null ">
+        and POINT_OWNER_ID = #{pointOwnerId, jdbcType=BIGINT }
+      </if>
+      <if test="extProdInstId != null and extProdInstId != ''">
+        and EXT_PROD_INST_ID = #{extProdInstId, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ProdInstDO" resultType="java.lang.Integer">
+      select count(*) from PROD_INST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PROD_INST
+        where 
+           PROD_INST_ID = #{prodInstId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PROD_INST 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="prodInstId">
+      insert into  PROD_INST ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{prodId,jdbcType=INTEGER}, 
+        #{accProdInstId,jdbcType=BIGINT}, 
+        #{prodUseType,jdbcType=VARCHAR}, 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{account,jdbcType=VARCHAR}, 
+        #{paymentModeCd,jdbcType=VARCHAR}, 
+        #{addressDesc,jdbcType=VARCHAR}, 
+        #{ownerCustId,jdbcType=BIGINT}, 
+        #{prodInstPwd,jdbcType=VARCHAR}, 
+        #{exchId,jdbcType=INTEGER}, 
+        #{addressId,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{actDate,jdbcType=TIMESTAMP}, 
+        #{beginRentDate,jdbcType=TIMESTAMP}, 
+        #{stopRentDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{firstFinishDate,jdbcType=TIMESTAMP}, 
+        #{busiModDate,jdbcType=TIMESTAMP}, 
+        #{useCustId,jdbcType=BIGINT}, 
+        #{lastOrderItemId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{pointOwnerId,jdbcType=BIGINT}, 
+        #{extProdInstId,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PROD_INST ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{prodId,jdbcType=INTEGER}, 
+        #{accProdInstId,jdbcType=BIGINT}, 
+        #{prodUseType,jdbcType=VARCHAR}, 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{account,jdbcType=VARCHAR}, 
+        #{paymentModeCd,jdbcType=VARCHAR}, 
+        #{addressDesc,jdbcType=VARCHAR}, 
+        #{ownerCustId,jdbcType=BIGINT}, 
+        #{prodInstPwd,jdbcType=VARCHAR}, 
+        #{exchId,jdbcType=INTEGER}, 
+        #{addressId,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{actDate,jdbcType=TIMESTAMP}, 
+        #{beginRentDate,jdbcType=TIMESTAMP}, 
+        #{stopRentDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{firstFinishDate,jdbcType=TIMESTAMP}, 
+        #{busiModDate,jdbcType=TIMESTAMP}, 
+        #{useCustId,jdbcType=BIGINT}, 
+        #{lastOrderItemId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{pointOwnerId,jdbcType=BIGINT}, 
+        #{extProdInstId,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PROD_INST  
+        where
+           PROD_INST_ID = #{prodInstId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PROD_INST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PROD_INST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="prodId != null">
+         PROD_ID = #{prodId,jdbcType=INTEGER},
+      </if>
+      <if test="accProdInstId != null">
+         ACC_PROD_INST_ID = #{accProdInstId,jdbcType=BIGINT},
+      </if>
+      <if test="prodUseType != null">
+         PROD_USE_TYPE = #{prodUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="accNum != null">
+         ACC_NUM = #{accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+         ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentModeCd != null">
+         PAYMENT_MODE_CD = #{paymentModeCd,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDesc != null">
+         ADDRESS_DESC = #{addressDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerCustId != null">
+         OWNER_CUST_ID = #{ownerCustId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstPwd != null">
+         PROD_INST_PWD = #{prodInstPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="exchId != null">
+         EXCH_ID = #{exchId,jdbcType=INTEGER},
+      </if>
+      <if test="addressId != null">
+         ADDRESS_ID = #{addressId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="actDate != null">
+         ACT_DATE = #{actDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginRentDate != null">
+         BEGIN_RENT_DATE = #{beginRentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopRentDate != null">
+         STOP_RENT_DATE = #{stopRentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createOrgId != null">
+         CREATE_ORG_ID = #{createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstFinishDate != null">
+         FIRST_FINISH_DATE = #{firstFinishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="busiModDate != null">
+         BUSI_MOD_DATE = #{busiModDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useCustId != null">
+         USE_CUST_ID = #{useCustId,jdbcType=BIGINT},
+      </if>
+      <if test="lastOrderItemId != null">
+         LAST_ORDER_ITEM_ID = #{lastOrderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pointOwnerId != null">
+         POINT_OWNER_ID = #{pointOwnerId,jdbcType=BIGINT},
+      </if>
+      <if test="extProdInstId != null">
+         EXT_PROD_INST_ID = #{extProdInstId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PROD_INST_ID = #{prodInstId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PROD_INST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodId != null">
+        PROD_ID = #{record.prodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.accProdInstId != null">
+        ACC_PROD_INST_ID = #{record.accProdInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodUseType != null">
+        PROD_USE_TYPE = #{record.prodUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accNum != null">
+        ACC_NUM = #{record.accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.account != null">
+        ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentModeCd != null">
+        PAYMENT_MODE_CD = #{record.paymentModeCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressDesc != null">
+        ADDRESS_DESC = #{record.addressDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerCustId != null">
+        OWNER_CUST_ID = #{record.ownerCustId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstPwd != null">
+        PROD_INST_PWD = #{record.prodInstPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchId != null">
+        EXCH_ID = #{record.exchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addressId != null">
+        ADDRESS_ID = #{record.addressId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.actDate != null">
+        ACT_DATE = #{record.actDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.beginRentDate != null">
+        BEGIN_RENT_DATE = #{record.beginRentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stopRentDate != null">
+        STOP_RENT_DATE = #{record.stopRentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createOrgId != null">
+        CREATE_ORG_ID = #{record.createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.firstFinishDate != null">
+        FIRST_FINISH_DATE = #{record.firstFinishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.busiModDate != null">
+        BUSI_MOD_DATE = #{record.busiModDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.useCustId != null">
+        USE_CUST_ID = #{record.useCustId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastOrderItemId != null">
+        LAST_ORDER_ITEM_ID = #{record.lastOrderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointOwnerId != null">
+        POINT_OWNER_ID = #{record.pointOwnerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.extProdInstId != null">
+        EXT_PROD_INST_ID = #{record.extProdInstId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.prodInstId != null ">
+        PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodId != null ">
+        and PROD_ID = #{condition.prodId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.accProdInstId != null ">
+        and ACC_PROD_INST_ID = #{condition.accProdInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodUseType != null and condition.prodUseType != ''">
+        and PROD_USE_TYPE = #{condition.prodUseType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.accNum != null and condition.accNum != ''">
+        and ACC_NUM = #{condition.accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.account != null and condition.account != ''">
+        and ACCOUNT = #{condition.account, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paymentModeCd != null and condition.paymentModeCd != ''">
+        and PAYMENT_MODE_CD = #{condition.paymentModeCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.addressDesc != null and condition.addressDesc != ''">
+        and ADDRESS_DESC = #{condition.addressDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ownerCustId != null ">
+        and OWNER_CUST_ID = #{condition.ownerCustId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstPwd != null and condition.prodInstPwd != ''">
+        and PROD_INST_PWD = #{condition.prodInstPwd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exchId != null ">
+        and EXCH_ID = #{condition.exchId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.addressId != null and condition.addressId != ''">
+        and ADDRESS_ID = #{condition.addressId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.actDate != null ">
+        and ACT_DATE = #{condition.actDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.beginRentDate != null ">
+        and BEGIN_RENT_DATE = #{condition.beginRentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.stopRentDate != null ">
+        and STOP_RENT_DATE = #{condition.stopRentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createOrgId != null ">
+        and CREATE_ORG_ID = #{condition.createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.firstFinishDate != null ">
+        and FIRST_FINISH_DATE = #{condition.firstFinishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.busiModDate != null ">
+        and BUSI_MOD_DATE = #{condition.busiModDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.useCustId != null ">
+        and USE_CUST_ID = #{condition.useCustId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lastOrderItemId != null ">
+        and LAST_ORDER_ITEM_ID = #{condition.lastOrderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointOwnerId != null ">
+        and POINT_OWNER_ID = #{condition.pointOwnerId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.extProdInstId != null and condition.extProdInstId != ''">
+        and EXT_PROD_INST_ID = #{condition.extProdInstId, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

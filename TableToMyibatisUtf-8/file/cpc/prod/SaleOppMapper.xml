@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SaleOppMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SaleOppDO">
+    <id column="SALE_OPP_ID" jdbcType="BIGINT" property="saleOppId"/>
+    <result column="OPP_SOURCE_ID" jdbcType="BIGINT" property="oppSourceId"/>
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="SALE_OPP_NAME" jdbcType="VARCHAR" property="saleOppName"/>
+    <result column="SALE_OPP_CODE" jdbcType="VARCHAR" property="saleOppCode"/>
+    <result column="SALE_OPP_TYPE" jdbcType="VARCHAR" property="saleOppType"/>
+    <result column="CUST_REQUIRE" jdbcType="VARCHAR" property="custRequire"/>
+    <result column="SALE_OPP_DESC" jdbcType="VARCHAR" property="saleOppDesc"/>
+    <result column="PLAN_SIGN_DATE" jdbcType="TIMESTAMP" property="planSignDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SALE_OPP_ID, 
+          OPP_SOURCE_ID, 
+          CUST_ID, 
+          ORG_ID, 
+          SALE_OPP_NAME, 
+          SALE_OPP_CODE, 
+          SALE_OPP_TYPE, 
+          CUST_REQUIRE, 
+          SALE_OPP_DESC, 
+          PLAN_SIGN_DATE, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OPP_SOURCE_ID, 
+          CUST_ID, 
+          ORG_ID, 
+          SALE_OPP_NAME, 
+          SALE_OPP_CODE, 
+          SALE_OPP_TYPE, 
+          CUST_REQUIRE, 
+          SALE_OPP_DESC, 
+          PLAN_SIGN_DATE, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="saleOppId != null ">
+        SALE_OPP_ID = #{saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="oppSourceId != null ">
+        and OPP_SOURCE_ID = #{oppSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="custId != null ">
+        and CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="saleOppName != null and saleOppName != ''">
+        and SALE_OPP_NAME = #{saleOppName, jdbcType=VARCHAR }
+      </if>
+      <if test="saleOppCode != null and saleOppCode != ''">
+        and SALE_OPP_CODE = #{saleOppCode, jdbcType=VARCHAR }
+      </if>
+      <if test="saleOppType != null and saleOppType != ''">
+        and SALE_OPP_TYPE = #{saleOppType, jdbcType=VARCHAR }
+      </if>
+      <if test="custRequire != null and custRequire != ''">
+        and CUST_REQUIRE = #{custRequire, jdbcType=VARCHAR }
+      </if>
+      <if test="saleOppDesc != null and saleOppDesc != ''">
+        and SALE_OPP_DESC = #{saleOppDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="planSignDate != null ">
+        and PLAN_SIGN_DATE = #{planSignDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SaleOppDO" resultType="java.lang.Integer">
+      select count(*) from SALE_OPP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SALE_OPP
+        where 
+           SALE_OPP_ID = #{saleOppId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SALE_OPP 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="saleOppId">
+      insert into  SALE_OPP ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{oppSourceId,jdbcType=BIGINT}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{saleOppName,jdbcType=VARCHAR}, 
+        #{saleOppCode,jdbcType=VARCHAR}, 
+        #{saleOppType,jdbcType=VARCHAR}, 
+        #{custRequire,jdbcType=VARCHAR}, 
+        #{saleOppDesc,jdbcType=VARCHAR}, 
+        #{planSignDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SALE_OPP ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{oppSourceId,jdbcType=BIGINT}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{saleOppName,jdbcType=VARCHAR}, 
+        #{saleOppCode,jdbcType=VARCHAR}, 
+        #{saleOppType,jdbcType=VARCHAR}, 
+        #{custRequire,jdbcType=VARCHAR}, 
+        #{saleOppDesc,jdbcType=VARCHAR}, 
+        #{planSignDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SALE_OPP  
+        where
+           SALE_OPP_ID = #{saleOppId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SALE_OPP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SALE_OPP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="oppSourceId != null">
+         OPP_SOURCE_ID = #{oppSourceId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="saleOppName != null">
+         SALE_OPP_NAME = #{saleOppName,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOppCode != null">
+         SALE_OPP_CODE = #{saleOppCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOppType != null">
+         SALE_OPP_TYPE = #{saleOppType,jdbcType=VARCHAR},
+      </if>
+      <if test="custRequire != null">
+         CUST_REQUIRE = #{custRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOppDesc != null">
+         SALE_OPP_DESC = #{saleOppDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="planSignDate != null">
+         PLAN_SIGN_DATE = #{planSignDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SALE_OPP_ID = #{saleOppId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SALE_OPP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.saleOppId != null">
+        SALE_OPP_ID = #{record.saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oppSourceId != null">
+        OPP_SOURCE_ID = #{record.oppSourceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.saleOppName != null">
+        SALE_OPP_NAME = #{record.saleOppName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOppCode != null">
+        SALE_OPP_CODE = #{record.saleOppCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOppType != null">
+        SALE_OPP_TYPE = #{record.saleOppType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custRequire != null">
+        CUST_REQUIRE = #{record.custRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOppDesc != null">
+        SALE_OPP_DESC = #{record.saleOppDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planSignDate != null">
+        PLAN_SIGN_DATE = #{record.planSignDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.saleOppId != null ">
+        SALE_OPP_ID = #{condition.saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oppSourceId != null ">
+        and OPP_SOURCE_ID = #{condition.oppSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custId != null ">
+        and CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.saleOppName != null and condition.saleOppName != ''">
+        and SALE_OPP_NAME = #{condition.saleOppName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.saleOppCode != null and condition.saleOppCode != ''">
+        and SALE_OPP_CODE = #{condition.saleOppCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.saleOppType != null and condition.saleOppType != ''">
+        and SALE_OPP_TYPE = #{condition.saleOppType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custRequire != null and condition.custRequire != ''">
+        and CUST_REQUIRE = #{condition.custRequire, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.saleOppDesc != null and condition.saleOppDesc != ''">
+        and SALE_OPP_DESC = #{condition.saleOppDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.planSignDate != null ">
+        and PLAN_SIGN_DATE = #{condition.planSignDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

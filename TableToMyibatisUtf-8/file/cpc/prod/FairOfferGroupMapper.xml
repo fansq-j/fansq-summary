@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.FairOfferGroupMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.FairOfferGroupDO">
+    <id column="fair_offer_group_id" jdbcType="INTEGER" property="fairOfferGroupId"/>
+    <result column="GROUP_ID" jdbcType="INTEGER" property="groupId"/>
+    <result column="OFFER_ID" jdbcType="INTEGER" property="offerId"/>
+    <result column="OFFER_NAME" jdbcType="VARCHAR" property="offerName"/>
+    <result column="OFFER_SERIES" jdbcType="VARCHAR" property="offerSeries"/>
+    <result column="PRIORITY_VALUE" jdbcType="INTEGER" property="priorityValue"/>
+    <result column="FAIR_OFFER_ID" jdbcType="INTEGER" property="fairOfferId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          fair_offer_group_id, 
+          GROUP_ID, 
+          OFFER_ID, 
+          OFFER_NAME, 
+          OFFER_SERIES, 
+          PRIORITY_VALUE, 
+          FAIR_OFFER_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          GROUP_ID, 
+          OFFER_ID, 
+          OFFER_NAME, 
+          OFFER_SERIES, 
+          PRIORITY_VALUE, 
+          FAIR_OFFER_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="fairOfferGroupId != null ">
+        fair_offer_group_id = #{fairOfferGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="groupId != null ">
+        and GROUP_ID = #{groupId, jdbcType=INTEGER }
+      </if>
+      <if test="offerId != null ">
+        and OFFER_ID = #{offerId, jdbcType=INTEGER }
+      </if>
+      <if test="offerName != null and offerName != ''">
+        and OFFER_NAME = #{offerName, jdbcType=VARCHAR }
+      </if>
+      <if test="offerSeries != null and offerSeries != ''">
+        and OFFER_SERIES = #{offerSeries, jdbcType=VARCHAR }
+      </if>
+      <if test="priorityValue != null ">
+        and PRIORITY_VALUE = #{priorityValue, jdbcType=INTEGER }
+      </if>
+      <if test="fairOfferId != null ">
+        and FAIR_OFFER_ID = #{fairOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.FairOfferGroupDO" resultType="java.lang.Integer">
+      select count(*) from FAIR_OFFER_GROUP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from FAIR_OFFER_GROUP
+        where 
+           fair_offer_group_id = #{fairOfferGroupId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  FAIR_OFFER_GROUP 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="fairOfferGroupId">
+      insert into  FAIR_OFFER_GROUP ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{groupId,jdbcType=INTEGER}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{offerName,jdbcType=VARCHAR}, 
+        #{offerSeries,jdbcType=VARCHAR}, 
+        #{priorityValue,jdbcType=INTEGER}, 
+        #{fairOfferId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  FAIR_OFFER_GROUP ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{fairOfferGroupId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{offerName,jdbcType=VARCHAR}, 
+        #{offerSeries,jdbcType=VARCHAR}, 
+        #{priorityValue,jdbcType=INTEGER}, 
+        #{fairOfferId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from FAIR_OFFER_GROUP  
+        where
+           fair_offer_group_id = #{fairOfferGroupId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from FAIR_OFFER_GROUP
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  FAIR_OFFER_GROUP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="groupId != null">
+         GROUP_ID = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="offerId != null">
+         OFFER_ID = #{offerId,jdbcType=INTEGER},
+      </if>
+      <if test="offerName != null">
+         OFFER_NAME = #{offerName,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSeries != null">
+         OFFER_SERIES = #{offerSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="priorityValue != null">
+         PRIORITY_VALUE = #{priorityValue,jdbcType=INTEGER},
+      </if>
+      <if test="fairOfferId != null">
+         FAIR_OFFER_ID = #{fairOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           fair_offer_group_id = #{fairOfferGroupId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update FAIR_OFFER_GROUP
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.fairOfferGroupId != null">
+        fair_offer_group_id = #{record.fairOfferGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.offerId != null">
+        OFFER_ID = #{record.offerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.offerName != null">
+        OFFER_NAME = #{record.offerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSeries != null">
+        OFFER_SERIES = #{record.offerSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priorityValue != null">
+        PRIORITY_VALUE = #{record.priorityValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.fairOfferId != null">
+        FAIR_OFFER_ID = #{record.fairOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.fairOfferGroupId != null ">
+        fair_offer_group_id = #{condition.fairOfferGroupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.groupId != null ">
+        and GROUP_ID = #{condition.groupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offerId != null ">
+        and OFFER_ID = #{condition.offerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offerName != null and condition.offerName != ''">
+        and OFFER_NAME = #{condition.offerName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerSeries != null and condition.offerSeries != ''">
+        and OFFER_SERIES = #{condition.offerSeries, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.priorityValue != null ">
+        and PRIORITY_VALUE = #{condition.priorityValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fairOfferId != null ">
+        and FAIR_OFFER_ID = #{condition.fairOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

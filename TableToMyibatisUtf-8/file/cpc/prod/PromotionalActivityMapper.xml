@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PromotionalActivityMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PromotionalActivityDO">
+    <id column="PROM_ACTI_ID" jdbcType="INTEGER" property="promActiId"/>
+    <result column="PROM_ACTI_NAME" jdbcType="VARCHAR" property="promActiName"/>
+    <result column="PRICING_DESC" jdbcType="VARCHAR" property="pricingDesc"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="ACTI_TYPE" jdbcType="VARCHAR" property="actiType"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="LAN_ID" jdbcType="INTEGER" property="lanId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PROM_ACTI_ID, 
+          PROM_ACTI_NAME, 
+          PRICING_DESC, 
+          PRIORITY, 
+          ACTI_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          LAN_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROM_ACTI_NAME, 
+          PRICING_DESC, 
+          PRIORITY, 
+          ACTI_TYPE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          LAN_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="promActiId != null ">
+        PROM_ACTI_ID = #{promActiId, jdbcType=INTEGER }
+      </if>
+      <if test="promActiName != null and promActiName != ''">
+        and PROM_ACTI_NAME = #{promActiName, jdbcType=VARCHAR }
+      </if>
+      <if test="pricingDesc != null and pricingDesc != ''">
+        and PRICING_DESC = #{pricingDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="actiType != null and actiType != ''">
+        and ACTI_TYPE = #{actiType, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PromotionalActivityDO" resultType="java.lang.Integer">
+      select count(*) from PROMOTIONAL_ACTIVITY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PROMOTIONAL_ACTIVITY
+        where 
+           PROM_ACTI_ID = #{promActiId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PROMOTIONAL_ACTIVITY 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="promActiId">
+      insert into  PROMOTIONAL_ACTIVITY ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{promActiName,jdbcType=VARCHAR}, 
+        #{pricingDesc,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{actiType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{lanId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PROMOTIONAL_ACTIVITY ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{promActiId,jdbcType=INTEGER}, 
+        #{promActiName,jdbcType=VARCHAR}, 
+        #{pricingDesc,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{actiType,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{lanId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PROMOTIONAL_ACTIVITY  
+        where
+           PROM_ACTI_ID = #{promActiId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PROMOTIONAL_ACTIVITY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PROMOTIONAL_ACTIVITY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="promActiName != null">
+         PROM_ACTI_NAME = #{promActiName,jdbcType=VARCHAR},
+      </if>
+      <if test="pricingDesc != null">
+         PRICING_DESC = #{pricingDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="actiType != null">
+         ACTI_TYPE = #{actiType,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PROM_ACTI_ID = #{promActiId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PROMOTIONAL_ACTIVITY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.promActiId != null">
+        PROM_ACTI_ID = #{record.promActiId,jdbcType=INTEGER},
+      </if>
+      <if test="record.promActiName != null">
+        PROM_ACTI_NAME = #{record.promActiName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricingDesc != null">
+        PRICING_DESC = #{record.pricingDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.actiType != null">
+        ACTI_TYPE = #{record.actiType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.promActiId != null ">
+        PROM_ACTI_ID = #{condition.promActiId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.promActiName != null and condition.promActiName != ''">
+        and PROM_ACTI_NAME = #{condition.promActiName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pricingDesc != null and condition.pricingDesc != ''">
+        and PRICING_DESC = #{condition.pricingDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.actiType != null and condition.actiType != ''">
+        and ACTI_TYPE = #{condition.actiType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

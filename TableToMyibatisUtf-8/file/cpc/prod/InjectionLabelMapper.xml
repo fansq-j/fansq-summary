@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.InjectionLabelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.InjectionLabelDO">
+    <id column="INJECTION_LABEL_ID" jdbcType="BIGINT" property="injectionLabelId"/>
+    <result column="INJECTION_LABEL_CODE" jdbcType="VARCHAR" property="injectionLabelCode"/>
+    <result column="INJECTION_LABEL_NAME" jdbcType="VARCHAR" property="injectionLabelName"/>
+    <result column="INJECTION_LABEL_DESC" jdbcType="VARCHAR" property="injectionLabelDesc"/>
+    <result column="LABEL_TYPE" jdbcType="VARCHAR" property="labelType"/>
+    <result column="LABEL_VALUE_TYPE" jdbcType="VARCHAR" property="labelValueType"/>
+    <result column="LABEL_DATA_TYPE" jdbcType="VARCHAR" property="labelDataType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          INJECTION_LABEL_ID, 
+          INJECTION_LABEL_CODE, 
+          INJECTION_LABEL_NAME, 
+          INJECTION_LABEL_DESC, 
+          LABEL_TYPE, 
+          LABEL_VALUE_TYPE, 
+          LABEL_DATA_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          INJECTION_LABEL_CODE, 
+          INJECTION_LABEL_NAME, 
+          INJECTION_LABEL_DESC, 
+          LABEL_TYPE, 
+          LABEL_VALUE_TYPE, 
+          LABEL_DATA_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="injectionLabelId != null ">
+        INJECTION_LABEL_ID = #{injectionLabelId, jdbcType=BIGINT }
+      </if>
+      <if test="injectionLabelCode != null and injectionLabelCode != ''">
+        and INJECTION_LABEL_CODE = #{injectionLabelCode, jdbcType=VARCHAR }
+      </if>
+      <if test="injectionLabelName != null and injectionLabelName != ''">
+        and INJECTION_LABEL_NAME = #{injectionLabelName, jdbcType=VARCHAR }
+      </if>
+      <if test="injectionLabelDesc != null and injectionLabelDesc != ''">
+        and INJECTION_LABEL_DESC = #{injectionLabelDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="labelType != null and labelType != ''">
+        and LABEL_TYPE = #{labelType, jdbcType=VARCHAR }
+      </if>
+      <if test="labelValueType != null and labelValueType != ''">
+        and LABEL_VALUE_TYPE = #{labelValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="labelDataType != null and labelDataType != ''">
+        and LABEL_DATA_TYPE = #{labelDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.InjectionLabelDO" resultType="java.lang.Integer">
+      select count(*) from INJECTION_LABEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from INJECTION_LABEL
+        where 
+           INJECTION_LABEL_ID = #{injectionLabelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  INJECTION_LABEL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="injectionLabelId">
+      insert into  INJECTION_LABEL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{injectionLabelCode,jdbcType=VARCHAR}, 
+        #{injectionLabelName,jdbcType=VARCHAR}, 
+        #{injectionLabelDesc,jdbcType=VARCHAR}, 
+        #{labelType,jdbcType=VARCHAR}, 
+        #{labelValueType,jdbcType=VARCHAR}, 
+        #{labelDataType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  INJECTION_LABEL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{injectionLabelId,jdbcType=BIGINT}, 
+        #{injectionLabelCode,jdbcType=VARCHAR}, 
+        #{injectionLabelName,jdbcType=VARCHAR}, 
+        #{injectionLabelDesc,jdbcType=VARCHAR}, 
+        #{labelType,jdbcType=VARCHAR}, 
+        #{labelValueType,jdbcType=VARCHAR}, 
+        #{labelDataType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from INJECTION_LABEL  
+        where
+           INJECTION_LABEL_ID = #{injectionLabelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from INJECTION_LABEL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  INJECTION_LABEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="injectionLabelCode != null">
+         INJECTION_LABEL_CODE = #{injectionLabelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="injectionLabelName != null">
+         INJECTION_LABEL_NAME = #{injectionLabelName,jdbcType=VARCHAR},
+      </if>
+      <if test="injectionLabelDesc != null">
+         INJECTION_LABEL_DESC = #{injectionLabelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="labelType != null">
+         LABEL_TYPE = #{labelType,jdbcType=VARCHAR},
+      </if>
+      <if test="labelValueType != null">
+         LABEL_VALUE_TYPE = #{labelValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="labelDataType != null">
+         LABEL_DATA_TYPE = #{labelDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           INJECTION_LABEL_ID = #{injectionLabelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update INJECTION_LABEL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.injectionLabelId != null">
+        INJECTION_LABEL_ID = #{record.injectionLabelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.injectionLabelCode != null">
+        INJECTION_LABEL_CODE = #{record.injectionLabelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.injectionLabelName != null">
+        INJECTION_LABEL_NAME = #{record.injectionLabelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.injectionLabelDesc != null">
+        INJECTION_LABEL_DESC = #{record.injectionLabelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelType != null">
+        LABEL_TYPE = #{record.labelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelValueType != null">
+        LABEL_VALUE_TYPE = #{record.labelValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labelDataType != null">
+        LABEL_DATA_TYPE = #{record.labelDataType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.injectionLabelId != null ">
+        INJECTION_LABEL_ID = #{condition.injectionLabelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.injectionLabelCode != null and condition.injectionLabelCode != ''">
+        and INJECTION_LABEL_CODE = #{condition.injectionLabelCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.injectionLabelName != null and condition.injectionLabelName != ''">
+        and INJECTION_LABEL_NAME = #{condition.injectionLabelName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.injectionLabelDesc != null and condition.injectionLabelDesc != ''">
+        and INJECTION_LABEL_DESC = #{condition.injectionLabelDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelType != null and condition.labelType != ''">
+        and LABEL_TYPE = #{condition.labelType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelValueType != null and condition.labelValueType != ''">
+        and LABEL_VALUE_TYPE = #{condition.labelValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.labelDataType != null and condition.labelDataType != ''">
+        and LABEL_DATA_TYPE = #{condition.labelDataType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

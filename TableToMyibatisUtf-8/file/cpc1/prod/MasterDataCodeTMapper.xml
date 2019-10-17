@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.MasterDataCodeTMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.MasterDataCodeTDO">
+    <id column="MASTER_ID" jdbcType="BIGINT" property="masterId"/>
+    <result column="MASTER_CODE" jdbcType="VARCHAR" property="masterCode"/>
+    <result column="MASTER_NAME" jdbcType="VARCHAR" property="masterName"/>
+    <result column="VALUE_CODE" jdbcType="VARCHAR" property="valueCode"/>
+    <result column="VALUE_NAME" jdbcType="VARCHAR" property="valueName"/>
+    <result column="IF_VALID" jdbcType="BIGINT" property="ifValid"/>
+    <result column="UPPER_VALUE_CODE" jdbcType="VARCHAR" property="upperValueCode"/>
+    <result column="EXPLAIN_INFO" jdbcType="VARCHAR" property="explainInfo"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="EXTEND_INFO" jdbcType="VARCHAR" property="extendInfo"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="SORT" jdbcType="INTEGER" property="sort"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MASTER_ID, 
+          MASTER_CODE, 
+          MASTER_NAME, 
+          VALUE_CODE, 
+          VALUE_NAME, 
+          IF_VALID, 
+          UPPER_VALUE_CODE, 
+          EXPLAIN_INFO, 
+          REMARK, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          EXTEND_INFO, 
+          STATUS_CD, 
+          SORT
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MASTER_CODE, 
+          MASTER_NAME, 
+          VALUE_CODE, 
+          VALUE_NAME, 
+          IF_VALID, 
+          UPPER_VALUE_CODE, 
+          EXPLAIN_INFO, 
+          REMARK, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          EXTEND_INFO, 
+          STATUS_CD, 
+          SORT
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="masterId != null ">
+        MASTER_ID = #{masterId, jdbcType=BIGINT }
+      </if>
+      <if test="masterCode != null and masterCode != ''">
+        and MASTER_CODE = #{masterCode, jdbcType=VARCHAR }
+      </if>
+      <if test="masterName != null and masterName != ''">
+        and MASTER_NAME = #{masterName, jdbcType=VARCHAR }
+      </if>
+      <if test="valueCode != null and valueCode != ''">
+        and VALUE_CODE = #{valueCode, jdbcType=VARCHAR }
+      </if>
+      <if test="valueName != null and valueName != ''">
+        and VALUE_NAME = #{valueName, jdbcType=VARCHAR }
+      </if>
+      <if test="ifValid != null ">
+        and IF_VALID = #{ifValid, jdbcType=BIGINT }
+      </if>
+      <if test="upperValueCode != null and upperValueCode != ''">
+        and UPPER_VALUE_CODE = #{upperValueCode, jdbcType=VARCHAR }
+      </if>
+      <if test="explainInfo != null and explainInfo != ''">
+        and EXPLAIN_INFO = #{explainInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="extendInfo != null and extendInfo != ''">
+        and EXTEND_INFO = #{extendInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="sort != null ">
+        and SORT = #{sort, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.MasterDataCodeTDO" resultType="java.lang.Integer">
+      select count(*) from MASTER_DATA_CODE_T
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MASTER_DATA_CODE_T
+        where 
+           MASTER_ID = #{masterId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MASTER_DATA_CODE_T 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="masterId">
+      insert into  MASTER_DATA_CODE_T ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{masterCode,jdbcType=VARCHAR}, 
+        #{masterName,jdbcType=VARCHAR}, 
+        #{valueCode,jdbcType=VARCHAR}, 
+        #{valueName,jdbcType=VARCHAR}, 
+        #{ifValid,jdbcType=BIGINT}, 
+        #{upperValueCode,jdbcType=VARCHAR}, 
+        #{explainInfo,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{extendInfo,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{sort,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MASTER_DATA_CODE_T ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{masterId,jdbcType=BIGINT}, 
+        #{masterCode,jdbcType=VARCHAR}, 
+        #{masterName,jdbcType=VARCHAR}, 
+        #{valueCode,jdbcType=VARCHAR}, 
+        #{valueName,jdbcType=VARCHAR}, 
+        #{ifValid,jdbcType=BIGINT}, 
+        #{upperValueCode,jdbcType=VARCHAR}, 
+        #{explainInfo,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{extendInfo,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{sort,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MASTER_DATA_CODE_T  
+        where
+           MASTER_ID = #{masterId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MASTER_DATA_CODE_T
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MASTER_DATA_CODE_T
+    <trim prefix="set" suffixOverrides=",">
+      <if test="masterCode != null">
+         MASTER_CODE = #{masterCode,jdbcType=VARCHAR},
+      </if>
+      <if test="masterName != null">
+         MASTER_NAME = #{masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="valueCode != null">
+         VALUE_CODE = #{valueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueName != null">
+         VALUE_NAME = #{valueName,jdbcType=VARCHAR},
+      </if>
+      <if test="ifValid != null">
+         IF_VALID = #{ifValid,jdbcType=BIGINT},
+      </if>
+      <if test="upperValueCode != null">
+         UPPER_VALUE_CODE = #{upperValueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="explainInfo != null">
+         EXPLAIN_INFO = #{explainInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extendInfo != null">
+         EXTEND_INFO = #{extendInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+         SORT = #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           MASTER_ID = #{masterId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MASTER_DATA_CODE_T
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.masterId != null">
+        MASTER_ID = #{record.masterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.masterCode != null">
+        MASTER_CODE = #{record.masterCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterName != null">
+        MASTER_NAME = #{record.masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueCode != null">
+        VALUE_CODE = #{record.valueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueName != null">
+        VALUE_NAME = #{record.valueName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifValid != null">
+        IF_VALID = #{record.ifValid,jdbcType=BIGINT},
+      </if>
+      <if test="record.upperValueCode != null">
+        UPPER_VALUE_CODE = #{record.upperValueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.explainInfo != null">
+        EXPLAIN_INFO = #{record.explainInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.extendInfo != null">
+        EXTEND_INFO = #{record.extendInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        SORT = #{record.sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.masterId != null ">
+        MASTER_ID = #{condition.masterId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.masterCode != null and condition.masterCode != ''">
+        and MASTER_CODE = #{condition.masterCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.masterName != null and condition.masterName != ''">
+        and MASTER_NAME = #{condition.masterName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueCode != null and condition.valueCode != ''">
+        and VALUE_CODE = #{condition.valueCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueName != null and condition.valueName != ''">
+        and VALUE_NAME = #{condition.valueName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifValid != null ">
+        and IF_VALID = #{condition.ifValid, jdbcType=BIGINT }
+      </if>
+      <if test="condition.upperValueCode != null and condition.upperValueCode != ''">
+        and UPPER_VALUE_CODE = #{condition.upperValueCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.explainInfo != null and condition.explainInfo != ''">
+        and EXPLAIN_INFO = #{condition.explainInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.extendInfo != null and condition.extendInfo != ''">
+        and EXTEND_INFO = #{condition.extendInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sort != null ">
+        and SORT = #{condition.sort, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

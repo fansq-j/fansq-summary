@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BankAgentAcctItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BankAgentAcctItemDO">
+    <id column="AGENT_ACCT_ITEM_ID" jdbcType="BIGINT" property="agentAcctItemId"/>
+    <result column="ACCT_ITEM_ID" jdbcType="BIGINT" property="acctItemId"/>
+    <result column="SEND_ID" jdbcType="BIGINT" property="sendId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="AGENT_CHARGE" jdbcType="BIGINT" property="agentCharge"/>
+    <result column="AGENT_TYPE" jdbcType="INTEGER" property="agentType"/>
+    <result column="BRANCH_ID" jdbcType="INTEGER" property="branchId"/>
+    <result column="BANK_ACCT" jdbcType="VARCHAR" property="bankAcct"/>
+    <result column="BANK_ITEM_TYPE_LATN_ID" jdbcType="INTEGER" property="bankItemTypeLatnId"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          AGENT_ACCT_ITEM_ID, 
+          ACCT_ITEM_ID, 
+          SEND_ID, 
+          AMOUNT, 
+          BILLING_CYCLE_ID, 
+          PROD_INST_ID, 
+          ACCT_ID, 
+          AGENT_CHARGE, 
+          AGENT_TYPE, 
+          BRANCH_ID, 
+          BANK_ACCT, 
+          BANK_ITEM_TYPE_LATN_ID, 
+          CREATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_ITEM_ID, 
+          SEND_ID, 
+          AMOUNT, 
+          BILLING_CYCLE_ID, 
+          PROD_INST_ID, 
+          ACCT_ID, 
+          AGENT_CHARGE, 
+          AGENT_TYPE, 
+          BRANCH_ID, 
+          BANK_ACCT, 
+          BANK_ITEM_TYPE_LATN_ID, 
+          CREATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="agentAcctItemId != null ">
+        AGENT_ACCT_ITEM_ID = #{agentAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="acctItemId != null ">
+        and ACCT_ITEM_ID = #{acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="sendId != null ">
+        and SEND_ID = #{sendId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="agentCharge != null ">
+        and AGENT_CHARGE = #{agentCharge, jdbcType=BIGINT }
+      </if>
+      <if test="agentType != null ">
+        and AGENT_TYPE = #{agentType, jdbcType=INTEGER }
+      </if>
+      <if test="branchId != null ">
+        and BRANCH_ID = #{branchId, jdbcType=INTEGER }
+      </if>
+      <if test="bankAcct != null and bankAcct != ''">
+        and BANK_ACCT = #{bankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="bankItemTypeLatnId != null ">
+        and BANK_ITEM_TYPE_LATN_ID = #{bankItemTypeLatnId, jdbcType=INTEGER }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BankAgentAcctItemDO" resultType="java.lang.Integer">
+      select count(*) from BANK_AGENT_ACCT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BANK_AGENT_ACCT_ITEM
+        where 
+           AGENT_ACCT_ITEM_ID = #{agentAcctItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BANK_AGENT_ACCT_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="agentAcctItemId">
+      insert into  BANK_AGENT_ACCT_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctItemId,jdbcType=BIGINT}, 
+        #{sendId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{agentCharge,jdbcType=BIGINT}, 
+        #{agentType,jdbcType=INTEGER}, 
+        #{branchId,jdbcType=INTEGER}, 
+        #{bankAcct,jdbcType=VARCHAR}, 
+        #{bankItemTypeLatnId,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BANK_AGENT_ACCT_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{agentAcctItemId,jdbcType=BIGINT}, 
+        #{acctItemId,jdbcType=BIGINT}, 
+        #{sendId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{agentCharge,jdbcType=BIGINT}, 
+        #{agentType,jdbcType=INTEGER}, 
+        #{branchId,jdbcType=INTEGER}, 
+        #{bankAcct,jdbcType=VARCHAR}, 
+        #{bankItemTypeLatnId,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BANK_AGENT_ACCT_ITEM  
+        where
+           AGENT_ACCT_ITEM_ID = #{agentAcctItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BANK_AGENT_ACCT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BANK_AGENT_ACCT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctItemId != null">
+         ACCT_ITEM_ID = #{acctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="sendId != null">
+         SEND_ID = #{sendId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="agentCharge != null">
+         AGENT_CHARGE = #{agentCharge,jdbcType=BIGINT},
+      </if>
+      <if test="agentType != null">
+         AGENT_TYPE = #{agentType,jdbcType=INTEGER},
+      </if>
+      <if test="branchId != null">
+         BRANCH_ID = #{branchId,jdbcType=INTEGER},
+      </if>
+      <if test="bankAcct != null">
+         BANK_ACCT = #{bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="bankItemTypeLatnId != null">
+         BANK_ITEM_TYPE_LATN_ID = #{bankItemTypeLatnId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           AGENT_ACCT_ITEM_ID = #{agentAcctItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BANK_AGENT_ACCT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.agentAcctItemId != null">
+        AGENT_ACCT_ITEM_ID = #{record.agentAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctItemId != null">
+        ACCT_ITEM_ID = #{record.acctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sendId != null">
+        SEND_ID = #{record.sendId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agentCharge != null">
+        AGENT_CHARGE = #{record.agentCharge,jdbcType=BIGINT},
+      </if>
+      <if test="record.agentType != null">
+        AGENT_TYPE = #{record.agentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.branchId != null">
+        BRANCH_ID = #{record.branchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankAcct != null">
+        BANK_ACCT = #{record.bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankItemTypeLatnId != null">
+        BANK_ITEM_TYPE_LATN_ID = #{record.bankItemTypeLatnId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.agentAcctItemId != null ">
+        AGENT_ACCT_ITEM_ID = #{condition.agentAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctItemId != null ">
+        and ACCT_ITEM_ID = #{condition.acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sendId != null ">
+        and SEND_ID = #{condition.sendId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agentCharge != null ">
+        and AGENT_CHARGE = #{condition.agentCharge, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agentType != null ">
+        and AGENT_TYPE = #{condition.agentType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.branchId != null ">
+        and BRANCH_ID = #{condition.branchId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.bankAcct != null and condition.bankAcct != ''">
+        and BANK_ACCT = #{condition.bankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.bankItemTypeLatnId != null ">
+        and BANK_ITEM_TYPE_LATN_ID = #{condition.bankItemTypeLatnId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

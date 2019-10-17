@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.GridUnitMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.GridUnitDO">
+    <id column="GRID_UNIT_ID" jdbcType="BIGINT" property="gridUnitId"/>
+    <result column="GRID_UNIT_NAME" jdbcType="VARCHAR" property="gridUnitName"/>
+    <result column="GRID_UNIT_CODE" jdbcType="VARCHAR" property="gridUnitCode"/>
+    <result column="GRID_UNIT_TYPE" jdbcType="VARCHAR" property="gridUnitType"/>
+    <result column="GRID_UNIT_SUB_TYPE" jdbcType="VARCHAR" property="gridUnitSubType"/>
+    <result column="GRID_UNIT_ADDRESS" jdbcType="VARCHAR" property="gridUnitAddress"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="COMMON_REGION_ID" jdbcType="BIGINT" property="commonRegionId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          GRID_UNIT_ID, 
+          GRID_UNIT_NAME, 
+          GRID_UNIT_CODE, 
+          GRID_UNIT_TYPE, 
+          GRID_UNIT_SUB_TYPE, 
+          GRID_UNIT_ADDRESS, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          COMMON_REGION_ID, 
+          LAN_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          GRID_UNIT_NAME, 
+          GRID_UNIT_CODE, 
+          GRID_UNIT_TYPE, 
+          GRID_UNIT_SUB_TYPE, 
+          GRID_UNIT_ADDRESS, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          COMMON_REGION_ID, 
+          LAN_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="gridUnitId != null ">
+        GRID_UNIT_ID = #{gridUnitId, jdbcType=BIGINT }
+      </if>
+      <if test="gridUnitName != null and gridUnitName != ''">
+        and GRID_UNIT_NAME = #{gridUnitName, jdbcType=VARCHAR }
+      </if>
+      <if test="gridUnitCode != null and gridUnitCode != ''">
+        and GRID_UNIT_CODE = #{gridUnitCode, jdbcType=VARCHAR }
+      </if>
+      <if test="gridUnitType != null and gridUnitType != ''">
+        and GRID_UNIT_TYPE = #{gridUnitType, jdbcType=VARCHAR }
+      </if>
+      <if test="gridUnitSubType != null and gridUnitSubType != ''">
+        and GRID_UNIT_SUB_TYPE = #{gridUnitSubType, jdbcType=VARCHAR }
+      </if>
+      <if test="gridUnitAddress != null and gridUnitAddress != ''">
+        and GRID_UNIT_ADDRESS = #{gridUnitAddress, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="commonRegionId != null ">
+        and COMMON_REGION_ID = #{commonRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.GridUnitDO" resultType="java.lang.Integer">
+      select count(*) from GRID_UNIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GRID_UNIT
+        where 
+           GRID_UNIT_ID = #{gridUnitId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GRID_UNIT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="gridUnitId">
+      insert into  GRID_UNIT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{gridUnitName,jdbcType=VARCHAR}, 
+        #{gridUnitCode,jdbcType=VARCHAR}, 
+        #{gridUnitType,jdbcType=VARCHAR}, 
+        #{gridUnitSubType,jdbcType=VARCHAR}, 
+        #{gridUnitAddress,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{commonRegionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GRID_UNIT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{gridUnitId,jdbcType=BIGINT}, 
+        #{gridUnitName,jdbcType=VARCHAR}, 
+        #{gridUnitCode,jdbcType=VARCHAR}, 
+        #{gridUnitType,jdbcType=VARCHAR}, 
+        #{gridUnitSubType,jdbcType=VARCHAR}, 
+        #{gridUnitAddress,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{commonRegionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GRID_UNIT  
+        where
+           GRID_UNIT_ID = #{gridUnitId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GRID_UNIT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GRID_UNIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="gridUnitName != null">
+         GRID_UNIT_NAME = #{gridUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="gridUnitCode != null">
+         GRID_UNIT_CODE = #{gridUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gridUnitType != null">
+         GRID_UNIT_TYPE = #{gridUnitType,jdbcType=VARCHAR},
+      </if>
+      <if test="gridUnitSubType != null">
+         GRID_UNIT_SUB_TYPE = #{gridUnitSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="gridUnitAddress != null">
+         GRID_UNIT_ADDRESS = #{gridUnitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="commonRegionId != null">
+         COMMON_REGION_ID = #{commonRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           GRID_UNIT_ID = #{gridUnitId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GRID_UNIT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.gridUnitId != null">
+        GRID_UNIT_ID = #{record.gridUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gridUnitName != null">
+        GRID_UNIT_NAME = #{record.gridUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gridUnitCode != null">
+        GRID_UNIT_CODE = #{record.gridUnitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gridUnitType != null">
+        GRID_UNIT_TYPE = #{record.gridUnitType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gridUnitSubType != null">
+        GRID_UNIT_SUB_TYPE = #{record.gridUnitSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gridUnitAddress != null">
+        GRID_UNIT_ADDRESS = #{record.gridUnitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commonRegionId != null">
+        COMMON_REGION_ID = #{record.commonRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.gridUnitId != null ">
+        GRID_UNIT_ID = #{condition.gridUnitId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.gridUnitName != null and condition.gridUnitName != ''">
+        and GRID_UNIT_NAME = #{condition.gridUnitName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gridUnitCode != null and condition.gridUnitCode != ''">
+        and GRID_UNIT_CODE = #{condition.gridUnitCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gridUnitType != null and condition.gridUnitType != ''">
+        and GRID_UNIT_TYPE = #{condition.gridUnitType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gridUnitSubType != null and condition.gridUnitSubType != ''">
+        and GRID_UNIT_SUB_TYPE = #{condition.gridUnitSubType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gridUnitAddress != null and condition.gridUnitAddress != ''">
+        and GRID_UNIT_ADDRESS = #{condition.gridUnitAddress, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.commonRegionId != null ">
+        and COMMON_REGION_ID = #{condition.commonRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ShoppingCartItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ShoppingCartItemDO">
+    <id column="CART_ITEM_ID" jdbcType="BIGINT" property="cartItemId"/>
+    <result column="GROUP_ID" jdbcType="INTEGER" property="groupId"/>
+    <result column="CART_ID" jdbcType="BIGINT" property="cartId"/>
+    <result column="CART_ITEM_CD" jdbcType="VARCHAR" property="cartItemCd"/>
+    <result column="APPLY_OBJ_SPEC" jdbcType="BIGINT" property="applyObjSpec"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="SERVICE_OFFER_ID" jdbcType="INTEGER" property="serviceOfferId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_POST" jdbcType="BIGINT" property="createPost"/>
+    <result column="CREATE_ORG_ID" jdbcType="BIGINT" property="createOrgId"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CART_ITEM_ID, 
+          GROUP_ID, 
+          CART_ID, 
+          CART_ITEM_CD, 
+          APPLY_OBJ_SPEC, 
+          OBJ_ID, 
+          SERVICE_OFFER_ID, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          GROUP_ID, 
+          CART_ID, 
+          CART_ITEM_CD, 
+          APPLY_OBJ_SPEC, 
+          OBJ_ID, 
+          SERVICE_OFFER_ID, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_POST, 
+          CREATE_ORG_ID, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="cartItemId != null ">
+        CART_ITEM_ID = #{cartItemId, jdbcType=BIGINT }
+      </if>
+      <if test="groupId != null ">
+        and GROUP_ID = #{groupId, jdbcType=INTEGER }
+      </if>
+      <if test="cartId != null ">
+        and CART_ID = #{cartId, jdbcType=BIGINT }
+      </if>
+      <if test="cartItemCd != null and cartItemCd != ''">
+        and CART_ITEM_CD = #{cartItemCd, jdbcType=VARCHAR }
+      </if>
+      <if test="applyObjSpec != null ">
+        and APPLY_OBJ_SPEC = #{applyObjSpec, jdbcType=BIGINT }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createPost != null ">
+        and CREATE_POST = #{createPost, jdbcType=BIGINT }
+      </if>
+      <if test="createOrgId != null ">
+        and CREATE_ORG_ID = #{createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ShoppingCartItemDO" resultType="java.lang.Integer">
+      select count(*) from SHOPPING_CART_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SHOPPING_CART_ITEM
+        where 
+           CART_ITEM_ID = #{cartItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SHOPPING_CART_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="cartItemId">
+      insert into  SHOPPING_CART_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{groupId,jdbcType=INTEGER}, 
+        #{cartId,jdbcType=BIGINT}, 
+        #{cartItemCd,jdbcType=VARCHAR}, 
+        #{applyObjSpec,jdbcType=BIGINT}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SHOPPING_CART_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{cartItemId,jdbcType=BIGINT}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{cartId,jdbcType=BIGINT}, 
+        #{cartItemCd,jdbcType=VARCHAR}, 
+        #{applyObjSpec,jdbcType=BIGINT}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createPost,jdbcType=BIGINT}, 
+        #{createOrgId,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SHOPPING_CART_ITEM  
+        where
+           CART_ITEM_ID = #{cartItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SHOPPING_CART_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SHOPPING_CART_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="groupId != null">
+         GROUP_ID = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="cartId != null">
+         CART_ID = #{cartId,jdbcType=BIGINT},
+      </if>
+      <if test="cartItemCd != null">
+         CART_ITEM_CD = #{cartItemCd,jdbcType=VARCHAR},
+      </if>
+      <if test="applyObjSpec != null">
+         APPLY_OBJ_SPEC = #{applyObjSpec,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceOfferId != null">
+         SERVICE_OFFER_ID = #{serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPost != null">
+         CREATE_POST = #{createPost,jdbcType=BIGINT},
+      </if>
+      <if test="createOrgId != null">
+         CREATE_ORG_ID = #{createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           CART_ITEM_ID = #{cartItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SHOPPING_CART_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.cartItemId != null">
+        CART_ITEM_ID = #{record.cartItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.groupId != null">
+        GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cartId != null">
+        CART_ID = #{record.cartId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cartItemCd != null">
+        CART_ITEM_CD = #{record.cartItemCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyObjSpec != null">
+        APPLY_OBJ_SPEC = #{record.applyObjSpec,jdbcType=BIGINT},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceOfferId != null">
+        SERVICE_OFFER_ID = #{record.serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createPost != null">
+        CREATE_POST = #{record.createPost,jdbcType=BIGINT},
+      </if>
+      <if test="record.createOrgId != null">
+        CREATE_ORG_ID = #{record.createOrgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.cartItemId != null ">
+        CART_ITEM_ID = #{condition.cartItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.groupId != null ">
+        and GROUP_ID = #{condition.groupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cartId != null ">
+        and CART_ID = #{condition.cartId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.cartItemCd != null and condition.cartItemCd != ''">
+        and CART_ITEM_CD = #{condition.cartItemCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.applyObjSpec != null ">
+        and APPLY_OBJ_SPEC = #{condition.applyObjSpec, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{condition.serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createPost != null ">
+        and CREATE_POST = #{condition.createPost, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createOrgId != null ">
+        and CREATE_ORG_ID = #{condition.createOrgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

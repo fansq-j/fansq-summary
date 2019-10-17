@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BillItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BillItemDO">
+    <id column="BILL_ITEM_TYPE_ID" jdbcType="INTEGER" property="billItemTypeId"/>
+    <result column="CLASSIFY" jdbcType="INTEGER" property="classify"/>
+    <result column="BILL_PARENT_ID" jdbcType="INTEGER" property="billParentId"/>
+    <result column="BILL_REMARK_ID" jdbcType="INTEGER" property="billRemarkId"/>
+    <result column="OFFER_ID" jdbcType="INTEGER" property="offerId"/>
+    <result column="PRINT_ORDER" jdbcType="INTEGER" property="printOrder"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BILL_ITEM_TYPE_ID, 
+          CLASSIFY, 
+          BILL_PARENT_ID, 
+          BILL_REMARK_ID, 
+          OFFER_ID, 
+          PRINT_ORDER, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CLASSIFY, 
+          BILL_PARENT_ID, 
+          BILL_REMARK_ID, 
+          OFFER_ID, 
+          PRINT_ORDER, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="billItemTypeId != null ">
+        BILL_ITEM_TYPE_ID = #{billItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="classify != null ">
+        and CLASSIFY = #{classify, jdbcType=INTEGER }
+      </if>
+      <if test="billParentId != null ">
+        and BILL_PARENT_ID = #{billParentId, jdbcType=INTEGER }
+      </if>
+      <if test="billRemarkId != null ">
+        and BILL_REMARK_ID = #{billRemarkId, jdbcType=INTEGER }
+      </if>
+      <if test="offerId != null ">
+        and OFFER_ID = #{offerId, jdbcType=INTEGER }
+      </if>
+      <if test="printOrder != null ">
+        and PRINT_ORDER = #{printOrder, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BillItemDO" resultType="java.lang.Integer">
+      select count(*) from BILL_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BILL_ITEM
+        where 
+           BILL_ITEM_TYPE_ID = #{billItemTypeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BILL_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="billItemTypeId">
+      insert into  BILL_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{classify,jdbcType=INTEGER}, 
+        #{billParentId,jdbcType=INTEGER}, 
+        #{billRemarkId,jdbcType=INTEGER}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{printOrder,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BILL_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{billItemTypeId,jdbcType=INTEGER}, 
+        #{classify,jdbcType=INTEGER}, 
+        #{billParentId,jdbcType=INTEGER}, 
+        #{billRemarkId,jdbcType=INTEGER}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{printOrder,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BILL_ITEM  
+        where
+           BILL_ITEM_TYPE_ID = #{billItemTypeId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from BILL_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BILL_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="classify != null">
+         CLASSIFY = #{classify,jdbcType=INTEGER},
+      </if>
+      <if test="billParentId != null">
+         BILL_PARENT_ID = #{billParentId,jdbcType=INTEGER},
+      </if>
+      <if test="billRemarkId != null">
+         BILL_REMARK_ID = #{billRemarkId,jdbcType=INTEGER},
+      </if>
+      <if test="offerId != null">
+         OFFER_ID = #{offerId,jdbcType=INTEGER},
+      </if>
+      <if test="printOrder != null">
+         PRINT_ORDER = #{printOrder,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           BILL_ITEM_TYPE_ID = #{billItemTypeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update BILL_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.billItemTypeId != null">
+        BILL_ITEM_TYPE_ID = #{record.billItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.classify != null">
+        CLASSIFY = #{record.classify,jdbcType=INTEGER},
+      </if>
+      <if test="record.billParentId != null">
+        BILL_PARENT_ID = #{record.billParentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billRemarkId != null">
+        BILL_REMARK_ID = #{record.billRemarkId,jdbcType=INTEGER},
+      </if>
+      <if test="record.offerId != null">
+        OFFER_ID = #{record.offerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.printOrder != null">
+        PRINT_ORDER = #{record.printOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.billItemTypeId != null ">
+        BILL_ITEM_TYPE_ID = #{condition.billItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.classify != null ">
+        and CLASSIFY = #{condition.classify, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billParentId != null ">
+        and BILL_PARENT_ID = #{condition.billParentId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billRemarkId != null ">
+        and BILL_REMARK_ID = #{condition.billRemarkId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offerId != null ">
+        and OFFER_ID = #{condition.offerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.printOrder != null ">
+        and PRINT_ORDER = #{condition.printOrder, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

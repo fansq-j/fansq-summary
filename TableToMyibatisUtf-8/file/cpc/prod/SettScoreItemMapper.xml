@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SettScoreItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SettScoreItemDO">
+    <id column="SETT_SCORE_ITEM_ID" jdbcType="BIGINT" property="settScoreItemId"/>
+    <result column="SETTLE_OBJ_TYPE" jdbcType="INTEGER" property="settleObjType"/>
+    <result column="SETTLE_OBJ_ID" jdbcType="BIGINT" property="settleObjId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="SETT_SCORE_TYPE_ID" jdbcType="INTEGER" property="settScoreTypeId"/>
+    <result column="SETT_SCORE_VALUE" jdbcType="BIGINT" property="settScoreValue"/>
+    <result column="ADJUST_FLAG" jdbcType="INTEGER" property="adjustFlag"/>
+    <result column="ORG_BILLING_CYCLE_ID" jdbcType="INTEGER" property="orgBillingCycleId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SETT_SCORE_ITEM_ID, 
+          SETTLE_OBJ_TYPE, 
+          SETTLE_OBJ_ID, 
+          BILLING_CYCLE_ID, 
+          SETT_SCORE_TYPE_ID, 
+          SETT_SCORE_VALUE, 
+          ADJUST_FLAG, 
+          ORG_BILLING_CYCLE_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SETTLE_OBJ_TYPE, 
+          SETTLE_OBJ_ID, 
+          BILLING_CYCLE_ID, 
+          SETT_SCORE_TYPE_ID, 
+          SETT_SCORE_VALUE, 
+          ADJUST_FLAG, 
+          ORG_BILLING_CYCLE_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="settScoreItemId != null ">
+        SETT_SCORE_ITEM_ID = #{settScoreItemId, jdbcType=BIGINT }
+      </if>
+      <if test="settleObjType != null ">
+        and SETTLE_OBJ_TYPE = #{settleObjType, jdbcType=INTEGER }
+      </if>
+      <if test="settleObjId != null ">
+        and SETTLE_OBJ_ID = #{settleObjId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="settScoreTypeId != null ">
+        and SETT_SCORE_TYPE_ID = #{settScoreTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="settScoreValue != null ">
+        and SETT_SCORE_VALUE = #{settScoreValue, jdbcType=BIGINT }
+      </if>
+      <if test="adjustFlag != null ">
+        and ADJUST_FLAG = #{adjustFlag, jdbcType=INTEGER }
+      </if>
+      <if test="orgBillingCycleId != null ">
+        and ORG_BILLING_CYCLE_ID = #{orgBillingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SettScoreItemDO" resultType="java.lang.Integer">
+      select count(*) from SETT_SCORE_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SETT_SCORE_ITEM
+        where 
+           SETT_SCORE_ITEM_ID = #{settScoreItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SETT_SCORE_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="settScoreItemId">
+      insert into  SETT_SCORE_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{settleObjType,jdbcType=INTEGER}, 
+        #{settleObjId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{settScoreTypeId,jdbcType=INTEGER}, 
+        #{settScoreValue,jdbcType=BIGINT}, 
+        #{adjustFlag,jdbcType=INTEGER}, 
+        #{orgBillingCycleId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SETT_SCORE_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{settScoreItemId,jdbcType=BIGINT}, 
+        #{settleObjType,jdbcType=INTEGER}, 
+        #{settleObjId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{settScoreTypeId,jdbcType=INTEGER}, 
+        #{settScoreValue,jdbcType=BIGINT}, 
+        #{adjustFlag,jdbcType=INTEGER}, 
+        #{orgBillingCycleId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SETT_SCORE_ITEM  
+        where
+           SETT_SCORE_ITEM_ID = #{settScoreItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SETT_SCORE_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SETT_SCORE_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="settleObjType != null">
+         SETTLE_OBJ_TYPE = #{settleObjType,jdbcType=INTEGER},
+      </if>
+      <if test="settleObjId != null">
+         SETTLE_OBJ_ID = #{settleObjId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="settScoreTypeId != null">
+         SETT_SCORE_TYPE_ID = #{settScoreTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="settScoreValue != null">
+         SETT_SCORE_VALUE = #{settScoreValue,jdbcType=BIGINT},
+      </if>
+      <if test="adjustFlag != null">
+         ADJUST_FLAG = #{adjustFlag,jdbcType=INTEGER},
+      </if>
+      <if test="orgBillingCycleId != null">
+         ORG_BILLING_CYCLE_ID = #{orgBillingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           SETT_SCORE_ITEM_ID = #{settScoreItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SETT_SCORE_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.settScoreItemId != null">
+        SETT_SCORE_ITEM_ID = #{record.settScoreItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.settleObjType != null">
+        SETTLE_OBJ_TYPE = #{record.settleObjType,jdbcType=INTEGER},
+      </if>
+      <if test="record.settleObjId != null">
+        SETTLE_OBJ_ID = #{record.settleObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.settScoreTypeId != null">
+        SETT_SCORE_TYPE_ID = #{record.settScoreTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.settScoreValue != null">
+        SETT_SCORE_VALUE = #{record.settScoreValue,jdbcType=BIGINT},
+      </if>
+      <if test="record.adjustFlag != null">
+        ADJUST_FLAG = #{record.adjustFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgBillingCycleId != null">
+        ORG_BILLING_CYCLE_ID = #{record.orgBillingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.settScoreItemId != null ">
+        SETT_SCORE_ITEM_ID = #{condition.settScoreItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.settleObjType != null ">
+        and SETTLE_OBJ_TYPE = #{condition.settleObjType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.settleObjId != null ">
+        and SETTLE_OBJ_ID = #{condition.settleObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.settScoreTypeId != null ">
+        and SETT_SCORE_TYPE_ID = #{condition.settScoreTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.settScoreValue != null ">
+        and SETT_SCORE_VALUE = #{condition.settScoreValue, jdbcType=BIGINT }
+      </if>
+      <if test="condition.adjustFlag != null ">
+        and ADJUST_FLAG = #{condition.adjustFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orgBillingCycleId != null ">
+        and ORG_BILLING_CYCLE_ID = #{condition.orgBillingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

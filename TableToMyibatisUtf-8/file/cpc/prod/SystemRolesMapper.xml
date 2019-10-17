@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SystemRolesMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SystemRolesDO">
+    <id column="SYS_ROLE_ID" jdbcType="BIGINT" property="sysRoleId"/>
+    <result column="SYS_ROLE_NAME" jdbcType="VARCHAR" property="sysRoleName"/>
+    <result column="SYS_ROLE_CODE" jdbcType="VARCHAR" property="sysRoleCode"/>
+    <result column="SYS_ROLE_TYPE" jdbcType="VARCHAR" property="sysRoleType"/>
+    <result column="SYS_ROLE_DESC" jdbcType="VARCHAR" property="sysRoleDesc"/>
+    <result column="INIT_FLAG" jdbcType="INTEGER" property="initFlag"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="SYSTEM_INFO_ID" jdbcType="BIGINT" property="systemInfoId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SYS_ROLE_ID, 
+          SYS_ROLE_NAME, 
+          SYS_ROLE_CODE, 
+          SYS_ROLE_TYPE, 
+          SYS_ROLE_DESC, 
+          INIT_FLAG, 
+          REGION_ID, 
+          SYSTEM_INFO_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SYS_ROLE_NAME, 
+          SYS_ROLE_CODE, 
+          SYS_ROLE_TYPE, 
+          SYS_ROLE_DESC, 
+          INIT_FLAG, 
+          REGION_ID, 
+          SYSTEM_INFO_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="sysRoleId != null ">
+        SYS_ROLE_ID = #{sysRoleId, jdbcType=BIGINT }
+      </if>
+      <if test="sysRoleName != null and sysRoleName != ''">
+        and SYS_ROLE_NAME = #{sysRoleName, jdbcType=VARCHAR }
+      </if>
+      <if test="sysRoleCode != null and sysRoleCode != ''">
+        and SYS_ROLE_CODE = #{sysRoleCode, jdbcType=VARCHAR }
+      </if>
+      <if test="sysRoleType != null and sysRoleType != ''">
+        and SYS_ROLE_TYPE = #{sysRoleType, jdbcType=VARCHAR }
+      </if>
+      <if test="sysRoleDesc != null and sysRoleDesc != ''">
+        and SYS_ROLE_DESC = #{sysRoleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="initFlag != null ">
+        and INIT_FLAG = #{initFlag, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SystemRolesDO" resultType="java.lang.Integer">
+      select count(*) from SYSTEM_ROLES
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SYSTEM_ROLES
+        where 
+           SYS_ROLE_ID = #{sysRoleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SYSTEM_ROLES 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="sysRoleId">
+      insert into  SYSTEM_ROLES ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{sysRoleName,jdbcType=VARCHAR}, 
+        #{sysRoleCode,jdbcType=VARCHAR}, 
+        #{sysRoleType,jdbcType=VARCHAR}, 
+        #{sysRoleDesc,jdbcType=VARCHAR}, 
+        #{initFlag,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SYSTEM_ROLES ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{sysRoleId,jdbcType=BIGINT}, 
+        #{sysRoleName,jdbcType=VARCHAR}, 
+        #{sysRoleCode,jdbcType=VARCHAR}, 
+        #{sysRoleType,jdbcType=VARCHAR}, 
+        #{sysRoleDesc,jdbcType=VARCHAR}, 
+        #{initFlag,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SYSTEM_ROLES  
+        where
+           SYS_ROLE_ID = #{sysRoleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SYSTEM_ROLES
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SYSTEM_ROLES
+    <trim prefix="set" suffixOverrides=",">
+      <if test="sysRoleName != null">
+         SYS_ROLE_NAME = #{sysRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoleCode != null">
+         SYS_ROLE_CODE = #{sysRoleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoleType != null">
+         SYS_ROLE_TYPE = #{sysRoleType,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoleDesc != null">
+         SYS_ROLE_DESC = #{sysRoleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="initFlag != null">
+         INIT_FLAG = #{initFlag,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="systemInfoId != null">
+         SYSTEM_INFO_ID = #{systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           SYS_ROLE_ID = #{sysRoleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SYSTEM_ROLES
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.sysRoleId != null">
+        SYS_ROLE_ID = #{record.sysRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysRoleName != null">
+        SYS_ROLE_NAME = #{record.sysRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysRoleCode != null">
+        SYS_ROLE_CODE = #{record.sysRoleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysRoleType != null">
+        SYS_ROLE_TYPE = #{record.sysRoleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysRoleDesc != null">
+        SYS_ROLE_DESC = #{record.sysRoleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.initFlag != null">
+        INIT_FLAG = #{record.initFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.systemInfoId != null">
+        SYSTEM_INFO_ID = #{record.systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.sysRoleId != null ">
+        SYS_ROLE_ID = #{condition.sysRoleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sysRoleName != null and condition.sysRoleName != ''">
+        and SYS_ROLE_NAME = #{condition.sysRoleName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sysRoleCode != null and condition.sysRoleCode != ''">
+        and SYS_ROLE_CODE = #{condition.sysRoleCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sysRoleType != null and condition.sysRoleType != ''">
+        and SYS_ROLE_TYPE = #{condition.sysRoleType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.sysRoleDesc != null and condition.sysRoleDesc != ''">
+        and SYS_ROLE_DESC = #{condition.sysRoleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.initFlag != null ">
+        and INIT_FLAG = #{condition.initFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{condition.systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

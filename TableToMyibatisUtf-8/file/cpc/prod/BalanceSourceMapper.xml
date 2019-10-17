@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BalanceSourceMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BalanceSourceDO">
+    <id column="OPER_INCOME_ID" jdbcType="BIGINT" property="operIncomeId"/>
+    <result column="ACCT_BALANCE_ID" jdbcType="BIGINT" property="acctBalanceId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="OPER_DATE" jdbcType="TIMESTAMP" property="operDate"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="BALANCE" jdbcType="BIGINT" property="balance"/>
+    <result column="CUR_AMOUNT" jdbcType="BIGINT" property="curAmount"/>
+    <result column="BALANCE_RELATION_ID" jdbcType="BIGINT" property="balanceRelationId"/>
+    <result column="BALANCE_SOURCE_TYPE_ID" jdbcType="INTEGER" property="balanceSourceTypeId"/>
+    <result column="CUR_STATUS_DATE" jdbcType="TIMESTAMP" property="curStatusDate"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="PAYMENT_ID" jdbcType="BIGINT" property="paymentId"/>
+    <result column="SOURCE_DESC" jdbcType="VARCHAR" property="sourceDesc"/>
+    <result column="PRESENT_RULE_ID" jdbcType="INTEGER" property="presentRuleId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          OPER_INCOME_ID, 
+          ACCT_BALANCE_ID, 
+          OPER_TYPE, 
+          STAFF_ID, 
+          ORG_ID, 
+          OPER_DATE, 
+          AMOUNT, 
+          BALANCE, 
+          CUR_AMOUNT, 
+          BALANCE_RELATION_ID, 
+          BALANCE_SOURCE_TYPE_ID, 
+          CUR_STATUS_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          PAYMENT_ID, 
+          SOURCE_DESC, 
+          PRESENT_RULE_ID, 
+          OFFER_INST_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_BALANCE_ID, 
+          OPER_TYPE, 
+          STAFF_ID, 
+          ORG_ID, 
+          OPER_DATE, 
+          AMOUNT, 
+          BALANCE, 
+          CUR_AMOUNT, 
+          BALANCE_RELATION_ID, 
+          BALANCE_SOURCE_TYPE_ID, 
+          CUR_STATUS_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          PAYMENT_ID, 
+          SOURCE_DESC, 
+          PRESENT_RULE_ID, 
+          OFFER_INST_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="operIncomeId != null ">
+        OPER_INCOME_ID = #{operIncomeId, jdbcType=BIGINT }
+      </if>
+      <if test="acctBalanceId != null ">
+        and ACCT_BALANCE_ID = #{acctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="operDate != null ">
+        and OPER_DATE = #{operDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="balance != null ">
+        and BALANCE = #{balance, jdbcType=BIGINT }
+      </if>
+      <if test="curAmount != null ">
+        and CUR_AMOUNT = #{curAmount, jdbcType=BIGINT }
+      </if>
+      <if test="balanceRelationId != null ">
+        and BALANCE_RELATION_ID = #{balanceRelationId, jdbcType=BIGINT }
+      </if>
+      <if test="balanceSourceTypeId != null ">
+        and BALANCE_SOURCE_TYPE_ID = #{balanceSourceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="curStatusDate != null ">
+        and CUR_STATUS_DATE = #{curStatusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="paymentId != null ">
+        and PAYMENT_ID = #{paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="sourceDesc != null and sourceDesc != ''">
+        and SOURCE_DESC = #{sourceDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="presentRuleId != null ">
+        and PRESENT_RULE_ID = #{presentRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BalanceSourceDO" resultType="java.lang.Integer">
+      select count(*) from BALANCE_SOURCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BALANCE_SOURCE
+        where 
+           OPER_INCOME_ID = #{operIncomeId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BALANCE_SOURCE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="operIncomeId">
+      insert into  BALANCE_SOURCE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctBalanceId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{operDate,jdbcType=TIMESTAMP}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{balance,jdbcType=BIGINT}, 
+        #{curAmount,jdbcType=BIGINT}, 
+        #{balanceRelationId,jdbcType=BIGINT}, 
+        #{balanceSourceTypeId,jdbcType=INTEGER}, 
+        #{curStatusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{sourceDesc,jdbcType=VARCHAR}, 
+        #{presentRuleId,jdbcType=INTEGER}, 
+        #{offerInstId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BALANCE_SOURCE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{operIncomeId,jdbcType=BIGINT}, 
+        #{acctBalanceId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{operDate,jdbcType=TIMESTAMP}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{balance,jdbcType=BIGINT}, 
+        #{curAmount,jdbcType=BIGINT}, 
+        #{balanceRelationId,jdbcType=BIGINT}, 
+        #{balanceSourceTypeId,jdbcType=INTEGER}, 
+        #{curStatusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{sourceDesc,jdbcType=VARCHAR}, 
+        #{presentRuleId,jdbcType=INTEGER}, 
+        #{offerInstId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BALANCE_SOURCE  
+        where
+           OPER_INCOME_ID = #{operIncomeId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BALANCE_SOURCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BALANCE_SOURCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctBalanceId != null">
+         ACCT_BALANCE_ID = #{acctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="operDate != null">
+         OPER_DATE = #{operDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="balance != null">
+         BALANCE = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="curAmount != null">
+         CUR_AMOUNT = #{curAmount,jdbcType=BIGINT},
+      </if>
+      <if test="balanceRelationId != null">
+         BALANCE_RELATION_ID = #{balanceRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="balanceSourceTypeId != null">
+         BALANCE_SOURCE_TYPE_ID = #{balanceSourceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="curStatusDate != null">
+         CUR_STATUS_DATE = #{curStatusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentId != null">
+         PAYMENT_ID = #{paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="sourceDesc != null">
+         SOURCE_DESC = #{sourceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="presentRuleId != null">
+         PRESENT_RULE_ID = #{presentRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           OPER_INCOME_ID = #{operIncomeId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BALANCE_SOURCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.operIncomeId != null">
+        OPER_INCOME_ID = #{record.operIncomeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctBalanceId != null">
+        ACCT_BALANCE_ID = #{record.acctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operDate != null">
+        OPER_DATE = #{record.operDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.balance != null">
+        BALANCE = #{record.balance,jdbcType=BIGINT},
+      </if>
+      <if test="record.curAmount != null">
+        CUR_AMOUNT = #{record.curAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.balanceRelationId != null">
+        BALANCE_RELATION_ID = #{record.balanceRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.balanceSourceTypeId != null">
+        BALANCE_SOURCE_TYPE_ID = #{record.balanceSourceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.curStatusDate != null">
+        CUR_STATUS_DATE = #{record.curStatusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paymentId != null">
+        PAYMENT_ID = #{record.paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceDesc != null">
+        SOURCE_DESC = #{record.sourceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.presentRuleId != null">
+        PRESENT_RULE_ID = #{record.presentRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.operIncomeId != null ">
+        OPER_INCOME_ID = #{condition.operIncomeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctBalanceId != null ">
+        and ACCT_BALANCE_ID = #{condition.acctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operDate != null ">
+        and OPER_DATE = #{condition.operDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.balance != null ">
+        and BALANCE = #{condition.balance, jdbcType=BIGINT }
+      </if>
+      <if test="condition.curAmount != null ">
+        and CUR_AMOUNT = #{condition.curAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.balanceRelationId != null ">
+        and BALANCE_RELATION_ID = #{condition.balanceRelationId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.balanceSourceTypeId != null ">
+        and BALANCE_SOURCE_TYPE_ID = #{condition.balanceSourceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.curStatusDate != null ">
+        and CUR_STATUS_DATE = #{condition.curStatusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.paymentId != null ">
+        and PAYMENT_ID = #{condition.paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sourceDesc != null and condition.sourceDesc != ''">
+        and SOURCE_DESC = #{condition.sourceDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.presentRuleId != null ">
+        and PRESENT_RULE_ID = #{condition.presentRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

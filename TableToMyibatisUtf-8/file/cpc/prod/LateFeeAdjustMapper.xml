@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.LateFeeAdjustMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.LateFeeAdjustDO">
+    <id column="LATE_FEE_ADJUST_ID" jdbcType="BIGINT" property="lateFeeAdjustId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="ADJUST_FLAG" jdbcType="INTEGER" property="adjustFlag"/>
+    <result column="ADJUST_TYPE" jdbcType="INTEGER" property="adjustType"/>
+    <result column="ADJUST_VALUE" jdbcType="INTEGER" property="adjustValue"/>
+    <result column="ROW_VALUE" jdbcType="INTEGER" property="rowValue"/>
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="ADJUST_REASON" jdbcType="VARCHAR" property="adjustReason"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          LATE_FEE_ADJUST_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          BILLING_CYCLE_ID, 
+          ADJUST_FLAG, 
+          ADJUST_TYPE, 
+          ADJUST_VALUE, 
+          ROW_VALUE, 
+          BILL_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          STAFF_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ADJUST_REASON
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_ID, 
+          PROD_INST_ID, 
+          BILLING_CYCLE_ID, 
+          ADJUST_FLAG, 
+          ADJUST_TYPE, 
+          ADJUST_VALUE, 
+          ROW_VALUE, 
+          BILL_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          STAFF_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ADJUST_REASON
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="lateFeeAdjustId != null ">
+        LATE_FEE_ADJUST_ID = #{lateFeeAdjustId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="adjustFlag != null ">
+        and ADJUST_FLAG = #{adjustFlag, jdbcType=INTEGER }
+      </if>
+      <if test="adjustType != null ">
+        and ADJUST_TYPE = #{adjustType, jdbcType=INTEGER }
+      </if>
+      <if test="adjustValue != null ">
+        and ADJUST_VALUE = #{adjustValue, jdbcType=INTEGER }
+      </if>
+      <if test="rowValue != null ">
+        and ROW_VALUE = #{rowValue, jdbcType=INTEGER }
+      </if>
+      <if test="billId != null ">
+        and BILL_ID = #{billId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="adjustReason != null and adjustReason != ''">
+        and ADJUST_REASON = #{adjustReason, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.LateFeeAdjustDO" resultType="java.lang.Integer">
+      select count(*) from LATE_FEE_ADJUST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from LATE_FEE_ADJUST
+        where 
+           LATE_FEE_ADJUST_ID = #{lateFeeAdjustId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  LATE_FEE_ADJUST 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="lateFeeAdjustId">
+      insert into  LATE_FEE_ADJUST ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{adjustFlag,jdbcType=INTEGER}, 
+        #{adjustType,jdbcType=INTEGER}, 
+        #{adjustValue,jdbcType=INTEGER}, 
+        #{rowValue,jdbcType=INTEGER}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{adjustReason,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  LATE_FEE_ADJUST ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{lateFeeAdjustId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{adjustFlag,jdbcType=INTEGER}, 
+        #{adjustType,jdbcType=INTEGER}, 
+        #{adjustValue,jdbcType=INTEGER}, 
+        #{rowValue,jdbcType=INTEGER}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{adjustReason,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from LATE_FEE_ADJUST  
+        where
+           LATE_FEE_ADJUST_ID = #{lateFeeAdjustId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from LATE_FEE_ADJUST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  LATE_FEE_ADJUST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="adjustFlag != null">
+         ADJUST_FLAG = #{adjustFlag,jdbcType=INTEGER},
+      </if>
+      <if test="adjustType != null">
+         ADJUST_TYPE = #{adjustType,jdbcType=INTEGER},
+      </if>
+      <if test="adjustValue != null">
+         ADJUST_VALUE = #{adjustValue,jdbcType=INTEGER},
+      </if>
+      <if test="rowValue != null">
+         ROW_VALUE = #{rowValue,jdbcType=INTEGER},
+      </if>
+      <if test="billId != null">
+         BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adjustReason != null">
+         ADJUST_REASON = #{adjustReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           LATE_FEE_ADJUST_ID = #{lateFeeAdjustId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update LATE_FEE_ADJUST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.lateFeeAdjustId != null">
+        LATE_FEE_ADJUST_ID = #{record.lateFeeAdjustId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustFlag != null">
+        ADJUST_FLAG = #{record.adjustFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustType != null">
+        ADJUST_TYPE = #{record.adjustType,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustValue != null">
+        ADJUST_VALUE = #{record.adjustValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.rowValue != null">
+        ROW_VALUE = #{record.rowValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adjustReason != null">
+        ADJUST_REASON = #{record.adjustReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.lateFeeAdjustId != null ">
+        LATE_FEE_ADJUST_ID = #{condition.lateFeeAdjustId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustFlag != null ">
+        and ADJUST_FLAG = #{condition.adjustFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustType != null ">
+        and ADJUST_TYPE = #{condition.adjustType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustValue != null ">
+        and ADJUST_VALUE = #{condition.adjustValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.rowValue != null ">
+        and ROW_VALUE = #{condition.rowValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billId != null ">
+        and BILL_ID = #{condition.billId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.adjustReason != null and condition.adjustReason != ''">
+        and ADJUST_REASON = #{condition.adjustReason, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

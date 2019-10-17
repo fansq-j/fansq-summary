@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.DiscountCalcMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.DiscountCalcDO">
+    <id column="DISCOUNT_EXPRESS_ID" jdbcType="INTEGER" property="discountExpressId"/>
+    <result column="CALC_METHOD_ID" jdbcType="INTEGER" property="calcMethodId"/>
+    <result column="SERVICE_OFFER_ID" jdbcType="INTEGER" property="serviceOfferId"/>
+    <result column="CALC_RESULT_TYPE" jdbcType="INTEGER" property="calcResultType"/>
+    <result column="PRICING_SECTION_ID" jdbcType="INTEGER" property="pricingSectionId"/>
+    <result column="DISCOUNT_RATE_VALUE_ID" jdbcType="INTEGER" property="discountRateValueId"/>
+    <result column="FIXED_VALUE_ID" jdbcType="INTEGER" property="fixedValueId"/>
+    <result column="START_REF_VALUE_ID" jdbcType="INTEGER" property="startRefValueId"/>
+    <result column="END_REF_VALUE_ID" jdbcType="INTEGER" property="endRefValueId"/>
+    <result column="CALC_PRIORITY" jdbcType="INTEGER" property="calcPriority"/>
+    <result column="DISCOUNT_DESC" jdbcType="VARCHAR" property="discountDesc"/>
+    <result column="FIRST_MONTH_CALC" jdbcType="INTEGER" property="firstMonthCalc"/>
+    <result column="FIRST_EFF_DATE_TYPE" jdbcType="INTEGER" property="firstEffDateType"/>
+    <result column="RATABLE_CYCLE_ID" jdbcType="INTEGER" property="ratableCycleId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          DISCOUNT_EXPRESS_ID, 
+          CALC_METHOD_ID, 
+          SERVICE_OFFER_ID, 
+          CALC_RESULT_TYPE, 
+          PRICING_SECTION_ID, 
+          DISCOUNT_RATE_VALUE_ID, 
+          FIXED_VALUE_ID, 
+          START_REF_VALUE_ID, 
+          END_REF_VALUE_ID, 
+          CALC_PRIORITY, 
+          DISCOUNT_DESC, 
+          FIRST_MONTH_CALC, 
+          FIRST_EFF_DATE_TYPE, 
+          RATABLE_CYCLE_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CALC_METHOD_ID, 
+          SERVICE_OFFER_ID, 
+          CALC_RESULT_TYPE, 
+          PRICING_SECTION_ID, 
+          DISCOUNT_RATE_VALUE_ID, 
+          FIXED_VALUE_ID, 
+          START_REF_VALUE_ID, 
+          END_REF_VALUE_ID, 
+          CALC_PRIORITY, 
+          DISCOUNT_DESC, 
+          FIRST_MONTH_CALC, 
+          FIRST_EFF_DATE_TYPE, 
+          RATABLE_CYCLE_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="discountExpressId != null ">
+        DISCOUNT_EXPRESS_ID = #{discountExpressId, jdbcType=INTEGER }
+      </if>
+      <if test="calcMethodId != null ">
+        and CALC_METHOD_ID = #{calcMethodId, jdbcType=INTEGER }
+      </if>
+      <if test="serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="calcResultType != null ">
+        and CALC_RESULT_TYPE = #{calcResultType, jdbcType=INTEGER }
+      </if>
+      <if test="pricingSectionId != null ">
+        and PRICING_SECTION_ID = #{pricingSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="discountRateValueId != null ">
+        and DISCOUNT_RATE_VALUE_ID = #{discountRateValueId, jdbcType=INTEGER }
+      </if>
+      <if test="fixedValueId != null ">
+        and FIXED_VALUE_ID = #{fixedValueId, jdbcType=INTEGER }
+      </if>
+      <if test="startRefValueId != null ">
+        and START_REF_VALUE_ID = #{startRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="endRefValueId != null ">
+        and END_REF_VALUE_ID = #{endRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="calcPriority != null ">
+        and CALC_PRIORITY = #{calcPriority, jdbcType=INTEGER }
+      </if>
+      <if test="discountDesc != null and discountDesc != ''">
+        and DISCOUNT_DESC = #{discountDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="firstMonthCalc != null ">
+        and FIRST_MONTH_CALC = #{firstMonthCalc, jdbcType=INTEGER }
+      </if>
+      <if test="firstEffDateType != null ">
+        and FIRST_EFF_DATE_TYPE = #{firstEffDateType, jdbcType=INTEGER }
+      </if>
+      <if test="ratableCycleId != null ">
+        and RATABLE_CYCLE_ID = #{ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.DiscountCalcDO" resultType="java.lang.Integer">
+      select count(*) from DISCOUNT_CALC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from DISCOUNT_CALC
+        where 
+           DISCOUNT_EXPRESS_ID = #{discountExpressId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DISCOUNT_CALC 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="discountExpressId">
+      insert into  DISCOUNT_CALC ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{calcMethodId,jdbcType=INTEGER}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{calcResultType,jdbcType=INTEGER}, 
+        #{pricingSectionId,jdbcType=INTEGER}, 
+        #{discountRateValueId,jdbcType=INTEGER}, 
+        #{fixedValueId,jdbcType=INTEGER}, 
+        #{startRefValueId,jdbcType=INTEGER}, 
+        #{endRefValueId,jdbcType=INTEGER}, 
+        #{calcPriority,jdbcType=INTEGER}, 
+        #{discountDesc,jdbcType=VARCHAR}, 
+        #{firstMonthCalc,jdbcType=INTEGER}, 
+        #{firstEffDateType,jdbcType=INTEGER}, 
+        #{ratableCycleId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  DISCOUNT_CALC ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{discountExpressId,jdbcType=INTEGER}, 
+        #{calcMethodId,jdbcType=INTEGER}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{calcResultType,jdbcType=INTEGER}, 
+        #{pricingSectionId,jdbcType=INTEGER}, 
+        #{discountRateValueId,jdbcType=INTEGER}, 
+        #{fixedValueId,jdbcType=INTEGER}, 
+        #{startRefValueId,jdbcType=INTEGER}, 
+        #{endRefValueId,jdbcType=INTEGER}, 
+        #{calcPriority,jdbcType=INTEGER}, 
+        #{discountDesc,jdbcType=VARCHAR}, 
+        #{firstMonthCalc,jdbcType=INTEGER}, 
+        #{firstEffDateType,jdbcType=INTEGER}, 
+        #{ratableCycleId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from DISCOUNT_CALC  
+        where
+           DISCOUNT_EXPRESS_ID = #{discountExpressId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from DISCOUNT_CALC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  DISCOUNT_CALC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="calcMethodId != null">
+         CALC_METHOD_ID = #{calcMethodId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceOfferId != null">
+         SERVICE_OFFER_ID = #{serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="calcResultType != null">
+         CALC_RESULT_TYPE = #{calcResultType,jdbcType=INTEGER},
+      </if>
+      <if test="pricingSectionId != null">
+         PRICING_SECTION_ID = #{pricingSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="discountRateValueId != null">
+         DISCOUNT_RATE_VALUE_ID = #{discountRateValueId,jdbcType=INTEGER},
+      </if>
+      <if test="fixedValueId != null">
+         FIXED_VALUE_ID = #{fixedValueId,jdbcType=INTEGER},
+      </if>
+      <if test="startRefValueId != null">
+         START_REF_VALUE_ID = #{startRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="endRefValueId != null">
+         END_REF_VALUE_ID = #{endRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="calcPriority != null">
+         CALC_PRIORITY = #{calcPriority,jdbcType=INTEGER},
+      </if>
+      <if test="discountDesc != null">
+         DISCOUNT_DESC = #{discountDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="firstMonthCalc != null">
+         FIRST_MONTH_CALC = #{firstMonthCalc,jdbcType=INTEGER},
+      </if>
+      <if test="firstEffDateType != null">
+         FIRST_EFF_DATE_TYPE = #{firstEffDateType,jdbcType=INTEGER},
+      </if>
+      <if test="ratableCycleId != null">
+         RATABLE_CYCLE_ID = #{ratableCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           DISCOUNT_EXPRESS_ID = #{discountExpressId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update DISCOUNT_CALC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.discountExpressId != null">
+        DISCOUNT_EXPRESS_ID = #{record.discountExpressId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcMethodId != null">
+        CALC_METHOD_ID = #{record.calcMethodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceOfferId != null">
+        SERVICE_OFFER_ID = #{record.serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcResultType != null">
+        CALC_RESULT_TYPE = #{record.calcResultType,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingSectionId != null">
+        PRICING_SECTION_ID = #{record.pricingSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountRateValueId != null">
+        DISCOUNT_RATE_VALUE_ID = #{record.discountRateValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fixedValueId != null">
+        FIXED_VALUE_ID = #{record.fixedValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.startRefValueId != null">
+        START_REF_VALUE_ID = #{record.startRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.endRefValueId != null">
+        END_REF_VALUE_ID = #{record.endRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPriority != null">
+        CALC_PRIORITY = #{record.calcPriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.discountDesc != null">
+        DISCOUNT_DESC = #{record.discountDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstMonthCalc != null">
+        FIRST_MONTH_CALC = #{record.firstMonthCalc,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstEffDateType != null">
+        FIRST_EFF_DATE_TYPE = #{record.firstEffDateType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratableCycleId != null">
+        RATABLE_CYCLE_ID = #{record.ratableCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.discountExpressId != null ">
+        DISCOUNT_EXPRESS_ID = #{condition.discountExpressId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcMethodId != null ">
+        and CALC_METHOD_ID = #{condition.calcMethodId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{condition.serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcResultType != null ">
+        and CALC_RESULT_TYPE = #{condition.calcResultType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingSectionId != null ">
+        and PRICING_SECTION_ID = #{condition.pricingSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.discountRateValueId != null ">
+        and DISCOUNT_RATE_VALUE_ID = #{condition.discountRateValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fixedValueId != null ">
+        and FIXED_VALUE_ID = #{condition.fixedValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.startRefValueId != null ">
+        and START_REF_VALUE_ID = #{condition.startRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.endRefValueId != null ">
+        and END_REF_VALUE_ID = #{condition.endRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPriority != null ">
+        and CALC_PRIORITY = #{condition.calcPriority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.discountDesc != null and condition.discountDesc != ''">
+        and DISCOUNT_DESC = #{condition.discountDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.firstMonthCalc != null ">
+        and FIRST_MONTH_CALC = #{condition.firstMonthCalc, jdbcType=INTEGER }
+      </if>
+      <if test="condition.firstEffDateType != null ">
+        and FIRST_EFF_DATE_TYPE = #{condition.firstEffDateType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratableCycleId != null ">
+        and RATABLE_CYCLE_ID = #{condition.ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

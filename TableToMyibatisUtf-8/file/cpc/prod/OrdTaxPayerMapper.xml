@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdTaxPayerMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdTaxPayerDO">
+    <result column="TAX_PAYER_ID" jdbcType="BIGINT" property="taxPayerId"/>
+    <result column="TAX_ID" jdbcType="VARCHAR" property="taxId"/>
+    <result column="TAX_NAME" jdbcType="VARCHAR" property="taxName"/>
+    <result column="TAX_PROVINCE_CODE" jdbcType="VARCHAR" property="taxProvinceCode"/>
+    <result column="TAX_RELA_TEL" jdbcType="VARCHAR" property="taxRelaTel"/>
+    <result column="TAX_RELA_ADDR" jdbcType="VARCHAR" property="taxRelaAddr"/>
+    <result column="TAX_BANK_NAME" jdbcType="VARCHAR" property="taxBankName"/>
+    <result column="TAX_BANK_ACCT" jdbcType="VARCHAR" property="taxBankAcct"/>
+    <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate"/>
+    <result column="TAX_END_DATE" jdbcType="TIMESTAMP" property="taxEndDate"/>
+    <result column="GENERAL_TAXPAYER_FLAG" jdbcType="INTEGER" property="generalTaxpayerFlag"/>
+    <result column="VAT_INVOICES_FLAG" jdbcType="INTEGER" property="vatInvoicesFlag"/>
+    <result column="BILL_DELIVER_WAY" jdbcType="VARCHAR" property="billDeliverWay"/>
+    <result column="BILL_DELIVER_ADDR" jdbcType="VARCHAR" property="billDeliverAddr"/>
+    <result column="POSTCODE" jdbcType="VARCHAR" property="postcode"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="APPROVAL_TIME" jdbcType="TIMESTAMP" property="approvalTime"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TAX_PAYER_ID, 
+          TAX_ID, 
+          TAX_NAME, 
+          TAX_PROVINCE_CODE, 
+          TAX_RELA_TEL, 
+          TAX_RELA_ADDR, 
+          TAX_BANK_NAME, 
+          TAX_BANK_ACCT, 
+          START_DATE, 
+          TAX_END_DATE, 
+          GENERAL_TAXPAYER_FLAG, 
+          VAT_INVOICES_FLAG, 
+          BILL_DELIVER_WAY, 
+          BILL_DELIVER_ADDR, 
+          POSTCODE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          APPROVAL_TIME, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          CREATE_STAFF, 
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TAX_PAYER_ID, 
+          TAX_ID, 
+          TAX_NAME, 
+          TAX_PROVINCE_CODE, 
+          TAX_RELA_TEL, 
+          TAX_RELA_ADDR, 
+          TAX_BANK_NAME, 
+          TAX_BANK_ACCT, 
+          START_DATE, 
+          TAX_END_DATE, 
+          GENERAL_TAXPAYER_FLAG, 
+          VAT_INVOICES_FLAG, 
+          BILL_DELIVER_WAY, 
+          BILL_DELIVER_ADDR, 
+          POSTCODE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          APPROVAL_TIME, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          CREATE_STAFF, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="taxPayerId != null ">
+        TAX_PAYER_ID = #{taxPayerId, jdbcType=BIGINT }
+      </if>
+      <if test="taxId != null and taxId != ''">
+        and TAX_ID = #{taxId, jdbcType=VARCHAR }
+      </if>
+      <if test="taxName != null and taxName != ''">
+        and TAX_NAME = #{taxName, jdbcType=VARCHAR }
+      </if>
+      <if test="taxProvinceCode != null and taxProvinceCode != ''">
+        and TAX_PROVINCE_CODE = #{taxProvinceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="taxRelaTel != null and taxRelaTel != ''">
+        and TAX_RELA_TEL = #{taxRelaTel, jdbcType=VARCHAR }
+      </if>
+      <if test="taxRelaAddr != null and taxRelaAddr != ''">
+        and TAX_RELA_ADDR = #{taxRelaAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="taxBankName != null and taxBankName != ''">
+        and TAX_BANK_NAME = #{taxBankName, jdbcType=VARCHAR }
+      </if>
+      <if test="taxBankAcct != null and taxBankAcct != ''">
+        and TAX_BANK_ACCT = #{taxBankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="startDate != null ">
+        and START_DATE = #{startDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="taxEndDate != null ">
+        and TAX_END_DATE = #{taxEndDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="generalTaxpayerFlag != null ">
+        and GENERAL_TAXPAYER_FLAG = #{generalTaxpayerFlag, jdbcType=INTEGER }
+      </if>
+      <if test="vatInvoicesFlag != null ">
+        and VAT_INVOICES_FLAG = #{vatInvoicesFlag, jdbcType=INTEGER }
+      </if>
+      <if test="billDeliverWay != null and billDeliverWay != ''">
+        and BILL_DELIVER_WAY = #{billDeliverWay, jdbcType=VARCHAR }
+      </if>
+      <if test="billDeliverAddr != null and billDeliverAddr != ''">
+        and BILL_DELIVER_ADDR = #{billDeliverAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="postcode != null and postcode != ''">
+        and POSTCODE = #{postcode, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="approvalTime != null ">
+        and APPROVAL_TIME = #{approvalTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="rowId != null ">
+        and ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdTaxPayerDO" resultType="java.lang.Integer">
+      select count(*) from ORD_TAX_PAYER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_TAX_PAYER
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_TAX_PAYER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_TAX_PAYER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{taxPayerId,jdbcType=BIGINT}, 
+        #{taxId,jdbcType=VARCHAR}, 
+        #{taxName,jdbcType=VARCHAR}, 
+        #{taxProvinceCode,jdbcType=VARCHAR}, 
+        #{taxRelaTel,jdbcType=VARCHAR}, 
+        #{taxRelaAddr,jdbcType=VARCHAR}, 
+        #{taxBankName,jdbcType=VARCHAR}, 
+        #{taxBankAcct,jdbcType=VARCHAR}, 
+        #{startDate,jdbcType=TIMESTAMP}, 
+        #{taxEndDate,jdbcType=TIMESTAMP}, 
+        #{generalTaxpayerFlag,jdbcType=INTEGER}, 
+        #{vatInvoicesFlag,jdbcType=INTEGER}, 
+        #{billDeliverWay,jdbcType=VARCHAR}, 
+        #{billDeliverAddr,jdbcType=VARCHAR}, 
+        #{postcode,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{approvalTime,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_TAX_PAYER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{taxPayerId,jdbcType=BIGINT}, 
+        #{taxId,jdbcType=VARCHAR}, 
+        #{taxName,jdbcType=VARCHAR}, 
+        #{taxProvinceCode,jdbcType=VARCHAR}, 
+        #{taxRelaTel,jdbcType=VARCHAR}, 
+        #{taxRelaAddr,jdbcType=VARCHAR}, 
+        #{taxBankName,jdbcType=VARCHAR}, 
+        #{taxBankAcct,jdbcType=VARCHAR}, 
+        #{startDate,jdbcType=TIMESTAMP}, 
+        #{taxEndDate,jdbcType=TIMESTAMP}, 
+        #{generalTaxpayerFlag,jdbcType=INTEGER}, 
+        #{vatInvoicesFlag,jdbcType=INTEGER}, 
+        #{billDeliverWay,jdbcType=VARCHAR}, 
+        #{billDeliverAddr,jdbcType=VARCHAR}, 
+        #{postcode,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{approvalTime,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_TAX_PAYER  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_TAX_PAYER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_TAX_PAYER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="taxPayerId != null">
+         TAX_PAYER_ID = #{taxPayerId,jdbcType=BIGINT},
+      </if>
+      <if test="taxId != null">
+         TAX_ID = #{taxId,jdbcType=VARCHAR},
+      </if>
+      <if test="taxName != null">
+         TAX_NAME = #{taxName,jdbcType=VARCHAR},
+      </if>
+      <if test="taxProvinceCode != null">
+         TAX_PROVINCE_CODE = #{taxProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRelaTel != null">
+         TAX_RELA_TEL = #{taxRelaTel,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRelaAddr != null">
+         TAX_RELA_ADDR = #{taxRelaAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankName != null">
+         TAX_BANK_NAME = #{taxBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="taxBankAcct != null">
+         TAX_BANK_ACCT = #{taxBankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+         START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taxEndDate != null">
+         TAX_END_DATE = #{taxEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="generalTaxpayerFlag != null">
+         GENERAL_TAXPAYER_FLAG = #{generalTaxpayerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="vatInvoicesFlag != null">
+         VAT_INVOICES_FLAG = #{vatInvoicesFlag,jdbcType=INTEGER},
+      </if>
+      <if test="billDeliverWay != null">
+         BILL_DELIVER_WAY = #{billDeliverWay,jdbcType=VARCHAR},
+      </if>
+      <if test="billDeliverAddr != null">
+         BILL_DELIVER_ADDR = #{billDeliverAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+         POSTCODE = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalTime != null">
+         APPROVAL_TIME = #{approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_TAX_PAYER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.taxPayerId != null">
+        TAX_PAYER_ID = #{record.taxPayerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taxId != null">
+        TAX_ID = #{record.taxId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxName != null">
+        TAX_NAME = #{record.taxName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxProvinceCode != null">
+        TAX_PROVINCE_CODE = #{record.taxProvinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxRelaTel != null">
+        TAX_RELA_TEL = #{record.taxRelaTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxRelaAddr != null">
+        TAX_RELA_ADDR = #{record.taxRelaAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxBankName != null">
+        TAX_BANK_NAME = #{record.taxBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxBankAcct != null">
+        TAX_BANK_ACCT = #{record.taxBankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null">
+        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taxEndDate != null">
+        TAX_END_DATE = #{record.taxEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.generalTaxpayerFlag != null">
+        GENERAL_TAXPAYER_FLAG = #{record.generalTaxpayerFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.vatInvoicesFlag != null">
+        VAT_INVOICES_FLAG = #{record.vatInvoicesFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.billDeliverWay != null">
+        BILL_DELIVER_WAY = #{record.billDeliverWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billDeliverAddr != null">
+        BILL_DELIVER_ADDR = #{record.billDeliverAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null">
+        POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.approvalTime != null">
+        APPROVAL_TIME = #{record.approvalTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.taxPayerId != null ">
+        TAX_PAYER_ID = #{condition.taxPayerId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.taxId != null and condition.taxId != ''">
+        and TAX_ID = #{condition.taxId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxName != null and condition.taxName != ''">
+        and TAX_NAME = #{condition.taxName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxProvinceCode != null and condition.taxProvinceCode != ''">
+        and TAX_PROVINCE_CODE = #{condition.taxProvinceCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxRelaTel != null and condition.taxRelaTel != ''">
+        and TAX_RELA_TEL = #{condition.taxRelaTel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxRelaAddr != null and condition.taxRelaAddr != ''">
+        and TAX_RELA_ADDR = #{condition.taxRelaAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxBankName != null and condition.taxBankName != ''">
+        and TAX_BANK_NAME = #{condition.taxBankName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.taxBankAcct != null and condition.taxBankAcct != ''">
+        and TAX_BANK_ACCT = #{condition.taxBankAcct, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.startDate != null ">
+        and START_DATE = #{condition.startDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.taxEndDate != null ">
+        and TAX_END_DATE = #{condition.taxEndDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.generalTaxpayerFlag != null ">
+        and GENERAL_TAXPAYER_FLAG = #{condition.generalTaxpayerFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.vatInvoicesFlag != null ">
+        and VAT_INVOICES_FLAG = #{condition.vatInvoicesFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billDeliverWay != null and condition.billDeliverWay != ''">
+        and BILL_DELIVER_WAY = #{condition.billDeliverWay, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.billDeliverAddr != null and condition.billDeliverAddr != ''">
+        and BILL_DELIVER_ADDR = #{condition.billDeliverAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.postcode != null and condition.postcode != ''">
+        and POSTCODE = #{condition.postcode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.approvalTime != null ">
+        and APPROVAL_TIME = #{condition.approvalTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.rowId != null ">
+        and ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

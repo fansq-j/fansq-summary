@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktAlgorithmsMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktAlgorithmsDO">
+    <id column="ALGO_ID" jdbcType="BIGINT" property="algoId"/>
+    <result column="ALGO_CODE" jdbcType="VARCHAR" property="algoCode"/>
+    <result column="ALGO_NAME" jdbcType="VARCHAR" property="algoName"/>
+    <result column="HANDLE_CLASS" jdbcType="VARCHAR" property="handleClass"/>
+    <result column="ALGO_DESC" jdbcType="VARCHAR" property="algoDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ALGO_ID, 
+          ALGO_CODE, 
+          ALGO_NAME, 
+          HANDLE_CLASS, 
+          ALGO_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ALGO_CODE, 
+          ALGO_NAME, 
+          HANDLE_CLASS, 
+          ALGO_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="algoId != null ">
+        ALGO_ID = #{algoId, jdbcType=BIGINT }
+      </if>
+      <if test="algoCode != null and algoCode != ''">
+        and ALGO_CODE = #{algoCode, jdbcType=VARCHAR }
+      </if>
+      <if test="algoName != null and algoName != ''">
+        and ALGO_NAME = #{algoName, jdbcType=VARCHAR }
+      </if>
+      <if test="handleClass != null and handleClass != ''">
+        and HANDLE_CLASS = #{handleClass, jdbcType=VARCHAR }
+      </if>
+      <if test="algoDesc != null and algoDesc != ''">
+        and ALGO_DESC = #{algoDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktAlgorithmsDO" resultType="java.lang.Integer">
+      select count(*) from MKT_ALGORITHMS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_ALGORITHMS
+        where 
+           ALGO_ID = #{algoId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_ALGORITHMS 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="algoId">
+      insert into  MKT_ALGORITHMS ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{algoCode,jdbcType=VARCHAR}, 
+        #{algoName,jdbcType=VARCHAR}, 
+        #{handleClass,jdbcType=VARCHAR}, 
+        #{algoDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_ALGORITHMS ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{algoId,jdbcType=BIGINT}, 
+        #{algoCode,jdbcType=VARCHAR}, 
+        #{algoName,jdbcType=VARCHAR}, 
+        #{handleClass,jdbcType=VARCHAR}, 
+        #{algoDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_ALGORITHMS  
+        where
+           ALGO_ID = #{algoId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_ALGORITHMS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_ALGORITHMS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="algoCode != null">
+         ALGO_CODE = #{algoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="algoName != null">
+         ALGO_NAME = #{algoName,jdbcType=VARCHAR},
+      </if>
+      <if test="handleClass != null">
+         HANDLE_CLASS = #{handleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="algoDesc != null">
+         ALGO_DESC = #{algoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ALGO_ID = #{algoId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_ALGORITHMS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.algoId != null">
+        ALGO_ID = #{record.algoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.algoCode != null">
+        ALGO_CODE = #{record.algoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.algoName != null">
+        ALGO_NAME = #{record.algoName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleClass != null">
+        HANDLE_CLASS = #{record.handleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.algoDesc != null">
+        ALGO_DESC = #{record.algoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.algoId != null ">
+        ALGO_ID = #{condition.algoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.algoCode != null and condition.algoCode != ''">
+        and ALGO_CODE = #{condition.algoCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.algoName != null and condition.algoName != ''">
+        and ALGO_NAME = #{condition.algoName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.handleClass != null and condition.handleClass != ''">
+        and HANDLE_CLASS = #{condition.handleClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.algoDesc != null and condition.algoDesc != ''">
+        and ALGO_DESC = #{condition.algoDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

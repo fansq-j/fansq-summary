@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CycleSplitRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CycleSplitRuleDO">
+    <id column="CYCLE_SPLIT_RULE_ID" jdbcType="BIGINT" property="cycleSplitRuleId"/>
+    <result column="CYCLE_SPLIT_RULE_NAME" jdbcType="VARCHAR" property="cycleSplitRuleName"/>
+    <result column="OFFSET_CYCLE_TYPE" jdbcType="INTEGER" property="offsetCycleType"/>
+    <result column="OFFSET_CYCLE_UNIT" jdbcType="INTEGER" property="offsetCycleUnit"/>
+    <result column="OFFSET_SPAN" jdbcType="INTEGER" property="offsetSpan"/>
+    <result column="OFFSET_NUM" jdbcType="INTEGER" property="offsetNum"/>
+    <result column="OFFSET_CYCLE_STR" jdbcType="VARCHAR" property="offsetCycleStr"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CYCLE_SPLIT_RULE_ID, 
+          CYCLE_SPLIT_RULE_NAME, 
+          OFFSET_CYCLE_TYPE, 
+          OFFSET_CYCLE_UNIT, 
+          OFFSET_SPAN, 
+          OFFSET_NUM, 
+          OFFSET_CYCLE_STR, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CYCLE_SPLIT_RULE_NAME, 
+          OFFSET_CYCLE_TYPE, 
+          OFFSET_CYCLE_UNIT, 
+          OFFSET_SPAN, 
+          OFFSET_NUM, 
+          OFFSET_CYCLE_STR, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="cycleSplitRuleId != null ">
+        CYCLE_SPLIT_RULE_ID = #{cycleSplitRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="cycleSplitRuleName != null and cycleSplitRuleName != ''">
+        and CYCLE_SPLIT_RULE_NAME = #{cycleSplitRuleName, jdbcType=VARCHAR }
+      </if>
+      <if test="offsetCycleType != null ">
+        and OFFSET_CYCLE_TYPE = #{offsetCycleType, jdbcType=INTEGER }
+      </if>
+      <if test="offsetCycleUnit != null ">
+        and OFFSET_CYCLE_UNIT = #{offsetCycleUnit, jdbcType=INTEGER }
+      </if>
+      <if test="offsetSpan != null ">
+        and OFFSET_SPAN = #{offsetSpan, jdbcType=INTEGER }
+      </if>
+      <if test="offsetNum != null ">
+        and OFFSET_NUM = #{offsetNum, jdbcType=INTEGER }
+      </if>
+      <if test="offsetCycleStr != null and offsetCycleStr != ''">
+        and OFFSET_CYCLE_STR = #{offsetCycleStr, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CycleSplitRuleDO" resultType="java.lang.Integer">
+      select count(*) from CYCLE_SPLIT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CYCLE_SPLIT_RULE
+        where 
+           CYCLE_SPLIT_RULE_ID = #{cycleSplitRuleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CYCLE_SPLIT_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="cycleSplitRuleId">
+      insert into  CYCLE_SPLIT_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{cycleSplitRuleName,jdbcType=VARCHAR}, 
+        #{offsetCycleType,jdbcType=INTEGER}, 
+        #{offsetCycleUnit,jdbcType=INTEGER}, 
+        #{offsetSpan,jdbcType=INTEGER}, 
+        #{offsetNum,jdbcType=INTEGER}, 
+        #{offsetCycleStr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CYCLE_SPLIT_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{cycleSplitRuleId,jdbcType=BIGINT}, 
+        #{cycleSplitRuleName,jdbcType=VARCHAR}, 
+        #{offsetCycleType,jdbcType=INTEGER}, 
+        #{offsetCycleUnit,jdbcType=INTEGER}, 
+        #{offsetSpan,jdbcType=INTEGER}, 
+        #{offsetNum,jdbcType=INTEGER}, 
+        #{offsetCycleStr,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CYCLE_SPLIT_RULE  
+        where
+           CYCLE_SPLIT_RULE_ID = #{cycleSplitRuleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CYCLE_SPLIT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CYCLE_SPLIT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="cycleSplitRuleName != null">
+         CYCLE_SPLIT_RULE_NAME = #{cycleSplitRuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="offsetCycleType != null">
+         OFFSET_CYCLE_TYPE = #{offsetCycleType,jdbcType=INTEGER},
+      </if>
+      <if test="offsetCycleUnit != null">
+         OFFSET_CYCLE_UNIT = #{offsetCycleUnit,jdbcType=INTEGER},
+      </if>
+      <if test="offsetSpan != null">
+         OFFSET_SPAN = #{offsetSpan,jdbcType=INTEGER},
+      </if>
+      <if test="offsetNum != null">
+         OFFSET_NUM = #{offsetNum,jdbcType=INTEGER},
+      </if>
+      <if test="offsetCycleStr != null">
+         OFFSET_CYCLE_STR = #{offsetCycleStr,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           CYCLE_SPLIT_RULE_ID = #{cycleSplitRuleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CYCLE_SPLIT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.cycleSplitRuleId != null">
+        CYCLE_SPLIT_RULE_ID = #{record.cycleSplitRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cycleSplitRuleName != null">
+        CYCLE_SPLIT_RULE_NAME = #{record.cycleSplitRuleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offsetCycleType != null">
+        OFFSET_CYCLE_TYPE = #{record.offsetCycleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.offsetCycleUnit != null">
+        OFFSET_CYCLE_UNIT = #{record.offsetCycleUnit,jdbcType=INTEGER},
+      </if>
+      <if test="record.offsetSpan != null">
+        OFFSET_SPAN = #{record.offsetSpan,jdbcType=INTEGER},
+      </if>
+      <if test="record.offsetNum != null">
+        OFFSET_NUM = #{record.offsetNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.offsetCycleStr != null">
+        OFFSET_CYCLE_STR = #{record.offsetCycleStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.cycleSplitRuleId != null ">
+        CYCLE_SPLIT_RULE_ID = #{condition.cycleSplitRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.cycleSplitRuleName != null and condition.cycleSplitRuleName != ''">
+        and CYCLE_SPLIT_RULE_NAME = #{condition.cycleSplitRuleName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offsetCycleType != null ">
+        and OFFSET_CYCLE_TYPE = #{condition.offsetCycleType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offsetCycleUnit != null ">
+        and OFFSET_CYCLE_UNIT = #{condition.offsetCycleUnit, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offsetSpan != null ">
+        and OFFSET_SPAN = #{condition.offsetSpan, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offsetNum != null ">
+        and OFFSET_NUM = #{condition.offsetNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offsetCycleStr != null and condition.offsetCycleStr != ''">
+        and OFFSET_CYCLE_STR = #{condition.offsetCycleStr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

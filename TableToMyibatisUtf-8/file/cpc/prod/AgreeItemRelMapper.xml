@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AgreeItemRelMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AgreeItemRelDO">
+    <id column="ARG_ARG_ITEM_REL_ID" jdbcType="BIGINT" property="argArgItemRelId"/>
+    <result column="AGREE_ID" jdbcType="BIGINT" property="agreeId"/>
+    <result column="AGREE_ITEM_ID" jdbcType="BIGINT" property="agreeItemId"/>
+    <result column="AGR_ITEM_SIGN" jdbcType="VARCHAR" property="agrItemSign"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="AGR_ITEM_ORDER" jdbcType="INTEGER" property="agrItemOrder"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ARG_ARG_ITEM_REL_ID, 
+          AGREE_ID, 
+          AGREE_ITEM_ID, 
+          AGR_ITEM_SIGN, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          AGR_ITEM_ORDER
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          AGREE_ID, 
+          AGREE_ITEM_ID, 
+          AGR_ITEM_SIGN, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          AGR_ITEM_ORDER
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="argArgItemRelId != null ">
+        ARG_ARG_ITEM_REL_ID = #{argArgItemRelId, jdbcType=BIGINT }
+      </if>
+      <if test="agreeId != null ">
+        and AGREE_ID = #{agreeId, jdbcType=BIGINT }
+      </if>
+      <if test="agreeItemId != null ">
+        and AGREE_ITEM_ID = #{agreeItemId, jdbcType=BIGINT }
+      </if>
+      <if test="agrItemSign != null and agrItemSign != ''">
+        and AGR_ITEM_SIGN = #{agrItemSign, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="agrItemOrder != null ">
+        and AGR_ITEM_ORDER = #{agrItemOrder, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AgreeItemRelDO" resultType="java.lang.Integer">
+      select count(*) from AGREE_ITEM_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from AGREE_ITEM_REL
+        where 
+           ARG_ARG_ITEM_REL_ID = #{argArgItemRelId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  AGREE_ITEM_REL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="argArgItemRelId">
+      insert into  AGREE_ITEM_REL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{agreeId,jdbcType=BIGINT}, 
+        #{agreeItemId,jdbcType=BIGINT}, 
+        #{agrItemSign,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{agrItemOrder,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  AGREE_ITEM_REL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{argArgItemRelId,jdbcType=BIGINT}, 
+        #{agreeId,jdbcType=BIGINT}, 
+        #{agreeItemId,jdbcType=BIGINT}, 
+        #{agrItemSign,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{agrItemOrder,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from AGREE_ITEM_REL  
+        where
+           ARG_ARG_ITEM_REL_ID = #{argArgItemRelId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from AGREE_ITEM_REL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  AGREE_ITEM_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="agreeId != null">
+         AGREE_ID = #{agreeId,jdbcType=BIGINT},
+      </if>
+      <if test="agreeItemId != null">
+         AGREE_ITEM_ID = #{agreeItemId,jdbcType=BIGINT},
+      </if>
+      <if test="agrItemSign != null">
+         AGR_ITEM_SIGN = #{agrItemSign,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agrItemOrder != null">
+         AGR_ITEM_ORDER = #{agrItemOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ARG_ARG_ITEM_REL_ID = #{argArgItemRelId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update AGREE_ITEM_REL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.argArgItemRelId != null">
+        ARG_ARG_ITEM_REL_ID = #{record.argArgItemRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeId != null">
+        AGREE_ID = #{record.agreeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeItemId != null">
+        AGREE_ITEM_ID = #{record.agreeItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agrItemSign != null">
+        AGR_ITEM_SIGN = #{record.agrItemSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.agrItemOrder != null">
+        AGR_ITEM_ORDER = #{record.agrItemOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.argArgItemRelId != null ">
+        ARG_ARG_ITEM_REL_ID = #{condition.argArgItemRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeId != null ">
+        and AGREE_ID = #{condition.agreeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeItemId != null ">
+        and AGREE_ITEM_ID = #{condition.agreeItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agrItemSign != null and condition.agrItemSign != ''">
+        and AGR_ITEM_SIGN = #{condition.agrItemSign, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.agrItemOrder != null ">
+        and AGR_ITEM_ORDER = #{condition.agrItemOrder, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

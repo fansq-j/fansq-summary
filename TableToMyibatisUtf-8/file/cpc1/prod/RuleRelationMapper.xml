@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.RuleRelationMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.RuleRelationDO">
+    <id column="RULE_RELATION_ID" jdbcType="BIGINT" property="ruleRelationId"/>
+    <result column="A_RULE_ID" jdbcType="BIGINT" property="aRuleId"/>
+    <result column="Z_RULE_ID" jdbcType="BIGINT" property="zRuleId"/>
+    <result column="RELATION_TYPE" jdbcType="VARCHAR" property="relationType"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RULE_RELATION_ID, 
+          A_RULE_ID, 
+          Z_RULE_ID, 
+          RELATION_TYPE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          A_RULE_ID, 
+          Z_RULE_ID, 
+          RELATION_TYPE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="ruleRelationId != null ">
+        RULE_RELATION_ID = #{ruleRelationId, jdbcType=BIGINT }
+      </if>
+      <if test="aRuleId != null ">
+        and A_RULE_ID = #{aRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="zRuleId != null ">
+        and Z_RULE_ID = #{zRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="relationType != null and relationType != ''">
+        and RELATION_TYPE = #{relationType, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.RuleRelationDO" resultType="java.lang.Integer">
+      select count(*) from RULE_RELATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RULE_RELATION
+        where 
+           RULE_RELATION_ID = #{ruleRelationId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RULE_RELATION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="ruleRelationId">
+      insert into  RULE_RELATION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{aRuleId,jdbcType=BIGINT}, 
+        #{zRuleId,jdbcType=BIGINT}, 
+        #{relationType,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RULE_RELATION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{ruleRelationId,jdbcType=BIGINT}, 
+        #{aRuleId,jdbcType=BIGINT}, 
+        #{zRuleId,jdbcType=BIGINT}, 
+        #{relationType,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RULE_RELATION  
+        where
+           RULE_RELATION_ID = #{ruleRelationId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RULE_RELATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RULE_RELATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="aRuleId != null">
+         A_RULE_ID = #{aRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="zRuleId != null">
+         Z_RULE_ID = #{zRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="relationType != null">
+         RELATION_TYPE = #{relationType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           RULE_RELATION_ID = #{ruleRelationId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RULE_RELATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.ruleRelationId != null">
+        RULE_RELATION_ID = #{record.ruleRelationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aRuleId != null">
+        A_RULE_ID = #{record.aRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.zRuleId != null">
+        Z_RULE_ID = #{record.zRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.relationType != null">
+        RELATION_TYPE = #{record.relationType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.ruleRelationId != null ">
+        RULE_RELATION_ID = #{condition.ruleRelationId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.aRuleId != null ">
+        and A_RULE_ID = #{condition.aRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.zRuleId != null ">
+        and Z_RULE_ID = #{condition.zRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.relationType != null and condition.relationType != ''">
+        and RELATION_TYPE = #{condition.relationType, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

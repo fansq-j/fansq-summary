@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.ExpressTemplateMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.ExpressTemplateDO">
+    <id column="EXPRESS_TEMPLATE_ID" jdbcType="BIGINT" property="expressTemplateId"/>
+    <result column="EXPRESS_TEMPLATE_NAME" jdbcType="VARCHAR" property="expressTemplateName"/>
+    <result column="EXPRESS_TEMPLATE_TYPE" jdbcType="VARCHAR" property="expressTemplateType"/>
+    <result column="HANDLE_CLASS" jdbcType="VARCHAR" property="handleClass"/>
+    <result column="MACHINE_DESC" jdbcType="VARCHAR" property="machineDesc"/>
+    <result column="NATURE_DESC" jdbcType="VARCHAR" property="natureDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EXPRESS_TEMPLATE_ID, 
+          EXPRESS_TEMPLATE_NAME, 
+          EXPRESS_TEMPLATE_TYPE, 
+          HANDLE_CLASS, 
+          MACHINE_DESC, 
+          NATURE_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          APPLY_REGION_ID, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EXPRESS_TEMPLATE_NAME, 
+          EXPRESS_TEMPLATE_TYPE, 
+          HANDLE_CLASS, 
+          MACHINE_DESC, 
+          NATURE_DESC, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          APPLY_REGION_ID, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="expressTemplateId != null ">
+        EXPRESS_TEMPLATE_ID = #{expressTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="expressTemplateName != null and expressTemplateName != ''">
+        and EXPRESS_TEMPLATE_NAME = #{expressTemplateName, jdbcType=VARCHAR }
+      </if>
+      <if test="expressTemplateType != null and expressTemplateType != ''">
+        and EXPRESS_TEMPLATE_TYPE = #{expressTemplateType, jdbcType=VARCHAR }
+      </if>
+      <if test="handleClass != null and handleClass != ''">
+        and HANDLE_CLASS = #{handleClass, jdbcType=VARCHAR }
+      </if>
+      <if test="machineDesc != null and machineDesc != ''">
+        and MACHINE_DESC = #{machineDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="natureDesc != null and natureDesc != ''">
+        and NATURE_DESC = #{natureDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.ExpressTemplateDO" resultType="java.lang.Integer">
+      select count(*) from EXPRESS_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from EXPRESS_TEMPLATE
+        where 
+           EXPRESS_TEMPLATE_ID = #{expressTemplateId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EXPRESS_TEMPLATE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="expressTemplateId">
+      insert into  EXPRESS_TEMPLATE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{expressTemplateName,jdbcType=VARCHAR}, 
+        #{expressTemplateType,jdbcType=VARCHAR}, 
+        #{handleClass,jdbcType=VARCHAR}, 
+        #{machineDesc,jdbcType=VARCHAR}, 
+        #{natureDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  EXPRESS_TEMPLATE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{expressTemplateId,jdbcType=BIGINT}, 
+        #{expressTemplateName,jdbcType=VARCHAR}, 
+        #{expressTemplateType,jdbcType=VARCHAR}, 
+        #{handleClass,jdbcType=VARCHAR}, 
+        #{machineDesc,jdbcType=VARCHAR}, 
+        #{natureDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from EXPRESS_TEMPLATE  
+        where
+           EXPRESS_TEMPLATE_ID = #{expressTemplateId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from EXPRESS_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  EXPRESS_TEMPLATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="expressTemplateName != null">
+         EXPRESS_TEMPLATE_NAME = #{expressTemplateName,jdbcType=VARCHAR},
+      </if>
+      <if test="expressTemplateType != null">
+         EXPRESS_TEMPLATE_TYPE = #{expressTemplateType,jdbcType=VARCHAR},
+      </if>
+      <if test="handleClass != null">
+         HANDLE_CLASS = #{handleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="machineDesc != null">
+         MACHINE_DESC = #{machineDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="natureDesc != null">
+         NATURE_DESC = #{natureDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           EXPRESS_TEMPLATE_ID = #{expressTemplateId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update EXPRESS_TEMPLATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.expressTemplateId != null">
+        EXPRESS_TEMPLATE_ID = #{record.expressTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.expressTemplateName != null">
+        EXPRESS_TEMPLATE_NAME = #{record.expressTemplateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressTemplateType != null">
+        EXPRESS_TEMPLATE_TYPE = #{record.expressTemplateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleClass != null">
+        HANDLE_CLASS = #{record.handleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.machineDesc != null">
+        MACHINE_DESC = #{record.machineDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.natureDesc != null">
+        NATURE_DESC = #{record.natureDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.expressTemplateId != null ">
+        EXPRESS_TEMPLATE_ID = #{condition.expressTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.expressTemplateName != null and condition.expressTemplateName != ''">
+        and EXPRESS_TEMPLATE_NAME = #{condition.expressTemplateName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.expressTemplateType != null and condition.expressTemplateType != ''">
+        and EXPRESS_TEMPLATE_TYPE = #{condition.expressTemplateType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.handleClass != null and condition.handleClass != ''">
+        and HANDLE_CLASS = #{condition.handleClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.machineDesc != null and condition.machineDesc != ''">
+        and MACHINE_DESC = #{condition.machineDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.natureDesc != null and condition.natureDesc != ''">
+        and NATURE_DESC = #{condition.natureDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

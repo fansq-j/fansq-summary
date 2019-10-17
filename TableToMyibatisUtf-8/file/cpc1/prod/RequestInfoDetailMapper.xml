@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.RequestInfoDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.RequestInfoDetailDO">
+    <id column="REQUEST_TEMPLATE_INST_ID" jdbcType="INTEGER" property="requestTemplateInstId"/>
+    <result column="BATCH_NO" jdbcType="VARCHAR" property="batchNo"/>
+    <result column="NAME" jdbcType="VARCHAR" property="name"/>
+    <result column="DESC" jdbcType="VARCHAR" property="desc"/>
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode"/>
+    <result column="CONT_NAME" jdbcType="VARCHAR" property="contName"/>
+    <result column="CONT_TELE" jdbcType="VARCHAR" property="contTele"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="FINISH_DATE" jdbcType="TIMESTAMP" property="finishDate"/>
+    <result column="EXPECT_FINISH_DATE" jdbcType="TIMESTAMP" property="expectFinishDate"/>
+    <result column="REQUEST_TYPE" jdbcType="VARCHAR" property="requestType"/>
+    <result column="ACTION_TYPE" jdbcType="VARCHAR" property="actionType"/>
+    <result column="REQUEST_SOURCE" jdbcType="VARCHAR" property="requestSource"/>
+    <result column="GRP_REQUEST_TEMPLATE_INST_ID" jdbcType="INTEGER" property="grpRequestTemplateInstId"/>
+    <result column="REQUEST_OBJ_TYPE" jdbcType="VARCHAR" property="requestObjType"/>
+    <result column="DEVELOP_PREDICTION" jdbcType="VARCHAR" property="developPrediction"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="IF_GOVERNMENT" jdbcType="VARCHAR" property="ifGovernment"/>
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName"/>
+    <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath"/>
+    <result column="EXP1" jdbcType="VARCHAR" property="exp1"/>
+    <result column="EXP2" jdbcType="VARCHAR" property="exp2"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          REQUEST_TEMPLATE_INST_ID, 
+          BATCH_NO, 
+          NAME, 
+          DESC, 
+          DEPT_CODE, 
+          CONT_NAME, 
+          CONT_TELE, 
+          CREATE_DATE, 
+          FINISH_DATE, 
+          EXPECT_FINISH_DATE, 
+          REQUEST_TYPE, 
+          ACTION_TYPE, 
+          REQUEST_SOURCE, 
+          GRP_REQUEST_TEMPLATE_INST_ID, 
+          REQUEST_OBJ_TYPE, 
+          DEVELOP_PREDICTION, 
+          STATUS_CD, 
+          IF_GOVERNMENT, 
+          FILE_NAME, 
+          FILE_PATH, 
+          EXP1, 
+          EXP2
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BATCH_NO, 
+          NAME, 
+          DESC, 
+          DEPT_CODE, 
+          CONT_NAME, 
+          CONT_TELE, 
+          CREATE_DATE, 
+          FINISH_DATE, 
+          EXPECT_FINISH_DATE, 
+          REQUEST_TYPE, 
+          ACTION_TYPE, 
+          REQUEST_SOURCE, 
+          GRP_REQUEST_TEMPLATE_INST_ID, 
+          REQUEST_OBJ_TYPE, 
+          DEVELOP_PREDICTION, 
+          STATUS_CD, 
+          IF_GOVERNMENT, 
+          FILE_NAME, 
+          FILE_PATH, 
+          EXP1, 
+          EXP2
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="requestTemplateInstId != null ">
+        REQUEST_TEMPLATE_INST_ID = #{requestTemplateInstId, jdbcType=INTEGER }
+      </if>
+      <if test="batchNo != null and batchNo != ''">
+        and BATCH_NO = #{batchNo, jdbcType=VARCHAR }
+      </if>
+      <if test="name != null and name != ''">
+        and NAME = #{name, jdbcType=VARCHAR }
+      </if>
+      <if test="desc != null and desc != ''">
+        and DESC = #{desc, jdbcType=VARCHAR }
+      </if>
+      <if test="deptCode != null and deptCode != ''">
+        and DEPT_CODE = #{deptCode, jdbcType=VARCHAR }
+      </if>
+      <if test="contName != null and contName != ''">
+        and CONT_NAME = #{contName, jdbcType=VARCHAR }
+      </if>
+      <if test="contTele != null and contTele != ''">
+        and CONT_TELE = #{contTele, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="finishDate != null ">
+        and FINISH_DATE = #{finishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expectFinishDate != null ">
+        and EXPECT_FINISH_DATE = #{expectFinishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="requestType != null and requestType != ''">
+        and REQUEST_TYPE = #{requestType, jdbcType=VARCHAR }
+      </if>
+      <if test="actionType != null and actionType != ''">
+        and ACTION_TYPE = #{actionType, jdbcType=VARCHAR }
+      </if>
+      <if test="requestSource != null and requestSource != ''">
+        and REQUEST_SOURCE = #{requestSource, jdbcType=VARCHAR }
+      </if>
+      <if test="grpRequestTemplateInstId != null ">
+        and GRP_REQUEST_TEMPLATE_INST_ID = #{grpRequestTemplateInstId, jdbcType=INTEGER }
+      </if>
+      <if test="requestObjType != null and requestObjType != ''">
+        and REQUEST_OBJ_TYPE = #{requestObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="developPrediction != null and developPrediction != ''">
+        and DEVELOP_PREDICTION = #{developPrediction, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="ifGovernment != null and ifGovernment != ''">
+        and IF_GOVERNMENT = #{ifGovernment, jdbcType=VARCHAR }
+      </if>
+      <if test="fileName != null and fileName != ''">
+        and FILE_NAME = #{fileName, jdbcType=VARCHAR }
+      </if>
+      <if test="filePath != null and filePath != ''">
+        and FILE_PATH = #{filePath, jdbcType=VARCHAR }
+      </if>
+      <if test="exp1 != null and exp1 != ''">
+        and EXP1 = #{exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="exp2 != null and exp2 != ''">
+        and EXP2 = #{exp2, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.RequestInfoDetailDO" resultType="java.lang.Integer">
+      select count(*) from REQUEST_INFO_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from REQUEST_INFO_DETAIL
+        where 
+           REQUEST_TEMPLATE_INST_ID = #{requestTemplateInstId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  REQUEST_INFO_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="requestTemplateInstId">
+      insert into  REQUEST_INFO_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{batchNo,jdbcType=VARCHAR}, 
+        #{name,jdbcType=VARCHAR}, 
+        #{desc,jdbcType=VARCHAR}, 
+        #{deptCode,jdbcType=VARCHAR}, 
+        #{contName,jdbcType=VARCHAR}, 
+        #{contTele,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{finishDate,jdbcType=TIMESTAMP}, 
+        #{expectFinishDate,jdbcType=TIMESTAMP}, 
+        #{requestType,jdbcType=VARCHAR}, 
+        #{actionType,jdbcType=VARCHAR}, 
+        #{requestSource,jdbcType=VARCHAR}, 
+        #{grpRequestTemplateInstId,jdbcType=INTEGER}, 
+        #{requestObjType,jdbcType=VARCHAR}, 
+        #{developPrediction,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{ifGovernment,jdbcType=VARCHAR}, 
+        #{fileName,jdbcType=VARCHAR}, 
+        #{filePath,jdbcType=VARCHAR}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  REQUEST_INFO_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{requestTemplateInstId,jdbcType=INTEGER}, 
+        #{batchNo,jdbcType=VARCHAR}, 
+        #{name,jdbcType=VARCHAR}, 
+        #{desc,jdbcType=VARCHAR}, 
+        #{deptCode,jdbcType=VARCHAR}, 
+        #{contName,jdbcType=VARCHAR}, 
+        #{contTele,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{finishDate,jdbcType=TIMESTAMP}, 
+        #{expectFinishDate,jdbcType=TIMESTAMP}, 
+        #{requestType,jdbcType=VARCHAR}, 
+        #{actionType,jdbcType=VARCHAR}, 
+        #{requestSource,jdbcType=VARCHAR}, 
+        #{grpRequestTemplateInstId,jdbcType=INTEGER}, 
+        #{requestObjType,jdbcType=VARCHAR}, 
+        #{developPrediction,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{ifGovernment,jdbcType=VARCHAR}, 
+        #{fileName,jdbcType=VARCHAR}, 
+        #{filePath,jdbcType=VARCHAR}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from REQUEST_INFO_DETAIL  
+        where
+           REQUEST_TEMPLATE_INST_ID = #{requestTemplateInstId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from REQUEST_INFO_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  REQUEST_INFO_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="batchNo != null">
+         BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+         NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+         DESC = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null">
+         DEPT_CODE = #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contName != null">
+         CONT_NAME = #{contName,jdbcType=VARCHAR},
+      </if>
+      <if test="contTele != null">
+         CONT_TELE = #{contTele,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishDate != null">
+         FINISH_DATE = #{finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expectFinishDate != null">
+         EXPECT_FINISH_DATE = #{expectFinishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestType != null">
+         REQUEST_TYPE = #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="actionType != null">
+         ACTION_TYPE = #{actionType,jdbcType=VARCHAR},
+      </if>
+      <if test="requestSource != null">
+         REQUEST_SOURCE = #{requestSource,jdbcType=VARCHAR},
+      </if>
+      <if test="grpRequestTemplateInstId != null">
+         GRP_REQUEST_TEMPLATE_INST_ID = #{grpRequestTemplateInstId,jdbcType=INTEGER},
+      </if>
+      <if test="requestObjType != null">
+         REQUEST_OBJ_TYPE = #{requestObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="developPrediction != null">
+         DEVELOP_PREDICTION = #{developPrediction,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="ifGovernment != null">
+         IF_GOVERNMENT = #{ifGovernment,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+         FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+         FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="exp1 != null">
+         EXP1 = #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null">
+         EXP2 = #{exp2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           REQUEST_TEMPLATE_INST_ID = #{requestTemplateInstId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update REQUEST_INFO_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.requestTemplateInstId != null">
+        REQUEST_TEMPLATE_INST_ID = #{record.requestTemplateInstId,jdbcType=INTEGER},
+      </if>
+      <if test="record.batchNo != null">
+        BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.desc != null">
+        DESC = #{record.desc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptCode != null">
+        DEPT_CODE = #{record.deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contName != null">
+        CONT_NAME = #{record.contName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contTele != null">
+        CONT_TELE = #{record.contTele,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finishDate != null">
+        FINISH_DATE = #{record.finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expectFinishDate != null">
+        EXPECT_FINISH_DATE = #{record.expectFinishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.requestType != null">
+        REQUEST_TYPE = #{record.requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actionType != null">
+        ACTION_TYPE = #{record.actionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestSource != null">
+        REQUEST_SOURCE = #{record.requestSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grpRequestTemplateInstId != null">
+        GRP_REQUEST_TEMPLATE_INST_ID = #{record.grpRequestTemplateInstId,jdbcType=INTEGER},
+      </if>
+      <if test="record.requestObjType != null">
+        REQUEST_OBJ_TYPE = #{record.requestObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.developPrediction != null">
+        DEVELOP_PREDICTION = #{record.developPrediction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifGovernment != null">
+        IF_GOVERNMENT = #{record.ifGovernment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileName != null">
+        FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filePath != null">
+        FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp1 != null">
+        EXP1 = #{record.exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp2 != null">
+        EXP2 = #{record.exp2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.requestTemplateInstId != null ">
+        REQUEST_TEMPLATE_INST_ID = #{condition.requestTemplateInstId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.batchNo != null and condition.batchNo != ''">
+        and BATCH_NO = #{condition.batchNo, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.name != null and condition.name != ''">
+        and NAME = #{condition.name, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.desc != null and condition.desc != ''">
+        and DESC = #{condition.desc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.deptCode != null and condition.deptCode != ''">
+        and DEPT_CODE = #{condition.deptCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contName != null and condition.contName != ''">
+        and CONT_NAME = #{condition.contName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contTele != null and condition.contTele != ''">
+        and CONT_TELE = #{condition.contTele, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.finishDate != null ">
+        and FINISH_DATE = #{condition.finishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expectFinishDate != null ">
+        and EXPECT_FINISH_DATE = #{condition.expectFinishDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.requestType != null and condition.requestType != ''">
+        and REQUEST_TYPE = #{condition.requestType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.actionType != null and condition.actionType != ''">
+        and ACTION_TYPE = #{condition.actionType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.requestSource != null and condition.requestSource != ''">
+        and REQUEST_SOURCE = #{condition.requestSource, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.grpRequestTemplateInstId != null ">
+        and GRP_REQUEST_TEMPLATE_INST_ID = #{condition.grpRequestTemplateInstId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.requestObjType != null and condition.requestObjType != ''">
+        and REQUEST_OBJ_TYPE = #{condition.requestObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.developPrediction != null and condition.developPrediction != ''">
+        and DEVELOP_PREDICTION = #{condition.developPrediction, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifGovernment != null and condition.ifGovernment != ''">
+        and IF_GOVERNMENT = #{condition.ifGovernment, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.fileName != null and condition.fileName != ''">
+        and FILE_NAME = #{condition.fileName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.filePath != null and condition.filePath != ''">
+        and FILE_PATH = #{condition.filePath, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exp1 != null and condition.exp1 != ''">
+        and EXP1 = #{condition.exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exp2 != null and condition.exp2 != ''">
+        and EXP2 = #{condition.exp2, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

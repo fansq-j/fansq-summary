@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AcctItemTypeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AcctItemTypeDO">
+    <id column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="ACCT_ITEM_CLASS_ID" jdbcType="INTEGER" property="acctItemClassId"/>
+    <result column="PARTNER_ID" jdbcType="INTEGER" property="partnerId"/>
+    <result column="NAME" jdbcType="VARCHAR" property="name"/>
+    <result column="CHARGE_MARK" jdbcType="INTEGER" property="chargeMark"/>
+    <result column="TOTAL_MARK" jdbcType="INTEGER" property="totalMark"/>
+    <result column="ACCT_ITEM_TYPE_CODE" jdbcType="VARCHAR" property="acctItemTypeCode"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="PARENT_ITEM_TYPE_ID" jdbcType="INTEGER" property="parentItemTypeId"/>
+    <result column="IF_ADJUST" jdbcType="INTEGER" property="ifAdjust"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCT_ITEM_TYPE_ID, 
+          ACCT_ITEM_CLASS_ID, 
+          PARTNER_ID, 
+          NAME, 
+          CHARGE_MARK, 
+          TOTAL_MARK, 
+          ACCT_ITEM_TYPE_CODE, 
+          PRIORITY, 
+          PARENT_ITEM_TYPE_ID, 
+          IF_ADJUST, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_ITEM_CLASS_ID, 
+          PARTNER_ID, 
+          NAME, 
+          CHARGE_MARK, 
+          TOTAL_MARK, 
+          ACCT_ITEM_TYPE_CODE, 
+          PRIORITY, 
+          PARENT_ITEM_TYPE_ID, 
+          IF_ADJUST, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="acctItemTypeId != null ">
+        ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="acctItemClassId != null ">
+        and ACCT_ITEM_CLASS_ID = #{acctItemClassId, jdbcType=INTEGER }
+      </if>
+      <if test="partnerId != null ">
+        and PARTNER_ID = #{partnerId, jdbcType=INTEGER }
+      </if>
+      <if test="name != null and name != ''">
+        and NAME = #{name, jdbcType=VARCHAR }
+      </if>
+      <if test="chargeMark != null ">
+        and CHARGE_MARK = #{chargeMark, jdbcType=INTEGER }
+      </if>
+      <if test="totalMark != null ">
+        and TOTAL_MARK = #{totalMark, jdbcType=INTEGER }
+      </if>
+      <if test="acctItemTypeCode != null and acctItemTypeCode != ''">
+        and ACCT_ITEM_TYPE_CODE = #{acctItemTypeCode, jdbcType=VARCHAR }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="parentItemTypeId != null ">
+        and PARENT_ITEM_TYPE_ID = #{parentItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="ifAdjust != null ">
+        and IF_ADJUST = #{ifAdjust, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AcctItemTypeDO" resultType="java.lang.Integer">
+      select count(*) from ACCT_ITEM_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCT_ITEM_TYPE
+        where 
+           ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCT_ITEM_TYPE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="acctItemTypeId">
+      insert into  ACCT_ITEM_TYPE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctItemClassId,jdbcType=INTEGER}, 
+        #{partnerId,jdbcType=INTEGER}, 
+        #{name,jdbcType=VARCHAR}, 
+        #{chargeMark,jdbcType=INTEGER}, 
+        #{totalMark,jdbcType=INTEGER}, 
+        #{acctItemTypeCode,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{parentItemTypeId,jdbcType=INTEGER}, 
+        #{ifAdjust,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCT_ITEM_TYPE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{acctItemClassId,jdbcType=INTEGER}, 
+        #{partnerId,jdbcType=INTEGER}, 
+        #{name,jdbcType=VARCHAR}, 
+        #{chargeMark,jdbcType=INTEGER}, 
+        #{totalMark,jdbcType=INTEGER}, 
+        #{acctItemTypeCode,jdbcType=VARCHAR}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{parentItemTypeId,jdbcType=INTEGER}, 
+        #{ifAdjust,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCT_ITEM_TYPE  
+        where
+           ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCT_ITEM_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCT_ITEM_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctItemClassId != null">
+         ACCT_ITEM_CLASS_ID = #{acctItemClassId,jdbcType=INTEGER},
+      </if>
+      <if test="partnerId != null">
+         PARTNER_ID = #{partnerId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+         NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeMark != null">
+         CHARGE_MARK = #{chargeMark,jdbcType=INTEGER},
+      </if>
+      <if test="totalMark != null">
+         TOTAL_MARK = #{totalMark,jdbcType=INTEGER},
+      </if>
+      <if test="acctItemTypeCode != null">
+         ACCT_ITEM_TYPE_CODE = #{acctItemTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="parentItemTypeId != null">
+         PARENT_ITEM_TYPE_ID = #{parentItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="ifAdjust != null">
+         IF_ADJUST = #{ifAdjust,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCT_ITEM_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctItemClassId != null">
+        ACCT_ITEM_CLASS_ID = #{record.acctItemClassId,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerId != null">
+        PARTNER_ID = #{record.partnerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeMark != null">
+        CHARGE_MARK = #{record.chargeMark,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalMark != null">
+        TOTAL_MARK = #{record.totalMark,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctItemTypeCode != null">
+        ACCT_ITEM_TYPE_CODE = #{record.acctItemTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentItemTypeId != null">
+        PARENT_ITEM_TYPE_ID = #{record.parentItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifAdjust != null">
+        IF_ADJUST = #{record.ifAdjust,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.acctItemTypeId != null ">
+        ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctItemClassId != null ">
+        and ACCT_ITEM_CLASS_ID = #{condition.acctItemClassId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.partnerId != null ">
+        and PARTNER_ID = #{condition.partnerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.name != null and condition.name != ''">
+        and NAME = #{condition.name, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.chargeMark != null ">
+        and CHARGE_MARK = #{condition.chargeMark, jdbcType=INTEGER }
+      </if>
+      <if test="condition.totalMark != null ">
+        and TOTAL_MARK = #{condition.totalMark, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctItemTypeCode != null and condition.acctItemTypeCode != ''">
+        and ACCT_ITEM_TYPE_CODE = #{condition.acctItemTypeCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.parentItemTypeId != null ">
+        and PARENT_ITEM_TYPE_ID = #{condition.parentItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifAdjust != null ">
+        and IF_ADJUST = #{condition.ifAdjust, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AcctItemMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AcctItemDO">
+    <id column="ACCT_ITEM_ID" jdbcType="BIGINT" property="acctItemId"/>
+    <result column="ITEM_SOURCE_ID" jdbcType="INTEGER" property="itemSourceId"/>
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId"/>
+    <result column="PAYMENT_METHOD" jdbcType="INTEGER" property="paymentMethod"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="PAY_CYCLE_ID" jdbcType="INTEGER" property="payCycleId"/>
+    <result column="FEE_CYCLE_ID" jdbcType="INTEGER" property="feeCycleId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+    <result column="ORI_ACCT_ITEM_ID" jdbcType="BIGINT" property="oriAcctItemId"/>
+    <result column="HAD_INVOICE_AMOUNT" jdbcType="BIGINT" property="hadInvoiceAmount"/>
+    <result column="NO_INVOICE_AMOUNT" jdbcType="BIGINT" property="noInvoiceAmount"/>
+    <result column="PRESENT_AMOUNT" jdbcType="BIGINT" property="presentAmount"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="ONE_ACCT_ITEM_ID" jdbcType="BIGINT" property="oneAcctItemId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCT_ITEM_ID, 
+          ITEM_SOURCE_ID, 
+          BILL_ID, 
+          PAYMENT_METHOD, 
+          ACCT_ITEM_TYPE_ID, 
+          PROD_INST_ID, 
+          AMOUNT, 
+          BILLING_CYCLE_ID, 
+          PAY_CYCLE_ID, 
+          FEE_CYCLE_ID, 
+          ACCT_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          REGION_ID, 
+          CUST_ID, 
+          OFFER_INST_ID, 
+          ORI_ACCT_ITEM_ID, 
+          HAD_INVOICE_AMOUNT, 
+          NO_INVOICE_AMOUNT, 
+          PRESENT_AMOUNT, 
+          CREATE_DATE, 
+          ONE_ACCT_ITEM_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ITEM_SOURCE_ID, 
+          BILL_ID, 
+          PAYMENT_METHOD, 
+          ACCT_ITEM_TYPE_ID, 
+          PROD_INST_ID, 
+          AMOUNT, 
+          BILLING_CYCLE_ID, 
+          PAY_CYCLE_ID, 
+          FEE_CYCLE_ID, 
+          ACCT_ID, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          REGION_ID, 
+          CUST_ID, 
+          OFFER_INST_ID, 
+          ORI_ACCT_ITEM_ID, 
+          HAD_INVOICE_AMOUNT, 
+          NO_INVOICE_AMOUNT, 
+          PRESENT_AMOUNT, 
+          CREATE_DATE, 
+          ONE_ACCT_ITEM_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="acctItemId != null ">
+        ACCT_ITEM_ID = #{acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="billId != null ">
+        and BILL_ID = #{billId, jdbcType=BIGINT }
+      </if>
+      <if test="paymentMethod != null ">
+        and PAYMENT_METHOD = #{paymentMethod, jdbcType=INTEGER }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="payCycleId != null ">
+        and PAY_CYCLE_ID = #{payCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="feeCycleId != null ">
+        and FEE_CYCLE_ID = #{feeCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="custId != null ">
+        and CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="oriAcctItemId != null ">
+        and ORI_ACCT_ITEM_ID = #{oriAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="hadInvoiceAmount != null ">
+        and HAD_INVOICE_AMOUNT = #{hadInvoiceAmount, jdbcType=BIGINT }
+      </if>
+      <if test="noInvoiceAmount != null ">
+        and NO_INVOICE_AMOUNT = #{noInvoiceAmount, jdbcType=BIGINT }
+      </if>
+      <if test="presentAmount != null ">
+        and PRESENT_AMOUNT = #{presentAmount, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="oneAcctItemId != null ">
+        and ONE_ACCT_ITEM_ID = #{oneAcctItemId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AcctItemDO" resultType="java.lang.Integer">
+      select count(*) from ACCT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCT_ITEM
+        where 
+           ACCT_ITEM_ID = #{acctItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCT_ITEM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="acctItemId">
+      insert into  ACCT_ITEM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{paymentMethod,jdbcType=INTEGER}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{payCycleId,jdbcType=INTEGER}, 
+        #{feeCycleId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{oriAcctItemId,jdbcType=BIGINT}, 
+        #{hadInvoiceAmount,jdbcType=BIGINT}, 
+        #{noInvoiceAmount,jdbcType=BIGINT}, 
+        #{presentAmount,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{oneAcctItemId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCT_ITEM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{acctItemId,jdbcType=BIGINT}, 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{paymentMethod,jdbcType=INTEGER}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{payCycleId,jdbcType=INTEGER}, 
+        #{feeCycleId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{oriAcctItemId,jdbcType=BIGINT}, 
+        #{hadInvoiceAmount,jdbcType=BIGINT}, 
+        #{noInvoiceAmount,jdbcType=BIGINT}, 
+        #{presentAmount,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{oneAcctItemId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCT_ITEM  
+        where
+           ACCT_ITEM_ID = #{acctItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCT_ITEM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="itemSourceId != null">
+         ITEM_SOURCE_ID = #{itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="billId != null">
+         BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentMethod != null">
+         PAYMENT_METHOD = #{paymentMethod,jdbcType=INTEGER},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="payCycleId != null">
+         PAY_CYCLE_ID = #{payCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="feeCycleId != null">
+         FEE_CYCLE_ID = #{feeCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="oriAcctItemId != null">
+         ORI_ACCT_ITEM_ID = #{oriAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="hadInvoiceAmount != null">
+         HAD_INVOICE_AMOUNT = #{hadInvoiceAmount,jdbcType=BIGINT},
+      </if>
+      <if test="noInvoiceAmount != null">
+         NO_INVOICE_AMOUNT = #{noInvoiceAmount,jdbcType=BIGINT},
+      </if>
+      <if test="presentAmount != null">
+         PRESENT_AMOUNT = #{presentAmount,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oneAcctItemId != null">
+         ONE_ACCT_ITEM_ID = #{oneAcctItemId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           ACCT_ITEM_ID = #{acctItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCT_ITEM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.acctItemId != null">
+        ACCT_ITEM_ID = #{record.acctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemSourceId != null">
+        ITEM_SOURCE_ID = #{record.itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentMethod != null">
+        PAYMENT_METHOD = #{record.paymentMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payCycleId != null">
+        PAY_CYCLE_ID = #{record.payCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.feeCycleId != null">
+        FEE_CYCLE_ID = #{record.feeCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oriAcctItemId != null">
+        ORI_ACCT_ITEM_ID = #{record.oriAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hadInvoiceAmount != null">
+        HAD_INVOICE_AMOUNT = #{record.hadInvoiceAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.noInvoiceAmount != null">
+        NO_INVOICE_AMOUNT = #{record.noInvoiceAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.presentAmount != null">
+        PRESENT_AMOUNT = #{record.presentAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.oneAcctItemId != null">
+        ONE_ACCT_ITEM_ID = #{record.oneAcctItemId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.acctItemId != null ">
+        ACCT_ITEM_ID = #{condition.acctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{condition.itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billId != null ">
+        and BILL_ID = #{condition.billId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paymentMethod != null ">
+        and PAYMENT_METHOD = #{condition.paymentMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payCycleId != null ">
+        and PAY_CYCLE_ID = #{condition.payCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.feeCycleId != null ">
+        and FEE_CYCLE_ID = #{condition.feeCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.custId != null ">
+        and CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oriAcctItemId != null ">
+        and ORI_ACCT_ITEM_ID = #{condition.oriAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.hadInvoiceAmount != null ">
+        and HAD_INVOICE_AMOUNT = #{condition.hadInvoiceAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.noInvoiceAmount != null ">
+        and NO_INVOICE_AMOUNT = #{condition.noInvoiceAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.presentAmount != null ">
+        and PRESENT_AMOUNT = #{condition.presentAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.oneAcctItemId != null ">
+        and ONE_ACCT_ITEM_ID = #{condition.oneAcctItemId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

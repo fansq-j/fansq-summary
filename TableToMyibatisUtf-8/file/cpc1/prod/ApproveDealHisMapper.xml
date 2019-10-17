@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.ApproveDealHisMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.ApproveDealHisDO">
+    <id column="DEAL_HIS_ID" jdbcType="BIGINT" property="dealHisId"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="DEAL_STAFF" jdbcType="BIGINT" property="dealStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="DEAL_DATE" jdbcType="TIMESTAMP" property="dealDate"/>
+    <result column="DEAL_RESULT" jdbcType="VARCHAR" property="dealResult"/>
+    <result column="DEAL_ADVICE" jdbcType="VARCHAR" property="dealAdvice"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          DEAL_HIS_ID, 
+          OBJ_ID, 
+          OBJ_TYPE, 
+          DEAL_STAFF, 
+          CREATE_DATE, 
+          DEAL_DATE, 
+          DEAL_RESULT, 
+          DEAL_ADVICE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OBJ_ID, 
+          OBJ_TYPE, 
+          DEAL_STAFF, 
+          CREATE_DATE, 
+          DEAL_DATE, 
+          DEAL_RESULT, 
+          DEAL_ADVICE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="dealHisId != null ">
+        DEAL_HIS_ID = #{dealHisId, jdbcType=BIGINT }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="dealStaff != null ">
+        and DEAL_STAFF = #{dealStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="dealDate != null ">
+        and DEAL_DATE = #{dealDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="dealResult != null and dealResult != ''">
+        and DEAL_RESULT = #{dealResult, jdbcType=VARCHAR }
+      </if>
+      <if test="dealAdvice != null and dealAdvice != ''">
+        and DEAL_ADVICE = #{dealAdvice, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.ApproveDealHisDO" resultType="java.lang.Integer">
+      select count(*) from APPROVE_DEAL_HIS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from APPROVE_DEAL_HIS
+        where 
+           DEAL_HIS_ID = #{dealHisId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  APPROVE_DEAL_HIS 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="dealHisId">
+      insert into  APPROVE_DEAL_HIS ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{objId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{dealStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{dealDate,jdbcType=TIMESTAMP}, 
+        #{dealResult,jdbcType=VARCHAR}, 
+        #{dealAdvice,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  APPROVE_DEAL_HIS ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{dealHisId,jdbcType=BIGINT}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{dealStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{dealDate,jdbcType=TIMESTAMP}, 
+        #{dealResult,jdbcType=VARCHAR}, 
+        #{dealAdvice,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from APPROVE_DEAL_HIS  
+        where
+           DEAL_HIS_ID = #{dealHisId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from APPROVE_DEAL_HIS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  APPROVE_DEAL_HIS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="dealStaff != null">
+         DEAL_STAFF = #{dealStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealDate != null">
+         DEAL_DATE = #{dealDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealResult != null">
+         DEAL_RESULT = #{dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="dealAdvice != null">
+         DEAL_ADVICE = #{dealAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           DEAL_HIS_ID = #{dealHisId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update APPROVE_DEAL_HIS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.dealHisId != null">
+        DEAL_HIS_ID = #{record.dealHisId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealStaff != null">
+        DEAL_STAFF = #{record.dealStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dealDate != null">
+        DEAL_DATE = #{record.dealDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dealResult != null">
+        DEAL_RESULT = #{record.dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealAdvice != null">
+        DEAL_ADVICE = #{record.dealAdvice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.dealHisId != null ">
+        DEAL_HIS_ID = #{condition.dealHisId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.dealStaff != null ">
+        and DEAL_STAFF = #{condition.dealStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.dealDate != null ">
+        and DEAL_DATE = #{condition.dealDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.dealResult != null and condition.dealResult != ''">
+        and DEAL_RESULT = #{condition.dealResult, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.dealAdvice != null and condition.dealAdvice != ''">
+        and DEAL_ADVICE = #{condition.dealAdvice, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.GridUnitCompeteInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.GridUnitCompeteInfoDO">
+    <id column="GRID_UNIT_COMPETE_INFO_ID" jdbcType="BIGINT" property="gridUnitCompeteInfoId"/>
+    <result column="GRID_UNIT_ID" jdbcType="BIGINT" property="gridUnitId"/>
+    <result column="COMPETE_BUSINESS" jdbcType="VARCHAR" property="competeBusiness"/>
+    <result column="COMPETE_NAME" jdbcType="VARCHAR" property="competeName"/>
+    <result column="CUST_TO_COMP_ATTITUDE" jdbcType="VARCHAR" property="custToCompAttitude"/>
+    <result column="CUST_TO_MINE_ATTITUDE" jdbcType="VARCHAR" property="custToMineAttitude"/>
+    <result column="COMPETITOR_ENTER_TIME" jdbcType="VARCHAR" property="competitorEnterTime"/>
+    <result column="COMPETE_PARTY_" jdbcType="VARCHAR" property="competeParty"/>
+    <result column="COMPETITOR_MAINTAIN_WAY" jdbcType="VARCHAR" property="competitorMaintainWay"/>
+    <result column="COMPETITOR_" jdbcType="VARCHAR" property="competitor"/>
+    <result column="COMPTITOR_PRODUCT_FEE" jdbcType="VARCHAR" property="comptitorProductFee"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          GRID_UNIT_COMPETE_INFO_ID, 
+          GRID_UNIT_ID, 
+          COMPETE_BUSINESS, 
+          COMPETE_NAME, 
+          CUST_TO_COMP_ATTITUDE, 
+          CUST_TO_MINE_ATTITUDE, 
+          COMPETITOR_ENTER_TIME, 
+          COMPETE_PARTY_, 
+          COMPETITOR_MAINTAIN_WAY, 
+          COMPETITOR_, 
+          COMPTITOR_PRODUCT_FEE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          GRID_UNIT_ID, 
+          COMPETE_BUSINESS, 
+          COMPETE_NAME, 
+          CUST_TO_COMP_ATTITUDE, 
+          CUST_TO_MINE_ATTITUDE, 
+          COMPETITOR_ENTER_TIME, 
+          COMPETE_PARTY_, 
+          COMPETITOR_MAINTAIN_WAY, 
+          COMPETITOR_, 
+          COMPTITOR_PRODUCT_FEE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="gridUnitCompeteInfoId != null ">
+        GRID_UNIT_COMPETE_INFO_ID = #{gridUnitCompeteInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="gridUnitId != null ">
+        and GRID_UNIT_ID = #{gridUnitId, jdbcType=BIGINT }
+      </if>
+      <if test="competeBusiness != null and competeBusiness != ''">
+        and COMPETE_BUSINESS = #{competeBusiness, jdbcType=VARCHAR }
+      </if>
+      <if test="competeName != null and competeName != ''">
+        and COMPETE_NAME = #{competeName, jdbcType=VARCHAR }
+      </if>
+      <if test="custToCompAttitude != null and custToCompAttitude != ''">
+        and CUST_TO_COMP_ATTITUDE = #{custToCompAttitude, jdbcType=VARCHAR }
+      </if>
+      <if test="custToMineAttitude != null and custToMineAttitude != ''">
+        and CUST_TO_MINE_ATTITUDE = #{custToMineAttitude, jdbcType=VARCHAR }
+      </if>
+      <if test="competitorEnterTime != null and competitorEnterTime != ''">
+        and COMPETITOR_ENTER_TIME = #{competitorEnterTime, jdbcType=VARCHAR }
+      </if>
+      <if test="competeParty != null and competeParty != ''">
+        and COMPETE_PARTY_ = #{competeParty, jdbcType=VARCHAR }
+      </if>
+      <if test="competitorMaintainWay != null and competitorMaintainWay != ''">
+        and COMPETITOR_MAINTAIN_WAY = #{competitorMaintainWay, jdbcType=VARCHAR }
+      </if>
+      <if test="competitor != null and competitor != ''">
+        and COMPETITOR_ = #{competitor, jdbcType=VARCHAR }
+      </if>
+      <if test="comptitorProductFee != null and comptitorProductFee != ''">
+        and COMPTITOR_PRODUCT_FEE = #{comptitorProductFee, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.GridUnitCompeteInfoDO" resultType="java.lang.Integer">
+      select count(*) from GRID_UNIT_COMPETE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from GRID_UNIT_COMPETE_INFO
+        where 
+           GRID_UNIT_COMPETE_INFO_ID = #{gridUnitCompeteInfoId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  GRID_UNIT_COMPETE_INFO 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="gridUnitCompeteInfoId">
+      insert into  GRID_UNIT_COMPETE_INFO ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{gridUnitId,jdbcType=BIGINT}, 
+        #{competeBusiness,jdbcType=VARCHAR}, 
+        #{competeName,jdbcType=VARCHAR}, 
+        #{custToCompAttitude,jdbcType=VARCHAR}, 
+        #{custToMineAttitude,jdbcType=VARCHAR}, 
+        #{competitorEnterTime,jdbcType=VARCHAR}, 
+        #{competeParty,jdbcType=VARCHAR}, 
+        #{competitorMaintainWay,jdbcType=VARCHAR}, 
+        #{competitor,jdbcType=VARCHAR}, 
+        #{comptitorProductFee,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  GRID_UNIT_COMPETE_INFO ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{gridUnitCompeteInfoId,jdbcType=BIGINT}, 
+        #{gridUnitId,jdbcType=BIGINT}, 
+        #{competeBusiness,jdbcType=VARCHAR}, 
+        #{competeName,jdbcType=VARCHAR}, 
+        #{custToCompAttitude,jdbcType=VARCHAR}, 
+        #{custToMineAttitude,jdbcType=VARCHAR}, 
+        #{competitorEnterTime,jdbcType=VARCHAR}, 
+        #{competeParty,jdbcType=VARCHAR}, 
+        #{competitorMaintainWay,jdbcType=VARCHAR}, 
+        #{competitor,jdbcType=VARCHAR}, 
+        #{comptitorProductFee,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from GRID_UNIT_COMPETE_INFO  
+        where
+           GRID_UNIT_COMPETE_INFO_ID = #{gridUnitCompeteInfoId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from GRID_UNIT_COMPETE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  GRID_UNIT_COMPETE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="gridUnitId != null">
+         GRID_UNIT_ID = #{gridUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="competeBusiness != null">
+         COMPETE_BUSINESS = #{competeBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="competeName != null">
+         COMPETE_NAME = #{competeName,jdbcType=VARCHAR},
+      </if>
+      <if test="custToCompAttitude != null">
+         CUST_TO_COMP_ATTITUDE = #{custToCompAttitude,jdbcType=VARCHAR},
+      </if>
+      <if test="custToMineAttitude != null">
+         CUST_TO_MINE_ATTITUDE = #{custToMineAttitude,jdbcType=VARCHAR},
+      </if>
+      <if test="competitorEnterTime != null">
+         COMPETITOR_ENTER_TIME = #{competitorEnterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="competeParty != null">
+         COMPETE_PARTY_ = #{competeParty,jdbcType=VARCHAR},
+      </if>
+      <if test="competitorMaintainWay != null">
+         COMPETITOR_MAINTAIN_WAY = #{competitorMaintainWay,jdbcType=VARCHAR},
+      </if>
+      <if test="competitor != null">
+         COMPETITOR_ = #{competitor,jdbcType=VARCHAR},
+      </if>
+      <if test="comptitorProductFee != null">
+         COMPTITOR_PRODUCT_FEE = #{comptitorProductFee,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           GRID_UNIT_COMPETE_INFO_ID = #{gridUnitCompeteInfoId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update GRID_UNIT_COMPETE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.gridUnitCompeteInfoId != null">
+        GRID_UNIT_COMPETE_INFO_ID = #{record.gridUnitCompeteInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gridUnitId != null">
+        GRID_UNIT_ID = #{record.gridUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="record.competeBusiness != null">
+        COMPETE_BUSINESS = #{record.competeBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.competeName != null">
+        COMPETE_NAME = #{record.competeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custToCompAttitude != null">
+        CUST_TO_COMP_ATTITUDE = #{record.custToCompAttitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custToMineAttitude != null">
+        CUST_TO_MINE_ATTITUDE = #{record.custToMineAttitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.competitorEnterTime != null">
+        COMPETITOR_ENTER_TIME = #{record.competitorEnterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.competeParty != null">
+        COMPETE_PARTY_ = #{record.competeParty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.competitorMaintainWay != null">
+        COMPETITOR_MAINTAIN_WAY = #{record.competitorMaintainWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.competitor != null">
+        COMPETITOR_ = #{record.competitor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comptitorProductFee != null">
+        COMPTITOR_PRODUCT_FEE = #{record.comptitorProductFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.gridUnitCompeteInfoId != null ">
+        GRID_UNIT_COMPETE_INFO_ID = #{condition.gridUnitCompeteInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.gridUnitId != null ">
+        and GRID_UNIT_ID = #{condition.gridUnitId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.competeBusiness != null and condition.competeBusiness != ''">
+        and COMPETE_BUSINESS = #{condition.competeBusiness, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.competeName != null and condition.competeName != ''">
+        and COMPETE_NAME = #{condition.competeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custToCompAttitude != null and condition.custToCompAttitude != ''">
+        and CUST_TO_COMP_ATTITUDE = #{condition.custToCompAttitude, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custToMineAttitude != null and condition.custToMineAttitude != ''">
+        and CUST_TO_MINE_ATTITUDE = #{condition.custToMineAttitude, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.competitorEnterTime != null and condition.competitorEnterTime != ''">
+        and COMPETITOR_ENTER_TIME = #{condition.competitorEnterTime, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.competeParty != null and condition.competeParty != ''">
+        and COMPETE_PARTY_ = #{condition.competeParty, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.competitorMaintainWay != null and condition.competitorMaintainWay != ''">
+        and COMPETITOR_MAINTAIN_WAY = #{condition.competitorMaintainWay, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.competitor != null and condition.competitor != ''">
+        and COMPETITOR_ = #{condition.competitor, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.comptitorProductFee != null and condition.comptitorProductFee != ''">
+        and COMPTITOR_PRODUCT_FEE = #{condition.comptitorProductFee, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.EventPricingStrategyMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.EventPricingStrategyDO">
+    <id column="EVENT_PRICING_STRATEGY_ID" jdbcType="INTEGER" property="eventPricingStrategyId"/>
+    <result column="EVENT_TYPE_ID" jdbcType="INTEGER" property="eventTypeId"/>
+    <result column="EVENT_TYPE_FLAG" jdbcType="INTEGER" property="eventTypeFlag"/>
+    <result column="EVENT_PRICING_STRATEGY_NAME" jdbcType="VARCHAR" property="eventPricingStrategyName"/>
+    <result column="EVENT_PRICING_STRATEGY_DESC" jdbcType="VARCHAR" property="eventPricingStrategyDesc"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="EVENT_PRICING_STRATEGY_TYPE" jdbcType="INTEGER" property="eventPricingStrategyType"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EVENT_PRICING_STRATEGY_ID, 
+          EVENT_TYPE_ID, 
+          EVENT_TYPE_FLAG, 
+          EVENT_PRICING_STRATEGY_NAME, 
+          EVENT_PRICING_STRATEGY_DESC, 
+          EFF_DATE, 
+          EXP_DATE, 
+          EVENT_PRICING_STRATEGY_TYPE, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EVENT_TYPE_ID, 
+          EVENT_TYPE_FLAG, 
+          EVENT_PRICING_STRATEGY_NAME, 
+          EVENT_PRICING_STRATEGY_DESC, 
+          EFF_DATE, 
+          EXP_DATE, 
+          EVENT_PRICING_STRATEGY_TYPE, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="eventPricingStrategyId != null ">
+        EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId, jdbcType=INTEGER }
+      </if>
+      <if test="eventTypeId != null ">
+        and EVENT_TYPE_ID = #{eventTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="eventTypeFlag != null ">
+        and EVENT_TYPE_FLAG = #{eventTypeFlag, jdbcType=INTEGER }
+      </if>
+      <if test="eventPricingStrategyName != null and eventPricingStrategyName != ''">
+        and EVENT_PRICING_STRATEGY_NAME = #{eventPricingStrategyName, jdbcType=VARCHAR }
+      </if>
+      <if test="eventPricingStrategyDesc != null and eventPricingStrategyDesc != ''">
+        and EVENT_PRICING_STRATEGY_DESC = #{eventPricingStrategyDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="eventPricingStrategyType != null ">
+        and EVENT_PRICING_STRATEGY_TYPE = #{eventPricingStrategyType, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.EventPricingStrategyDO" resultType="java.lang.Integer">
+      select count(*) from EVENT_PRICING_STRATEGY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from EVENT_PRICING_STRATEGY
+        where 
+           EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EVENT_PRICING_STRATEGY 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="eventPricingStrategyId">
+      insert into  EVENT_PRICING_STRATEGY ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{eventTypeId,jdbcType=INTEGER}, 
+        #{eventTypeFlag,jdbcType=INTEGER}, 
+        #{eventPricingStrategyName,jdbcType=VARCHAR}, 
+        #{eventPricingStrategyDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{eventPricingStrategyType,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  EVENT_PRICING_STRATEGY ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{eventPricingStrategyId,jdbcType=INTEGER}, 
+        #{eventTypeId,jdbcType=INTEGER}, 
+        #{eventTypeFlag,jdbcType=INTEGER}, 
+        #{eventPricingStrategyName,jdbcType=VARCHAR}, 
+        #{eventPricingStrategyDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{eventPricingStrategyType,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from EVENT_PRICING_STRATEGY  
+        where
+           EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from EVENT_PRICING_STRATEGY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  EVENT_PRICING_STRATEGY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="eventTypeId != null">
+         EVENT_TYPE_ID = #{eventTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="eventTypeFlag != null">
+         EVENT_TYPE_FLAG = #{eventTypeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="eventPricingStrategyName != null">
+         EVENT_PRICING_STRATEGY_NAME = #{eventPricingStrategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventPricingStrategyDesc != null">
+         EVENT_PRICING_STRATEGY_DESC = #{eventPricingStrategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventPricingStrategyType != null">
+         EVENT_PRICING_STRATEGY_TYPE = #{eventPricingStrategyType,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update EVENT_PRICING_STRATEGY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.eventPricingStrategyId != null">
+        EVENT_PRICING_STRATEGY_ID = #{record.eventPricingStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventTypeId != null">
+        EVENT_TYPE_ID = #{record.eventTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventTypeFlag != null">
+        EVENT_TYPE_FLAG = #{record.eventTypeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventPricingStrategyName != null">
+        EVENT_PRICING_STRATEGY_NAME = #{record.eventPricingStrategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventPricingStrategyDesc != null">
+        EVENT_PRICING_STRATEGY_DESC = #{record.eventPricingStrategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eventPricingStrategyType != null">
+        EVENT_PRICING_STRATEGY_TYPE = #{record.eventPricingStrategyType,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.eventPricingStrategyId != null ">
+        EVENT_PRICING_STRATEGY_ID = #{condition.eventPricingStrategyId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.eventTypeId != null ">
+        and EVENT_TYPE_ID = #{condition.eventTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.eventTypeFlag != null ">
+        and EVENT_TYPE_FLAG = #{condition.eventTypeFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.eventPricingStrategyName != null and condition.eventPricingStrategyName != ''">
+        and EVENT_PRICING_STRATEGY_NAME = #{condition.eventPricingStrategyName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eventPricingStrategyDesc != null and condition.eventPricingStrategyDesc != ''">
+        and EVENT_PRICING_STRATEGY_DESC = #{condition.eventPricingStrategyDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.eventPricingStrategyType != null ">
+        and EVENT_PRICING_STRATEGY_TYPE = #{condition.eventPricingStrategyType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

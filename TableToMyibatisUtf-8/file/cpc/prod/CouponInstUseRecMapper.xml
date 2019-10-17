@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CouponInstUseRecMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CouponInstUseRecDO">
+    <id column="COUPON_INST_USE_ID" jdbcType="BIGINT" property="couponInstUseId"/>
+    <result column="COUPON_INST_ID" jdbcType="BIGINT" property="couponInstId"/>
+    <result column="USE_OBJ_TYPE" jdbcType="VARCHAR" property="useObjType"/>
+    <result column="USE_OBJ_ID" jdbcType="VARCHAR" property="useObjId"/>
+    <result column="USE_ORDER_ID" jdbcType="VARCHAR" property="useOrderId"/>
+    <result column="USE_DESC" jdbcType="VARCHAR" property="useDesc"/>
+    <result column="USE_DATE" jdbcType="TIMESTAMP" property="useDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          COUPON_INST_USE_ID, 
+          COUPON_INST_ID, 
+          USE_OBJ_TYPE, 
+          USE_OBJ_ID, 
+          USE_ORDER_ID, 
+          USE_DESC, 
+          USE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          COUPON_INST_ID, 
+          USE_OBJ_TYPE, 
+          USE_OBJ_ID, 
+          USE_ORDER_ID, 
+          USE_DESC, 
+          USE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="couponInstUseId != null ">
+        COUPON_INST_USE_ID = #{couponInstUseId, jdbcType=BIGINT }
+      </if>
+      <if test="couponInstId != null ">
+        and COUPON_INST_ID = #{couponInstId, jdbcType=BIGINT }
+      </if>
+      <if test="useObjType != null and useObjType != ''">
+        and USE_OBJ_TYPE = #{useObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="useObjId != null and useObjId != ''">
+        and USE_OBJ_ID = #{useObjId, jdbcType=VARCHAR }
+      </if>
+      <if test="useOrderId != null and useOrderId != ''">
+        and USE_ORDER_ID = #{useOrderId, jdbcType=VARCHAR }
+      </if>
+      <if test="useDesc != null and useDesc != ''">
+        and USE_DESC = #{useDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="useDate != null ">
+        and USE_DATE = #{useDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CouponInstUseRecDO" resultType="java.lang.Integer">
+      select count(*) from COUPON_INST_USE_REC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from COUPON_INST_USE_REC
+        where 
+           COUPON_INST_USE_ID = #{couponInstUseId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  COUPON_INST_USE_REC 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="couponInstUseId">
+      insert into  COUPON_INST_USE_REC ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{couponInstId,jdbcType=BIGINT}, 
+        #{useObjType,jdbcType=VARCHAR}, 
+        #{useObjId,jdbcType=VARCHAR}, 
+        #{useOrderId,jdbcType=VARCHAR}, 
+        #{useDesc,jdbcType=VARCHAR}, 
+        #{useDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  COUPON_INST_USE_REC ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{couponInstUseId,jdbcType=BIGINT}, 
+        #{couponInstId,jdbcType=BIGINT}, 
+        #{useObjType,jdbcType=VARCHAR}, 
+        #{useObjId,jdbcType=VARCHAR}, 
+        #{useOrderId,jdbcType=VARCHAR}, 
+        #{useDesc,jdbcType=VARCHAR}, 
+        #{useDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from COUPON_INST_USE_REC  
+        where
+           COUPON_INST_USE_ID = #{couponInstUseId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from COUPON_INST_USE_REC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  COUPON_INST_USE_REC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="couponInstId != null">
+         COUPON_INST_ID = #{couponInstId,jdbcType=BIGINT},
+      </if>
+      <if test="useObjType != null">
+         USE_OBJ_TYPE = #{useObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="useObjId != null">
+         USE_OBJ_ID = #{useObjId,jdbcType=VARCHAR},
+      </if>
+      <if test="useOrderId != null">
+         USE_ORDER_ID = #{useOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="useDesc != null">
+         USE_DESC = #{useDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null">
+         USE_DATE = #{useDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           COUPON_INST_USE_ID = #{couponInstUseId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update COUPON_INST_USE_REC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.couponInstUseId != null">
+        COUPON_INST_USE_ID = #{record.couponInstUseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.couponInstId != null">
+        COUPON_INST_ID = #{record.couponInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.useObjType != null">
+        USE_OBJ_TYPE = #{record.useObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useObjId != null">
+        USE_OBJ_ID = #{record.useObjId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useOrderId != null">
+        USE_ORDER_ID = #{record.useOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useDesc != null">
+        USE_DESC = #{record.useDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useDate != null">
+        USE_DATE = #{record.useDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.couponInstUseId != null ">
+        COUPON_INST_USE_ID = #{condition.couponInstUseId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.couponInstId != null ">
+        and COUPON_INST_ID = #{condition.couponInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.useObjType != null and condition.useObjType != ''">
+        and USE_OBJ_TYPE = #{condition.useObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.useObjId != null and condition.useObjId != ''">
+        and USE_OBJ_ID = #{condition.useObjId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.useOrderId != null and condition.useOrderId != ''">
+        and USE_ORDER_ID = #{condition.useOrderId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.useDesc != null and condition.useDesc != ''">
+        and USE_DESC = #{condition.useDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.useDate != null ">
+        and USE_DATE = #{condition.useDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdExtAcctMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdExtAcctDO">
+    <result column="EXT_ACCT_ID" jdbcType="BIGINT" property="extAcctId"/>
+    <result column="PAY_CHANNEL" jdbcType="INTEGER" property="payChannel"/>
+    <result column="PAY_ACCT_CODE" jdbcType="VARCHAR" property="payAcctCode"/>
+    <result column="PAY_ACCT_NAME" jdbcType="VARCHAR" property="payAcctName"/>
+    <result column="ACCT_OWNER_ORG" jdbcType="INTEGER" property="acctOwnerOrg"/>
+    <result column="ACCT_OWNER_ORG_BRANCH" jdbcType="INTEGER" property="acctOwnerOrgBranch"/>
+    <result column="IF_CONTRACT_QUICK_PAY" jdbcType="INTEGER" property="ifContractQuickPay"/>
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          EXT_ACCT_ID, 
+          PAY_CHANNEL, 
+          PAY_ACCT_CODE, 
+          PAY_ACCT_NAME, 
+          ACCT_OWNER_ORG, 
+          ACCT_OWNER_ORG_BRANCH, 
+          IF_CONTRACT_QUICK_PAY, 
+          CUST_ID, 
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          VER_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EXT_ACCT_ID, 
+          PAY_CHANNEL, 
+          PAY_ACCT_CODE, 
+          PAY_ACCT_NAME, 
+          ACCT_OWNER_ORG, 
+          ACCT_OWNER_ORG_BRANCH, 
+          IF_CONTRACT_QUICK_PAY, 
+          CUST_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          VER_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="extAcctId != null ">
+        EXT_ACCT_ID = #{extAcctId, jdbcType=BIGINT }
+      </if>
+      <if test="payChannel != null ">
+        and PAY_CHANNEL = #{payChannel, jdbcType=INTEGER }
+      </if>
+      <if test="payAcctCode != null and payAcctCode != ''">
+        and PAY_ACCT_CODE = #{payAcctCode, jdbcType=VARCHAR }
+      </if>
+      <if test="payAcctName != null and payAcctName != ''">
+        and PAY_ACCT_NAME = #{payAcctName, jdbcType=VARCHAR }
+      </if>
+      <if test="acctOwnerOrg != null ">
+        and ACCT_OWNER_ORG = #{acctOwnerOrg, jdbcType=INTEGER }
+      </if>
+      <if test="acctOwnerOrgBranch != null ">
+        and ACCT_OWNER_ORG_BRANCH = #{acctOwnerOrgBranch, jdbcType=INTEGER }
+      </if>
+      <if test="ifContractQuickPay != null ">
+        and IF_CONTRACT_QUICK_PAY = #{ifContractQuickPay, jdbcType=INTEGER }
+      </if>
+      <if test="custId != null ">
+        and CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+      <if test="rowId != null ">
+        and ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdExtAcctDO" resultType="java.lang.Integer">
+      select count(*) from ORD_EXT_ACCT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_EXT_ACCT
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_EXT_ACCT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_EXT_ACCT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{extAcctId,jdbcType=BIGINT}, 
+        #{payChannel,jdbcType=INTEGER}, 
+        #{payAcctCode,jdbcType=VARCHAR}, 
+        #{payAcctName,jdbcType=VARCHAR}, 
+        #{acctOwnerOrg,jdbcType=INTEGER}, 
+        #{acctOwnerOrgBranch,jdbcType=INTEGER}, 
+        #{ifContractQuickPay,jdbcType=INTEGER}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_EXT_ACCT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{extAcctId,jdbcType=BIGINT}, 
+        #{payChannel,jdbcType=INTEGER}, 
+        #{payAcctCode,jdbcType=VARCHAR}, 
+        #{payAcctName,jdbcType=VARCHAR}, 
+        #{acctOwnerOrg,jdbcType=INTEGER}, 
+        #{acctOwnerOrgBranch,jdbcType=INTEGER}, 
+        #{ifContractQuickPay,jdbcType=INTEGER}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_EXT_ACCT  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_EXT_ACCT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_EXT_ACCT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="extAcctId != null">
+         EXT_ACCT_ID = #{extAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="payChannel != null">
+         PAY_CHANNEL = #{payChannel,jdbcType=INTEGER},
+      </if>
+      <if test="payAcctCode != null">
+         PAY_ACCT_CODE = #{payAcctCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payAcctName != null">
+         PAY_ACCT_NAME = #{payAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="acctOwnerOrg != null">
+         ACCT_OWNER_ORG = #{acctOwnerOrg,jdbcType=INTEGER},
+      </if>
+      <if test="acctOwnerOrgBranch != null">
+         ACCT_OWNER_ORG_BRANCH = #{acctOwnerOrgBranch,jdbcType=INTEGER},
+      </if>
+      <if test="ifContractQuickPay != null">
+         IF_CONTRACT_QUICK_PAY = #{ifContractQuickPay,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_EXT_ACCT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.extAcctId != null">
+        EXT_ACCT_ID = #{record.extAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.payChannel != null">
+        PAY_CHANNEL = #{record.payChannel,jdbcType=INTEGER},
+      </if>
+      <if test="record.payAcctCode != null">
+        PAY_ACCT_CODE = #{record.payAcctCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payAcctName != null">
+        PAY_ACCT_NAME = #{record.payAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acctOwnerOrg != null">
+        ACCT_OWNER_ORG = #{record.acctOwnerOrg,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctOwnerOrgBranch != null">
+        ACCT_OWNER_ORG_BRANCH = #{record.acctOwnerOrgBranch,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifContractQuickPay != null">
+        IF_CONTRACT_QUICK_PAY = #{record.ifContractQuickPay,jdbcType=INTEGER},
+      </if>
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.extAcctId != null ">
+        EXT_ACCT_ID = #{condition.extAcctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payChannel != null ">
+        and PAY_CHANNEL = #{condition.payChannel, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payAcctCode != null and condition.payAcctCode != ''">
+        and PAY_ACCT_CODE = #{condition.payAcctCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.payAcctName != null and condition.payAcctName != ''">
+        and PAY_ACCT_NAME = #{condition.payAcctName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.acctOwnerOrg != null ">
+        and ACCT_OWNER_ORG = #{condition.acctOwnerOrg, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctOwnerOrgBranch != null ">
+        and ACCT_OWNER_ORG_BRANCH = #{condition.acctOwnerOrgBranch, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifContractQuickPay != null ">
+        and IF_CONTRACT_QUICK_PAY = #{condition.ifContractQuickPay, jdbcType=INTEGER }
+      </if>
+      <if test="condition.custId != null ">
+        and CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.rowId != null ">
+        and ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

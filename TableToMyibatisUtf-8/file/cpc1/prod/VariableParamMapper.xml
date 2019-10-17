@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.VariableParamMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.VariableParamDO">
+    <id column="VARIABLE_PARAM_ID" jdbcType="BIGINT" property="variableParamId"/>
+    <result column="EXPRESS_ID" jdbcType="BIGINT" property="expressId"/>
+    <result column="FORMAL_PARAM_ID" jdbcType="BIGINT" property="formalParamId"/>
+    <result column="PROPERTY_ID" jdbcType="BIGINT" property="propertyId"/>
+    <result column="OBJECT_CLASS" jdbcType="VARCHAR" property="objectClass"/>
+    <result column="OBJECT_METHOD" jdbcType="VARCHAR" property="objectMethod"/>
+    <result column="CORRESPOND_OBJECT_CLASS" jdbcType="VARCHAR" property="correspondObjectClass"/>
+    <result column="CORRESPOND_OBJECT_METHOD" jdbcType="VARCHAR" property="correspondObjectMethod"/>
+    <result column="VARIABLE_TYPE" jdbcType="INTEGER" property="variableType"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          VARIABLE_PARAM_ID, 
+          EXPRESS_ID, 
+          FORMAL_PARAM_ID, 
+          PROPERTY_ID, 
+          OBJECT_CLASS, 
+          OBJECT_METHOD, 
+          CORRESPOND_OBJECT_CLASS, 
+          CORRESPOND_OBJECT_METHOD, 
+          VARIABLE_TYPE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EXPRESS_ID, 
+          FORMAL_PARAM_ID, 
+          PROPERTY_ID, 
+          OBJECT_CLASS, 
+          OBJECT_METHOD, 
+          CORRESPOND_OBJECT_CLASS, 
+          CORRESPOND_OBJECT_METHOD, 
+          VARIABLE_TYPE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="variableParamId != null ">
+        VARIABLE_PARAM_ID = #{variableParamId, jdbcType=BIGINT }
+      </if>
+      <if test="expressId != null ">
+        and EXPRESS_ID = #{expressId, jdbcType=BIGINT }
+      </if>
+      <if test="formalParamId != null ">
+        and FORMAL_PARAM_ID = #{formalParamId, jdbcType=BIGINT }
+      </if>
+      <if test="propertyId != null ">
+        and PROPERTY_ID = #{propertyId, jdbcType=BIGINT }
+      </if>
+      <if test="objectClass != null and objectClass != ''">
+        and OBJECT_CLASS = #{objectClass, jdbcType=VARCHAR }
+      </if>
+      <if test="objectMethod != null and objectMethod != ''">
+        and OBJECT_METHOD = #{objectMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="correspondObjectClass != null and correspondObjectClass != ''">
+        and CORRESPOND_OBJECT_CLASS = #{correspondObjectClass, jdbcType=VARCHAR }
+      </if>
+      <if test="correspondObjectMethod != null and correspondObjectMethod != ''">
+        and CORRESPOND_OBJECT_METHOD = #{correspondObjectMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="variableType != null ">
+        and VARIABLE_TYPE = #{variableType, jdbcType=INTEGER }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.VariableParamDO" resultType="java.lang.Integer">
+      select count(*) from VARIABLE_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from VARIABLE_PARAM
+        where 
+           VARIABLE_PARAM_ID = #{variableParamId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  VARIABLE_PARAM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="variableParamId">
+      insert into  VARIABLE_PARAM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{expressId,jdbcType=BIGINT}, 
+        #{formalParamId,jdbcType=BIGINT}, 
+        #{propertyId,jdbcType=BIGINT}, 
+        #{objectClass,jdbcType=VARCHAR}, 
+        #{objectMethod,jdbcType=VARCHAR}, 
+        #{correspondObjectClass,jdbcType=VARCHAR}, 
+        #{correspondObjectMethod,jdbcType=VARCHAR}, 
+        #{variableType,jdbcType=INTEGER}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  VARIABLE_PARAM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{variableParamId,jdbcType=BIGINT}, 
+        #{expressId,jdbcType=BIGINT}, 
+        #{formalParamId,jdbcType=BIGINT}, 
+        #{propertyId,jdbcType=BIGINT}, 
+        #{objectClass,jdbcType=VARCHAR}, 
+        #{objectMethod,jdbcType=VARCHAR}, 
+        #{correspondObjectClass,jdbcType=VARCHAR}, 
+        #{correspondObjectMethod,jdbcType=VARCHAR}, 
+        #{variableType,jdbcType=INTEGER}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from VARIABLE_PARAM  
+        where
+           VARIABLE_PARAM_ID = #{variableParamId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from VARIABLE_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  VARIABLE_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="expressId != null">
+         EXPRESS_ID = #{expressId,jdbcType=BIGINT},
+      </if>
+      <if test="formalParamId != null">
+         FORMAL_PARAM_ID = #{formalParamId,jdbcType=BIGINT},
+      </if>
+      <if test="propertyId != null">
+         PROPERTY_ID = #{propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="objectClass != null">
+         OBJECT_CLASS = #{objectClass,jdbcType=VARCHAR},
+      </if>
+      <if test="objectMethod != null">
+         OBJECT_METHOD = #{objectMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="correspondObjectClass != null">
+         CORRESPOND_OBJECT_CLASS = #{correspondObjectClass,jdbcType=VARCHAR},
+      </if>
+      <if test="correspondObjectMethod != null">
+         CORRESPOND_OBJECT_METHOD = #{correspondObjectMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="variableType != null">
+         VARIABLE_TYPE = #{variableType,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           VARIABLE_PARAM_ID = #{variableParamId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update VARIABLE_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.variableParamId != null">
+        VARIABLE_PARAM_ID = #{record.variableParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.expressId != null">
+        EXPRESS_ID = #{record.expressId,jdbcType=BIGINT},
+      </if>
+      <if test="record.formalParamId != null">
+        FORMAL_PARAM_ID = #{record.formalParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.propertyId != null">
+        PROPERTY_ID = #{record.propertyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objectClass != null">
+        OBJECT_CLASS = #{record.objectClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objectMethod != null">
+        OBJECT_METHOD = #{record.objectMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.correspondObjectClass != null">
+        CORRESPOND_OBJECT_CLASS = #{record.correspondObjectClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.correspondObjectMethod != null">
+        CORRESPOND_OBJECT_METHOD = #{record.correspondObjectMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.variableType != null">
+        VARIABLE_TYPE = #{record.variableType,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.variableParamId != null ">
+        VARIABLE_PARAM_ID = #{condition.variableParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.expressId != null ">
+        and EXPRESS_ID = #{condition.expressId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.formalParamId != null ">
+        and FORMAL_PARAM_ID = #{condition.formalParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.propertyId != null ">
+        and PROPERTY_ID = #{condition.propertyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objectClass != null and condition.objectClass != ''">
+        and OBJECT_CLASS = #{condition.objectClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objectMethod != null and condition.objectMethod != ''">
+        and OBJECT_METHOD = #{condition.objectMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.correspondObjectClass != null and condition.correspondObjectClass != ''">
+        and CORRESPOND_OBJECT_CLASS = #{condition.correspondObjectClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.correspondObjectMethod != null and condition.correspondObjectMethod != ''">
+        and CORRESPOND_OBJECT_METHOD = #{condition.correspondObjectMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.variableType != null ">
+        and VARIABLE_TYPE = #{condition.variableType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

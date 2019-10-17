@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PartyCheckLogMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PartyCheckLogDO">
+    <id column="PARTY_CHECK_LOG_ID" jdbcType="BIGINT" property="partyCheckLogId"/>
+    <result column="PARTY_CERT_ID" jdbcType="BIGINT" property="partyCertId"/>
+    <result column="CHECK_METHOD" jdbcType="VARCHAR" property="checkMethod"/>
+    <result column="CHECK_DATE" jdbcType="TIMESTAMP" property="checkDate"/>
+    <result column="CHECKER" jdbcType="BIGINT" property="checker"/>
+    <result column="CHECK_CHANNEL" jdbcType="BIGINT" property="checkChannel"/>
+    <result column="CERT_CHECK_RESULT" jdbcType="VARCHAR" property="certCheckResult"/>
+    <result column="ERROR_MESSAGE" jdbcType="VARCHAR" property="errorMessage"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PARTY_CHECK_LOG_ID, 
+          PARTY_CERT_ID, 
+          CHECK_METHOD, 
+          CHECK_DATE, 
+          CHECKER, 
+          CHECK_CHANNEL, 
+          CERT_CHECK_RESULT, 
+          ERROR_MESSAGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PARTY_CERT_ID, 
+          CHECK_METHOD, 
+          CHECK_DATE, 
+          CHECKER, 
+          CHECK_CHANNEL, 
+          CERT_CHECK_RESULT, 
+          ERROR_MESSAGE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="partyCheckLogId != null ">
+        PARTY_CHECK_LOG_ID = #{partyCheckLogId, jdbcType=BIGINT }
+      </if>
+      <if test="partyCertId != null ">
+        and PARTY_CERT_ID = #{partyCertId, jdbcType=BIGINT }
+      </if>
+      <if test="checkMethod != null and checkMethod != ''">
+        and CHECK_METHOD = #{checkMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="checkDate != null ">
+        and CHECK_DATE = #{checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="checker != null ">
+        and CHECKER = #{checker, jdbcType=BIGINT }
+      </if>
+      <if test="checkChannel != null ">
+        and CHECK_CHANNEL = #{checkChannel, jdbcType=BIGINT }
+      </if>
+      <if test="certCheckResult != null and certCheckResult != ''">
+        and CERT_CHECK_RESULT = #{certCheckResult, jdbcType=VARCHAR }
+      </if>
+      <if test="errorMessage != null and errorMessage != ''">
+        and ERROR_MESSAGE = #{errorMessage, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PartyCheckLogDO" resultType="java.lang.Integer">
+      select count(*) from PARTY_CHECK_LOG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PARTY_CHECK_LOG
+        where 
+           PARTY_CHECK_LOG_ID = #{partyCheckLogId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PARTY_CHECK_LOG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="partyCheckLogId">
+      insert into  PARTY_CHECK_LOG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{partyCertId,jdbcType=BIGINT}, 
+        #{checkMethod,jdbcType=VARCHAR}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{checker,jdbcType=BIGINT}, 
+        #{checkChannel,jdbcType=BIGINT}, 
+        #{certCheckResult,jdbcType=VARCHAR}, 
+        #{errorMessage,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PARTY_CHECK_LOG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{partyCheckLogId,jdbcType=BIGINT}, 
+        #{partyCertId,jdbcType=BIGINT}, 
+        #{checkMethod,jdbcType=VARCHAR}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{checker,jdbcType=BIGINT}, 
+        #{checkChannel,jdbcType=BIGINT}, 
+        #{certCheckResult,jdbcType=VARCHAR}, 
+        #{errorMessage,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PARTY_CHECK_LOG  
+        where
+           PARTY_CHECK_LOG_ID = #{partyCheckLogId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PARTY_CHECK_LOG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PARTY_CHECK_LOG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="partyCertId != null">
+         PARTY_CERT_ID = #{partyCertId,jdbcType=BIGINT},
+      </if>
+      <if test="checkMethod != null">
+         CHECK_METHOD = #{checkMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="checkDate != null">
+         CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checker != null">
+         CHECKER = #{checker,jdbcType=BIGINT},
+      </if>
+      <if test="checkChannel != null">
+         CHECK_CHANNEL = #{checkChannel,jdbcType=BIGINT},
+      </if>
+      <if test="certCheckResult != null">
+         CERT_CHECK_RESULT = #{certCheckResult,jdbcType=VARCHAR},
+      </if>
+      <if test="errorMessage != null">
+         ERROR_MESSAGE = #{errorMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PARTY_CHECK_LOG_ID = #{partyCheckLogId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PARTY_CHECK_LOG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.partyCheckLogId != null">
+        PARTY_CHECK_LOG_ID = #{record.partyCheckLogId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyCertId != null">
+        PARTY_CERT_ID = #{record.partyCertId,jdbcType=BIGINT},
+      </if>
+      <if test="record.checkMethod != null">
+        CHECK_METHOD = #{record.checkMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkDate != null">
+        CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checker != null">
+        CHECKER = #{record.checker,jdbcType=BIGINT},
+      </if>
+      <if test="record.checkChannel != null">
+        CHECK_CHANNEL = #{record.checkChannel,jdbcType=BIGINT},
+      </if>
+      <if test="record.certCheckResult != null">
+        CERT_CHECK_RESULT = #{record.certCheckResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errorMessage != null">
+        ERROR_MESSAGE = #{record.errorMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.partyCheckLogId != null ">
+        PARTY_CHECK_LOG_ID = #{condition.partyCheckLogId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyCertId != null ">
+        and PARTY_CERT_ID = #{condition.partyCertId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.checkMethod != null and condition.checkMethod != ''">
+        and CHECK_METHOD = #{condition.checkMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.checkDate != null ">
+        and CHECK_DATE = #{condition.checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.checker != null ">
+        and CHECKER = #{condition.checker, jdbcType=BIGINT }
+      </if>
+      <if test="condition.checkChannel != null ">
+        and CHECK_CHANNEL = #{condition.checkChannel, jdbcType=BIGINT }
+      </if>
+      <if test="condition.certCheckResult != null and condition.certCheckResult != ''">
+        and CERT_CHECK_RESULT = #{condition.certCheckResult, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.errorMessage != null and condition.errorMessage != ''">
+        and ERROR_MESSAGE = #{condition.errorMessage, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

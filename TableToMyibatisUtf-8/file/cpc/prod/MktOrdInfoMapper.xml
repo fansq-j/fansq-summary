@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktOrdInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktOrdInfoDO">
+    <id column="MKT_ORD_INFO_ID" jdbcType="INTEGER" property="mktOrdInfoId"/>
+    <result column="CUST_ORDER_ID" jdbcType="BIGINT" property="custOrderId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="TOTAL_AMOUNT" jdbcType="BIGINT" property="totalAmount"/>
+    <result column="ACTUAL_PAID_AMOUNT" jdbcType="BIGINT" property="actualPaidAmount"/>
+    <result column="TOTAL_TAX" jdbcType="BIGINT" property="totalTax"/>
+    <result column="TOTAL_SHIP" jdbcType="BIGINT" property="totalShip"/>
+    <result column="DISCOUNT" jdbcType="BIGINT" property="discount"/>
+    <result column="PAY_STATUS" jdbcType="VARCHAR" property="payStatus"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="PAYMENT_DATE" jdbcType="TIMESTAMP" property="paymentDate"/>
+    <result column="VERIFY_DATE" jdbcType="TIMESTAMP" property="verifyDate"/>
+    <result column="ORDER_CANCEL_REASON" jdbcType="VARCHAR" property="orderCancelReason"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MKT_ORD_INFO_ID, 
+          CUST_ORDER_ID, 
+          ACCT_ID, 
+          TOTAL_AMOUNT, 
+          ACTUAL_PAID_AMOUNT, 
+          TOTAL_TAX, 
+          TOTAL_SHIP, 
+          DISCOUNT, 
+          PAY_STATUS, 
+          CREATE_DATE, 
+          PAYMENT_DATE, 
+          VERIFY_DATE, 
+          ORDER_CANCEL_REASON, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CUST_ORDER_ID, 
+          ACCT_ID, 
+          TOTAL_AMOUNT, 
+          ACTUAL_PAID_AMOUNT, 
+          TOTAL_TAX, 
+          TOTAL_SHIP, 
+          DISCOUNT, 
+          PAY_STATUS, 
+          CREATE_DATE, 
+          PAYMENT_DATE, 
+          VERIFY_DATE, 
+          ORDER_CANCEL_REASON, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="mktOrdInfoId != null ">
+        MKT_ORD_INFO_ID = #{mktOrdInfoId, jdbcType=INTEGER }
+      </if>
+      <if test="custOrderId != null ">
+        and CUST_ORDER_ID = #{custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="totalAmount != null ">
+        and TOTAL_AMOUNT = #{totalAmount, jdbcType=BIGINT }
+      </if>
+      <if test="actualPaidAmount != null ">
+        and ACTUAL_PAID_AMOUNT = #{actualPaidAmount, jdbcType=BIGINT }
+      </if>
+      <if test="totalTax != null ">
+        and TOTAL_TAX = #{totalTax, jdbcType=BIGINT }
+      </if>
+      <if test="totalShip != null ">
+        and TOTAL_SHIP = #{totalShip, jdbcType=BIGINT }
+      </if>
+      <if test="discount != null ">
+        and DISCOUNT = #{discount, jdbcType=BIGINT }
+      </if>
+      <if test="payStatus != null and payStatus != ''">
+        and PAY_STATUS = #{payStatus, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="paymentDate != null ">
+        and PAYMENT_DATE = #{paymentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="verifyDate != null ">
+        and VERIFY_DATE = #{verifyDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="orderCancelReason != null and orderCancelReason != ''">
+        and ORDER_CANCEL_REASON = #{orderCancelReason, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktOrdInfoDO" resultType="java.lang.Integer">
+      select count(*) from MKT_ORD_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_ORD_INFO
+        where 
+           MKT_ORD_INFO_ID = #{mktOrdInfoId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_ORD_INFO 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="mktOrdInfoId">
+      insert into  MKT_ORD_INFO ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{totalAmount,jdbcType=BIGINT}, 
+        #{actualPaidAmount,jdbcType=BIGINT}, 
+        #{totalTax,jdbcType=BIGINT}, 
+        #{totalShip,jdbcType=BIGINT}, 
+        #{discount,jdbcType=BIGINT}, 
+        #{payStatus,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{paymentDate,jdbcType=TIMESTAMP}, 
+        #{verifyDate,jdbcType=TIMESTAMP}, 
+        #{orderCancelReason,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_ORD_INFO ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{mktOrdInfoId,jdbcType=INTEGER}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{totalAmount,jdbcType=BIGINT}, 
+        #{actualPaidAmount,jdbcType=BIGINT}, 
+        #{totalTax,jdbcType=BIGINT}, 
+        #{totalShip,jdbcType=BIGINT}, 
+        #{discount,jdbcType=BIGINT}, 
+        #{payStatus,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{paymentDate,jdbcType=TIMESTAMP}, 
+        #{verifyDate,jdbcType=TIMESTAMP}, 
+        #{orderCancelReason,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_ORD_INFO  
+        where
+           MKT_ORD_INFO_ID = #{mktOrdInfoId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_ORD_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_ORD_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="custOrderId != null">
+         CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="totalAmount != null">
+         TOTAL_AMOUNT = #{totalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="actualPaidAmount != null">
+         ACTUAL_PAID_AMOUNT = #{actualPaidAmount,jdbcType=BIGINT},
+      </if>
+      <if test="totalTax != null">
+         TOTAL_TAX = #{totalTax,jdbcType=BIGINT},
+      </if>
+      <if test="totalShip != null">
+         TOTAL_SHIP = #{totalShip,jdbcType=BIGINT},
+      </if>
+      <if test="discount != null">
+         DISCOUNT = #{discount,jdbcType=BIGINT},
+      </if>
+      <if test="payStatus != null">
+         PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentDate != null">
+         PAYMENT_DATE = #{paymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyDate != null">
+         VERIFY_DATE = #{verifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderCancelReason != null">
+         ORDER_CANCEL_REASON = #{orderCancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           MKT_ORD_INFO_ID = #{mktOrdInfoId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_ORD_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.mktOrdInfoId != null">
+        MKT_ORD_INFO_ID = #{record.mktOrdInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="record.custOrderId != null">
+        CUST_ORDER_ID = #{record.custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalAmount != null">
+        TOTAL_AMOUNT = #{record.totalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.actualPaidAmount != null">
+        ACTUAL_PAID_AMOUNT = #{record.actualPaidAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalTax != null">
+        TOTAL_TAX = #{record.totalTax,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalShip != null">
+        TOTAL_SHIP = #{record.totalShip,jdbcType=BIGINT},
+      </if>
+      <if test="record.discount != null">
+        DISCOUNT = #{record.discount,jdbcType=BIGINT},
+      </if>
+      <if test="record.payStatus != null">
+        PAY_STATUS = #{record.payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paymentDate != null">
+        PAYMENT_DATE = #{record.paymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.verifyDate != null">
+        VERIFY_DATE = #{record.verifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderCancelReason != null">
+        ORDER_CANCEL_REASON = #{record.orderCancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.mktOrdInfoId != null ">
+        MKT_ORD_INFO_ID = #{condition.mktOrdInfoId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.custOrderId != null ">
+        and CUST_ORDER_ID = #{condition.custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.totalAmount != null ">
+        and TOTAL_AMOUNT = #{condition.totalAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.actualPaidAmount != null ">
+        and ACTUAL_PAID_AMOUNT = #{condition.actualPaidAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.totalTax != null ">
+        and TOTAL_TAX = #{condition.totalTax, jdbcType=BIGINT }
+      </if>
+      <if test="condition.totalShip != null ">
+        and TOTAL_SHIP = #{condition.totalShip, jdbcType=BIGINT }
+      </if>
+      <if test="condition.discount != null ">
+        and DISCOUNT = #{condition.discount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payStatus != null and condition.payStatus != ''">
+        and PAY_STATUS = #{condition.payStatus, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.paymentDate != null ">
+        and PAYMENT_DATE = #{condition.paymentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.verifyDate != null ">
+        and VERIFY_DATE = #{condition.verifyDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.orderCancelReason != null and condition.orderCancelReason != ''">
+        and ORDER_CANCEL_REASON = #{condition.orderCancelReason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

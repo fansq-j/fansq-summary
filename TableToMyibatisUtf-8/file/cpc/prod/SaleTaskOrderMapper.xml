@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SaleTaskOrderMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SaleTaskOrderDO">
+    <id column="ORDER_ID" jdbcType="BIGINT" property="orderId"/>
+    <result column="SALE_OPP_ID" jdbcType="BIGINT" property="saleOppId"/>
+    <result column="EXEC_DATE" jdbcType="TIMESTAMP" property="execDate"/>
+    <result column="ORDER_TYPE" jdbcType="VARCHAR" property="orderType"/>
+    <result column="EXEC_PURPOSE" jdbcType="VARCHAR" property="execPurpose"/>
+    <result column="COMMUNICATE_MODE" jdbcType="VARCHAR" property="communicateMode"/>
+    <result column="COMMUNICATE_INFO" jdbcType="VARCHAR" property="communicateInfo"/>
+    <result column="QUESTION_REQ" jdbcType="VARCHAR" property="questionReq"/>
+    <result column="NEXT_PLAN" jdbcType="VARCHAR" property="nextPlan"/>
+    <result column="EXEC_RESULT" jdbcType="VARCHAR" property="execResult"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ORDER_ID, 
+          SALE_OPP_ID, 
+          EXEC_DATE, 
+          ORDER_TYPE, 
+          EXEC_PURPOSE, 
+          COMMUNICATE_MODE, 
+          COMMUNICATE_INFO, 
+          QUESTION_REQ, 
+          NEXT_PLAN, 
+          EXEC_RESULT, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SALE_OPP_ID, 
+          EXEC_DATE, 
+          ORDER_TYPE, 
+          EXEC_PURPOSE, 
+          COMMUNICATE_MODE, 
+          COMMUNICATE_INFO, 
+          QUESTION_REQ, 
+          NEXT_PLAN, 
+          EXEC_RESULT, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="orderId != null ">
+        ORDER_ID = #{orderId, jdbcType=BIGINT }
+      </if>
+      <if test="saleOppId != null ">
+        and SALE_OPP_ID = #{saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="execDate != null ">
+        and EXEC_DATE = #{execDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="orderType != null and orderType != ''">
+        and ORDER_TYPE = #{orderType, jdbcType=VARCHAR }
+      </if>
+      <if test="execPurpose != null and execPurpose != ''">
+        and EXEC_PURPOSE = #{execPurpose, jdbcType=VARCHAR }
+      </if>
+      <if test="communicateMode != null and communicateMode != ''">
+        and COMMUNICATE_MODE = #{communicateMode, jdbcType=VARCHAR }
+      </if>
+      <if test="communicateInfo != null and communicateInfo != ''">
+        and COMMUNICATE_INFO = #{communicateInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="questionReq != null and questionReq != ''">
+        and QUESTION_REQ = #{questionReq, jdbcType=VARCHAR }
+      </if>
+      <if test="nextPlan != null and nextPlan != ''">
+        and NEXT_PLAN = #{nextPlan, jdbcType=VARCHAR }
+      </if>
+      <if test="execResult != null and execResult != ''">
+        and EXEC_RESULT = #{execResult, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SaleTaskOrderDO" resultType="java.lang.Integer">
+      select count(*) from SALE_TASK_ORDER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SALE_TASK_ORDER
+        where 
+           ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SALE_TASK_ORDER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="orderId">
+      insert into  SALE_TASK_ORDER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{execDate,jdbcType=TIMESTAMP}, 
+        #{orderType,jdbcType=VARCHAR}, 
+        #{execPurpose,jdbcType=VARCHAR}, 
+        #{communicateMode,jdbcType=VARCHAR}, 
+        #{communicateInfo,jdbcType=VARCHAR}, 
+        #{questionReq,jdbcType=VARCHAR}, 
+        #{nextPlan,jdbcType=VARCHAR}, 
+        #{execResult,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SALE_TASK_ORDER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{orderId,jdbcType=BIGINT}, 
+        #{saleOppId,jdbcType=BIGINT}, 
+        #{execDate,jdbcType=TIMESTAMP}, 
+        #{orderType,jdbcType=VARCHAR}, 
+        #{execPurpose,jdbcType=VARCHAR}, 
+        #{communicateMode,jdbcType=VARCHAR}, 
+        #{communicateInfo,jdbcType=VARCHAR}, 
+        #{questionReq,jdbcType=VARCHAR}, 
+        #{nextPlan,jdbcType=VARCHAR}, 
+        #{execResult,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SALE_TASK_ORDER  
+        where
+           ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SALE_TASK_ORDER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SALE_TASK_ORDER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="saleOppId != null">
+         SALE_OPP_ID = #{saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="execDate != null">
+         EXEC_DATE = #{execDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null">
+         ORDER_TYPE = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="execPurpose != null">
+         EXEC_PURPOSE = #{execPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="communicateMode != null">
+         COMMUNICATE_MODE = #{communicateMode,jdbcType=VARCHAR},
+      </if>
+      <if test="communicateInfo != null">
+         COMMUNICATE_INFO = #{communicateInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="questionReq != null">
+         QUESTION_REQ = #{questionReq,jdbcType=VARCHAR},
+      </if>
+      <if test="nextPlan != null">
+         NEXT_PLAN = #{nextPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="execResult != null">
+         EXEC_RESULT = #{execResult,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SALE_TASK_ORDER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.orderId != null">
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.saleOppId != null">
+        SALE_OPP_ID = #{record.saleOppId,jdbcType=BIGINT},
+      </if>
+      <if test="record.execDate != null">
+        EXEC_DATE = #{record.execDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderType != null">
+        ORDER_TYPE = #{record.orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execPurpose != null">
+        EXEC_PURPOSE = #{record.execPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communicateMode != null">
+        COMMUNICATE_MODE = #{record.communicateMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communicateInfo != null">
+        COMMUNICATE_INFO = #{record.communicateInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionReq != null">
+        QUESTION_REQ = #{record.questionReq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nextPlan != null">
+        NEXT_PLAN = #{record.nextPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execResult != null">
+        EXEC_RESULT = #{record.execResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.orderId != null ">
+        ORDER_ID = #{condition.orderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.saleOppId != null ">
+        and SALE_OPP_ID = #{condition.saleOppId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.execDate != null ">
+        and EXEC_DATE = #{condition.execDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.orderType != null and condition.orderType != ''">
+        and ORDER_TYPE = #{condition.orderType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.execPurpose != null and condition.execPurpose != ''">
+        and EXEC_PURPOSE = #{condition.execPurpose, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.communicateMode != null and condition.communicateMode != ''">
+        and COMMUNICATE_MODE = #{condition.communicateMode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.communicateInfo != null and condition.communicateInfo != ''">
+        and COMMUNICATE_INFO = #{condition.communicateInfo, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.questionReq != null and condition.questionReq != ''">
+        and QUESTION_REQ = #{condition.questionReq, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.nextPlan != null and condition.nextPlan != ''">
+        and NEXT_PLAN = #{condition.nextPlan, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.execResult != null and condition.execResult != ''">
+        and EXEC_RESULT = #{condition.execResult, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

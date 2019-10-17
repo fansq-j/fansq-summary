@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.TemplateParameterMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.TemplateParameterDO">
+    <id column="TEMPLATE_PARAM_ID" jdbcType="BIGINT" property="templateParamId"/>
+    <result column="TEMPLATE_PARAM_TYPE_ID" jdbcType="INTEGER" property="templateParamTypeId"/>
+    <result column="TEMPLATE_PARAM_NBR" jdbcType="VARCHAR" property="templateParamNbr"/>
+    <result column="PARAM_NAME" jdbcType="VARCHAR" property="paramName"/>
+    <result column="PARAMETER_DESC" jdbcType="VARCHAR" property="parameterDesc"/>
+    <result column="DEFAULT_VALUE" jdbcType="VARCHAR" property="defaultValue"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TEMPLATE_PARAM_ID, 
+          TEMPLATE_PARAM_TYPE_ID, 
+          TEMPLATE_PARAM_NBR, 
+          PARAM_NAME, 
+          PARAMETER_DESC, 
+          DEFAULT_VALUE, 
+          STATUS_CD, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TEMPLATE_PARAM_TYPE_ID, 
+          TEMPLATE_PARAM_NBR, 
+          PARAM_NAME, 
+          PARAMETER_DESC, 
+          DEFAULT_VALUE, 
+          STATUS_CD, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="templateParamId != null ">
+        TEMPLATE_PARAM_ID = #{templateParamId, jdbcType=BIGINT }
+      </if>
+      <if test="templateParamTypeId != null ">
+        and TEMPLATE_PARAM_TYPE_ID = #{templateParamTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="templateParamNbr != null and templateParamNbr != ''">
+        and TEMPLATE_PARAM_NBR = #{templateParamNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="paramName != null and paramName != ''">
+        and PARAM_NAME = #{paramName, jdbcType=VARCHAR }
+      </if>
+      <if test="parameterDesc != null and parameterDesc != ''">
+        and PARAMETER_DESC = #{parameterDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="defaultValue != null and defaultValue != ''">
+        and DEFAULT_VALUE = #{defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.TemplateParameterDO" resultType="java.lang.Integer">
+      select count(*) from TEMPLATE_PARAMETER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TEMPLATE_PARAMETER
+        where 
+           TEMPLATE_PARAM_ID = #{templateParamId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TEMPLATE_PARAMETER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="templateParamId">
+      insert into  TEMPLATE_PARAMETER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{templateParamTypeId,jdbcType=INTEGER}, 
+        #{templateParamNbr,jdbcType=VARCHAR}, 
+        #{paramName,jdbcType=VARCHAR}, 
+        #{parameterDesc,jdbcType=VARCHAR}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TEMPLATE_PARAMETER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{templateParamId,jdbcType=BIGINT}, 
+        #{templateParamTypeId,jdbcType=INTEGER}, 
+        #{templateParamNbr,jdbcType=VARCHAR}, 
+        #{paramName,jdbcType=VARCHAR}, 
+        #{parameterDesc,jdbcType=VARCHAR}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TEMPLATE_PARAMETER  
+        where
+           TEMPLATE_PARAM_ID = #{templateParamId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from TEMPLATE_PARAMETER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TEMPLATE_PARAMETER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="templateParamTypeId != null">
+         TEMPLATE_PARAM_TYPE_ID = #{templateParamTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="templateParamNbr != null">
+         TEMPLATE_PARAM_NBR = #{templateParamNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="paramName != null">
+         PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="parameterDesc != null">
+         PARAMETER_DESC = #{parameterDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultValue != null">
+         DEFAULT_VALUE = #{defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           TEMPLATE_PARAM_ID = #{templateParamId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update TEMPLATE_PARAMETER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.templateParamId != null">
+        TEMPLATE_PARAM_ID = #{record.templateParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.templateParamTypeId != null">
+        TEMPLATE_PARAM_TYPE_ID = #{record.templateParamTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateParamNbr != null">
+        TEMPLATE_PARAM_NBR = #{record.templateParamNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramName != null">
+        PARAM_NAME = #{record.paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameterDesc != null">
+        PARAMETER_DESC = #{record.parameterDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultValue != null">
+        DEFAULT_VALUE = #{record.defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.templateParamId != null ">
+        TEMPLATE_PARAM_ID = #{condition.templateParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.templateParamTypeId != null ">
+        and TEMPLATE_PARAM_TYPE_ID = #{condition.templateParamTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.templateParamNbr != null and condition.templateParamNbr != ''">
+        and TEMPLATE_PARAM_NBR = #{condition.templateParamNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paramName != null and condition.paramName != ''">
+        and PARAM_NAME = #{condition.paramName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parameterDesc != null and condition.parameterDesc != ''">
+        and PARAMETER_DESC = #{condition.parameterDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.defaultValue != null and condition.defaultValue != ''">
+        and DEFAULT_VALUE = #{condition.defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

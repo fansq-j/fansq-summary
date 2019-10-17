@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PayNodeCheckTotalMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PayNodeCheckTotalDO">
+    <id column="CHECK_TOTAL_ID" jdbcType="BIGINT" property="checkTotalId"/>
+    <result column="PAY_NODE_ID" jdbcType="INTEGER" property="payNodeId"/>
+    <result column="CHECK_DATE" jdbcType="TIMESTAMP" property="checkDate"/>
+    <result column="TOTAL_RECORD" jdbcType="INTEGER" property="totalRecord"/>
+    <result column="DIFF_RECORD" jdbcType="INTEGER" property="diffRecord"/>
+    <result column="TOTAL_AMOUNT" jdbcType="BIGINT" property="totalAmount"/>
+    <result column="DIFF_AMOUNT" jdbcType="BIGINT" property="diffAmount"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="RESULT_DESC" jdbcType="VARCHAR" property="resultDesc"/>
+    <result column="CONFIRM_FLAG" jdbcType="INTEGER" property="confirmFlag"/>
+    <result column="CONFIRM_DATE" jdbcType="TIMESTAMP" property="confirmDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CHECK_TOTAL_ID, 
+          PAY_NODE_ID, 
+          CHECK_DATE, 
+          TOTAL_RECORD, 
+          DIFF_RECORD, 
+          TOTAL_AMOUNT, 
+          DIFF_AMOUNT, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          RESULT_DESC, 
+          CONFIRM_FLAG, 
+          CONFIRM_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PAY_NODE_ID, 
+          CHECK_DATE, 
+          TOTAL_RECORD, 
+          DIFF_RECORD, 
+          TOTAL_AMOUNT, 
+          DIFF_AMOUNT, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          RESULT_DESC, 
+          CONFIRM_FLAG, 
+          CONFIRM_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="checkTotalId != null ">
+        CHECK_TOTAL_ID = #{checkTotalId, jdbcType=BIGINT }
+      </if>
+      <if test="payNodeId != null ">
+        and PAY_NODE_ID = #{payNodeId, jdbcType=INTEGER }
+      </if>
+      <if test="checkDate != null ">
+        and CHECK_DATE = #{checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="totalRecord != null ">
+        and TOTAL_RECORD = #{totalRecord, jdbcType=INTEGER }
+      </if>
+      <if test="diffRecord != null ">
+        and DIFF_RECORD = #{diffRecord, jdbcType=INTEGER }
+      </if>
+      <if test="totalAmount != null ">
+        and TOTAL_AMOUNT = #{totalAmount, jdbcType=BIGINT }
+      </if>
+      <if test="diffAmount != null ">
+        and DIFF_AMOUNT = #{diffAmount, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="resultDesc != null and resultDesc != ''">
+        and RESULT_DESC = #{resultDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="confirmFlag != null ">
+        and CONFIRM_FLAG = #{confirmFlag, jdbcType=INTEGER }
+      </if>
+      <if test="confirmDate != null ">
+        and CONFIRM_DATE = #{confirmDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PayNodeCheckTotalDO" resultType="java.lang.Integer">
+      select count(*) from PAY_NODE_CHECK_TOTAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PAY_NODE_CHECK_TOTAL
+        where 
+           CHECK_TOTAL_ID = #{checkTotalId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PAY_NODE_CHECK_TOTAL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="checkTotalId">
+      insert into  PAY_NODE_CHECK_TOTAL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{payNodeId,jdbcType=INTEGER}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{totalRecord,jdbcType=INTEGER}, 
+        #{diffRecord,jdbcType=INTEGER}, 
+        #{totalAmount,jdbcType=BIGINT}, 
+        #{diffAmount,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{resultDesc,jdbcType=VARCHAR}, 
+        #{confirmFlag,jdbcType=INTEGER}, 
+        #{confirmDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PAY_NODE_CHECK_TOTAL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{checkTotalId,jdbcType=BIGINT}, 
+        #{payNodeId,jdbcType=INTEGER}, 
+        #{checkDate,jdbcType=TIMESTAMP}, 
+        #{totalRecord,jdbcType=INTEGER}, 
+        #{diffRecord,jdbcType=INTEGER}, 
+        #{totalAmount,jdbcType=BIGINT}, 
+        #{diffAmount,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{resultDesc,jdbcType=VARCHAR}, 
+        #{confirmFlag,jdbcType=INTEGER}, 
+        #{confirmDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PAY_NODE_CHECK_TOTAL  
+        where
+           CHECK_TOTAL_ID = #{checkTotalId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from PAY_NODE_CHECK_TOTAL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PAY_NODE_CHECK_TOTAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="payNodeId != null">
+         PAY_NODE_ID = #{payNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="checkDate != null">
+         CHECK_DATE = #{checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalRecord != null">
+         TOTAL_RECORD = #{totalRecord,jdbcType=INTEGER},
+      </if>
+      <if test="diffRecord != null">
+         DIFF_RECORD = #{diffRecord,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+         TOTAL_AMOUNT = #{totalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="diffAmount != null">
+         DIFF_AMOUNT = #{diffAmount,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="resultDesc != null">
+         RESULT_DESC = #{resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmFlag != null">
+         CONFIRM_FLAG = #{confirmFlag,jdbcType=INTEGER},
+      </if>
+      <if test="confirmDate != null">
+         CONFIRM_DATE = #{confirmDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           CHECK_TOTAL_ID = #{checkTotalId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update PAY_NODE_CHECK_TOTAL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.checkTotalId != null">
+        CHECK_TOTAL_ID = #{record.checkTotalId,jdbcType=BIGINT},
+      </if>
+      <if test="record.payNodeId != null">
+        PAY_NODE_ID = #{record.payNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkDate != null">
+        CHECK_DATE = #{record.checkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.totalRecord != null">
+        TOTAL_RECORD = #{record.totalRecord,jdbcType=INTEGER},
+      </if>
+      <if test="record.diffRecord != null">
+        DIFF_RECORD = #{record.diffRecord,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalAmount != null">
+        TOTAL_AMOUNT = #{record.totalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.diffAmount != null">
+        DIFF_AMOUNT = #{record.diffAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.resultDesc != null">
+        RESULT_DESC = #{record.resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmFlag != null">
+        CONFIRM_FLAG = #{record.confirmFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.confirmDate != null">
+        CONFIRM_DATE = #{record.confirmDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.checkTotalId != null ">
+        CHECK_TOTAL_ID = #{condition.checkTotalId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payNodeId != null ">
+        and PAY_NODE_ID = #{condition.payNodeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.checkDate != null ">
+        and CHECK_DATE = #{condition.checkDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.totalRecord != null ">
+        and TOTAL_RECORD = #{condition.totalRecord, jdbcType=INTEGER }
+      </if>
+      <if test="condition.diffRecord != null ">
+        and DIFF_RECORD = #{condition.diffRecord, jdbcType=INTEGER }
+      </if>
+      <if test="condition.totalAmount != null ">
+        and TOTAL_AMOUNT = #{condition.totalAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.diffAmount != null ">
+        and DIFF_AMOUNT = #{condition.diffAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.resultDesc != null and condition.resultDesc != ''">
+        and RESULT_DESC = #{condition.resultDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.confirmFlag != null ">
+        and CONFIRM_FLAG = #{condition.confirmFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.confirmDate != null ">
+        and CONFIRM_DATE = #{condition.confirmDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.TemplateParamValueSpecMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.TemplateParamValueSpecDO">
+    <id column="TEMPLATE_PARAM_VALUE_SPEC_ID" jdbcType="INTEGER" property="templateParamValueSpecId"/>
+    <result column="TEMPLATE_PARAM_ID" jdbcType="INTEGER" property="templateParamId"/>
+    <result column="TEMPLATE_PARAM_VALUE_SPEC_NAME" jdbcType="VARCHAR" property="templateParamValueSpecName"/>
+    <result column="TEMPLATE_PARAM_VALUE_SPEC_DESC" jdbcType="VARCHAR" property="templateParamValueSpecDesc"/>
+    <result column="TEMPLATE_PARAM_TYPE_ID" jdbcType="INTEGER" property="templateParamTypeId"/>
+    <result column="TEMPLATE_PARAM_ENUM_VALUE" jdbcType="VARCHAR" property="templateParamEnumValue"/>
+    <result column="PARAM_VALUE_RANGE_MAX" jdbcType="VARCHAR" property="paramValueRangeMax"/>
+    <result column="PARAM_VALUE_RANGE_MIN" jdbcType="VARCHAR" property="paramValueRangeMin"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="IF_DISPLAY" jdbcType="INTEGER" property="ifDisplay"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TEMPLATE_PARAM_VALUE_SPEC_ID, 
+          TEMPLATE_PARAM_ID, 
+          TEMPLATE_PARAM_VALUE_SPEC_NAME, 
+          TEMPLATE_PARAM_VALUE_SPEC_DESC, 
+          TEMPLATE_PARAM_TYPE_ID, 
+          TEMPLATE_PARAM_ENUM_VALUE, 
+          PARAM_VALUE_RANGE_MAX, 
+          PARAM_VALUE_RANGE_MIN, 
+          STATUS_CD, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          IF_DISPLAY
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TEMPLATE_PARAM_ID, 
+          TEMPLATE_PARAM_VALUE_SPEC_NAME, 
+          TEMPLATE_PARAM_VALUE_SPEC_DESC, 
+          TEMPLATE_PARAM_TYPE_ID, 
+          TEMPLATE_PARAM_ENUM_VALUE, 
+          PARAM_VALUE_RANGE_MAX, 
+          PARAM_VALUE_RANGE_MIN, 
+          STATUS_CD, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          IF_DISPLAY
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="templateParamValueSpecId != null ">
+        TEMPLATE_PARAM_VALUE_SPEC_ID = #{templateParamValueSpecId, jdbcType=INTEGER }
+      </if>
+      <if test="templateParamId != null ">
+        and TEMPLATE_PARAM_ID = #{templateParamId, jdbcType=INTEGER }
+      </if>
+      <if test="templateParamValueSpecName != null and templateParamValueSpecName != ''">
+        and TEMPLATE_PARAM_VALUE_SPEC_NAME = #{templateParamValueSpecName, jdbcType=VARCHAR }
+      </if>
+      <if test="templateParamValueSpecDesc != null and templateParamValueSpecDesc != ''">
+        and TEMPLATE_PARAM_VALUE_SPEC_DESC = #{templateParamValueSpecDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="templateParamTypeId != null ">
+        and TEMPLATE_PARAM_TYPE_ID = #{templateParamTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="templateParamEnumValue != null and templateParamEnumValue != ''">
+        and TEMPLATE_PARAM_ENUM_VALUE = #{templateParamEnumValue, jdbcType=VARCHAR }
+      </if>
+      <if test="paramValueRangeMax != null and paramValueRangeMax != ''">
+        and PARAM_VALUE_RANGE_MAX = #{paramValueRangeMax, jdbcType=VARCHAR }
+      </if>
+      <if test="paramValueRangeMin != null and paramValueRangeMin != ''">
+        and PARAM_VALUE_RANGE_MIN = #{paramValueRangeMin, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="ifDisplay != null ">
+        and IF_DISPLAY = #{ifDisplay, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.TemplateParamValueSpecDO" resultType="java.lang.Integer">
+      select count(*) from TEMPLATE_PARAM_VALUE_SPEC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TEMPLATE_PARAM_VALUE_SPEC
+        where 
+           TEMPLATE_PARAM_VALUE_SPEC_ID = #{templateParamValueSpecId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TEMPLATE_PARAM_VALUE_SPEC 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="templateParamValueSpecId">
+      insert into  TEMPLATE_PARAM_VALUE_SPEC ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{templateParamId,jdbcType=INTEGER}, 
+        #{templateParamValueSpecName,jdbcType=VARCHAR}, 
+        #{templateParamValueSpecDesc,jdbcType=VARCHAR}, 
+        #{templateParamTypeId,jdbcType=INTEGER}, 
+        #{templateParamEnumValue,jdbcType=VARCHAR}, 
+        #{paramValueRangeMax,jdbcType=VARCHAR}, 
+        #{paramValueRangeMin,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{ifDisplay,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TEMPLATE_PARAM_VALUE_SPEC ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{templateParamValueSpecId,jdbcType=INTEGER}, 
+        #{templateParamId,jdbcType=INTEGER}, 
+        #{templateParamValueSpecName,jdbcType=VARCHAR}, 
+        #{templateParamValueSpecDesc,jdbcType=VARCHAR}, 
+        #{templateParamTypeId,jdbcType=INTEGER}, 
+        #{templateParamEnumValue,jdbcType=VARCHAR}, 
+        #{paramValueRangeMax,jdbcType=VARCHAR}, 
+        #{paramValueRangeMin,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{ifDisplay,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TEMPLATE_PARAM_VALUE_SPEC  
+        where
+           TEMPLATE_PARAM_VALUE_SPEC_ID = #{templateParamValueSpecId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from TEMPLATE_PARAM_VALUE_SPEC
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TEMPLATE_PARAM_VALUE_SPEC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="templateParamId != null">
+         TEMPLATE_PARAM_ID = #{templateParamId,jdbcType=INTEGER},
+      </if>
+      <if test="templateParamValueSpecName != null">
+         TEMPLATE_PARAM_VALUE_SPEC_NAME = #{templateParamValueSpecName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateParamValueSpecDesc != null">
+         TEMPLATE_PARAM_VALUE_SPEC_DESC = #{templateParamValueSpecDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="templateParamTypeId != null">
+         TEMPLATE_PARAM_TYPE_ID = #{templateParamTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="templateParamEnumValue != null">
+         TEMPLATE_PARAM_ENUM_VALUE = #{templateParamEnumValue,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValueRangeMax != null">
+         PARAM_VALUE_RANGE_MAX = #{paramValueRangeMax,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValueRangeMin != null">
+         PARAM_VALUE_RANGE_MIN = #{paramValueRangeMin,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ifDisplay != null">
+         IF_DISPLAY = #{ifDisplay,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           TEMPLATE_PARAM_VALUE_SPEC_ID = #{templateParamValueSpecId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update TEMPLATE_PARAM_VALUE_SPEC
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.templateParamValueSpecId != null">
+        TEMPLATE_PARAM_VALUE_SPEC_ID = #{record.templateParamValueSpecId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateParamId != null">
+        TEMPLATE_PARAM_ID = #{record.templateParamId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateParamValueSpecName != null">
+        TEMPLATE_PARAM_VALUE_SPEC_NAME = #{record.templateParamValueSpecName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templateParamValueSpecDesc != null">
+        TEMPLATE_PARAM_VALUE_SPEC_DESC = #{record.templateParamValueSpecDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.templateParamTypeId != null">
+        TEMPLATE_PARAM_TYPE_ID = #{record.templateParamTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateParamEnumValue != null">
+        TEMPLATE_PARAM_ENUM_VALUE = #{record.templateParamEnumValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramValueRangeMax != null">
+        PARAM_VALUE_RANGE_MAX = #{record.paramValueRangeMax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramValueRangeMin != null">
+        PARAM_VALUE_RANGE_MIN = #{record.paramValueRangeMin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ifDisplay != null">
+        IF_DISPLAY = #{record.ifDisplay,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.templateParamValueSpecId != null ">
+        TEMPLATE_PARAM_VALUE_SPEC_ID = #{condition.templateParamValueSpecId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.templateParamId != null ">
+        and TEMPLATE_PARAM_ID = #{condition.templateParamId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.templateParamValueSpecName != null and condition.templateParamValueSpecName != ''">
+        and TEMPLATE_PARAM_VALUE_SPEC_NAME = #{condition.templateParamValueSpecName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.templateParamValueSpecDesc != null and condition.templateParamValueSpecDesc != ''">
+        and TEMPLATE_PARAM_VALUE_SPEC_DESC = #{condition.templateParamValueSpecDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.templateParamTypeId != null ">
+        and TEMPLATE_PARAM_TYPE_ID = #{condition.templateParamTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.templateParamEnumValue != null and condition.templateParamEnumValue != ''">
+        and TEMPLATE_PARAM_ENUM_VALUE = #{condition.templateParamEnumValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paramValueRangeMax != null and condition.paramValueRangeMax != ''">
+        and PARAM_VALUE_RANGE_MAX = #{condition.paramValueRangeMax, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paramValueRangeMin != null and condition.paramValueRangeMin != ''">
+        and PARAM_VALUE_RANGE_MIN = #{condition.paramValueRangeMin, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.ifDisplay != null ">
+        and IF_DISPLAY = #{condition.ifDisplay, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

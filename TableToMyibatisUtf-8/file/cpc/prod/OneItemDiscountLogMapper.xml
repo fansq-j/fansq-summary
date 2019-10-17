@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OneItemDiscountLogMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OneItemDiscountLogDO">
+    <id column="ONE_CHARGE_DISCOUNT_ID" jdbcType="BIGINT" property="oneChargeDiscountId"/>
+    <result column="ONE_ACCT_ITEM_ID" jdbcType="BIGINT" property="oneAcctItemId"/>
+    <result column="CUST_ORDER_NBR" jdbcType="VARCHAR" property="custOrderNbr"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+    <result column="DISCOUNT" jdbcType="BIGINT" property="discount"/>
+    <result column="AGREE_STAFF_ID" jdbcType="BIGINT" property="agreeStaffId"/>
+    <result column="AGREE_SEQ" jdbcType="BIGINT" property="agreeSeq"/>
+    <result column="AGREE_DEPT_NO" jdbcType="VARCHAR" property="agreeDeptNo"/>
+    <result column="ADJUST_REASON" jdbcType="VARCHAR" property="adjustReason"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ONE_CHARGE_DISCOUNT_ID, 
+          ONE_ACCT_ITEM_ID, 
+          CUST_ORDER_NBR, 
+          ORDER_ITEM_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          OFFER_INST_ID, 
+          DISCOUNT, 
+          AGREE_STAFF_ID, 
+          AGREE_SEQ, 
+          AGREE_DEPT_NO, 
+          ADJUST_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ONE_ACCT_ITEM_ID, 
+          CUST_ORDER_NBR, 
+          ORDER_ITEM_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          OFFER_INST_ID, 
+          DISCOUNT, 
+          AGREE_STAFF_ID, 
+          AGREE_SEQ, 
+          AGREE_DEPT_NO, 
+          ADJUST_REASON, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="oneChargeDiscountId != null ">
+        ONE_CHARGE_DISCOUNT_ID = #{oneChargeDiscountId, jdbcType=BIGINT }
+      </if>
+      <if test="oneAcctItemId != null ">
+        and ONE_ACCT_ITEM_ID = #{oneAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="custOrderNbr != null and custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="discount != null ">
+        and DISCOUNT = #{discount, jdbcType=BIGINT }
+      </if>
+      <if test="agreeStaffId != null ">
+        and AGREE_STAFF_ID = #{agreeStaffId, jdbcType=BIGINT }
+      </if>
+      <if test="agreeSeq != null ">
+        and AGREE_SEQ = #{agreeSeq, jdbcType=BIGINT }
+      </if>
+      <if test="agreeDeptNo != null and agreeDeptNo != ''">
+        and AGREE_DEPT_NO = #{agreeDeptNo, jdbcType=VARCHAR }
+      </if>
+      <if test="adjustReason != null and adjustReason != ''">
+        and ADJUST_REASON = #{adjustReason, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OneItemDiscountLogDO" resultType="java.lang.Integer">
+      select count(*) from ONE_ITEM_DISCOUNT_LOG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ONE_ITEM_DISCOUNT_LOG
+        where 
+           ONE_CHARGE_DISCOUNT_ID = #{oneChargeDiscountId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ONE_ITEM_DISCOUNT_LOG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="oneChargeDiscountId">
+      insert into  ONE_ITEM_DISCOUNT_LOG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{oneAcctItemId,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{discount,jdbcType=BIGINT}, 
+        #{agreeStaffId,jdbcType=BIGINT}, 
+        #{agreeSeq,jdbcType=BIGINT}, 
+        #{agreeDeptNo,jdbcType=VARCHAR}, 
+        #{adjustReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ONE_ITEM_DISCOUNT_LOG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{oneChargeDiscountId,jdbcType=BIGINT}, 
+        #{oneAcctItemId,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{discount,jdbcType=BIGINT}, 
+        #{agreeStaffId,jdbcType=BIGINT}, 
+        #{agreeSeq,jdbcType=BIGINT}, 
+        #{agreeDeptNo,jdbcType=VARCHAR}, 
+        #{adjustReason,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ONE_ITEM_DISCOUNT_LOG  
+        where
+           ONE_CHARGE_DISCOUNT_ID = #{oneChargeDiscountId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ONE_ITEM_DISCOUNT_LOG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ONE_ITEM_DISCOUNT_LOG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="oneAcctItemId != null">
+         ONE_ACCT_ITEM_ID = #{oneAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="custOrderNbr != null">
+         CUST_ORDER_NBR = #{custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="discount != null">
+         DISCOUNT = #{discount,jdbcType=BIGINT},
+      </if>
+      <if test="agreeStaffId != null">
+         AGREE_STAFF_ID = #{agreeStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="agreeSeq != null">
+         AGREE_SEQ = #{agreeSeq,jdbcType=BIGINT},
+      </if>
+      <if test="agreeDeptNo != null">
+         AGREE_DEPT_NO = #{agreeDeptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustReason != null">
+         ADJUST_REASON = #{adjustReason,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ONE_CHARGE_DISCOUNT_ID = #{oneChargeDiscountId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ONE_ITEM_DISCOUNT_LOG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.oneChargeDiscountId != null">
+        ONE_CHARGE_DISCOUNT_ID = #{record.oneChargeDiscountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oneAcctItemId != null">
+        ONE_ACCT_ITEM_ID = #{record.oneAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custOrderNbr != null">
+        CUST_ORDER_NBR = #{record.custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.discount != null">
+        DISCOUNT = #{record.discount,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeStaffId != null">
+        AGREE_STAFF_ID = #{record.agreeStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeSeq != null">
+        AGREE_SEQ = #{record.agreeSeq,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeDeptNo != null">
+        AGREE_DEPT_NO = #{record.agreeDeptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adjustReason != null">
+        ADJUST_REASON = #{record.adjustReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.oneChargeDiscountId != null ">
+        ONE_CHARGE_DISCOUNT_ID = #{condition.oneChargeDiscountId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oneAcctItemId != null ">
+        and ONE_ACCT_ITEM_ID = #{condition.oneAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custOrderNbr != null and condition.custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{condition.custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.discount != null ">
+        and DISCOUNT = #{condition.discount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeStaffId != null ">
+        and AGREE_STAFF_ID = #{condition.agreeStaffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeSeq != null ">
+        and AGREE_SEQ = #{condition.agreeSeq, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeDeptNo != null and condition.agreeDeptNo != ''">
+        and AGREE_DEPT_NO = #{condition.agreeDeptNo, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.adjustReason != null and condition.adjustReason != ''">
+        and ADJUST_REASON = #{condition.adjustReason, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

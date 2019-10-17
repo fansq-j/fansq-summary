@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BankAgentFileFormatMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BankAgentFileFormatDO">
+    <id column="BANK_AGENT_FILE_FORMAT_ID" jdbcType="INTEGER" property="bankAgentFileFormatId"/>
+    <result column="BANK_FORMAT_ID" jdbcType="INTEGER" property="bankFormatId"/>
+    <result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
+    <result column="DEFAULT_VALUE" jdbcType="VARCHAR" property="defaultValue"/>
+    <result column="BEGION_POSITION" jdbcType="INTEGER" property="begionPosition"/>
+    <result column="ITEM_LENGTH" jdbcType="INTEGER" property="itemLength"/>
+    <result column="PAD_TYPE" jdbcType="INTEGER" property="padType"/>
+    <result column="PAD_STRING" jdbcType="VARCHAR" property="padString"/>
+    <result column="ROW_TYPE" jdbcType="INTEGER" property="rowType"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BANK_AGENT_FILE_FORMAT_ID, 
+          BANK_FORMAT_ID, 
+          ITEM_NAME, 
+          DEFAULT_VALUE, 
+          BEGION_POSITION, 
+          ITEM_LENGTH, 
+          PAD_TYPE, 
+          PAD_STRING, 
+          ROW_TYPE, 
+          LAN_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BANK_FORMAT_ID, 
+          ITEM_NAME, 
+          DEFAULT_VALUE, 
+          BEGION_POSITION, 
+          ITEM_LENGTH, 
+          PAD_TYPE, 
+          PAD_STRING, 
+          ROW_TYPE, 
+          LAN_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="bankAgentFileFormatId != null ">
+        BANK_AGENT_FILE_FORMAT_ID = #{bankAgentFileFormatId, jdbcType=INTEGER }
+      </if>
+      <if test="bankFormatId != null ">
+        and BANK_FORMAT_ID = #{bankFormatId, jdbcType=INTEGER }
+      </if>
+      <if test="itemName != null and itemName != ''">
+        and ITEM_NAME = #{itemName, jdbcType=VARCHAR }
+      </if>
+      <if test="defaultValue != null and defaultValue != ''">
+        and DEFAULT_VALUE = #{defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="begionPosition != null ">
+        and BEGION_POSITION = #{begionPosition, jdbcType=INTEGER }
+      </if>
+      <if test="itemLength != null ">
+        and ITEM_LENGTH = #{itemLength, jdbcType=INTEGER }
+      </if>
+      <if test="padType != null ">
+        and PAD_TYPE = #{padType, jdbcType=INTEGER }
+      </if>
+      <if test="padString != null and padString != ''">
+        and PAD_STRING = #{padString, jdbcType=VARCHAR }
+      </if>
+      <if test="rowType != null ">
+        and ROW_TYPE = #{rowType, jdbcType=INTEGER }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BankAgentFileFormatDO" resultType="java.lang.Integer">
+      select count(*) from BANK_AGENT_FILE_FORMAT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BANK_AGENT_FILE_FORMAT
+        where 
+           BANK_AGENT_FILE_FORMAT_ID = #{bankAgentFileFormatId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BANK_AGENT_FILE_FORMAT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="bankAgentFileFormatId">
+      insert into  BANK_AGENT_FILE_FORMAT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{bankFormatId,jdbcType=INTEGER}, 
+        #{itemName,jdbcType=VARCHAR}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{begionPosition,jdbcType=INTEGER}, 
+        #{itemLength,jdbcType=INTEGER}, 
+        #{padType,jdbcType=INTEGER}, 
+        #{padString,jdbcType=VARCHAR}, 
+        #{rowType,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BANK_AGENT_FILE_FORMAT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{bankAgentFileFormatId,jdbcType=INTEGER}, 
+        #{bankFormatId,jdbcType=INTEGER}, 
+        #{itemName,jdbcType=VARCHAR}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{begionPosition,jdbcType=INTEGER}, 
+        #{itemLength,jdbcType=INTEGER}, 
+        #{padType,jdbcType=INTEGER}, 
+        #{padString,jdbcType=VARCHAR}, 
+        #{rowType,jdbcType=INTEGER}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BANK_AGENT_FILE_FORMAT  
+        where
+           BANK_AGENT_FILE_FORMAT_ID = #{bankAgentFileFormatId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from BANK_AGENT_FILE_FORMAT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BANK_AGENT_FILE_FORMAT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="bankFormatId != null">
+         BANK_FORMAT_ID = #{bankFormatId,jdbcType=INTEGER},
+      </if>
+      <if test="itemName != null">
+         ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultValue != null">
+         DEFAULT_VALUE = #{defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="begionPosition != null">
+         BEGION_POSITION = #{begionPosition,jdbcType=INTEGER},
+      </if>
+      <if test="itemLength != null">
+         ITEM_LENGTH = #{itemLength,jdbcType=INTEGER},
+      </if>
+      <if test="padType != null">
+         PAD_TYPE = #{padType,jdbcType=INTEGER},
+      </if>
+      <if test="padString != null">
+         PAD_STRING = #{padString,jdbcType=VARCHAR},
+      </if>
+      <if test="rowType != null">
+         ROW_TYPE = #{rowType,jdbcType=INTEGER},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           BANK_AGENT_FILE_FORMAT_ID = #{bankAgentFileFormatId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update BANK_AGENT_FILE_FORMAT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.bankAgentFileFormatId != null">
+        BANK_AGENT_FILE_FORMAT_ID = #{record.bankAgentFileFormatId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankFormatId != null">
+        BANK_FORMAT_ID = #{record.bankFormatId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemName != null">
+        ITEM_NAME = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultValue != null">
+        DEFAULT_VALUE = #{record.defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.begionPosition != null">
+        BEGION_POSITION = #{record.begionPosition,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemLength != null">
+        ITEM_LENGTH = #{record.itemLength,jdbcType=INTEGER},
+      </if>
+      <if test="record.padType != null">
+        PAD_TYPE = #{record.padType,jdbcType=INTEGER},
+      </if>
+      <if test="record.padString != null">
+        PAD_STRING = #{record.padString,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rowType != null">
+        ROW_TYPE = #{record.rowType,jdbcType=INTEGER},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.bankAgentFileFormatId != null ">
+        BANK_AGENT_FILE_FORMAT_ID = #{condition.bankAgentFileFormatId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.bankFormatId != null ">
+        and BANK_FORMAT_ID = #{condition.bankFormatId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.itemName != null and condition.itemName != ''">
+        and ITEM_NAME = #{condition.itemName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.defaultValue != null and condition.defaultValue != ''">
+        and DEFAULT_VALUE = #{condition.defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.begionPosition != null ">
+        and BEGION_POSITION = #{condition.begionPosition, jdbcType=INTEGER }
+      </if>
+      <if test="condition.itemLength != null ">
+        and ITEM_LENGTH = #{condition.itemLength, jdbcType=INTEGER }
+      </if>
+      <if test="condition.padType != null ">
+        and PAD_TYPE = #{condition.padType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.padString != null and condition.padString != ''">
+        and PAD_STRING = #{condition.padString, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.rowType != null ">
+        and ROW_TYPE = #{condition.rowType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AccuInitRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AccuInitRuleDO">
+    <id column="ACCU_INIT_ID" jdbcType="INTEGER" property="accuInitId"/>
+    <result column="ACCU_TYPE_ID" jdbcType="INTEGER" property="accuTypeId"/>
+    <result column="CYCLE_AMOUNT_REF_VALUE_ID" jdbcType="INTEGER" property="cycleAmountRefValueId"/>
+    <result column="FIRST_EFF_DATE_TYPE" jdbcType="INTEGER" property="firstEffDateType"/>
+    <result column="FIRST_CALC_TYPE" jdbcType="INTEGER" property="firstCalcType"/>
+    <result column="CALC_PRECISION_METHOD" jdbcType="INTEGER" property="calcPrecisionMethod"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="CYCLE_TYPE" jdbcType="INTEGER" property="cycleType"/>
+    <result column="SPAN_COUNT" jdbcType="INTEGER" property="spanCount"/>
+    <result column="CYCLE_BEGIN_OFFSET" jdbcType="INTEGER" property="cycleBeginOffset"/>
+    <result column="CYCLE_END_OFFSET" jdbcType="INTEGER" property="cycleEndOffset"/>
+    <result column="ACTION_ID" jdbcType="INTEGER" property="actionId"/>
+    <result column="RATABLE_CYCLE_ID" jdbcType="INTEGER" property="ratableCycleId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCU_INIT_ID, 
+          ACCU_TYPE_ID, 
+          CYCLE_AMOUNT_REF_VALUE_ID, 
+          FIRST_EFF_DATE_TYPE, 
+          FIRST_CALC_TYPE, 
+          CALC_PRECISION_METHOD, 
+          OBJ_TYPE, 
+          CYCLE_TYPE, 
+          SPAN_COUNT, 
+          CYCLE_BEGIN_OFFSET, 
+          CYCLE_END_OFFSET, 
+          ACTION_ID, 
+          RATABLE_CYCLE_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCU_TYPE_ID, 
+          CYCLE_AMOUNT_REF_VALUE_ID, 
+          FIRST_EFF_DATE_TYPE, 
+          FIRST_CALC_TYPE, 
+          CALC_PRECISION_METHOD, 
+          OBJ_TYPE, 
+          CYCLE_TYPE, 
+          SPAN_COUNT, 
+          CYCLE_BEGIN_OFFSET, 
+          CYCLE_END_OFFSET, 
+          ACTION_ID, 
+          RATABLE_CYCLE_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="accuInitId != null ">
+        ACCU_INIT_ID = #{accuInitId, jdbcType=INTEGER }
+      </if>
+      <if test="accuTypeId != null ">
+        and ACCU_TYPE_ID = #{accuTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="cycleAmountRefValueId != null ">
+        and CYCLE_AMOUNT_REF_VALUE_ID = #{cycleAmountRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="firstEffDateType != null ">
+        and FIRST_EFF_DATE_TYPE = #{firstEffDateType, jdbcType=INTEGER }
+      </if>
+      <if test="firstCalcType != null ">
+        and FIRST_CALC_TYPE = #{firstCalcType, jdbcType=INTEGER }
+      </if>
+      <if test="calcPrecisionMethod != null ">
+        and CALC_PRECISION_METHOD = #{calcPrecisionMethod, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="cycleType != null ">
+        and CYCLE_TYPE = #{cycleType, jdbcType=INTEGER }
+      </if>
+      <if test="spanCount != null ">
+        and SPAN_COUNT = #{spanCount, jdbcType=INTEGER }
+      </if>
+      <if test="cycleBeginOffset != null ">
+        and CYCLE_BEGIN_OFFSET = #{cycleBeginOffset, jdbcType=INTEGER }
+      </if>
+      <if test="cycleEndOffset != null ">
+        and CYCLE_END_OFFSET = #{cycleEndOffset, jdbcType=INTEGER }
+      </if>
+      <if test="actionId != null ">
+        and ACTION_ID = #{actionId, jdbcType=INTEGER }
+      </if>
+      <if test="ratableCycleId != null ">
+        and RATABLE_CYCLE_ID = #{ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AccuInitRuleDO" resultType="java.lang.Integer">
+      select count(*) from ACCU_INIT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCU_INIT_RULE
+        where 
+           ACCU_INIT_ID = #{accuInitId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCU_INIT_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="accuInitId">
+      insert into  ACCU_INIT_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{accuTypeId,jdbcType=INTEGER}, 
+        #{cycleAmountRefValueId,jdbcType=INTEGER}, 
+        #{firstEffDateType,jdbcType=INTEGER}, 
+        #{firstCalcType,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{cycleType,jdbcType=INTEGER}, 
+        #{spanCount,jdbcType=INTEGER}, 
+        #{cycleBeginOffset,jdbcType=INTEGER}, 
+        #{cycleEndOffset,jdbcType=INTEGER}, 
+        #{actionId,jdbcType=INTEGER}, 
+        #{ratableCycleId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCU_INIT_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{accuInitId,jdbcType=INTEGER}, 
+        #{accuTypeId,jdbcType=INTEGER}, 
+        #{cycleAmountRefValueId,jdbcType=INTEGER}, 
+        #{firstEffDateType,jdbcType=INTEGER}, 
+        #{firstCalcType,jdbcType=INTEGER}, 
+        #{calcPrecisionMethod,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{cycleType,jdbcType=INTEGER}, 
+        #{spanCount,jdbcType=INTEGER}, 
+        #{cycleBeginOffset,jdbcType=INTEGER}, 
+        #{cycleEndOffset,jdbcType=INTEGER}, 
+        #{actionId,jdbcType=INTEGER}, 
+        #{ratableCycleId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCU_INIT_RULE  
+        where
+           ACCU_INIT_ID = #{accuInitId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCU_INIT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCU_INIT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="accuTypeId != null">
+         ACCU_TYPE_ID = #{accuTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="cycleAmountRefValueId != null">
+         CYCLE_AMOUNT_REF_VALUE_ID = #{cycleAmountRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="firstEffDateType != null">
+         FIRST_EFF_DATE_TYPE = #{firstEffDateType,jdbcType=INTEGER},
+      </if>
+      <if test="firstCalcType != null">
+         FIRST_CALC_TYPE = #{firstCalcType,jdbcType=INTEGER},
+      </if>
+      <if test="calcPrecisionMethod != null">
+         CALC_PRECISION_METHOD = #{calcPrecisionMethod,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleType != null">
+         CYCLE_TYPE = #{cycleType,jdbcType=INTEGER},
+      </if>
+      <if test="spanCount != null">
+         SPAN_COUNT = #{spanCount,jdbcType=INTEGER},
+      </if>
+      <if test="cycleBeginOffset != null">
+         CYCLE_BEGIN_OFFSET = #{cycleBeginOffset,jdbcType=INTEGER},
+      </if>
+      <if test="cycleEndOffset != null">
+         CYCLE_END_OFFSET = #{cycleEndOffset,jdbcType=INTEGER},
+      </if>
+      <if test="actionId != null">
+         ACTION_ID = #{actionId,jdbcType=INTEGER},
+      </if>
+      <if test="ratableCycleId != null">
+         RATABLE_CYCLE_ID = #{ratableCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ACCU_INIT_ID = #{accuInitId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCU_INIT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.accuInitId != null">
+        ACCU_INIT_ID = #{record.accuInitId,jdbcType=INTEGER},
+      </if>
+      <if test="record.accuTypeId != null">
+        ACCU_TYPE_ID = #{record.accuTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleAmountRefValueId != null">
+        CYCLE_AMOUNT_REF_VALUE_ID = #{record.cycleAmountRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstEffDateType != null">
+        FIRST_EFF_DATE_TYPE = #{record.firstEffDateType,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstCalcType != null">
+        FIRST_CALC_TYPE = #{record.firstCalcType,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPrecisionMethod != null">
+        CALC_PRECISION_METHOD = #{record.calcPrecisionMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycleType != null">
+        CYCLE_TYPE = #{record.cycleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.spanCount != null">
+        SPAN_COUNT = #{record.spanCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleBeginOffset != null">
+        CYCLE_BEGIN_OFFSET = #{record.cycleBeginOffset,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleEndOffset != null">
+        CYCLE_END_OFFSET = #{record.cycleEndOffset,jdbcType=INTEGER},
+      </if>
+      <if test="record.actionId != null">
+        ACTION_ID = #{record.actionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratableCycleId != null">
+        RATABLE_CYCLE_ID = #{record.ratableCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.accuInitId != null ">
+        ACCU_INIT_ID = #{condition.accuInitId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.accuTypeId != null ">
+        and ACCU_TYPE_ID = #{condition.accuTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cycleAmountRefValueId != null ">
+        and CYCLE_AMOUNT_REF_VALUE_ID = #{condition.cycleAmountRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.firstEffDateType != null ">
+        and FIRST_EFF_DATE_TYPE = #{condition.firstEffDateType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.firstCalcType != null ">
+        and FIRST_CALC_TYPE = #{condition.firstCalcType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPrecisionMethod != null ">
+        and CALC_PRECISION_METHOD = #{condition.calcPrecisionMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.cycleType != null ">
+        and CYCLE_TYPE = #{condition.cycleType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.spanCount != null ">
+        and SPAN_COUNT = #{condition.spanCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cycleBeginOffset != null ">
+        and CYCLE_BEGIN_OFFSET = #{condition.cycleBeginOffset, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cycleEndOffset != null ">
+        and CYCLE_END_OFFSET = #{condition.cycleEndOffset, jdbcType=INTEGER }
+      </if>
+      <if test="condition.actionId != null ">
+        and ACTION_ID = #{condition.actionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratableCycleId != null ">
+        and RATABLE_CYCLE_ID = #{condition.ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

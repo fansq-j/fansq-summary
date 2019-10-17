@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BillMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BillDO">
+    <id column="BILL_ID" jdbcType="BIGINT" property="billId"/>
+    <result column="PAYMENT_ID" jdbcType="BIGINT" property="paymentId"/>
+    <result column="PAYMENT_METHOD" jdbcType="INTEGER" property="paymentMethod"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="LATE_FEE" jdbcType="BIGINT" property="lateFee"/>
+    <result column="DERATE_LATE_FEE" jdbcType="BIGINT" property="derateLateFee"/>
+    <result column="BALANCE" jdbcType="BIGINT" property="balance"/>
+    <result column="LAST_CHANGE" jdbcType="BIGINT" property="lastChange"/>
+    <result column="CUR_CHANGE" jdbcType="BIGINT" property="curChange"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="PAYMENT_DATE" jdbcType="TIMESTAMP" property="paymentDate"/>
+    <result column="ACC_NUM" jdbcType="VARCHAR" property="accNum"/>
+    <result column="OPERATED_BILL_ID" jdbcType="BIGINT" property="operatedBillId"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BILL_ID, 
+          PAYMENT_ID, 
+          PAYMENT_METHOD, 
+          BILLING_CYCLE_ID, 
+          ACCT_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          PROD_INST_ID, 
+          AMOUNT, 
+          LATE_FEE, 
+          DERATE_LATE_FEE, 
+          BALANCE, 
+          LAST_CHANGE, 
+          CUR_CHANGE, 
+          CREATE_DATE, 
+          PAYMENT_DATE, 
+          ACC_NUM, 
+          OPERATED_BILL_ID, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PAYMENT_ID, 
+          PAYMENT_METHOD, 
+          BILLING_CYCLE_ID, 
+          ACCT_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          PROD_INST_ID, 
+          AMOUNT, 
+          LATE_FEE, 
+          DERATE_LATE_FEE, 
+          BALANCE, 
+          LAST_CHANGE, 
+          CUR_CHANGE, 
+          CREATE_DATE, 
+          PAYMENT_DATE, 
+          ACC_NUM, 
+          OPERATED_BILL_ID, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="billId != null ">
+        BILL_ID = #{billId, jdbcType=BIGINT }
+      </if>
+      <if test="paymentId != null ">
+        and PAYMENT_ID = #{paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="paymentMethod != null ">
+        and PAYMENT_METHOD = #{paymentMethod, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="lateFee != null ">
+        and LATE_FEE = #{lateFee, jdbcType=BIGINT }
+      </if>
+      <if test="derateLateFee != null ">
+        and DERATE_LATE_FEE = #{derateLateFee, jdbcType=BIGINT }
+      </if>
+      <if test="balance != null ">
+        and BALANCE = #{balance, jdbcType=BIGINT }
+      </if>
+      <if test="lastChange != null ">
+        and LAST_CHANGE = #{lastChange, jdbcType=BIGINT }
+      </if>
+      <if test="curChange != null ">
+        and CUR_CHANGE = #{curChange, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="paymentDate != null ">
+        and PAYMENT_DATE = #{paymentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="accNum != null and accNum != ''">
+        and ACC_NUM = #{accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="operatedBillId != null ">
+        and OPERATED_BILL_ID = #{operatedBillId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BillDO" resultType="java.lang.Integer">
+      select count(*) from BILL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BILL
+        where 
+           BILL_ID = #{billId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BILL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="billId">
+      insert into  BILL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{paymentMethod,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{lateFee,jdbcType=BIGINT}, 
+        #{derateLateFee,jdbcType=BIGINT}, 
+        #{balance,jdbcType=BIGINT}, 
+        #{lastChange,jdbcType=BIGINT}, 
+        #{curChange,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{paymentDate,jdbcType=TIMESTAMP}, 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{operatedBillId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BILL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{billId,jdbcType=BIGINT}, 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{paymentMethod,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{lateFee,jdbcType=BIGINT}, 
+        #{derateLateFee,jdbcType=BIGINT}, 
+        #{balance,jdbcType=BIGINT}, 
+        #{lastChange,jdbcType=BIGINT}, 
+        #{curChange,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{paymentDate,jdbcType=TIMESTAMP}, 
+        #{accNum,jdbcType=VARCHAR}, 
+        #{operatedBillId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BILL  
+        where
+           BILL_ID = #{billId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BILL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BILL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="paymentId != null">
+         PAYMENT_ID = #{paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentMethod != null">
+         PAYMENT_METHOD = #{paymentMethod,jdbcType=INTEGER},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="lateFee != null">
+         LATE_FEE = #{lateFee,jdbcType=BIGINT},
+      </if>
+      <if test="derateLateFee != null">
+         DERATE_LATE_FEE = #{derateLateFee,jdbcType=BIGINT},
+      </if>
+      <if test="balance != null">
+         BALANCE = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="lastChange != null">
+         LAST_CHANGE = #{lastChange,jdbcType=BIGINT},
+      </if>
+      <if test="curChange != null">
+         CUR_CHANGE = #{curChange,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentDate != null">
+         PAYMENT_DATE = #{paymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accNum != null">
+         ACC_NUM = #{accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="operatedBillId != null">
+         OPERATED_BILL_ID = #{operatedBillId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           BILL_ID = #{billId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BILL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentId != null">
+        PAYMENT_ID = #{record.paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentMethod != null">
+        PAYMENT_METHOD = #{record.paymentMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.lateFee != null">
+        LATE_FEE = #{record.lateFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.derateLateFee != null">
+        DERATE_LATE_FEE = #{record.derateLateFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.balance != null">
+        BALANCE = #{record.balance,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastChange != null">
+        LAST_CHANGE = #{record.lastChange,jdbcType=BIGINT},
+      </if>
+      <if test="record.curChange != null">
+        CUR_CHANGE = #{record.curChange,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paymentDate != null">
+        PAYMENT_DATE = #{record.paymentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accNum != null">
+        ACC_NUM = #{record.accNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatedBillId != null">
+        OPERATED_BILL_ID = #{record.operatedBillId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.billId != null ">
+        BILL_ID = #{condition.billId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paymentId != null ">
+        and PAYMENT_ID = #{condition.paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paymentMethod != null ">
+        and PAYMENT_METHOD = #{condition.paymentMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lateFee != null ">
+        and LATE_FEE = #{condition.lateFee, jdbcType=BIGINT }
+      </if>
+      <if test="condition.derateLateFee != null ">
+        and DERATE_LATE_FEE = #{condition.derateLateFee, jdbcType=BIGINT }
+      </if>
+      <if test="condition.balance != null ">
+        and BALANCE = #{condition.balance, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lastChange != null ">
+        and LAST_CHANGE = #{condition.lastChange, jdbcType=BIGINT }
+      </if>
+      <if test="condition.curChange != null ">
+        and CUR_CHANGE = #{condition.curChange, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.paymentDate != null ">
+        and PAYMENT_DATE = #{condition.paymentDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.accNum != null and condition.accNum != ''">
+        and ACC_NUM = #{condition.accNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operatedBillId != null ">
+        and OPERATED_BILL_ID = #{condition.operatedBillId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

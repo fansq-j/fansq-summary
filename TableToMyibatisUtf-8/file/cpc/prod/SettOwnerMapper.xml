@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SettOwnerMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SettOwnerDO">
+    <id column="SETT_OWNER_ID" jdbcType="INTEGER" property="settOwnerId"/>
+    <result column="SETT_OWNER_NAME" jdbcType="VARCHAR" property="settOwnerName"/>
+    <result column="OWNER_OBJECT_TYPE" jdbcType="INTEGER" property="ownerObjectType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SETT_OWNER_ID, 
+          SETT_OWNER_NAME, 
+          OWNER_OBJECT_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SETT_OWNER_NAME, 
+          OWNER_OBJECT_TYPE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="settOwnerId != null ">
+        SETT_OWNER_ID = #{settOwnerId, jdbcType=INTEGER }
+      </if>
+      <if test="settOwnerName != null and settOwnerName != ''">
+        and SETT_OWNER_NAME = #{settOwnerName, jdbcType=VARCHAR }
+      </if>
+      <if test="ownerObjectType != null ">
+        and OWNER_OBJECT_TYPE = #{ownerObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SettOwnerDO" resultType="java.lang.Integer">
+      select count(*) from SETT_OWNER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SETT_OWNER
+        where 
+           SETT_OWNER_ID = #{settOwnerId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SETT_OWNER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="settOwnerId">
+      insert into  SETT_OWNER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{settOwnerName,jdbcType=VARCHAR}, 
+        #{ownerObjectType,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SETT_OWNER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{settOwnerId,jdbcType=INTEGER}, 
+        #{settOwnerName,jdbcType=VARCHAR}, 
+        #{ownerObjectType,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SETT_OWNER  
+        where
+           SETT_OWNER_ID = #{settOwnerId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from SETT_OWNER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SETT_OWNER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="settOwnerName != null">
+         SETT_OWNER_NAME = #{settOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerObjectType != null">
+         OWNER_OBJECT_TYPE = #{ownerObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           SETT_OWNER_ID = #{settOwnerId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update SETT_OWNER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.settOwnerId != null">
+        SETT_OWNER_ID = #{record.settOwnerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.settOwnerName != null">
+        SETT_OWNER_NAME = #{record.settOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownerObjectType != null">
+        OWNER_OBJECT_TYPE = #{record.ownerObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.settOwnerId != null ">
+        SETT_OWNER_ID = #{condition.settOwnerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.settOwnerName != null and condition.settOwnerName != ''">
+        and SETT_OWNER_NAME = #{condition.settOwnerName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ownerObjectType != null ">
+        and OWNER_OBJECT_TYPE = #{condition.ownerObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PricingPlanMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PricingPlanDO">
+    <id column="PRICING_PLAN_ID" jdbcType="INTEGER" property="pricingPlanId"/>
+    <result column="PRICING_PLAN_NAME" jdbcType="VARCHAR" property="pricingPlanName"/>
+    <result column="PRICING_DESC" jdbcType="VARCHAR" property="pricingDesc"/>
+    <result column="PARAM_DESC" jdbcType="VARCHAR" property="paramDesc"/>
+    <result column="PRICING_PLAN_TYPE" jdbcType="INTEGER" property="pricingPlanType"/>
+    <result column="PRICING_PACKET_FLAG" jdbcType="INTEGER" property="pricingPacketFlag"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="IF_DEFAULT" jdbcType="INTEGER" property="ifDefault"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRICING_PLAN_ID, 
+          PRICING_PLAN_NAME, 
+          PRICING_DESC, 
+          PARAM_DESC, 
+          PRICING_PLAN_TYPE, 
+          PRICING_PACKET_FLAG, 
+          REGION_ID, 
+          IF_DEFAULT, 
+          PRIORITY, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PRICING_PLAN_NAME, 
+          PRICING_DESC, 
+          PARAM_DESC, 
+          PRICING_PLAN_TYPE, 
+          PRICING_PACKET_FLAG, 
+          REGION_ID, 
+          IF_DEFAULT, 
+          PRIORITY, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pricingPlanId != null ">
+        PRICING_PLAN_ID = #{pricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="pricingPlanName != null and pricingPlanName != ''">
+        and PRICING_PLAN_NAME = #{pricingPlanName, jdbcType=VARCHAR }
+      </if>
+      <if test="pricingDesc != null and pricingDesc != ''">
+        and PRICING_DESC = #{pricingDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="paramDesc != null and paramDesc != ''">
+        and PARAM_DESC = #{paramDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="pricingPlanType != null ">
+        and PRICING_PLAN_TYPE = #{pricingPlanType, jdbcType=INTEGER }
+      </if>
+      <if test="pricingPacketFlag != null ">
+        and PRICING_PACKET_FLAG = #{pricingPacketFlag, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="ifDefault != null ">
+        and IF_DEFAULT = #{ifDefault, jdbcType=INTEGER }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PricingPlanDO" resultType="java.lang.Integer">
+      select count(*) from PRICING_PLAN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRICING_PLAN
+        where 
+           PRICING_PLAN_ID = #{pricingPlanId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRICING_PLAN 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pricingPlanId">
+      insert into  PRICING_PLAN ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{pricingPlanName,jdbcType=VARCHAR}, 
+        #{pricingDesc,jdbcType=VARCHAR}, 
+        #{paramDesc,jdbcType=VARCHAR}, 
+        #{pricingPlanType,jdbcType=INTEGER}, 
+        #{pricingPacketFlag,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{ifDefault,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRICING_PLAN ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pricingPlanId,jdbcType=INTEGER}, 
+        #{pricingPlanName,jdbcType=VARCHAR}, 
+        #{pricingDesc,jdbcType=VARCHAR}, 
+        #{paramDesc,jdbcType=VARCHAR}, 
+        #{pricingPlanType,jdbcType=INTEGER}, 
+        #{pricingPacketFlag,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{ifDefault,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRICING_PLAN  
+        where
+           PRICING_PLAN_ID = #{pricingPlanId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PRICING_PLAN
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRICING_PLAN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="pricingPlanName != null">
+         PRICING_PLAN_NAME = #{pricingPlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="pricingDesc != null">
+         PRICING_DESC = #{pricingDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paramDesc != null">
+         PARAM_DESC = #{paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pricingPlanType != null">
+         PRICING_PLAN_TYPE = #{pricingPlanType,jdbcType=INTEGER},
+      </if>
+      <if test="pricingPacketFlag != null">
+         PRICING_PACKET_FLAG = #{pricingPacketFlag,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="ifDefault != null">
+         IF_DEFAULT = #{ifDefault,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PRICING_PLAN_ID = #{pricingPlanId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PRICING_PLAN
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pricingPlanId != null">
+        PRICING_PLAN_ID = #{record.pricingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingPlanName != null">
+        PRICING_PLAN_NAME = #{record.pricingPlanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricingDesc != null">
+        PRICING_DESC = #{record.pricingDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paramDesc != null">
+        PARAM_DESC = #{record.paramDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricingPlanType != null">
+        PRICING_PLAN_TYPE = #{record.pricingPlanType,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingPacketFlag != null">
+        PRICING_PACKET_FLAG = #{record.pricingPacketFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifDefault != null">
+        IF_DEFAULT = #{record.ifDefault,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pricingPlanId != null ">
+        PRICING_PLAN_ID = #{condition.pricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingPlanName != null and condition.pricingPlanName != ''">
+        and PRICING_PLAN_NAME = #{condition.pricingPlanName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pricingDesc != null and condition.pricingDesc != ''">
+        and PRICING_DESC = #{condition.pricingDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.paramDesc != null and condition.paramDesc != ''">
+        and PARAM_DESC = #{condition.paramDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pricingPlanType != null ">
+        and PRICING_PLAN_TYPE = #{condition.pricingPlanType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingPacketFlag != null ">
+        and PRICING_PACKET_FLAG = #{condition.pricingPacketFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifDefault != null ">
+        and IF_DEFAULT = #{condition.ifDefault, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

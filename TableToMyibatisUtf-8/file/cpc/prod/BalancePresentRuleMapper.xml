@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BalancePresentRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BalancePresentRuleDO">
+    <id column="PRESENT_RULE_ID" jdbcType="INTEGER" property="presentRuleId"/>
+    <result column="BAL_BALANCE_TYPE_ID" jdbcType="INTEGER" property="balBalanceTypeId"/>
+    <result column="OBJ_TYPE" jdbcType="INTEGER" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="BASE_VALUE_TYPE" jdbcType="INTEGER" property="baseValueType"/>
+    <result column="REF_CEIL" jdbcType="INTEGER" property="refCeil"/>
+    <result column="REF_FLOOR" jdbcType="INTEGER" property="refFloor"/>
+    <result column="BASE_VALUE" jdbcType="INTEGER" property="baseValue"/>
+    <result column="CALC_METHOD" jdbcType="INTEGER" property="calcMethod"/>
+    <result column="CALC_VALUE" jdbcType="INTEGER" property="calcValue"/>
+    <result column="CALC_RATE" jdbcType="INTEGER" property="calcRate"/>
+    <result column="CALC_PRECISION" jdbcType="INTEGER" property="calcPrecision"/>
+    <result column="MAX_VALUE" jdbcType="INTEGER" property="maxValue"/>
+    <result column="EFF_OFFSET_UNIT" jdbcType="INTEGER" property="effOffsetUnit"/>
+    <result column="EFF_OFFSET_VALUE" jdbcType="INTEGER" property="effOffsetValue"/>
+    <result column="BILLING_CYCLE_TYPE_ID" jdbcType="INTEGER" property="billingCycleTypeId"/>
+    <result column="CYCLE_COUNT" jdbcType="INTEGER" property="cycleCount"/>
+    <result column="PRESENT_TYPE" jdbcType="INTEGER" property="presentType"/>
+    <result column="RULE_TYPE" jdbcType="INTEGER" property="ruleType"/>
+    <result column="RULE_DESC" jdbcType="VARCHAR" property="ruleDesc"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="RULE_GROUP_ID" jdbcType="INTEGER" property="ruleGroupId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRESENT_RULE_ID, 
+          BAL_BALANCE_TYPE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          BASE_VALUE_TYPE, 
+          REF_CEIL, 
+          REF_FLOOR, 
+          BASE_VALUE, 
+          CALC_METHOD, 
+          CALC_VALUE, 
+          CALC_RATE, 
+          CALC_PRECISION, 
+          MAX_VALUE, 
+          EFF_OFFSET_UNIT, 
+          EFF_OFFSET_VALUE, 
+          BILLING_CYCLE_TYPE_ID, 
+          CYCLE_COUNT, 
+          PRESENT_TYPE, 
+          RULE_TYPE, 
+          RULE_DESC, 
+          REGION_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          RULE_GROUP_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BAL_BALANCE_TYPE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          BASE_VALUE_TYPE, 
+          REF_CEIL, 
+          REF_FLOOR, 
+          BASE_VALUE, 
+          CALC_METHOD, 
+          CALC_VALUE, 
+          CALC_RATE, 
+          CALC_PRECISION, 
+          MAX_VALUE, 
+          EFF_OFFSET_UNIT, 
+          EFF_OFFSET_VALUE, 
+          BILLING_CYCLE_TYPE_ID, 
+          CYCLE_COUNT, 
+          PRESENT_TYPE, 
+          RULE_TYPE, 
+          RULE_DESC, 
+          REGION_ID, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          RULE_GROUP_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="presentRuleId != null ">
+        PRESENT_RULE_ID = #{presentRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="balBalanceTypeId != null ">
+        and BAL_BALANCE_TYPE_ID = #{balBalanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null ">
+        and OBJ_TYPE = #{objType, jdbcType=INTEGER }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="baseValueType != null ">
+        and BASE_VALUE_TYPE = #{baseValueType, jdbcType=INTEGER }
+      </if>
+      <if test="refCeil != null ">
+        and REF_CEIL = #{refCeil, jdbcType=INTEGER }
+      </if>
+      <if test="refFloor != null ">
+        and REF_FLOOR = #{refFloor, jdbcType=INTEGER }
+      </if>
+      <if test="baseValue != null ">
+        and BASE_VALUE = #{baseValue, jdbcType=INTEGER }
+      </if>
+      <if test="calcMethod != null ">
+        and CALC_METHOD = #{calcMethod, jdbcType=INTEGER }
+      </if>
+      <if test="calcValue != null ">
+        and CALC_VALUE = #{calcValue, jdbcType=INTEGER }
+      </if>
+      <if test="calcRate != null ">
+        and CALC_RATE = #{calcRate, jdbcType=INTEGER }
+      </if>
+      <if test="calcPrecision != null ">
+        and CALC_PRECISION = #{calcPrecision, jdbcType=INTEGER }
+      </if>
+      <if test="maxValue != null ">
+        and MAX_VALUE = #{maxValue, jdbcType=INTEGER }
+      </if>
+      <if test="effOffsetUnit != null ">
+        and EFF_OFFSET_UNIT = #{effOffsetUnit, jdbcType=INTEGER }
+      </if>
+      <if test="effOffsetValue != null ">
+        and EFF_OFFSET_VALUE = #{effOffsetValue, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleTypeId != null ">
+        and BILLING_CYCLE_TYPE_ID = #{billingCycleTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="cycleCount != null ">
+        and CYCLE_COUNT = #{cycleCount, jdbcType=INTEGER }
+      </if>
+      <if test="presentType != null ">
+        and PRESENT_TYPE = #{presentType, jdbcType=INTEGER }
+      </if>
+      <if test="ruleType != null ">
+        and RULE_TYPE = #{ruleType, jdbcType=INTEGER }
+      </if>
+      <if test="ruleDesc != null and ruleDesc != ''">
+        and RULE_DESC = #{ruleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="ruleGroupId != null ">
+        and RULE_GROUP_ID = #{ruleGroupId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BalancePresentRuleDO" resultType="java.lang.Integer">
+      select count(*) from BALANCE_PRESENT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BALANCE_PRESENT_RULE
+        where 
+           PRESENT_RULE_ID = #{presentRuleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BALANCE_PRESENT_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="presentRuleId">
+      insert into  BALANCE_PRESENT_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{balBalanceTypeId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{baseValueType,jdbcType=INTEGER}, 
+        #{refCeil,jdbcType=INTEGER}, 
+        #{refFloor,jdbcType=INTEGER}, 
+        #{baseValue,jdbcType=INTEGER}, 
+        #{calcMethod,jdbcType=INTEGER}, 
+        #{calcValue,jdbcType=INTEGER}, 
+        #{calcRate,jdbcType=INTEGER}, 
+        #{calcPrecision,jdbcType=INTEGER}, 
+        #{maxValue,jdbcType=INTEGER}, 
+        #{effOffsetUnit,jdbcType=INTEGER}, 
+        #{effOffsetValue,jdbcType=INTEGER}, 
+        #{billingCycleTypeId,jdbcType=INTEGER}, 
+        #{cycleCount,jdbcType=INTEGER}, 
+        #{presentType,jdbcType=INTEGER}, 
+        #{ruleType,jdbcType=INTEGER}, 
+        #{ruleDesc,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{ruleGroupId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BALANCE_PRESENT_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{presentRuleId,jdbcType=INTEGER}, 
+        #{balBalanceTypeId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=INTEGER}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{baseValueType,jdbcType=INTEGER}, 
+        #{refCeil,jdbcType=INTEGER}, 
+        #{refFloor,jdbcType=INTEGER}, 
+        #{baseValue,jdbcType=INTEGER}, 
+        #{calcMethod,jdbcType=INTEGER}, 
+        #{calcValue,jdbcType=INTEGER}, 
+        #{calcRate,jdbcType=INTEGER}, 
+        #{calcPrecision,jdbcType=INTEGER}, 
+        #{maxValue,jdbcType=INTEGER}, 
+        #{effOffsetUnit,jdbcType=INTEGER}, 
+        #{effOffsetValue,jdbcType=INTEGER}, 
+        #{billingCycleTypeId,jdbcType=INTEGER}, 
+        #{cycleCount,jdbcType=INTEGER}, 
+        #{presentType,jdbcType=INTEGER}, 
+        #{ruleType,jdbcType=INTEGER}, 
+        #{ruleDesc,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{ruleGroupId,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BALANCE_PRESENT_RULE  
+        where
+           PRESENT_RULE_ID = #{presentRuleId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from BALANCE_PRESENT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BALANCE_PRESENT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="balBalanceTypeId != null">
+         BAL_BALANCE_TYPE_ID = #{balBalanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=INTEGER},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="baseValueType != null">
+         BASE_VALUE_TYPE = #{baseValueType,jdbcType=INTEGER},
+      </if>
+      <if test="refCeil != null">
+         REF_CEIL = #{refCeil,jdbcType=INTEGER},
+      </if>
+      <if test="refFloor != null">
+         REF_FLOOR = #{refFloor,jdbcType=INTEGER},
+      </if>
+      <if test="baseValue != null">
+         BASE_VALUE = #{baseValue,jdbcType=INTEGER},
+      </if>
+      <if test="calcMethod != null">
+         CALC_METHOD = #{calcMethod,jdbcType=INTEGER},
+      </if>
+      <if test="calcValue != null">
+         CALC_VALUE = #{calcValue,jdbcType=INTEGER},
+      </if>
+      <if test="calcRate != null">
+         CALC_RATE = #{calcRate,jdbcType=INTEGER},
+      </if>
+      <if test="calcPrecision != null">
+         CALC_PRECISION = #{calcPrecision,jdbcType=INTEGER},
+      </if>
+      <if test="maxValue != null">
+         MAX_VALUE = #{maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="effOffsetUnit != null">
+         EFF_OFFSET_UNIT = #{effOffsetUnit,jdbcType=INTEGER},
+      </if>
+      <if test="effOffsetValue != null">
+         EFF_OFFSET_VALUE = #{effOffsetValue,jdbcType=INTEGER},
+      </if>
+      <if test="billingCycleTypeId != null">
+         BILLING_CYCLE_TYPE_ID = #{billingCycleTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="cycleCount != null">
+         CYCLE_COUNT = #{cycleCount,jdbcType=INTEGER},
+      </if>
+      <if test="presentType != null">
+         PRESENT_TYPE = #{presentType,jdbcType=INTEGER},
+      </if>
+      <if test="ruleType != null">
+         RULE_TYPE = #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="ruleDesc != null">
+         RULE_DESC = #{ruleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ruleGroupId != null">
+         RULE_GROUP_ID = #{ruleGroupId,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           PRESENT_RULE_ID = #{presentRuleId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update BALANCE_PRESENT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.presentRuleId != null">
+        PRESENT_RULE_ID = #{record.presentRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.balBalanceTypeId != null">
+        BAL_BALANCE_TYPE_ID = #{record.balBalanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=INTEGER},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.baseValueType != null">
+        BASE_VALUE_TYPE = #{record.baseValueType,jdbcType=INTEGER},
+      </if>
+      <if test="record.refCeil != null">
+        REF_CEIL = #{record.refCeil,jdbcType=INTEGER},
+      </if>
+      <if test="record.refFloor != null">
+        REF_FLOOR = #{record.refFloor,jdbcType=INTEGER},
+      </if>
+      <if test="record.baseValue != null">
+        BASE_VALUE = #{record.baseValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcMethod != null">
+        CALC_METHOD = #{record.calcMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcValue != null">
+        CALC_VALUE = #{record.calcValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcRate != null">
+        CALC_RATE = #{record.calcRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPrecision != null">
+        CALC_PRECISION = #{record.calcPrecision,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxValue != null">
+        MAX_VALUE = #{record.maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.effOffsetUnit != null">
+        EFF_OFFSET_UNIT = #{record.effOffsetUnit,jdbcType=INTEGER},
+      </if>
+      <if test="record.effOffsetValue != null">
+        EFF_OFFSET_VALUE = #{record.effOffsetValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleTypeId != null">
+        BILLING_CYCLE_TYPE_ID = #{record.billingCycleTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleCount != null">
+        CYCLE_COUNT = #{record.cycleCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.presentType != null">
+        PRESENT_TYPE = #{record.presentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleType != null">
+        RULE_TYPE = #{record.ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleDesc != null">
+        RULE_DESC = #{record.ruleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ruleGroupId != null">
+        RULE_GROUP_ID = #{record.ruleGroupId,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.presentRuleId != null ">
+        PRESENT_RULE_ID = #{condition.presentRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.balBalanceTypeId != null ">
+        and BAL_BALANCE_TYPE_ID = #{condition.balBalanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null ">
+        and OBJ_TYPE = #{condition.objType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.baseValueType != null ">
+        and BASE_VALUE_TYPE = #{condition.baseValueType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.refCeil != null ">
+        and REF_CEIL = #{condition.refCeil, jdbcType=INTEGER }
+      </if>
+      <if test="condition.refFloor != null ">
+        and REF_FLOOR = #{condition.refFloor, jdbcType=INTEGER }
+      </if>
+      <if test="condition.baseValue != null ">
+        and BASE_VALUE = #{condition.baseValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcMethod != null ">
+        and CALC_METHOD = #{condition.calcMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcValue != null ">
+        and CALC_VALUE = #{condition.calcValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcRate != null ">
+        and CALC_RATE = #{condition.calcRate, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPrecision != null ">
+        and CALC_PRECISION = #{condition.calcPrecision, jdbcType=INTEGER }
+      </if>
+      <if test="condition.maxValue != null ">
+        and MAX_VALUE = #{condition.maxValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effOffsetUnit != null ">
+        and EFF_OFFSET_UNIT = #{condition.effOffsetUnit, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effOffsetValue != null ">
+        and EFF_OFFSET_VALUE = #{condition.effOffsetValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleTypeId != null ">
+        and BILLING_CYCLE_TYPE_ID = #{condition.billingCycleTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cycleCount != null ">
+        and CYCLE_COUNT = #{condition.cycleCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.presentType != null ">
+        and PRESENT_TYPE = #{condition.presentType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ruleType != null ">
+        and RULE_TYPE = #{condition.ruleType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ruleDesc != null and condition.ruleDesc != ''">
+        and RULE_DESC = #{condition.ruleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.ruleGroupId != null ">
+        and RULE_GROUP_ID = #{condition.ruleGroupId, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

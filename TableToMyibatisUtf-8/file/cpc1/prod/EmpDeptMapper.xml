@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.EmpDeptMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.EmpDeptDO">
+    <result column="pid" jdbcType="INTEGER" property="pid"/>
+    <result column="deptname" jdbcType="VARCHAR" property="deptname"/>
+    <result column="empname" jdbcType="VARCHAR" property="empname"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="workplace" jdbcType="VARCHAR" property="workplace"/>
+    <result column="password" jdbcType="VARCHAR" property="password"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          pid, 
+          deptname, 
+          empname, 
+          email, 
+          workplace, 
+          password
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          pid, 
+          deptname, 
+          empname, 
+          email, 
+          workplace, 
+          password
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pid != null ">
+        pid = #{pid, jdbcType=INTEGER }
+      </if>
+      <if test="deptname != null and deptname != ''">
+        and deptname = #{deptname, jdbcType=VARCHAR }
+      </if>
+      <if test="empname != null and empname != ''">
+        and empname = #{empname, jdbcType=VARCHAR }
+      </if>
+      <if test="email != null and email != ''">
+        and email = #{email, jdbcType=VARCHAR }
+      </if>
+      <if test="workplace != null and workplace != ''">
+        and workplace = #{workplace, jdbcType=VARCHAR }
+      </if>
+      <if test="password != null and password != ''">
+        and password = #{password, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.EmpDeptDO" resultType="java.lang.Integer">
+      select count(*) from EMP_DEPT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  EMP_DEPT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insert">
+      insert into  EMP_DEPT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pid,jdbcType=INTEGER}, 
+        #{deptname,jdbcType=VARCHAR}, 
+        #{empname,jdbcType=VARCHAR}, 
+        #{email,jdbcType=VARCHAR}, 
+        #{workplace,jdbcType=VARCHAR}, 
+        #{password,jdbcType=VARCHAR}
+         )
+  </insert>
+
+
+  <delete id="delete">
+      delete from EMP_DEPT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+
+  <update id="updateBySelective">
+      update EMP_DEPT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptname != null">
+        deptname = #{record.deptname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empname != null">
+        empname = #{record.empname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workplace != null">
+        workplace = #{record.workplace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pid != null ">
+        pid = #{condition.pid, jdbcType=INTEGER }
+      </if>
+      <if test="condition.deptname != null and condition.deptname != ''">
+        and deptname = #{condition.deptname, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.empname != null and condition.empname != ''">
+        and empname = #{condition.empname, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.email != null and condition.email != ''">
+        and email = #{condition.email, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.workplace != null and condition.workplace != ''">
+        and workplace = #{condition.workplace, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.password != null and condition.password != ''">
+        and password = #{condition.password, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktStrategyMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktStrategyDO">
+    <id column="STRATEGY_ID" jdbcType="BIGINT" property="strategyId"/>
+    <result column="STRATEGY_NAME" jdbcType="VARCHAR" property="strategyName"/>
+    <result column="STRATEGY_TYPE" jdbcType="VARCHAR" property="strategyType"/>
+    <result column="STRATEGY_DESC" jdbcType="VARCHAR" property="strategyDesc"/>
+    <result column="RULE_EXPRESSION" jdbcType="VARCHAR" property="ruleExpression"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          STRATEGY_ID, 
+          STRATEGY_NAME, 
+          STRATEGY_TYPE, 
+          STRATEGY_DESC, 
+          RULE_EXPRESSION, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          LAN_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          STRATEGY_NAME, 
+          STRATEGY_TYPE, 
+          STRATEGY_DESC, 
+          RULE_EXPRESSION, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          LAN_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="strategyId != null ">
+        STRATEGY_ID = #{strategyId, jdbcType=BIGINT }
+      </if>
+      <if test="strategyName != null and strategyName != ''">
+        and STRATEGY_NAME = #{strategyName, jdbcType=VARCHAR }
+      </if>
+      <if test="strategyType != null and strategyType != ''">
+        and STRATEGY_TYPE = #{strategyType, jdbcType=VARCHAR }
+      </if>
+      <if test="strategyDesc != null and strategyDesc != ''">
+        and STRATEGY_DESC = #{strategyDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="ruleExpression != null and ruleExpression != ''">
+        and RULE_EXPRESSION = #{ruleExpression, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktStrategyDO" resultType="java.lang.Integer">
+      select count(*) from MKT_STRATEGY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_STRATEGY
+        where 
+           STRATEGY_ID = #{strategyId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_STRATEGY 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="strategyId">
+      insert into  MKT_STRATEGY ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{strategyName,jdbcType=VARCHAR}, 
+        #{strategyType,jdbcType=VARCHAR}, 
+        #{strategyDesc,jdbcType=VARCHAR}, 
+        #{ruleExpression,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_STRATEGY ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{strategyId,jdbcType=BIGINT}, 
+        #{strategyName,jdbcType=VARCHAR}, 
+        #{strategyType,jdbcType=VARCHAR}, 
+        #{strategyDesc,jdbcType=VARCHAR}, 
+        #{ruleExpression,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_STRATEGY  
+        where
+           STRATEGY_ID = #{strategyId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_STRATEGY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_STRATEGY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="strategyName != null">
+         STRATEGY_NAME = #{strategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyType != null">
+         STRATEGY_TYPE = #{strategyType,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyDesc != null">
+         STRATEGY_DESC = #{strategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleExpression != null">
+         RULE_EXPRESSION = #{ruleExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           STRATEGY_ID = #{strategyId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_STRATEGY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.strategyId != null">
+        STRATEGY_ID = #{record.strategyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.strategyName != null">
+        STRATEGY_NAME = #{record.strategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strategyType != null">
+        STRATEGY_TYPE = #{record.strategyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strategyDesc != null">
+        STRATEGY_DESC = #{record.strategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleExpression != null">
+        RULE_EXPRESSION = #{record.ruleExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.strategyId != null ">
+        STRATEGY_ID = #{condition.strategyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.strategyName != null and condition.strategyName != ''">
+        and STRATEGY_NAME = #{condition.strategyName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.strategyType != null and condition.strategyType != ''">
+        and STRATEGY_TYPE = #{condition.strategyType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.strategyDesc != null and condition.strategyDesc != ''">
+        and STRATEGY_DESC = #{condition.strategyDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ruleExpression != null and condition.ruleExpression != ''">
+        and RULE_EXPRESSION = #{condition.ruleExpression, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

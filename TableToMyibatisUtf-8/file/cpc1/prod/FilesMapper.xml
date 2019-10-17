@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.FilesMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.FilesDO">
+    <id column="file_id" jdbcType="INTEGER" property="fileId"/>
+    <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+    <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
+    <result column="exp1" jdbcType="VARCHAR" property="exp1"/>
+    <result column="exp2" jdbcType="VARCHAR" property="exp2"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          file_id, 
+          file_name, 
+          file_path, 
+          exp1, 
+          exp2
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          file_name, 
+          file_path, 
+          exp1, 
+          exp2
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="fileId != null ">
+        file_id = #{fileId, jdbcType=INTEGER }
+      </if>
+      <if test="fileName != null and fileName != ''">
+        and file_name = #{fileName, jdbcType=VARCHAR }
+      </if>
+      <if test="filePath != null and filePath != ''">
+        and file_path = #{filePath, jdbcType=VARCHAR }
+      </if>
+      <if test="exp1 != null and exp1 != ''">
+        and exp1 = #{exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="exp2 != null and exp2 != ''">
+        and exp2 = #{exp2, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.FilesDO" resultType="java.lang.Integer">
+      select count(*) from FILES
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from FILES
+        where 
+           file_id = #{fileId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  FILES 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="fileId">
+      insert into  FILES ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{fileName,jdbcType=VARCHAR}, 
+        #{filePath,jdbcType=VARCHAR}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  FILES ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{fileId,jdbcType=INTEGER}, 
+        #{fileName,jdbcType=VARCHAR}, 
+        #{filePath,jdbcType=VARCHAR}, 
+        #{exp1,jdbcType=VARCHAR}, 
+        #{exp2,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from FILES  
+        where
+           file_id = #{fileId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from FILES
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  FILES
+    <trim prefix="set" suffixOverrides=",">
+      <if test="fileName != null">
+         file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+         file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="exp1 != null">
+         exp1 = #{exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="exp2 != null">
+         exp2 = #{exp2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           file_id = #{fileId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update FILES
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.fileId != null">
+        file_id = #{record.fileId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileName != null">
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filePath != null">
+        file_path = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp1 != null">
+        exp1 = #{record.exp1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exp2 != null">
+        exp2 = #{record.exp2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.fileId != null ">
+        file_id = #{condition.fileId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.fileName != null and condition.fileName != ''">
+        and file_name = #{condition.fileName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.filePath != null and condition.filePath != ''">
+        and file_path = #{condition.filePath, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exp1 != null and condition.exp1 != ''">
+        and exp1 = #{condition.exp1, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.exp2 != null and condition.exp2 != ''">
+        and exp2 = #{condition.exp2, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

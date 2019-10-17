@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.RuleEventMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.RuleEventDO">
+    <id column="RULE_EVENT_ID" jdbcType="BIGINT" property="ruleEventId"/>
+    <result column="RULE_EVENT_TYPE" jdbcType="VARCHAR" property="ruleEventType"/>
+    <result column="RULE_EVENT_NAME" jdbcType="VARCHAR" property="ruleEventName"/>
+    <result column="COMMENTS" jdbcType="VARCHAR" property="comments"/>
+    <result column="PPM_RULE_EVENT_ID" jdbcType="BIGINT" property="ppmRuleEventId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RULE_EVENT_ID, 
+          RULE_EVENT_TYPE, 
+          RULE_EVENT_NAME, 
+          COMMENTS, 
+          PPM_RULE_EVENT_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RULE_EVENT_TYPE, 
+          RULE_EVENT_NAME, 
+          COMMENTS, 
+          PPM_RULE_EVENT_ID, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="ruleEventId != null ">
+        RULE_EVENT_ID = #{ruleEventId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleEventType != null and ruleEventType != ''">
+        and RULE_EVENT_TYPE = #{ruleEventType, jdbcType=VARCHAR }
+      </if>
+      <if test="ruleEventName != null and ruleEventName != ''">
+        and RULE_EVENT_NAME = #{ruleEventName, jdbcType=VARCHAR }
+      </if>
+      <if test="comments != null and comments != ''">
+        and COMMENTS = #{comments, jdbcType=VARCHAR }
+      </if>
+      <if test="ppmRuleEventId != null ">
+        and PPM_RULE_EVENT_ID = #{ppmRuleEventId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.RuleEventDO" resultType="java.lang.Integer">
+      select count(*) from RULE_EVENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RULE_EVENT
+        where 
+           RULE_EVENT_ID = #{ruleEventId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RULE_EVENT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="ruleEventId">
+      insert into  RULE_EVENT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ruleEventType,jdbcType=VARCHAR}, 
+        #{ruleEventName,jdbcType=VARCHAR}, 
+        #{comments,jdbcType=VARCHAR}, 
+        #{ppmRuleEventId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RULE_EVENT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{ruleEventId,jdbcType=BIGINT}, 
+        #{ruleEventType,jdbcType=VARCHAR}, 
+        #{ruleEventName,jdbcType=VARCHAR}, 
+        #{comments,jdbcType=VARCHAR}, 
+        #{ppmRuleEventId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RULE_EVENT  
+        where
+           RULE_EVENT_ID = #{ruleEventId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RULE_EVENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RULE_EVENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ruleEventType != null">
+         RULE_EVENT_TYPE = #{ruleEventType,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleEventName != null">
+         RULE_EVENT_NAME = #{ruleEventName,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+         COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="ppmRuleEventId != null">
+         PPM_RULE_EVENT_ID = #{ppmRuleEventId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           RULE_EVENT_ID = #{ruleEventId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RULE_EVENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.ruleEventId != null">
+        RULE_EVENT_ID = #{record.ruleEventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleEventType != null">
+        RULE_EVENT_TYPE = #{record.ruleEventType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleEventName != null">
+        RULE_EVENT_NAME = #{record.ruleEventName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null">
+        COMMENTS = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppmRuleEventId != null">
+        PPM_RULE_EVENT_ID = #{record.ppmRuleEventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.ruleEventId != null ">
+        RULE_EVENT_ID = #{condition.ruleEventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleEventType != null and condition.ruleEventType != ''">
+        and RULE_EVENT_TYPE = #{condition.ruleEventType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ruleEventName != null and condition.ruleEventName != ''">
+        and RULE_EVENT_NAME = #{condition.ruleEventName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.comments != null and condition.comments != ''">
+        and COMMENTS = #{condition.comments, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ppmRuleEventId != null ">
+        and PPM_RULE_EVENT_ID = #{condition.ppmRuleEventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

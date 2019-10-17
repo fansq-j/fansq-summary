@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BusiObjAttrMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BusiObjAttrDO">
+    <id column="BUSI_OBJ_ATTR_ID" jdbcType="BIGINT" property="busiObjAttrId"/>
+    <result column="BUSI_OBJ_ID" jdbcType="BIGINT" property="busiObjId"/>
+    <result column="ATTR_ID" jdbcType="BIGINT" property="attrId"/>
+    <result column="TAB_ID" jdbcType="BIGINT" property="tabId"/>
+    <result column="COL_ID" jdbcType="BIGINT" property="colId"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+    <result column="ATTR_MAX_COUNT" jdbcType="INTEGER" property="attrMaxCount"/>
+    <result column="DEFAULT_VALUE" jdbcType="VARCHAR" property="defaultValue"/>
+    <result column="VALUE_FROM" jdbcType="VARCHAR" property="valueFrom"/>
+    <result column="VALUE_TO" jdbcType="VARCHAR" property="valueTo"/>
+    <result column="IS_UNIQUE" jdbcType="INTEGER" property="isUnique"/>
+    <result column="IS_NULLABLE" jdbcType="INTEGER" property="isNullable"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BUSI_OBJ_ATTR_ID, 
+          BUSI_OBJ_ID, 
+          ATTR_ID, 
+          TAB_ID, 
+          COL_ID, 
+          VER_NUM, 
+          ATTR_MAX_COUNT, 
+          DEFAULT_VALUE, 
+          VALUE_FROM, 
+          VALUE_TO, 
+          IS_UNIQUE, 
+          IS_NULLABLE, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BUSI_OBJ_ID, 
+          ATTR_ID, 
+          TAB_ID, 
+          COL_ID, 
+          VER_NUM, 
+          ATTR_MAX_COUNT, 
+          DEFAULT_VALUE, 
+          VALUE_FROM, 
+          VALUE_TO, 
+          IS_UNIQUE, 
+          IS_NULLABLE, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="busiObjAttrId != null ">
+        BUSI_OBJ_ATTR_ID = #{busiObjAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="busiObjId != null ">
+        and BUSI_OBJ_ID = #{busiObjId, jdbcType=BIGINT }
+      </if>
+      <if test="attrId != null ">
+        and ATTR_ID = #{attrId, jdbcType=BIGINT }
+      </if>
+      <if test="tabId != null ">
+        and TAB_ID = #{tabId, jdbcType=BIGINT }
+      </if>
+      <if test="colId != null ">
+        and COL_ID = #{colId, jdbcType=BIGINT }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+      <if test="attrMaxCount != null ">
+        and ATTR_MAX_COUNT = #{attrMaxCount, jdbcType=INTEGER }
+      </if>
+      <if test="defaultValue != null and defaultValue != ''">
+        and DEFAULT_VALUE = #{defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="valueFrom != null and valueFrom != ''">
+        and VALUE_FROM = #{valueFrom, jdbcType=VARCHAR }
+      </if>
+      <if test="valueTo != null and valueTo != ''">
+        and VALUE_TO = #{valueTo, jdbcType=VARCHAR }
+      </if>
+      <if test="isUnique != null ">
+        and IS_UNIQUE = #{isUnique, jdbcType=INTEGER }
+      </if>
+      <if test="isNullable != null ">
+        and IS_NULLABLE = #{isNullable, jdbcType=INTEGER }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BusiObjAttrDO" resultType="java.lang.Integer">
+      select count(*) from BUSI_OBJ_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BUSI_OBJ_ATTR
+        where 
+           BUSI_OBJ_ATTR_ID = #{busiObjAttrId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BUSI_OBJ_ATTR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="busiObjAttrId">
+      insert into  BUSI_OBJ_ATTR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{busiObjId,jdbcType=BIGINT}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{tabId,jdbcType=BIGINT}, 
+        #{colId,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{attrMaxCount,jdbcType=INTEGER}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{valueFrom,jdbcType=VARCHAR}, 
+        #{valueTo,jdbcType=VARCHAR}, 
+        #{isUnique,jdbcType=INTEGER}, 
+        #{isNullable,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BUSI_OBJ_ATTR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{busiObjAttrId,jdbcType=BIGINT}, 
+        #{busiObjId,jdbcType=BIGINT}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{tabId,jdbcType=BIGINT}, 
+        #{colId,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{attrMaxCount,jdbcType=INTEGER}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{valueFrom,jdbcType=VARCHAR}, 
+        #{valueTo,jdbcType=VARCHAR}, 
+        #{isUnique,jdbcType=INTEGER}, 
+        #{isNullable,jdbcType=INTEGER}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BUSI_OBJ_ATTR  
+        where
+           BUSI_OBJ_ATTR_ID = #{busiObjAttrId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BUSI_OBJ_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BUSI_OBJ_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="busiObjId != null">
+         BUSI_OBJ_ID = #{busiObjId,jdbcType=BIGINT},
+      </if>
+      <if test="attrId != null">
+         ATTR_ID = #{attrId,jdbcType=BIGINT},
+      </if>
+      <if test="tabId != null">
+         TAB_ID = #{tabId,jdbcType=BIGINT},
+      </if>
+      <if test="colId != null">
+         COL_ID = #{colId,jdbcType=BIGINT},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+      <if test="attrMaxCount != null">
+         ATTR_MAX_COUNT = #{attrMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="defaultValue != null">
+         DEFAULT_VALUE = #{defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="valueFrom != null">
+         VALUE_FROM = #{valueFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="valueTo != null">
+         VALUE_TO = #{valueTo,jdbcType=VARCHAR},
+      </if>
+      <if test="isUnique != null">
+         IS_UNIQUE = #{isUnique,jdbcType=INTEGER},
+      </if>
+      <if test="isNullable != null">
+         IS_NULLABLE = #{isNullable,jdbcType=INTEGER},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           BUSI_OBJ_ATTR_ID = #{busiObjAttrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BUSI_OBJ_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.busiObjAttrId != null">
+        BUSI_OBJ_ATTR_ID = #{record.busiObjAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.busiObjId != null">
+        BUSI_OBJ_ID = #{record.busiObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrId != null">
+        ATTR_ID = #{record.attrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tabId != null">
+        TAB_ID = #{record.tabId,jdbcType=BIGINT},
+      </if>
+      <if test="record.colId != null">
+        COL_ID = #{record.colId,jdbcType=BIGINT},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.attrMaxCount != null">
+        ATTR_MAX_COUNT = #{record.attrMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.defaultValue != null">
+        DEFAULT_VALUE = #{record.defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueFrom != null">
+        VALUE_FROM = #{record.valueFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueTo != null">
+        VALUE_TO = #{record.valueTo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isUnique != null">
+        IS_UNIQUE = #{record.isUnique,jdbcType=INTEGER},
+      </if>
+      <if test="record.isNullable != null">
+        IS_NULLABLE = #{record.isNullable,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.busiObjAttrId != null ">
+        BUSI_OBJ_ATTR_ID = #{condition.busiObjAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.busiObjId != null ">
+        and BUSI_OBJ_ID = #{condition.busiObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrId != null ">
+        and ATTR_ID = #{condition.attrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tabId != null ">
+        and TAB_ID = #{condition.tabId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.colId != null ">
+        and COL_ID = #{condition.colId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.attrMaxCount != null ">
+        and ATTR_MAX_COUNT = #{condition.attrMaxCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.defaultValue != null and condition.defaultValue != ''">
+        and DEFAULT_VALUE = #{condition.defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueFrom != null and condition.valueFrom != ''">
+        and VALUE_FROM = #{condition.valueFrom, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueTo != null and condition.valueTo != ''">
+        and VALUE_TO = #{condition.valueTo, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isUnique != null ">
+        and IS_UNIQUE = #{condition.isUnique, jdbcType=INTEGER }
+      </if>
+      <if test="condition.isNullable != null ">
+        and IS_NULLABLE = #{condition.isNullable, jdbcType=INTEGER }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

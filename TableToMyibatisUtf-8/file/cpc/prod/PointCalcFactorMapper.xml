@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PointCalcFactorMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PointCalcFactorDO">
+    <id column="POINT_CALC_FACTOR_ID" jdbcType="INTEGER" property="pointCalcFactorId"/>
+    <result column="CALC_FACTOR_NAME" jdbcType="VARCHAR" property="calcFactorName"/>
+    <result column="POINT_CALC_OBJ_TYPE" jdbcType="VARCHAR" property="pointCalcObjType"/>
+    <result column="POINT_CALC_OBJ_ID" jdbcType="BIGINT" property="pointCalcObjId"/>
+    <result column="CALC_OBJ_ATTR_TYPE" jdbcType="VARCHAR" property="calcObjAttrType"/>
+    <result column="CALC_OBJ_ATTR_ID" jdbcType="BIGINT" property="calcObjAttrId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          POINT_CALC_FACTOR_ID, 
+          CALC_FACTOR_NAME, 
+          POINT_CALC_OBJ_TYPE, 
+          POINT_CALC_OBJ_ID, 
+          CALC_OBJ_ATTR_TYPE, 
+          CALC_OBJ_ATTR_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CALC_FACTOR_NAME, 
+          POINT_CALC_OBJ_TYPE, 
+          POINT_CALC_OBJ_ID, 
+          CALC_OBJ_ATTR_TYPE, 
+          CALC_OBJ_ATTR_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pointCalcFactorId != null ">
+        POINT_CALC_FACTOR_ID = #{pointCalcFactorId, jdbcType=INTEGER }
+      </if>
+      <if test="calcFactorName != null and calcFactorName != ''">
+        and CALC_FACTOR_NAME = #{calcFactorName, jdbcType=VARCHAR }
+      </if>
+      <if test="pointCalcObjType != null and pointCalcObjType != ''">
+        and POINT_CALC_OBJ_TYPE = #{pointCalcObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="pointCalcObjId != null ">
+        and POINT_CALC_OBJ_ID = #{pointCalcObjId, jdbcType=BIGINT }
+      </if>
+      <if test="calcObjAttrType != null and calcObjAttrType != ''">
+        and CALC_OBJ_ATTR_TYPE = #{calcObjAttrType, jdbcType=VARCHAR }
+      </if>
+      <if test="calcObjAttrId != null ">
+        and CALC_OBJ_ATTR_ID = #{calcObjAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PointCalcFactorDO" resultType="java.lang.Integer">
+      select count(*) from POINT_CALC_FACTOR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POINT_CALC_FACTOR
+        where 
+           POINT_CALC_FACTOR_ID = #{pointCalcFactorId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POINT_CALC_FACTOR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pointCalcFactorId">
+      insert into  POINT_CALC_FACTOR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{calcFactorName,jdbcType=VARCHAR}, 
+        #{pointCalcObjType,jdbcType=VARCHAR}, 
+        #{pointCalcObjId,jdbcType=BIGINT}, 
+        #{calcObjAttrType,jdbcType=VARCHAR}, 
+        #{calcObjAttrId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POINT_CALC_FACTOR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pointCalcFactorId,jdbcType=INTEGER}, 
+        #{calcFactorName,jdbcType=VARCHAR}, 
+        #{pointCalcObjType,jdbcType=VARCHAR}, 
+        #{pointCalcObjId,jdbcType=BIGINT}, 
+        #{calcObjAttrType,jdbcType=VARCHAR}, 
+        #{calcObjAttrId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POINT_CALC_FACTOR  
+        where
+           POINT_CALC_FACTOR_ID = #{pointCalcFactorId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from POINT_CALC_FACTOR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POINT_CALC_FACTOR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="calcFactorName != null">
+         CALC_FACTOR_NAME = #{calcFactorName,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCalcObjType != null">
+         POINT_CALC_OBJ_TYPE = #{pointCalcObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCalcObjId != null">
+         POINT_CALC_OBJ_ID = #{pointCalcObjId,jdbcType=BIGINT},
+      </if>
+      <if test="calcObjAttrType != null">
+         CALC_OBJ_ATTR_TYPE = #{calcObjAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="calcObjAttrId != null">
+         CALC_OBJ_ATTR_ID = #{calcObjAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           POINT_CALC_FACTOR_ID = #{pointCalcFactorId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update POINT_CALC_FACTOR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pointCalcFactorId != null">
+        POINT_CALC_FACTOR_ID = #{record.pointCalcFactorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcFactorName != null">
+        CALC_FACTOR_NAME = #{record.calcFactorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointCalcObjType != null">
+        POINT_CALC_OBJ_TYPE = #{record.pointCalcObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointCalcObjId != null">
+        POINT_CALC_OBJ_ID = #{record.pointCalcObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.calcObjAttrType != null">
+        CALC_OBJ_ATTR_TYPE = #{record.calcObjAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calcObjAttrId != null">
+        CALC_OBJ_ATTR_ID = #{record.calcObjAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pointCalcFactorId != null ">
+        POINT_CALC_FACTOR_ID = #{condition.pointCalcFactorId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcFactorName != null and condition.calcFactorName != ''">
+        and CALC_FACTOR_NAME = #{condition.calcFactorName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointCalcObjType != null and condition.pointCalcObjType != ''">
+        and POINT_CALC_OBJ_TYPE = #{condition.pointCalcObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pointCalcObjId != null ">
+        and POINT_CALC_OBJ_ID = #{condition.pointCalcObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.calcObjAttrType != null and condition.calcObjAttrType != ''">
+        and CALC_OBJ_ATTR_TYPE = #{condition.calcObjAttrType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.calcObjAttrId != null ">
+        and CALC_OBJ_ATTR_ID = #{condition.calcObjAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

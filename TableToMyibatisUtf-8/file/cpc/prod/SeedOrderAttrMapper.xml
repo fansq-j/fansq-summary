@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SeedOrderAttrMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SeedOrderAttrDO">
+    <id column="SEED_ORDER_ATTR_ID" jdbcType="BIGINT" property="seedOrderAttrId"/>
+    <result column="BATCH_TEMPLATE_ID" jdbcType="BIGINT" property="batchTemplateId"/>
+    <result column="JSON_OBJ_NAME" jdbcType="VARCHAR" property="jsonObjName"/>
+    <result column="JSON_ATTR_NAME" jdbcType="VARCHAR" property="jsonAttrName"/>
+    <result column="JSON_ATTR_VALUE" jdbcType="VARCHAR" property="jsonAttrValue"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SEED_ORDER_ATTR_ID, 
+          BATCH_TEMPLATE_ID, 
+          JSON_OBJ_NAME, 
+          JSON_ATTR_NAME, 
+          JSON_ATTR_VALUE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BATCH_TEMPLATE_ID, 
+          JSON_OBJ_NAME, 
+          JSON_ATTR_NAME, 
+          JSON_ATTR_VALUE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="seedOrderAttrId != null ">
+        SEED_ORDER_ATTR_ID = #{seedOrderAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="batchTemplateId != null ">
+        and BATCH_TEMPLATE_ID = #{batchTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="jsonObjName != null and jsonObjName != ''">
+        and JSON_OBJ_NAME = #{jsonObjName, jdbcType=VARCHAR }
+      </if>
+      <if test="jsonAttrName != null and jsonAttrName != ''">
+        and JSON_ATTR_NAME = #{jsonAttrName, jdbcType=VARCHAR }
+      </if>
+      <if test="jsonAttrValue != null and jsonAttrValue != ''">
+        and JSON_ATTR_VALUE = #{jsonAttrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SeedOrderAttrDO" resultType="java.lang.Integer">
+      select count(*) from SEED_ORDER_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SEED_ORDER_ATTR
+        where 
+           SEED_ORDER_ATTR_ID = #{seedOrderAttrId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SEED_ORDER_ATTR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="seedOrderAttrId">
+      insert into  SEED_ORDER_ATTR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{batchTemplateId,jdbcType=BIGINT}, 
+        #{jsonObjName,jdbcType=VARCHAR}, 
+        #{jsonAttrName,jdbcType=VARCHAR}, 
+        #{jsonAttrValue,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SEED_ORDER_ATTR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{seedOrderAttrId,jdbcType=BIGINT}, 
+        #{batchTemplateId,jdbcType=BIGINT}, 
+        #{jsonObjName,jdbcType=VARCHAR}, 
+        #{jsonAttrName,jdbcType=VARCHAR}, 
+        #{jsonAttrValue,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SEED_ORDER_ATTR  
+        where
+           SEED_ORDER_ATTR_ID = #{seedOrderAttrId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SEED_ORDER_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SEED_ORDER_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="batchTemplateId != null">
+         BATCH_TEMPLATE_ID = #{batchTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="jsonObjName != null">
+         JSON_OBJ_NAME = #{jsonObjName,jdbcType=VARCHAR},
+      </if>
+      <if test="jsonAttrName != null">
+         JSON_ATTR_NAME = #{jsonAttrName,jdbcType=VARCHAR},
+      </if>
+      <if test="jsonAttrValue != null">
+         JSON_ATTR_VALUE = #{jsonAttrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SEED_ORDER_ATTR_ID = #{seedOrderAttrId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SEED_ORDER_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.seedOrderAttrId != null">
+        SEED_ORDER_ATTR_ID = #{record.seedOrderAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchTemplateId != null">
+        BATCH_TEMPLATE_ID = #{record.batchTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.jsonObjName != null">
+        JSON_OBJ_NAME = #{record.jsonObjName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jsonAttrName != null">
+        JSON_ATTR_NAME = #{record.jsonAttrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jsonAttrValue != null">
+        JSON_ATTR_VALUE = #{record.jsonAttrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.seedOrderAttrId != null ">
+        SEED_ORDER_ATTR_ID = #{condition.seedOrderAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.batchTemplateId != null ">
+        and BATCH_TEMPLATE_ID = #{condition.batchTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.jsonObjName != null and condition.jsonObjName != ''">
+        and JSON_OBJ_NAME = #{condition.jsonObjName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.jsonAttrName != null and condition.jsonAttrName != ''">
+        and JSON_ATTR_NAME = #{condition.jsonAttrName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.jsonAttrValue != null and condition.jsonAttrValue != ''">
+        and JSON_ATTR_VALUE = #{condition.jsonAttrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

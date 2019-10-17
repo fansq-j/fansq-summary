@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AgreementMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AgreementDO">
+    <id column="AGREE_ID" jdbcType="BIGINT" property="agreeId"/>
+    <result column="AGREEMENT_TMP_ID" jdbcType="BIGINT" property="agreementTmpId"/>
+    <result column="AGREE_NBR" jdbcType="VARCHAR" property="agreeNbr"/>
+    <result column="AGREE_NAME" jdbcType="VARCHAR" property="agreeName"/>
+    <result column="SIGN_DATE" jdbcType="TIMESTAMP" property="signDate"/>
+    <result column="SIGN_PERSON" jdbcType="BIGINT" property="signPerson"/>
+    <result column="PARTY_A_NAME" jdbcType="VARCHAR" property="partyAName"/>
+    <result column="SIGN_PLACE" jdbcType="VARCHAR" property="signPlace"/>
+    <result column="VALID_PERIOD" jdbcType="INTEGER" property="validPeriod"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="AGREE_AMOUNT" jdbcType="BIGINT" property="agreeAmount"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="AGREE_TYPE" jdbcType="VARCHAR" property="agreeType"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="PARTY_A_ADDR" jdbcType="VARCHAR" property="partyAAddr"/>
+    <result column="PARTY_A_CONTACT" jdbcType="VARCHAR" property="partyAContact"/>
+    <result column="PARTY_A_PHONE" jdbcType="VARCHAR" property="partyAPhone"/>
+    <result column="PARTY_A_SIGNER" jdbcType="VARCHAR" property="partyASigner"/>
+    <result column="PARTY_Z_NAME" jdbcType="VARCHAR" property="partyZName"/>
+    <result column="PARTY_Z_ADDR" jdbcType="VARCHAR" property="partyZAddr"/>
+    <result column="PARTY_Z_CONTACT" jdbcType="VARCHAR" property="partyZContact"/>
+    <result column="PARTY_Z_PHONE" jdbcType="VARCHAR" property="partyZPhone"/>
+    <result column="PARTY_Z_SIGNER" jdbcType="VARCHAR" property="partyZSigner"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="EXP_PROC_METHOD" jdbcType="VARCHAR" property="expProcMethod"/>
+    <result column="STATUS_CHG_REASON" jdbcType="VARCHAR" property="statusChgReason"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          AGREE_ID, 
+          AGREEMENT_TMP_ID, 
+          AGREE_NBR, 
+          AGREE_NAME, 
+          SIGN_DATE, 
+          SIGN_PERSON, 
+          PARTY_A_NAME, 
+          SIGN_PLACE, 
+          VALID_PERIOD, 
+          STATUS_CD, 
+          AGREE_AMOUNT, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          AGREE_TYPE, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          PARTY_A_ADDR, 
+          PARTY_A_CONTACT, 
+          PARTY_A_PHONE, 
+          PARTY_A_SIGNER, 
+          PARTY_Z_NAME, 
+          PARTY_Z_ADDR, 
+          PARTY_Z_CONTACT, 
+          PARTY_Z_PHONE, 
+          PARTY_Z_SIGNER, 
+          REMARK, 
+          EXP_PROC_METHOD, 
+          STATUS_CHG_REASON
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          AGREEMENT_TMP_ID, 
+          AGREE_NBR, 
+          AGREE_NAME, 
+          SIGN_DATE, 
+          SIGN_PERSON, 
+          PARTY_A_NAME, 
+          SIGN_PLACE, 
+          VALID_PERIOD, 
+          STATUS_CD, 
+          AGREE_AMOUNT, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          AGREE_TYPE, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          PARTY_A_ADDR, 
+          PARTY_A_CONTACT, 
+          PARTY_A_PHONE, 
+          PARTY_A_SIGNER, 
+          PARTY_Z_NAME, 
+          PARTY_Z_ADDR, 
+          PARTY_Z_CONTACT, 
+          PARTY_Z_PHONE, 
+          PARTY_Z_SIGNER, 
+          REMARK, 
+          EXP_PROC_METHOD, 
+          STATUS_CHG_REASON
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="agreeId != null ">
+        AGREE_ID = #{agreeId, jdbcType=BIGINT }
+      </if>
+      <if test="agreementTmpId != null ">
+        and AGREEMENT_TMP_ID = #{agreementTmpId, jdbcType=BIGINT }
+      </if>
+      <if test="agreeNbr != null and agreeNbr != ''">
+        and AGREE_NBR = #{agreeNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="agreeName != null and agreeName != ''">
+        and AGREE_NAME = #{agreeName, jdbcType=VARCHAR }
+      </if>
+      <if test="signDate != null ">
+        and SIGN_DATE = #{signDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="signPerson != null ">
+        and SIGN_PERSON = #{signPerson, jdbcType=BIGINT }
+      </if>
+      <if test="partyAName != null and partyAName != ''">
+        and PARTY_A_NAME = #{partyAName, jdbcType=VARCHAR }
+      </if>
+      <if test="signPlace != null and signPlace != ''">
+        and SIGN_PLACE = #{signPlace, jdbcType=VARCHAR }
+      </if>
+      <if test="validPeriod != null ">
+        and VALID_PERIOD = #{validPeriod, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="agreeAmount != null ">
+        and AGREE_AMOUNT = #{agreeAmount, jdbcType=BIGINT }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="agreeType != null and agreeType != ''">
+        and AGREE_TYPE = #{agreeType, jdbcType=VARCHAR }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="partyAAddr != null and partyAAddr != ''">
+        and PARTY_A_ADDR = #{partyAAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="partyAContact != null and partyAContact != ''">
+        and PARTY_A_CONTACT = #{partyAContact, jdbcType=VARCHAR }
+      </if>
+      <if test="partyAPhone != null and partyAPhone != ''">
+        and PARTY_A_PHONE = #{partyAPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="partyASigner != null and partyASigner != ''">
+        and PARTY_A_SIGNER = #{partyASigner, jdbcType=VARCHAR }
+      </if>
+      <if test="partyZName != null and partyZName != ''">
+        and PARTY_Z_NAME = #{partyZName, jdbcType=VARCHAR }
+      </if>
+      <if test="partyZAddr != null and partyZAddr != ''">
+        and PARTY_Z_ADDR = #{partyZAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="partyZContact != null and partyZContact != ''">
+        and PARTY_Z_CONTACT = #{partyZContact, jdbcType=VARCHAR }
+      </if>
+      <if test="partyZPhone != null and partyZPhone != ''">
+        and PARTY_Z_PHONE = #{partyZPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="partyZSigner != null and partyZSigner != ''">
+        and PARTY_Z_SIGNER = #{partyZSigner, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="expProcMethod != null and expProcMethod != ''">
+        and EXP_PROC_METHOD = #{expProcMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="statusChgReason != null and statusChgReason != ''">
+        and STATUS_CHG_REASON = #{statusChgReason, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AgreementDO" resultType="java.lang.Integer">
+      select count(*) from AGREEMENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from AGREEMENT
+        where 
+           AGREE_ID = #{agreeId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  AGREEMENT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="agreeId">
+      insert into  AGREEMENT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{agreementTmpId,jdbcType=BIGINT}, 
+        #{agreeNbr,jdbcType=VARCHAR}, 
+        #{agreeName,jdbcType=VARCHAR}, 
+        #{signDate,jdbcType=TIMESTAMP}, 
+        #{signPerson,jdbcType=BIGINT}, 
+        #{partyAName,jdbcType=VARCHAR}, 
+        #{signPlace,jdbcType=VARCHAR}, 
+        #{validPeriod,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{agreeAmount,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{agreeType,jdbcType=VARCHAR}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{partyAAddr,jdbcType=VARCHAR}, 
+        #{partyAContact,jdbcType=VARCHAR}, 
+        #{partyAPhone,jdbcType=VARCHAR}, 
+        #{partyASigner,jdbcType=VARCHAR}, 
+        #{partyZName,jdbcType=VARCHAR}, 
+        #{partyZAddr,jdbcType=VARCHAR}, 
+        #{partyZContact,jdbcType=VARCHAR}, 
+        #{partyZPhone,jdbcType=VARCHAR}, 
+        #{partyZSigner,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{expProcMethod,jdbcType=VARCHAR}, 
+        #{statusChgReason,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  AGREEMENT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{agreeId,jdbcType=BIGINT}, 
+        #{agreementTmpId,jdbcType=BIGINT}, 
+        #{agreeNbr,jdbcType=VARCHAR}, 
+        #{agreeName,jdbcType=VARCHAR}, 
+        #{signDate,jdbcType=TIMESTAMP}, 
+        #{signPerson,jdbcType=BIGINT}, 
+        #{partyAName,jdbcType=VARCHAR}, 
+        #{signPlace,jdbcType=VARCHAR}, 
+        #{validPeriod,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{agreeAmount,jdbcType=BIGINT}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{agreeType,jdbcType=VARCHAR}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{partyAAddr,jdbcType=VARCHAR}, 
+        #{partyAContact,jdbcType=VARCHAR}, 
+        #{partyAPhone,jdbcType=VARCHAR}, 
+        #{partyASigner,jdbcType=VARCHAR}, 
+        #{partyZName,jdbcType=VARCHAR}, 
+        #{partyZAddr,jdbcType=VARCHAR}, 
+        #{partyZContact,jdbcType=VARCHAR}, 
+        #{partyZPhone,jdbcType=VARCHAR}, 
+        #{partyZSigner,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{expProcMethod,jdbcType=VARCHAR}, 
+        #{statusChgReason,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from AGREEMENT  
+        where
+           AGREE_ID = #{agreeId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from AGREEMENT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  AGREEMENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="agreementTmpId != null">
+         AGREEMENT_TMP_ID = #{agreementTmpId,jdbcType=BIGINT},
+      </if>
+      <if test="agreeNbr != null">
+         AGREE_NBR = #{agreeNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="agreeName != null">
+         AGREE_NAME = #{agreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="signDate != null">
+         SIGN_DATE = #{signDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signPerson != null">
+         SIGN_PERSON = #{signPerson,jdbcType=BIGINT},
+      </if>
+      <if test="partyAName != null">
+         PARTY_A_NAME = #{partyAName,jdbcType=VARCHAR},
+      </if>
+      <if test="signPlace != null">
+         SIGN_PLACE = #{signPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="validPeriod != null">
+         VALID_PERIOD = #{validPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="agreeAmount != null">
+         AGREE_AMOUNT = #{agreeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agreeType != null">
+         AGREE_TYPE = #{agreeType,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="partyAAddr != null">
+         PARTY_A_ADDR = #{partyAAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partyAContact != null">
+         PARTY_A_CONTACT = #{partyAContact,jdbcType=VARCHAR},
+      </if>
+      <if test="partyAPhone != null">
+         PARTY_A_PHONE = #{partyAPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="partyASigner != null">
+         PARTY_A_SIGNER = #{partyASigner,jdbcType=VARCHAR},
+      </if>
+      <if test="partyZName != null">
+         PARTY_Z_NAME = #{partyZName,jdbcType=VARCHAR},
+      </if>
+      <if test="partyZAddr != null">
+         PARTY_Z_ADDR = #{partyZAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partyZContact != null">
+         PARTY_Z_CONTACT = #{partyZContact,jdbcType=VARCHAR},
+      </if>
+      <if test="partyZPhone != null">
+         PARTY_Z_PHONE = #{partyZPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="partyZSigner != null">
+         PARTY_Z_SIGNER = #{partyZSigner,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="expProcMethod != null">
+         EXP_PROC_METHOD = #{expProcMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="statusChgReason != null">
+         STATUS_CHG_REASON = #{statusChgReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           AGREE_ID = #{agreeId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update AGREEMENT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.agreeId != null">
+        AGREE_ID = #{record.agreeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreementTmpId != null">
+        AGREEMENT_TMP_ID = #{record.agreementTmpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeNbr != null">
+        AGREE_NBR = #{record.agreeNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreeName != null">
+        AGREE_NAME = #{record.agreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signDate != null">
+        SIGN_DATE = #{record.signDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.signPerson != null">
+        SIGN_PERSON = #{record.signPerson,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyAName != null">
+        PARTY_A_NAME = #{record.partyAName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signPlace != null">
+        SIGN_PLACE = #{record.signPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validPeriod != null">
+        VALID_PERIOD = #{record.validPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreeAmount != null">
+        AGREE_AMOUNT = #{record.agreeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.agreeType != null">
+        AGREE_TYPE = #{record.agreeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyAAddr != null">
+        PARTY_A_ADDR = #{record.partyAAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyAContact != null">
+        PARTY_A_CONTACT = #{record.partyAContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyAPhone != null">
+        PARTY_A_PHONE = #{record.partyAPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyASigner != null">
+        PARTY_A_SIGNER = #{record.partyASigner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyZName != null">
+        PARTY_Z_NAME = #{record.partyZName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyZAddr != null">
+        PARTY_Z_ADDR = #{record.partyZAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyZContact != null">
+        PARTY_Z_CONTACT = #{record.partyZContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyZPhone != null">
+        PARTY_Z_PHONE = #{record.partyZPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyZSigner != null">
+        PARTY_Z_SIGNER = #{record.partyZSigner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expProcMethod != null">
+        EXP_PROC_METHOD = #{record.expProcMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusChgReason != null">
+        STATUS_CHG_REASON = #{record.statusChgReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.agreeId != null ">
+        AGREE_ID = #{condition.agreeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreementTmpId != null ">
+        and AGREEMENT_TMP_ID = #{condition.agreementTmpId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeNbr != null and condition.agreeNbr != ''">
+        and AGREE_NBR = #{condition.agreeNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.agreeName != null and condition.agreeName != ''">
+        and AGREE_NAME = #{condition.agreeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.signDate != null ">
+        and SIGN_DATE = #{condition.signDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.signPerson != null ">
+        and SIGN_PERSON = #{condition.signPerson, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyAName != null and condition.partyAName != ''">
+        and PARTY_A_NAME = #{condition.partyAName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.signPlace != null and condition.signPlace != ''">
+        and SIGN_PLACE = #{condition.signPlace, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.validPeriod != null ">
+        and VALID_PERIOD = #{condition.validPeriod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.agreeAmount != null ">
+        and AGREE_AMOUNT = #{condition.agreeAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.agreeType != null and condition.agreeType != ''">
+        and AGREE_TYPE = #{condition.agreeType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyAAddr != null and condition.partyAAddr != ''">
+        and PARTY_A_ADDR = #{condition.partyAAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyAContact != null and condition.partyAContact != ''">
+        and PARTY_A_CONTACT = #{condition.partyAContact, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyAPhone != null and condition.partyAPhone != ''">
+        and PARTY_A_PHONE = #{condition.partyAPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyASigner != null and condition.partyASigner != ''">
+        and PARTY_A_SIGNER = #{condition.partyASigner, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyZName != null and condition.partyZName != ''">
+        and PARTY_Z_NAME = #{condition.partyZName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyZAddr != null and condition.partyZAddr != ''">
+        and PARTY_Z_ADDR = #{condition.partyZAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyZContact != null and condition.partyZContact != ''">
+        and PARTY_Z_CONTACT = #{condition.partyZContact, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyZPhone != null and condition.partyZPhone != ''">
+        and PARTY_Z_PHONE = #{condition.partyZPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyZSigner != null and condition.partyZSigner != ''">
+        and PARTY_Z_SIGNER = #{condition.partyZSigner, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.expProcMethod != null and condition.expProcMethod != ''">
+        and EXP_PROC_METHOD = #{condition.expProcMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusChgReason != null and condition.statusChgReason != ''">
+        and STATUS_CHG_REASON = #{condition.statusChgReason, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

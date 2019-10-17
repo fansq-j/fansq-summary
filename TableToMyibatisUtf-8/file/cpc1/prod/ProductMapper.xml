@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.ProductMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.ProductDO">
+    <id column="PROD_ID" jdbcType="INTEGER" property="prodId"/>
+    <result column="PROD_NBR" jdbcType="VARCHAR" property="prodNbr"/>
+    <result column="PROD_SYS_NBR" jdbcType="VARCHAR" property="prodSysNbr"/>
+    <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName"/>
+    <result column="PROD_DESC" jdbcType="VARCHAR" property="prodDesc"/>
+    <result column="MANAGE_GRADE" jdbcType="VARCHAR" property="manageGrade"/>
+    <result column="service_kind" jdbcType="INTEGER" property="serviceKind"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="PROD_COMP_TYPE" jdbcType="VARCHAR" property="prodCompType"/>
+    <result column="PROD_FUNC_TYPE" jdbcType="VARCHAR" property="prodFuncType"/>
+    <result column="BILL_PROD_TYPE" jdbcType="VARCHAR" property="billProdType"/>
+    <result column="PROD_USE_TYPE" jdbcType="VARCHAR" property="prodUseType"/>
+    <result column="BASE_OFFER_ID" jdbcType="INTEGER" property="baseOfferId"/>
+    <result column="MANAGE_REGION_ID" jdbcType="BIGINT" property="manageRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="ALIAS_NAME" jdbcType="VARCHAR" property="aliasName"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="IS_INDEPENDENT" jdbcType="VARCHAR" property="isIndependent"/>
+    <result column="GRP_PROD_NBR" jdbcType="VARCHAR" property="grpProdNbr"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PROD_ID, 
+          PROD_NBR, 
+          PROD_SYS_NBR, 
+          PROD_NAME, 
+          PROD_DESC, 
+          MANAGE_GRADE, 
+          service_kind, 
+          EFF_DATE, 
+          EXP_DATE, 
+          PROD_COMP_TYPE, 
+          PROD_FUNC_TYPE, 
+          BILL_PROD_TYPE, 
+          PROD_USE_TYPE, 
+          BASE_OFFER_ID, 
+          MANAGE_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          ALIAS_NAME, 
+          REMARK, 
+          IS_INDEPENDENT, 
+          GRP_PROD_NBR
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROD_NBR, 
+          PROD_SYS_NBR, 
+          PROD_NAME, 
+          PROD_DESC, 
+          MANAGE_GRADE, 
+          service_kind, 
+          EFF_DATE, 
+          EXP_DATE, 
+          PROD_COMP_TYPE, 
+          PROD_FUNC_TYPE, 
+          BILL_PROD_TYPE, 
+          PROD_USE_TYPE, 
+          BASE_OFFER_ID, 
+          MANAGE_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          ALIAS_NAME, 
+          REMARK, 
+          IS_INDEPENDENT, 
+          GRP_PROD_NBR
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="prodId != null ">
+        PROD_ID = #{prodId, jdbcType=INTEGER }
+      </if>
+      <if test="prodNbr != null and prodNbr != ''">
+        and PROD_NBR = #{prodNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="prodSysNbr != null and prodSysNbr != ''">
+        and PROD_SYS_NBR = #{prodSysNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="prodName != null and prodName != ''">
+        and PROD_NAME = #{prodName, jdbcType=VARCHAR }
+      </if>
+      <if test="prodDesc != null and prodDesc != ''">
+        and PROD_DESC = #{prodDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="manageGrade != null and manageGrade != ''">
+        and MANAGE_GRADE = #{manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="serviceKind != null ">
+        and service_kind = #{serviceKind, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="prodCompType != null and prodCompType != ''">
+        and PROD_COMP_TYPE = #{prodCompType, jdbcType=VARCHAR }
+      </if>
+      <if test="prodFuncType != null and prodFuncType != ''">
+        and PROD_FUNC_TYPE = #{prodFuncType, jdbcType=VARCHAR }
+      </if>
+      <if test="billProdType != null and billProdType != ''">
+        and BILL_PROD_TYPE = #{billProdType, jdbcType=VARCHAR }
+      </if>
+      <if test="prodUseType != null and prodUseType != ''">
+        and PROD_USE_TYPE = #{prodUseType, jdbcType=VARCHAR }
+      </if>
+      <if test="baseOfferId != null ">
+        and BASE_OFFER_ID = #{baseOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="manageRegionId != null ">
+        and MANAGE_REGION_ID = #{manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="aliasName != null and aliasName != ''">
+        and ALIAS_NAME = #{aliasName, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="isIndependent != null and isIndependent != ''">
+        and IS_INDEPENDENT = #{isIndependent, jdbcType=VARCHAR }
+      </if>
+      <if test="grpProdNbr != null and grpProdNbr != ''">
+        and GRP_PROD_NBR = #{grpProdNbr, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.ProductDO" resultType="java.lang.Integer">
+      select count(*) from PRODUCT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRODUCT
+        where 
+           PROD_ID = #{prodId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRODUCT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="prodId">
+      insert into  PRODUCT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{prodNbr,jdbcType=VARCHAR}, 
+        #{prodSysNbr,jdbcType=VARCHAR}, 
+        #{prodName,jdbcType=VARCHAR}, 
+        #{prodDesc,jdbcType=VARCHAR}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{serviceKind,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{prodCompType,jdbcType=VARCHAR}, 
+        #{prodFuncType,jdbcType=VARCHAR}, 
+        #{billProdType,jdbcType=VARCHAR}, 
+        #{prodUseType,jdbcType=VARCHAR}, 
+        #{baseOfferId,jdbcType=INTEGER}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{aliasName,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{isIndependent,jdbcType=VARCHAR}, 
+        #{grpProdNbr,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRODUCT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{prodId,jdbcType=INTEGER}, 
+        #{prodNbr,jdbcType=VARCHAR}, 
+        #{prodSysNbr,jdbcType=VARCHAR}, 
+        #{prodName,jdbcType=VARCHAR}, 
+        #{prodDesc,jdbcType=VARCHAR}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{serviceKind,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{prodCompType,jdbcType=VARCHAR}, 
+        #{prodFuncType,jdbcType=VARCHAR}, 
+        #{billProdType,jdbcType=VARCHAR}, 
+        #{prodUseType,jdbcType=VARCHAR}, 
+        #{baseOfferId,jdbcType=INTEGER}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{aliasName,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{isIndependent,jdbcType=VARCHAR}, 
+        #{grpProdNbr,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRODUCT  
+        where
+           PROD_ID = #{prodId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PRODUCT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRODUCT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="prodNbr != null">
+         PROD_NBR = #{prodNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="prodSysNbr != null">
+         PROD_SYS_NBR = #{prodSysNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+         PROD_NAME = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodDesc != null">
+         PROD_DESC = #{prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="manageGrade != null">
+         MANAGE_GRADE = #{manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceKind != null">
+         service_kind = #{serviceKind,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prodCompType != null">
+         PROD_COMP_TYPE = #{prodCompType,jdbcType=VARCHAR},
+      </if>
+      <if test="prodFuncType != null">
+         PROD_FUNC_TYPE = #{prodFuncType,jdbcType=VARCHAR},
+      </if>
+      <if test="billProdType != null">
+         BILL_PROD_TYPE = #{billProdType,jdbcType=VARCHAR},
+      </if>
+      <if test="prodUseType != null">
+         PROD_USE_TYPE = #{prodUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="baseOfferId != null">
+         BASE_OFFER_ID = #{baseOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="manageRegionId != null">
+         MANAGE_REGION_ID = #{manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aliasName != null">
+         ALIAS_NAME = #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isIndependent != null">
+         IS_INDEPENDENT = #{isIndependent,jdbcType=VARCHAR},
+      </if>
+      <if test="grpProdNbr != null">
+         GRP_PROD_NBR = #{grpProdNbr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PROD_ID = #{prodId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PRODUCT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.prodId != null">
+        PROD_ID = #{record.prodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodNbr != null">
+        PROD_NBR = #{record.prodNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodSysNbr != null">
+        PROD_SYS_NBR = #{record.prodSysNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodName != null">
+        PROD_NAME = #{record.prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodDesc != null">
+        PROD_DESC = #{record.prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageGrade != null">
+        MANAGE_GRADE = #{record.manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceKind != null">
+        service_kind = #{record.serviceKind,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.prodCompType != null">
+        PROD_COMP_TYPE = #{record.prodCompType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodFuncType != null">
+        PROD_FUNC_TYPE = #{record.prodFuncType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billProdType != null">
+        BILL_PROD_TYPE = #{record.billProdType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodUseType != null">
+        PROD_USE_TYPE = #{record.prodUseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseOfferId != null">
+        BASE_OFFER_ID = #{record.baseOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="record.manageRegionId != null">
+        MANAGE_REGION_ID = #{record.manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aliasName != null">
+        ALIAS_NAME = #{record.aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isIndependent != null">
+        IS_INDEPENDENT = #{record.isIndependent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grpProdNbr != null">
+        GRP_PROD_NBR = #{record.grpProdNbr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.prodId != null ">
+        PROD_ID = #{condition.prodId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.prodNbr != null and condition.prodNbr != ''">
+        and PROD_NBR = #{condition.prodNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodSysNbr != null and condition.prodSysNbr != ''">
+        and PROD_SYS_NBR = #{condition.prodSysNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodName != null and condition.prodName != ''">
+        and PROD_NAME = #{condition.prodName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodDesc != null and condition.prodDesc != ''">
+        and PROD_DESC = #{condition.prodDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.manageGrade != null and condition.manageGrade != ''">
+        and MANAGE_GRADE = #{condition.manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.serviceKind != null ">
+        and service_kind = #{condition.serviceKind, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.prodCompType != null and condition.prodCompType != ''">
+        and PROD_COMP_TYPE = #{condition.prodCompType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodFuncType != null and condition.prodFuncType != ''">
+        and PROD_FUNC_TYPE = #{condition.prodFuncType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.billProdType != null and condition.billProdType != ''">
+        and BILL_PROD_TYPE = #{condition.billProdType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodUseType != null and condition.prodUseType != ''">
+        and PROD_USE_TYPE = #{condition.prodUseType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.baseOfferId != null ">
+        and BASE_OFFER_ID = #{condition.baseOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.manageRegionId != null ">
+        and MANAGE_REGION_ID = #{condition.manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.aliasName != null and condition.aliasName != ''">
+        and ALIAS_NAME = #{condition.aliasName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isIndependent != null and condition.isIndependent != ''">
+        and IS_INDEPENDENT = #{condition.isIndependent, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.grpProdNbr != null and condition.grpProdNbr != ''">
+        and GRP_PROD_NBR = #{condition.grpProdNbr, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

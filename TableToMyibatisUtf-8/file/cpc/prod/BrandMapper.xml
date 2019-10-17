@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BrandMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BrandDO">
+    <id column="BRAND_ID" jdbcType="BIGINT" property="brandId"/>
+    <result column="BRAND_CODE" jdbcType="VARCHAR" property="brandCode"/>
+    <result column="BRAND_TYPE" jdbcType="VARCHAR" property="brandType"/>
+    <result column="BRAND_NAME" jdbcType="VARCHAR" property="brandName"/>
+    <result column="BRAND_DESC" jdbcType="VARCHAR" property="brandDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BRAND_ID, 
+          BRAND_CODE, 
+          BRAND_TYPE, 
+          BRAND_NAME, 
+          BRAND_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BRAND_CODE, 
+          BRAND_TYPE, 
+          BRAND_NAME, 
+          BRAND_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="brandId != null ">
+        BRAND_ID = #{brandId, jdbcType=BIGINT }
+      </if>
+      <if test="brandCode != null and brandCode != ''">
+        and BRAND_CODE = #{brandCode, jdbcType=VARCHAR }
+      </if>
+      <if test="brandType != null and brandType != ''">
+        and BRAND_TYPE = #{brandType, jdbcType=VARCHAR }
+      </if>
+      <if test="brandName != null and brandName != ''">
+        and BRAND_NAME = #{brandName, jdbcType=VARCHAR }
+      </if>
+      <if test="brandDesc != null and brandDesc != ''">
+        and BRAND_DESC = #{brandDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BrandDO" resultType="java.lang.Integer">
+      select count(*) from BRAND
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BRAND
+        where 
+           BRAND_ID = #{brandId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BRAND 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="brandId">
+      insert into  BRAND ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{brandCode,jdbcType=VARCHAR}, 
+        #{brandType,jdbcType=VARCHAR}, 
+        #{brandName,jdbcType=VARCHAR}, 
+        #{brandDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BRAND ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{brandId,jdbcType=BIGINT}, 
+        #{brandCode,jdbcType=VARCHAR}, 
+        #{brandType,jdbcType=VARCHAR}, 
+        #{brandName,jdbcType=VARCHAR}, 
+        #{brandDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BRAND  
+        where
+           BRAND_ID = #{brandId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BRAND
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BRAND
+    <trim prefix="set" suffixOverrides=",">
+      <if test="brandCode != null">
+         BRAND_CODE = #{brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brandType != null">
+         BRAND_TYPE = #{brandType,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null">
+         BRAND_NAME = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandDesc != null">
+         BRAND_DESC = #{brandDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           BRAND_ID = #{brandId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BRAND
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.brandId != null">
+        BRAND_ID = #{record.brandId,jdbcType=BIGINT},
+      </if>
+      <if test="record.brandCode != null">
+        BRAND_CODE = #{record.brandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandType != null">
+        BRAND_TYPE = #{record.brandType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandName != null">
+        BRAND_NAME = #{record.brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandDesc != null">
+        BRAND_DESC = #{record.brandDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.brandId != null ">
+        BRAND_ID = #{condition.brandId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.brandCode != null and condition.brandCode != ''">
+        and BRAND_CODE = #{condition.brandCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.brandType != null and condition.brandType != ''">
+        and BRAND_TYPE = #{condition.brandType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.brandName != null and condition.brandName != ''">
+        and BRAND_NAME = #{condition.brandName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.brandDesc != null and condition.brandDesc != ''">
+        and BRAND_DESC = #{condition.brandDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktScriptMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktScriptDO">
+    <id column="SCRIPT_ID" jdbcType="BIGINT" property="scriptId"/>
+    <result column="SCRIPT_NAME" jdbcType="VARCHAR" property="scriptName"/>
+    <result column="SCRIPT_DESC" jdbcType="VARCHAR" property="scriptDesc"/>
+    <result column="SCRIPT_TYPE" jdbcType="VARCHAR" property="scriptType"/>
+    <result column="SUIT_CHANNEL_TYPE" jdbcType="VARCHAR" property="suitChannelType"/>
+    <result column="EXEC_CHANNEL" jdbcType="VARCHAR" property="execChannel"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SCRIPT_ID, 
+          SCRIPT_NAME, 
+          SCRIPT_DESC, 
+          SCRIPT_TYPE, 
+          SUIT_CHANNEL_TYPE, 
+          EXEC_CHANNEL, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SCRIPT_NAME, 
+          SCRIPT_DESC, 
+          SCRIPT_TYPE, 
+          SUIT_CHANNEL_TYPE, 
+          EXEC_CHANNEL, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="scriptId != null ">
+        SCRIPT_ID = #{scriptId, jdbcType=BIGINT }
+      </if>
+      <if test="scriptName != null and scriptName != ''">
+        and SCRIPT_NAME = #{scriptName, jdbcType=VARCHAR }
+      </if>
+      <if test="scriptDesc != null and scriptDesc != ''">
+        and SCRIPT_DESC = #{scriptDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="scriptType != null and scriptType != ''">
+        and SCRIPT_TYPE = #{scriptType, jdbcType=VARCHAR }
+      </if>
+      <if test="suitChannelType != null and suitChannelType != ''">
+        and SUIT_CHANNEL_TYPE = #{suitChannelType, jdbcType=VARCHAR }
+      </if>
+      <if test="execChannel != null and execChannel != ''">
+        and EXEC_CHANNEL = #{execChannel, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktScriptDO" resultType="java.lang.Integer">
+      select count(*) from MKT_SCRIPT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_SCRIPT
+        where 
+           SCRIPT_ID = #{scriptId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_SCRIPT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="scriptId">
+      insert into  MKT_SCRIPT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{scriptName,jdbcType=VARCHAR}, 
+        #{scriptDesc,jdbcType=VARCHAR}, 
+        #{scriptType,jdbcType=VARCHAR}, 
+        #{suitChannelType,jdbcType=VARCHAR}, 
+        #{execChannel,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_SCRIPT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{scriptId,jdbcType=BIGINT}, 
+        #{scriptName,jdbcType=VARCHAR}, 
+        #{scriptDesc,jdbcType=VARCHAR}, 
+        #{scriptType,jdbcType=VARCHAR}, 
+        #{suitChannelType,jdbcType=VARCHAR}, 
+        #{execChannel,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_SCRIPT  
+        where
+           SCRIPT_ID = #{scriptId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_SCRIPT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_SCRIPT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="scriptName != null">
+         SCRIPT_NAME = #{scriptName,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptDesc != null">
+         SCRIPT_DESC = #{scriptDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptType != null">
+         SCRIPT_TYPE = #{scriptType,jdbcType=VARCHAR},
+      </if>
+      <if test="suitChannelType != null">
+         SUIT_CHANNEL_TYPE = #{suitChannelType,jdbcType=VARCHAR},
+      </if>
+      <if test="execChannel != null">
+         EXEC_CHANNEL = #{execChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SCRIPT_ID = #{scriptId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_SCRIPT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.scriptId != null">
+        SCRIPT_ID = #{record.scriptId,jdbcType=BIGINT},
+      </if>
+      <if test="record.scriptName != null">
+        SCRIPT_NAME = #{record.scriptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scriptDesc != null">
+        SCRIPT_DESC = #{record.scriptDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scriptType != null">
+        SCRIPT_TYPE = #{record.scriptType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suitChannelType != null">
+        SUIT_CHANNEL_TYPE = #{record.suitChannelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execChannel != null">
+        EXEC_CHANNEL = #{record.execChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.scriptId != null ">
+        SCRIPT_ID = #{condition.scriptId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.scriptName != null and condition.scriptName != ''">
+        and SCRIPT_NAME = #{condition.scriptName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.scriptDesc != null and condition.scriptDesc != ''">
+        and SCRIPT_DESC = #{condition.scriptDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.scriptType != null and condition.scriptType != ''">
+        and SCRIPT_TYPE = #{condition.scriptType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.suitChannelType != null and condition.suitChannelType != ''">
+        and SUIT_CHANNEL_TYPE = #{condition.suitChannelType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.execChannel != null and condition.execChannel != ''">
+        and EXEC_CHANNEL = #{condition.execChannel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

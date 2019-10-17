@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OneItemResultMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OneItemResultDO">
+    <id column="ONE_ACCT_ITEM_ID" jdbcType="BIGINT" property="oneAcctItemId"/>
+    <result column="CUST_ORDER_ID" jdbcType="BIGINT" property="custOrderId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="SOURCE_TYPE" jdbcType="INTEGER" property="sourceType"/>
+    <result column="BILL_ID" jdbcType="BIGINT" property="billId"/>
+    <result column="PAYMENT_ID" jdbcType="BIGINT" property="paymentId"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="BALANCE_TYPE_ID" jdbcType="INTEGER" property="balanceTypeId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="ITEM_SOURCE_ID" jdbcType="INTEGER" property="itemSourceId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+    <result column="OFFER_ID" jdbcType="INTEGER" property="offerId"/>
+    <result column="REAL_AMOUNT" jdbcType="BIGINT" property="realAmount"/>
+    <result column="RESULT_ITEM_TYPE" jdbcType="INTEGER" property="resultItemType"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CHARGE_METHOD" jdbcType="INTEGER" property="chargeMethod"/>
+    <result column="BUREAU_ID" jdbcType="INTEGER" property="bureauId"/>
+    <result column="ORI_ACCT_ITEM_ID" jdbcType="BIGINT" property="oriAcctItemId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="IF_CHARGE_OFF" jdbcType="INTEGER" property="ifChargeOff"/>
+    <result column="MERGE_ACCT_DEAL_TIME" jdbcType="TIMESTAMP" property="mergeAcctDealTime"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ONE_ACCT_ITEM_ID, 
+          CUST_ORDER_ID, 
+          ORDER_ITEM_ID, 
+          SOURCE_TYPE, 
+          BILL_ID, 
+          PAYMENT_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          BALANCE_TYPE_ID, 
+          BILLING_CYCLE_ID, 
+          ITEM_SOURCE_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          OFFER_INST_ID, 
+          OFFER_ID, 
+          REAL_AMOUNT, 
+          RESULT_ITEM_TYPE, 
+          CREATE_DATE, 
+          CHARGE_METHOD, 
+          BUREAU_ID, 
+          ORI_ACCT_ITEM_ID, 
+          LAN_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          IF_CHARGE_OFF, 
+          MERGE_ACCT_DEAL_TIME, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CUST_ORDER_ID, 
+          ORDER_ITEM_ID, 
+          SOURCE_TYPE, 
+          BILL_ID, 
+          PAYMENT_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          BALANCE_TYPE_ID, 
+          BILLING_CYCLE_ID, 
+          ITEM_SOURCE_ID, 
+          ACCT_ID, 
+          PROD_INST_ID, 
+          OFFER_INST_ID, 
+          OFFER_ID, 
+          REAL_AMOUNT, 
+          RESULT_ITEM_TYPE, 
+          CREATE_DATE, 
+          CHARGE_METHOD, 
+          BUREAU_ID, 
+          ORI_ACCT_ITEM_ID, 
+          LAN_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          IF_CHARGE_OFF, 
+          MERGE_ACCT_DEAL_TIME, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="oneAcctItemId != null ">
+        ONE_ACCT_ITEM_ID = #{oneAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="custOrderId != null ">
+        and CUST_ORDER_ID = #{custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="sourceType != null ">
+        and SOURCE_TYPE = #{sourceType, jdbcType=INTEGER }
+      </if>
+      <if test="billId != null ">
+        and BILL_ID = #{billId, jdbcType=BIGINT }
+      </if>
+      <if test="paymentId != null ">
+        and PAYMENT_ID = #{paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="balanceTypeId != null ">
+        and BALANCE_TYPE_ID = #{balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="offerId != null ">
+        and OFFER_ID = #{offerId, jdbcType=INTEGER }
+      </if>
+      <if test="realAmount != null ">
+        and REAL_AMOUNT = #{realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="resultItemType != null ">
+        and RESULT_ITEM_TYPE = #{resultItemType, jdbcType=INTEGER }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="chargeMethod != null ">
+        and CHARGE_METHOD = #{chargeMethod, jdbcType=INTEGER }
+      </if>
+      <if test="bureauId != null ">
+        and BUREAU_ID = #{bureauId, jdbcType=INTEGER }
+      </if>
+      <if test="oriAcctItemId != null ">
+        and ORI_ACCT_ITEM_ID = #{oriAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="ifChargeOff != null ">
+        and IF_CHARGE_OFF = #{ifChargeOff, jdbcType=INTEGER }
+      </if>
+      <if test="mergeAcctDealTime != null ">
+        and MERGE_ACCT_DEAL_TIME = #{mergeAcctDealTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OneItemResultDO" resultType="java.lang.Integer">
+      select count(*) from ONE_ITEM_RESULT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ONE_ITEM_RESULT
+        where 
+           ONE_ACCT_ITEM_ID = #{oneAcctItemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ONE_ITEM_RESULT 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="oneAcctItemId">
+      insert into  ONE_ITEM_RESULT ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{sourceType,jdbcType=INTEGER}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{balanceTypeId,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{resultItemType,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{chargeMethod,jdbcType=INTEGER}, 
+        #{bureauId,jdbcType=INTEGER}, 
+        #{oriAcctItemId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{ifChargeOff,jdbcType=INTEGER}, 
+        #{mergeAcctDealTime,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ONE_ITEM_RESULT ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{oneAcctItemId,jdbcType=BIGINT}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{sourceType,jdbcType=INTEGER}, 
+        #{billId,jdbcType=BIGINT}, 
+        #{paymentId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{balanceTypeId,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{itemSourceId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{resultItemType,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{chargeMethod,jdbcType=INTEGER}, 
+        #{bureauId,jdbcType=INTEGER}, 
+        #{oriAcctItemId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{ifChargeOff,jdbcType=INTEGER}, 
+        #{mergeAcctDealTime,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ONE_ITEM_RESULT  
+        where
+           ONE_ACCT_ITEM_ID = #{oneAcctItemId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ONE_ITEM_RESULT
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ONE_ITEM_RESULT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="custOrderId != null">
+         CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="sourceType != null">
+         SOURCE_TYPE = #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="billId != null">
+         BILL_ID = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentId != null">
+         PAYMENT_ID = #{paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="balanceTypeId != null">
+         BALANCE_TYPE_ID = #{balanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="itemSourceId != null">
+         ITEM_SOURCE_ID = #{itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="offerId != null">
+         OFFER_ID = #{offerId,jdbcType=INTEGER},
+      </if>
+      <if test="realAmount != null">
+         REAL_AMOUNT = #{realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="resultItemType != null">
+         RESULT_ITEM_TYPE = #{resultItemType,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargeMethod != null">
+         CHARGE_METHOD = #{chargeMethod,jdbcType=INTEGER},
+      </if>
+      <if test="bureauId != null">
+         BUREAU_ID = #{bureauId,jdbcType=INTEGER},
+      </if>
+      <if test="oriAcctItemId != null">
+         ORI_ACCT_ITEM_ID = #{oriAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="ifChargeOff != null">
+         IF_CHARGE_OFF = #{ifChargeOff,jdbcType=INTEGER},
+      </if>
+      <if test="mergeAcctDealTime != null">
+         MERGE_ACCT_DEAL_TIME = #{mergeAcctDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           ONE_ACCT_ITEM_ID = #{oneAcctItemId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ONE_ITEM_RESULT
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.oneAcctItemId != null">
+        ONE_ACCT_ITEM_ID = #{record.oneAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custOrderId != null">
+        CUST_ORDER_ID = #{record.custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourceType != null">
+        SOURCE_TYPE = #{record.sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.billId != null">
+        BILL_ID = #{record.billId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentId != null">
+        PAYMENT_ID = #{record.paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.balanceTypeId != null">
+        BALANCE_TYPE_ID = #{record.balanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemSourceId != null">
+        ITEM_SOURCE_ID = #{record.itemSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerId != null">
+        OFFER_ID = #{record.offerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.realAmount != null">
+        REAL_AMOUNT = #{record.realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.resultItemType != null">
+        RESULT_ITEM_TYPE = #{record.resultItemType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.chargeMethod != null">
+        CHARGE_METHOD = #{record.chargeMethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.bureauId != null">
+        BUREAU_ID = #{record.bureauId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oriAcctItemId != null">
+        ORI_ACCT_ITEM_ID = #{record.oriAcctItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ifChargeOff != null">
+        IF_CHARGE_OFF = #{record.ifChargeOff,jdbcType=INTEGER},
+      </if>
+      <if test="record.mergeAcctDealTime != null">
+        MERGE_ACCT_DEAL_TIME = #{record.mergeAcctDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.oneAcctItemId != null ">
+        ONE_ACCT_ITEM_ID = #{condition.oneAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custOrderId != null ">
+        and CUST_ORDER_ID = #{condition.custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sourceType != null ">
+        and SOURCE_TYPE = #{condition.sourceType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billId != null ">
+        and BILL_ID = #{condition.billId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.paymentId != null ">
+        and PAYMENT_ID = #{condition.paymentId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.balanceTypeId != null ">
+        and BALANCE_TYPE_ID = #{condition.balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.itemSourceId != null ">
+        and ITEM_SOURCE_ID = #{condition.itemSourceId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerId != null ">
+        and OFFER_ID = #{condition.offerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.realAmount != null ">
+        and REAL_AMOUNT = #{condition.realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.resultItemType != null ">
+        and RESULT_ITEM_TYPE = #{condition.resultItemType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.chargeMethod != null ">
+        and CHARGE_METHOD = #{condition.chargeMethod, jdbcType=INTEGER }
+      </if>
+      <if test="condition.bureauId != null ">
+        and BUREAU_ID = #{condition.bureauId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.oriAcctItemId != null ">
+        and ORI_ACCT_ITEM_ID = #{condition.oriAcctItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ifChargeOff != null ">
+        and IF_CHARGE_OFF = #{condition.ifChargeOff, jdbcType=INTEGER }
+      </if>
+      <if test="condition.mergeAcctDealTime != null ">
+        and MERGE_ACCT_DEAL_TIME = #{condition.mergeAcctDealTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

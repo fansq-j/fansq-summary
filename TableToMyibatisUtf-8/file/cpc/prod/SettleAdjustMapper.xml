@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SettleAdjustMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SettleAdjustDO">
+    <id column="SETTLE_ADJUST_ID" jdbcType="BIGINT" property="settleAdjustId"/>
+    <result column="IN_STAFF_ID" jdbcType="BIGINT" property="inStaffId"/>
+    <result column="SETTLE_OBJ_TYPE" jdbcType="INTEGER" property="settleObjType"/>
+    <result column="SETTLE_OBJ_ID" jdbcType="BIGINT" property="settleObjId"/>
+    <result column="ADJUST_OBJ_TYPE" jdbcType="INTEGER" property="adjustObjType"/>
+    <result column="ADJUST_OBJ_ID" jdbcType="BIGINT" property="adjustObjId"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="CHARGE" jdbcType="BIGINT" property="charge"/>
+    <result column="ACC_NBR" jdbcType="VARCHAR" property="accNbr"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="INTEGER" property="acctItemTypeId"/>
+    <result column="COST_FLAG" jdbcType="INTEGER" property="costFlag"/>
+    <result column="ADJUST_STATE" jdbcType="INTEGER" property="adjustState"/>
+    <result column="ADJUST_STATE_DATE" jdbcType="TIMESTAMP" property="adjustStateDate"/>
+    <result column="ADJUST_DESC" jdbcType="VARCHAR" property="adjustDesc"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SETTLE_ADJUST_ID, 
+          IN_STAFF_ID, 
+          SETTLE_OBJ_TYPE, 
+          SETTLE_OBJ_ID, 
+          ADJUST_OBJ_TYPE, 
+          ADJUST_OBJ_ID, 
+          BILLING_CYCLE_ID, 
+          CHARGE, 
+          ACC_NBR, 
+          PROD_INST_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          COST_FLAG, 
+          ADJUST_STATE, 
+          ADJUST_STATE_DATE, 
+          ADJUST_DESC, 
+          CREATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          IN_STAFF_ID, 
+          SETTLE_OBJ_TYPE, 
+          SETTLE_OBJ_ID, 
+          ADJUST_OBJ_TYPE, 
+          ADJUST_OBJ_ID, 
+          BILLING_CYCLE_ID, 
+          CHARGE, 
+          ACC_NBR, 
+          PROD_INST_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          COST_FLAG, 
+          ADJUST_STATE, 
+          ADJUST_STATE_DATE, 
+          ADJUST_DESC, 
+          CREATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="settleAdjustId != null ">
+        SETTLE_ADJUST_ID = #{settleAdjustId, jdbcType=BIGINT }
+      </if>
+      <if test="inStaffId != null ">
+        and IN_STAFF_ID = #{inStaffId, jdbcType=BIGINT }
+      </if>
+      <if test="settleObjType != null ">
+        and SETTLE_OBJ_TYPE = #{settleObjType, jdbcType=INTEGER }
+      </if>
+      <if test="settleObjId != null ">
+        and SETTLE_OBJ_ID = #{settleObjId, jdbcType=BIGINT }
+      </if>
+      <if test="adjustObjType != null ">
+        and ADJUST_OBJ_TYPE = #{adjustObjType, jdbcType=INTEGER }
+      </if>
+      <if test="adjustObjId != null ">
+        and ADJUST_OBJ_ID = #{adjustObjId, jdbcType=BIGINT }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="charge != null ">
+        and CHARGE = #{charge, jdbcType=BIGINT }
+      </if>
+      <if test="accNbr != null and accNbr != ''">
+        and ACC_NBR = #{accNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="costFlag != null ">
+        and COST_FLAG = #{costFlag, jdbcType=INTEGER }
+      </if>
+      <if test="adjustState != null ">
+        and ADJUST_STATE = #{adjustState, jdbcType=INTEGER }
+      </if>
+      <if test="adjustStateDate != null ">
+        and ADJUST_STATE_DATE = #{adjustStateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="adjustDesc != null and adjustDesc != ''">
+        and ADJUST_DESC = #{adjustDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SettleAdjustDO" resultType="java.lang.Integer">
+      select count(*) from SETTLE_ADJUST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SETTLE_ADJUST
+        where 
+           SETTLE_ADJUST_ID = #{settleAdjustId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SETTLE_ADJUST 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="settleAdjustId">
+      insert into  SETTLE_ADJUST ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{inStaffId,jdbcType=BIGINT}, 
+        #{settleObjType,jdbcType=INTEGER}, 
+        #{settleObjId,jdbcType=BIGINT}, 
+        #{adjustObjType,jdbcType=INTEGER}, 
+        #{adjustObjId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{charge,jdbcType=BIGINT}, 
+        #{accNbr,jdbcType=VARCHAR}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{costFlag,jdbcType=INTEGER}, 
+        #{adjustState,jdbcType=INTEGER}, 
+        #{adjustStateDate,jdbcType=TIMESTAMP}, 
+        #{adjustDesc,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SETTLE_ADJUST ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{settleAdjustId,jdbcType=BIGINT}, 
+        #{inStaffId,jdbcType=BIGINT}, 
+        #{settleObjType,jdbcType=INTEGER}, 
+        #{settleObjId,jdbcType=BIGINT}, 
+        #{adjustObjType,jdbcType=INTEGER}, 
+        #{adjustObjId,jdbcType=BIGINT}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{charge,jdbcType=BIGINT}, 
+        #{accNbr,jdbcType=VARCHAR}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=INTEGER}, 
+        #{costFlag,jdbcType=INTEGER}, 
+        #{adjustState,jdbcType=INTEGER}, 
+        #{adjustStateDate,jdbcType=TIMESTAMP}, 
+        #{adjustDesc,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SETTLE_ADJUST  
+        where
+           SETTLE_ADJUST_ID = #{settleAdjustId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SETTLE_ADJUST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SETTLE_ADJUST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="inStaffId != null">
+         IN_STAFF_ID = #{inStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="settleObjType != null">
+         SETTLE_OBJ_TYPE = #{settleObjType,jdbcType=INTEGER},
+      </if>
+      <if test="settleObjId != null">
+         SETTLE_OBJ_ID = #{settleObjId,jdbcType=BIGINT},
+      </if>
+      <if test="adjustObjType != null">
+         ADJUST_OBJ_TYPE = #{adjustObjType,jdbcType=INTEGER},
+      </if>
+      <if test="adjustObjId != null">
+         ADJUST_OBJ_ID = #{adjustObjId,jdbcType=BIGINT},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="charge != null">
+         CHARGE = #{charge,jdbcType=BIGINT},
+      </if>
+      <if test="accNbr != null">
+         ACC_NBR = #{accNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="costFlag != null">
+         COST_FLAG = #{costFlag,jdbcType=INTEGER},
+      </if>
+      <if test="adjustState != null">
+         ADJUST_STATE = #{adjustState,jdbcType=INTEGER},
+      </if>
+      <if test="adjustStateDate != null">
+         ADJUST_STATE_DATE = #{adjustStateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adjustDesc != null">
+         ADJUST_DESC = #{adjustDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           SETTLE_ADJUST_ID = #{settleAdjustId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SETTLE_ADJUST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.settleAdjustId != null">
+        SETTLE_ADJUST_ID = #{record.settleAdjustId,jdbcType=BIGINT},
+      </if>
+      <if test="record.inStaffId != null">
+        IN_STAFF_ID = #{record.inStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.settleObjType != null">
+        SETTLE_OBJ_TYPE = #{record.settleObjType,jdbcType=INTEGER},
+      </if>
+      <if test="record.settleObjId != null">
+        SETTLE_OBJ_ID = #{record.settleObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adjustObjType != null">
+        ADJUST_OBJ_TYPE = #{record.adjustObjType,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustObjId != null">
+        ADJUST_OBJ_ID = #{record.adjustObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.charge != null">
+        CHARGE = #{record.charge,jdbcType=BIGINT},
+      </if>
+      <if test="record.accNbr != null">
+        ACC_NBR = #{record.accNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.costFlag != null">
+        COST_FLAG = #{record.costFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustState != null">
+        ADJUST_STATE = #{record.adjustState,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustStateDate != null">
+        ADJUST_STATE_DATE = #{record.adjustStateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adjustDesc != null">
+        ADJUST_DESC = #{record.adjustDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.settleAdjustId != null ">
+        SETTLE_ADJUST_ID = #{condition.settleAdjustId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.inStaffId != null ">
+        and IN_STAFF_ID = #{condition.inStaffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.settleObjType != null ">
+        and SETTLE_OBJ_TYPE = #{condition.settleObjType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.settleObjId != null ">
+        and SETTLE_OBJ_ID = #{condition.settleObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.adjustObjType != null ">
+        and ADJUST_OBJ_TYPE = #{condition.adjustObjType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustObjId != null ">
+        and ADJUST_OBJ_ID = #{condition.adjustObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.charge != null ">
+        and CHARGE = #{condition.charge, jdbcType=BIGINT }
+      </if>
+      <if test="condition.accNbr != null and condition.accNbr != ''">
+        and ACC_NBR = #{condition.accNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.costFlag != null ">
+        and COST_FLAG = #{condition.costFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustState != null ">
+        and ADJUST_STATE = #{condition.adjustState, jdbcType=INTEGER }
+      </if>
+      <if test="condition.adjustStateDate != null ">
+        and ADJUST_STATE_DATE = #{condition.adjustStateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.adjustDesc != null and condition.adjustDesc != ''">
+        and ADJUST_DESC = #{condition.adjustDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

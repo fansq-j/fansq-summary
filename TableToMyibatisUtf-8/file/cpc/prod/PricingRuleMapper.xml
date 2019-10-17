@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PricingRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PricingRuleDO">
+    <id column="PRICING_RULE_ID" jdbcType="INTEGER" property="pricingRuleId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="INTEGER" property="objId"/>
+    <result column="OPERATOR_ID" jdbcType="INTEGER" property="operatorId"/>
+    <result column="PRICING_SECTION_ID" jdbcType="INTEGER" property="pricingSectionId"/>
+    <result column="RESULT_REF_VALUE_ID" jdbcType="INTEGER" property="resultRefValueId"/>
+    <result column="GROUP_ID" jdbcType="INTEGER" property="groupId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRICING_RULE_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          OPERATOR_ID, 
+          PRICING_SECTION_ID, 
+          RESULT_REF_VALUE_ID, 
+          GROUP_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OBJ_TYPE, 
+          OBJ_ID, 
+          OPERATOR_ID, 
+          PRICING_SECTION_ID, 
+          RESULT_REF_VALUE_ID, 
+          GROUP_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pricingRuleId != null ">
+        PRICING_RULE_ID = #{pricingRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=INTEGER }
+      </if>
+      <if test="operatorId != null ">
+        and OPERATOR_ID = #{operatorId, jdbcType=INTEGER }
+      </if>
+      <if test="pricingSectionId != null ">
+        and PRICING_SECTION_ID = #{pricingSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="resultRefValueId != null ">
+        and RESULT_REF_VALUE_ID = #{resultRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="groupId != null ">
+        and GROUP_ID = #{groupId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PricingRuleDO" resultType="java.lang.Integer">
+      select count(*) from PRICING_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRICING_RULE
+        where 
+           PRICING_RULE_ID = #{pricingRuleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRICING_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pricingRuleId">
+      insert into  PRICING_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{operatorId,jdbcType=INTEGER}, 
+        #{pricingSectionId,jdbcType=INTEGER}, 
+        #{resultRefValueId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRICING_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pricingRuleId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=INTEGER}, 
+        #{operatorId,jdbcType=INTEGER}, 
+        #{pricingSectionId,jdbcType=INTEGER}, 
+        #{resultRefValueId,jdbcType=INTEGER}, 
+        #{groupId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRICING_RULE  
+        where
+           PRICING_RULE_ID = #{pricingRuleId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PRICING_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRICING_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+         OPERATOR_ID = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="pricingSectionId != null">
+         PRICING_SECTION_ID = #{pricingSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="resultRefValueId != null">
+         RESULT_REF_VALUE_ID = #{resultRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+         GROUP_ID = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PRICING_RULE_ID = #{pricingRuleId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PRICING_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pricingRuleId != null">
+        PRICING_RULE_ID = #{record.pricingRuleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorId != null">
+        OPERATOR_ID = #{record.operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingSectionId != null">
+        PRICING_SECTION_ID = #{record.pricingSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.resultRefValueId != null">
+        RESULT_REF_VALUE_ID = #{record.resultRefValueId,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupId != null">
+        GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pricingRuleId != null ">
+        PRICING_RULE_ID = #{condition.pricingRuleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operatorId != null ">
+        and OPERATOR_ID = #{condition.operatorId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingSectionId != null ">
+        and PRICING_SECTION_ID = #{condition.pricingSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.resultRefValueId != null ">
+        and RESULT_REF_VALUE_ID = #{condition.resultRefValueId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.groupId != null ">
+        and GROUP_ID = #{condition.groupId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

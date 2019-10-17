@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.TemplateTypeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.TemplateTypeDO">
+    <id column="TEMPLATE_TYPE_ID" jdbcType="INTEGER" property="templateTypeId"/>
+    <result column="UP_TEMPLATE_TYPE_ID" jdbcType="INTEGER" property="upTemplateTypeId"/>
+    <result column="TEMPLATE_TYPE_CODE" jdbcType="VARCHAR" property="templateTypeCode"/>
+    <result column="TYPE_NAME" jdbcType="VARCHAR" property="typeName"/>
+    <result column="TYPE_DESC" jdbcType="VARCHAR" property="typeDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATE_DATE" jdbcType="TIMESTAMP" property="stateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TEMPLATE_TYPE_ID, 
+          UP_TEMPLATE_TYPE_ID, 
+          TEMPLATE_TYPE_CODE, 
+          TYPE_NAME, 
+          TYPE_DESC, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATE_DATE, 
+          UPDATE_STAFF, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          UP_TEMPLATE_TYPE_ID, 
+          TEMPLATE_TYPE_CODE, 
+          TYPE_NAME, 
+          TYPE_DESC, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATE_DATE, 
+          UPDATE_STAFF, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="templateTypeId != null ">
+        TEMPLATE_TYPE_ID = #{templateTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="upTemplateTypeId != null ">
+        and UP_TEMPLATE_TYPE_ID = #{upTemplateTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="templateTypeCode != null and templateTypeCode != ''">
+        and TEMPLATE_TYPE_CODE = #{templateTypeCode, jdbcType=VARCHAR }
+      </if>
+      <if test="typeName != null and typeName != ''">
+        and TYPE_NAME = #{typeName, jdbcType=VARCHAR }
+      </if>
+      <if test="typeDesc != null and typeDesc != ''">
+        and TYPE_DESC = #{typeDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="stateDate != null ">
+        and STATE_DATE = #{stateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.TemplateTypeDO" resultType="java.lang.Integer">
+      select count(*) from TEMPLATE_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from TEMPLATE_TYPE
+        where 
+           TEMPLATE_TYPE_ID = #{templateTypeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  TEMPLATE_TYPE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="templateTypeId">
+      insert into  TEMPLATE_TYPE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{upTemplateTypeId,jdbcType=INTEGER}, 
+        #{templateTypeCode,jdbcType=VARCHAR}, 
+        #{typeName,jdbcType=VARCHAR}, 
+        #{typeDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{stateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  TEMPLATE_TYPE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{templateTypeId,jdbcType=INTEGER}, 
+        #{upTemplateTypeId,jdbcType=INTEGER}, 
+        #{templateTypeCode,jdbcType=VARCHAR}, 
+        #{typeName,jdbcType=VARCHAR}, 
+        #{typeDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{stateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from TEMPLATE_TYPE  
+        where
+           TEMPLATE_TYPE_ID = #{templateTypeId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from TEMPLATE_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  TEMPLATE_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="upTemplateTypeId != null">
+         UP_TEMPLATE_TYPE_ID = #{upTemplateTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="templateTypeCode != null">
+         TEMPLATE_TYPE_CODE = #{templateTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+         TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeDesc != null">
+         TYPE_DESC = #{typeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="stateDate != null">
+         STATE_DATE = #{stateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           TEMPLATE_TYPE_ID = #{templateTypeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update TEMPLATE_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.templateTypeId != null">
+        TEMPLATE_TYPE_ID = #{record.templateTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.upTemplateTypeId != null">
+        UP_TEMPLATE_TYPE_ID = #{record.upTemplateTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.templateTypeCode != null">
+        TEMPLATE_TYPE_CODE = #{record.templateTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeName != null">
+        TYPE_NAME = #{record.typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeDesc != null">
+        TYPE_DESC = #{record.typeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.stateDate != null">
+        STATE_DATE = #{record.stateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.templateTypeId != null ">
+        TEMPLATE_TYPE_ID = #{condition.templateTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.upTemplateTypeId != null ">
+        and UP_TEMPLATE_TYPE_ID = #{condition.upTemplateTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.templateTypeCode != null and condition.templateTypeCode != ''">
+        and TEMPLATE_TYPE_CODE = #{condition.templateTypeCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.typeName != null and condition.typeName != ''">
+        and TYPE_NAME = #{condition.typeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.typeDesc != null and condition.typeDesc != ''">
+        and TYPE_DESC = #{condition.typeDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.stateDate != null ">
+        and STATE_DATE = #{condition.stateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

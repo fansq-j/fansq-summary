@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktOrdPayInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktOrdPayInfoDO">
+    <id column="MKT_ORD_PAY_ID" jdbcType="INTEGER" property="mktOrdPayId"/>
+    <result column="MKT_ORD_INFO_ID" jdbcType="VARCHAR" property="mktOrdInfoId"/>
+    <result column="CUST_ORDER_ID" jdbcType="BIGINT" property="custOrderId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="PAY_METHOD" jdbcType="VARCHAR" property="payMethod"/>
+    <result column="PAY_STATUS" jdbcType="VARCHAR" property="payStatus"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          MKT_ORD_PAY_ID, 
+          MKT_ORD_INFO_ID, 
+          CUST_ORDER_ID, 
+          ACCT_ID, 
+          AMOUNT, 
+          PAY_METHOD, 
+          PAY_STATUS
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          MKT_ORD_INFO_ID, 
+          CUST_ORDER_ID, 
+          ACCT_ID, 
+          AMOUNT, 
+          PAY_METHOD, 
+          PAY_STATUS
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="mktOrdPayId != null ">
+        MKT_ORD_PAY_ID = #{mktOrdPayId, jdbcType=INTEGER }
+      </if>
+      <if test="mktOrdInfoId != null and mktOrdInfoId != ''">
+        and MKT_ORD_INFO_ID = #{mktOrdInfoId, jdbcType=VARCHAR }
+      </if>
+      <if test="custOrderId != null ">
+        and CUST_ORDER_ID = #{custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="payMethod != null and payMethod != ''">
+        and PAY_METHOD = #{payMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="payStatus != null and payStatus != ''">
+        and PAY_STATUS = #{payStatus, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktOrdPayInfoDO" resultType="java.lang.Integer">
+      select count(*) from MKT_ORD_PAY_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_ORD_PAY_INFO
+        where 
+           MKT_ORD_PAY_ID = #{mktOrdPayId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_ORD_PAY_INFO 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="mktOrdPayId">
+      insert into  MKT_ORD_PAY_INFO ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{mktOrdInfoId,jdbcType=VARCHAR}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{payMethod,jdbcType=VARCHAR}, 
+        #{payStatus,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_ORD_PAY_INFO ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{mktOrdPayId,jdbcType=INTEGER}, 
+        #{mktOrdInfoId,jdbcType=VARCHAR}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{payMethod,jdbcType=VARCHAR}, 
+        #{payStatus,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_ORD_PAY_INFO  
+        where
+           MKT_ORD_PAY_ID = #{mktOrdPayId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_ORD_PAY_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_ORD_PAY_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="mktOrdInfoId != null">
+         MKT_ORD_INFO_ID = #{mktOrdInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="custOrderId != null">
+         CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="payMethod != null">
+         PAY_METHOD = #{payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null">
+         PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           MKT_ORD_PAY_ID = #{mktOrdPayId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_ORD_PAY_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.mktOrdPayId != null">
+        MKT_ORD_PAY_ID = #{record.mktOrdPayId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mktOrdInfoId != null">
+        MKT_ORD_INFO_ID = #{record.mktOrdInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custOrderId != null">
+        CUST_ORDER_ID = #{record.custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.payMethod != null">
+        PAY_METHOD = #{record.payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payStatus != null">
+        PAY_STATUS = #{record.payStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.mktOrdPayId != null ">
+        MKT_ORD_PAY_ID = #{condition.mktOrdPayId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.mktOrdInfoId != null and condition.mktOrdInfoId != ''">
+        and MKT_ORD_INFO_ID = #{condition.mktOrdInfoId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custOrderId != null ">
+        and CUST_ORDER_ID = #{condition.custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.payMethod != null and condition.payMethod != ''">
+        and PAY_METHOD = #{condition.payMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.payStatus != null and condition.payStatus != ''">
+        and PAY_STATUS = #{condition.payStatus, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

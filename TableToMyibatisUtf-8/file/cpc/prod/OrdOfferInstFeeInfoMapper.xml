@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdOfferInstFeeInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdOfferInstFeeInfoDO">
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="OFFER_INST_FEE_INFO_ID" jdbcType="BIGINT" property="offerInstFeeInfoId"/>
+    <result column="OFFER_INST_ID" jdbcType="BIGINT" property="offerInstId"/>
+    <result column="OFFER_ID" jdbcType="INTEGER" property="offerId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="ACCT_ITEM_TYPE_ID" jdbcType="BIGINT" property="acctItemTypeId"/>
+    <result column="CURRENCY" jdbcType="VARCHAR" property="currency"/>
+    <result column="RATIO" jdbcType="INTEGER" property="ratio"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="RATIO_METHOD" jdbcType="VARCHAR" property="ratioMethod"/>
+    <result column="IS_FIXED_PRICE" jdbcType="VARCHAR" property="isFixedPrice"/>
+    <result column="REAL_AMOUNT" jdbcType="BIGINT" property="realAmount"/>
+    <result column="CHARGE_ORG" jdbcType="BIGINT" property="chargeOrg"/>
+    <result column="COMM_CHARGE_ORG" jdbcType="BIGINT" property="commChargeOrg"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          OFFER_INST_FEE_INFO_ID, 
+          OFFER_INST_ID, 
+          OFFER_ID, 
+          PROD_INST_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          CURRENCY, 
+          RATIO, 
+          AMOUNT, 
+          RATIO_METHOD, 
+          IS_FIXED_PRICE, 
+          REAL_AMOUNT, 
+          CHARGE_ORG, 
+          COMM_CHARGE_ORG, 
+          VER_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          OFFER_INST_FEE_INFO_ID, 
+          OFFER_INST_ID, 
+          OFFER_ID, 
+          PROD_INST_ID, 
+          ACCT_ITEM_TYPE_ID, 
+          CURRENCY, 
+          RATIO, 
+          AMOUNT, 
+          RATIO_METHOD, 
+          IS_FIXED_PRICE, 
+          REAL_AMOUNT, 
+          CHARGE_ORG, 
+          COMM_CHARGE_ORG, 
+          VER_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="rowId != null ">
+        ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="offerInstFeeInfoId != null ">
+        and OFFER_INST_FEE_INFO_ID = #{offerInstFeeInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="offerInstId != null ">
+        and OFFER_INST_ID = #{offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="offerId != null ">
+        and OFFER_ID = #{offerId, jdbcType=INTEGER }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{acctItemTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="currency != null and currency != ''">
+        and CURRENCY = #{currency, jdbcType=VARCHAR }
+      </if>
+      <if test="ratio != null ">
+        and RATIO = #{ratio, jdbcType=INTEGER }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="ratioMethod != null and ratioMethod != ''">
+        and RATIO_METHOD = #{ratioMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="isFixedPrice != null and isFixedPrice != ''">
+        and IS_FIXED_PRICE = #{isFixedPrice, jdbcType=VARCHAR }
+      </if>
+      <if test="realAmount != null ">
+        and REAL_AMOUNT = #{realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="chargeOrg != null ">
+        and CHARGE_ORG = #{chargeOrg, jdbcType=BIGINT }
+      </if>
+      <if test="commChargeOrg != null ">
+        and COMM_CHARGE_ORG = #{commChargeOrg, jdbcType=BIGINT }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdOfferInstFeeInfoDO" resultType="java.lang.Integer">
+      select count(*) from ORD_OFFER_INST_FEE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_OFFER_INST_FEE_INFO
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_OFFER_INST_FEE_INFO 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_OFFER_INST_FEE_INFO ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{offerInstFeeInfoId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=BIGINT}, 
+        #{currency,jdbcType=VARCHAR}, 
+        #{ratio,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{ratioMethod,jdbcType=VARCHAR}, 
+        #{isFixedPrice,jdbcType=VARCHAR}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{chargeOrg,jdbcType=BIGINT}, 
+        #{commChargeOrg,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_OFFER_INST_FEE_INFO ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{offerInstFeeInfoId,jdbcType=BIGINT}, 
+        #{offerInstId,jdbcType=BIGINT}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{acctItemTypeId,jdbcType=BIGINT}, 
+        #{currency,jdbcType=VARCHAR}, 
+        #{ratio,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{ratioMethod,jdbcType=VARCHAR}, 
+        #{isFixedPrice,jdbcType=VARCHAR}, 
+        #{realAmount,jdbcType=BIGINT}, 
+        #{chargeOrg,jdbcType=BIGINT}, 
+        #{commChargeOrg,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_OFFER_INST_FEE_INFO  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_OFFER_INST_FEE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_OFFER_INST_FEE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="offerInstFeeInfoId != null">
+         OFFER_INST_FEE_INFO_ID = #{offerInstFeeInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="offerInstId != null">
+         OFFER_INST_ID = #{offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="offerId != null">
+         OFFER_ID = #{offerId,jdbcType=INTEGER},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="acctItemTypeId != null">
+         ACCT_ITEM_TYPE_ID = #{acctItemTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="currency != null">
+         CURRENCY = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="ratio != null">
+         RATIO = #{ratio,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="ratioMethod != null">
+         RATIO_METHOD = #{ratioMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="isFixedPrice != null">
+         IS_FIXED_PRICE = #{isFixedPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="realAmount != null">
+         REAL_AMOUNT = #{realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="chargeOrg != null">
+         CHARGE_ORG = #{chargeOrg,jdbcType=BIGINT},
+      </if>
+      <if test="commChargeOrg != null">
+         COMM_CHARGE_ORG = #{commChargeOrg,jdbcType=BIGINT},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_OFFER_INST_FEE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerInstFeeInfoId != null">
+        OFFER_INST_FEE_INFO_ID = #{record.offerInstFeeInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerInstId != null">
+        OFFER_INST_ID = #{record.offerInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerId != null">
+        OFFER_ID = #{record.offerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctItemTypeId != null">
+        ACCT_ITEM_TYPE_ID = #{record.acctItemTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.currency != null">
+        CURRENCY = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ratio != null">
+        RATIO = #{record.ratio,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.ratioMethod != null">
+        RATIO_METHOD = #{record.ratioMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFixedPrice != null">
+        IS_FIXED_PRICE = #{record.isFixedPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realAmount != null">
+        REAL_AMOUNT = #{record.realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.chargeOrg != null">
+        CHARGE_ORG = #{record.chargeOrg,jdbcType=BIGINT},
+      </if>
+      <if test="record.commChargeOrg != null">
+        COMM_CHARGE_ORG = #{record.commChargeOrg,jdbcType=BIGINT},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.rowId != null ">
+        ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerInstFeeInfoId != null ">
+        and OFFER_INST_FEE_INFO_ID = #{condition.offerInstFeeInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerInstId != null ">
+        and OFFER_INST_ID = #{condition.offerInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerId != null ">
+        and OFFER_ID = #{condition.offerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctItemTypeId != null ">
+        and ACCT_ITEM_TYPE_ID = #{condition.acctItemTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.currency != null and condition.currency != ''">
+        and CURRENCY = #{condition.currency, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ratio != null ">
+        and RATIO = #{condition.ratio, jdbcType=INTEGER }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ratioMethod != null and condition.ratioMethod != ''">
+        and RATIO_METHOD = #{condition.ratioMethod, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isFixedPrice != null and condition.isFixedPrice != ''">
+        and IS_FIXED_PRICE = #{condition.isFixedPrice, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.realAmount != null ">
+        and REAL_AMOUNT = #{condition.realAmount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.chargeOrg != null ">
+        and CHARGE_ORG = #{condition.chargeOrg, jdbcType=BIGINT }
+      </if>
+      <if test="condition.commChargeOrg != null ">
+        and COMM_CHARGE_ORG = #{condition.commChargeOrg, jdbcType=BIGINT }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

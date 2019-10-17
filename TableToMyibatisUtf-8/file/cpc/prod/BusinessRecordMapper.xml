@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BusinessRecordMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BusinessRecordDO">
+    <id column="BUSINESS_REC_ID" jdbcType="BIGINT" property="businessRecId"/>
+    <result column="BUSINESS_TYPE" jdbcType="INTEGER" property="businessType"/>
+    <result column="EXT_SERIAL_ID" jdbcType="VARCHAR" property="extSerialId"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BUSINESS_REC_ID, 
+          BUSINESS_TYPE, 
+          EXT_SERIAL_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          AMOUNT, 
+          CREATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BUSINESS_TYPE, 
+          EXT_SERIAL_ID, 
+          STAFF_ID, 
+          ORG_ID, 
+          AMOUNT, 
+          CREATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="businessRecId != null ">
+        BUSINESS_REC_ID = #{businessRecId, jdbcType=BIGINT }
+      </if>
+      <if test="businessType != null ">
+        and BUSINESS_TYPE = #{businessType, jdbcType=INTEGER }
+      </if>
+      <if test="extSerialId != null and extSerialId != ''">
+        and EXT_SERIAL_ID = #{extSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BusinessRecordDO" resultType="java.lang.Integer">
+      select count(*) from BUSINESS_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BUSINESS_RECORD
+        where 
+           BUSINESS_REC_ID = #{businessRecId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BUSINESS_RECORD 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="businessRecId">
+      insert into  BUSINESS_RECORD ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{businessType,jdbcType=INTEGER}, 
+        #{extSerialId,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BUSINESS_RECORD ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{businessRecId,jdbcType=BIGINT}, 
+        #{businessType,jdbcType=INTEGER}, 
+        #{extSerialId,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BUSINESS_RECORD  
+        where
+           BUSINESS_REC_ID = #{businessRecId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BUSINESS_RECORD
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BUSINESS_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="businessType != null">
+         BUSINESS_TYPE = #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="extSerialId != null">
+         EXT_SERIAL_ID = #{extSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           BUSINESS_REC_ID = #{businessRecId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BUSINESS_RECORD
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.businessRecId != null">
+        BUSINESS_REC_ID = #{record.businessRecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessType != null">
+        BUSINESS_TYPE = #{record.businessType,jdbcType=INTEGER},
+      </if>
+      <if test="record.extSerialId != null">
+        EXT_SERIAL_ID = #{record.extSerialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.businessRecId != null ">
+        BUSINESS_REC_ID = #{condition.businessRecId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.businessType != null ">
+        and BUSINESS_TYPE = #{condition.businessType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.extSerialId != null and condition.extSerialId != ''">
+        and EXT_SERIAL_ID = #{condition.extSerialId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

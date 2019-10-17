@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.CreditRulMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.CreditRulDO">
+    <id column="CREDIT_RUL_ID" jdbcType="BIGINT" property="creditRulId"/>
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName"/>
+    <result column="RESULT_TYPE" jdbcType="VARCHAR" property="resultType"/>
+    <result column="RESULT" jdbcType="VARCHAR" property="result"/>
+    <result column="RESULT_EXP_ID" jdbcType="BIGINT" property="resultExpId"/>
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CREDIT_RUL_ID, 
+          RULE_NAME, 
+          RESULT_TYPE, 
+          RESULT, 
+          RESULT_EXP_ID, 
+          DESCRIPTION, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          APPLY_REGION_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RULE_NAME, 
+          RESULT_TYPE, 
+          RESULT, 
+          RESULT_EXP_ID, 
+          DESCRIPTION, 
+          REMARK, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          APPLY_REGION_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="creditRulId != null ">
+        CREDIT_RUL_ID = #{creditRulId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleName != null and ruleName != ''">
+        and RULE_NAME = #{ruleName, jdbcType=VARCHAR }
+      </if>
+      <if test="resultType != null and resultType != ''">
+        and RESULT_TYPE = #{resultType, jdbcType=VARCHAR }
+      </if>
+      <if test="result != null and result != ''">
+        and RESULT = #{result, jdbcType=VARCHAR }
+      </if>
+      <if test="resultExpId != null ">
+        and RESULT_EXP_ID = #{resultExpId, jdbcType=BIGINT }
+      </if>
+      <if test="description != null and description != ''">
+        and DESCRIPTION = #{description, jdbcType=VARCHAR }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.CreditRulDO" resultType="java.lang.Integer">
+      select count(*) from CREDIT_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CREDIT_RUL
+        where 
+           CREDIT_RUL_ID = #{creditRulId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CREDIT_RUL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="creditRulId">
+      insert into  CREDIT_RUL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ruleName,jdbcType=VARCHAR}, 
+        #{resultType,jdbcType=VARCHAR}, 
+        #{result,jdbcType=VARCHAR}, 
+        #{resultExpId,jdbcType=BIGINT}, 
+        #{description,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CREDIT_RUL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{creditRulId,jdbcType=BIGINT}, 
+        #{ruleName,jdbcType=VARCHAR}, 
+        #{resultType,jdbcType=VARCHAR}, 
+        #{result,jdbcType=VARCHAR}, 
+        #{resultExpId,jdbcType=BIGINT}, 
+        #{description,jdbcType=VARCHAR}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{applyRegionId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CREDIT_RUL  
+        where
+           CREDIT_RUL_ID = #{creditRulId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CREDIT_RUL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CREDIT_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ruleName != null">
+         RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="resultType != null">
+         RESULT_TYPE = #{resultType,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+         RESULT = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="resultExpId != null">
+         RESULT_EXP_ID = #{resultExpId,jdbcType=BIGINT},
+      </if>
+      <if test="description != null">
+         DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           CREDIT_RUL_ID = #{creditRulId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CREDIT_RUL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.creditRulId != null">
+        CREDIT_RUL_ID = #{record.creditRulId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleName != null">
+        RULE_NAME = #{record.ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultType != null">
+        RESULT_TYPE = #{record.resultType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.result != null">
+        RESULT = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultExpId != null">
+        RESULT_EXP_ID = #{record.resultExpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.creditRulId != null ">
+        CREDIT_RUL_ID = #{condition.creditRulId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleName != null and condition.ruleName != ''">
+        and RULE_NAME = #{condition.ruleName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.resultType != null and condition.resultType != ''">
+        and RESULT_TYPE = #{condition.resultType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.result != null and condition.result != ''">
+        and RESULT = #{condition.result, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.resultExpId != null ">
+        and RESULT_EXP_ID = #{condition.resultExpId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.description != null and condition.description != ''">
+        and DESCRIPTION = #{condition.description, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

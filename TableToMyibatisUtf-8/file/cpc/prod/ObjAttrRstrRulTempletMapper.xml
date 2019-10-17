@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ObjAttrRstrRulTempletMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ObjAttrRstrRulTempletDO">
+    <id column="ATTR_RSTR_TEMP_ID" jdbcType="BIGINT" property="attrRstrTempId"/>
+    <result column="RULE_TYPE" jdbcType="VARCHAR" property="ruleType"/>
+    <result column="REL_OBJ_TYPE" jdbcType="VARCHAR" property="relObjType"/>
+    <result column="A_OBJ_TYPE" jdbcType="VARCHAR" property="aObjType"/>
+    <result column="A_ATTR_TYPE" jdbcType="VARCHAR" property="aAttrType"/>
+    <result column="A_SERVER_OFFER_ID" jdbcType="VARCHAR" property="aServerOfferId"/>
+    <result column="Z_OBJ_TYPE" jdbcType="VARCHAR" property="zObjType"/>
+    <result column="Z_ATTR_TYPE" jdbcType="VARCHAR" property="zAttrType"/>
+    <result column="Z_SERVER_OFFER_ID" jdbcType="VARCHAR" property="zServerOfferId"/>
+    <result column="RESTRICT_TYPE" jdbcType="VARCHAR" property="restrictType"/>
+    <result column="DIRECTION" jdbcType="VARCHAR" property="direction"/>
+    <result column="RULE_PROMPT" jdbcType="VARCHAR" property="rulePrompt"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ATTR_RSTR_TEMP_ID, 
+          RULE_TYPE, 
+          REL_OBJ_TYPE, 
+          A_OBJ_TYPE, 
+          A_ATTR_TYPE, 
+          A_SERVER_OFFER_ID, 
+          Z_OBJ_TYPE, 
+          Z_ATTR_TYPE, 
+          Z_SERVER_OFFER_ID, 
+          RESTRICT_TYPE, 
+          DIRECTION, 
+          RULE_PROMPT, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RULE_TYPE, 
+          REL_OBJ_TYPE, 
+          A_OBJ_TYPE, 
+          A_ATTR_TYPE, 
+          A_SERVER_OFFER_ID, 
+          Z_OBJ_TYPE, 
+          Z_ATTR_TYPE, 
+          Z_SERVER_OFFER_ID, 
+          RESTRICT_TYPE, 
+          DIRECTION, 
+          RULE_PROMPT, 
+          STATUS_CD, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="attrRstrTempId != null ">
+        ATTR_RSTR_TEMP_ID = #{attrRstrTempId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleType != null and ruleType != ''">
+        and RULE_TYPE = #{ruleType, jdbcType=VARCHAR }
+      </if>
+      <if test="relObjType != null and relObjType != ''">
+        and REL_OBJ_TYPE = #{relObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="aObjType != null and aObjType != ''">
+        and A_OBJ_TYPE = #{aObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="aAttrType != null and aAttrType != ''">
+        and A_ATTR_TYPE = #{aAttrType, jdbcType=VARCHAR }
+      </if>
+      <if test="aServerOfferId != null and aServerOfferId != ''">
+        and A_SERVER_OFFER_ID = #{aServerOfferId, jdbcType=VARCHAR }
+      </if>
+      <if test="zObjType != null and zObjType != ''">
+        and Z_OBJ_TYPE = #{zObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="zAttrType != null and zAttrType != ''">
+        and Z_ATTR_TYPE = #{zAttrType, jdbcType=VARCHAR }
+      </if>
+      <if test="zServerOfferId != null and zServerOfferId != ''">
+        and Z_SERVER_OFFER_ID = #{zServerOfferId, jdbcType=VARCHAR }
+      </if>
+      <if test="restrictType != null and restrictType != ''">
+        and RESTRICT_TYPE = #{restrictType, jdbcType=VARCHAR }
+      </if>
+      <if test="direction != null and direction != ''">
+        and DIRECTION = #{direction, jdbcType=VARCHAR }
+      </if>
+      <if test="rulePrompt != null and rulePrompt != ''">
+        and RULE_PROMPT = #{rulePrompt, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ObjAttrRstrRulTempletDO" resultType="java.lang.Integer">
+      select count(*) from OBJ_ATTR_RSTR_RUL_TEMPLET
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from OBJ_ATTR_RSTR_RUL_TEMPLET
+        where 
+           ATTR_RSTR_TEMP_ID = #{attrRstrTempId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  OBJ_ATTR_RSTR_RUL_TEMPLET 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="attrRstrTempId">
+      insert into  OBJ_ATTR_RSTR_RUL_TEMPLET ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ruleType,jdbcType=VARCHAR}, 
+        #{relObjType,jdbcType=VARCHAR}, 
+        #{aObjType,jdbcType=VARCHAR}, 
+        #{aAttrType,jdbcType=VARCHAR}, 
+        #{aServerOfferId,jdbcType=VARCHAR}, 
+        #{zObjType,jdbcType=VARCHAR}, 
+        #{zAttrType,jdbcType=VARCHAR}, 
+        #{zServerOfferId,jdbcType=VARCHAR}, 
+        #{restrictType,jdbcType=VARCHAR}, 
+        #{direction,jdbcType=VARCHAR}, 
+        #{rulePrompt,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  OBJ_ATTR_RSTR_RUL_TEMPLET ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{attrRstrTempId,jdbcType=BIGINT}, 
+        #{ruleType,jdbcType=VARCHAR}, 
+        #{relObjType,jdbcType=VARCHAR}, 
+        #{aObjType,jdbcType=VARCHAR}, 
+        #{aAttrType,jdbcType=VARCHAR}, 
+        #{aServerOfferId,jdbcType=VARCHAR}, 
+        #{zObjType,jdbcType=VARCHAR}, 
+        #{zAttrType,jdbcType=VARCHAR}, 
+        #{zServerOfferId,jdbcType=VARCHAR}, 
+        #{restrictType,jdbcType=VARCHAR}, 
+        #{direction,jdbcType=VARCHAR}, 
+        #{rulePrompt,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from OBJ_ATTR_RSTR_RUL_TEMPLET  
+        where
+           ATTR_RSTR_TEMP_ID = #{attrRstrTempId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from OBJ_ATTR_RSTR_RUL_TEMPLET
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  OBJ_ATTR_RSTR_RUL_TEMPLET
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ruleType != null">
+         RULE_TYPE = #{ruleType,jdbcType=VARCHAR},
+      </if>
+      <if test="relObjType != null">
+         REL_OBJ_TYPE = #{relObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="aObjType != null">
+         A_OBJ_TYPE = #{aObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="aAttrType != null">
+         A_ATTR_TYPE = #{aAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="aServerOfferId != null">
+         A_SERVER_OFFER_ID = #{aServerOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="zObjType != null">
+         Z_OBJ_TYPE = #{zObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="zAttrType != null">
+         Z_ATTR_TYPE = #{zAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="zServerOfferId != null">
+         Z_SERVER_OFFER_ID = #{zServerOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="restrictType != null">
+         RESTRICT_TYPE = #{restrictType,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null">
+         DIRECTION = #{direction,jdbcType=VARCHAR},
+      </if>
+      <if test="rulePrompt != null">
+         RULE_PROMPT = #{rulePrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ATTR_RSTR_TEMP_ID = #{attrRstrTempId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update OBJ_ATTR_RSTR_RUL_TEMPLET
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.attrRstrTempId != null">
+        ATTR_RSTR_TEMP_ID = #{record.attrRstrTempId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleType != null">
+        RULE_TYPE = #{record.ruleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relObjType != null">
+        REL_OBJ_TYPE = #{record.relObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aObjType != null">
+        A_OBJ_TYPE = #{record.aObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aAttrType != null">
+        A_ATTR_TYPE = #{record.aAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aServerOfferId != null">
+        A_SERVER_OFFER_ID = #{record.aServerOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zObjType != null">
+        Z_OBJ_TYPE = #{record.zObjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zAttrType != null">
+        Z_ATTR_TYPE = #{record.zAttrType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zServerOfferId != null">
+        Z_SERVER_OFFER_ID = #{record.zServerOfferId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.restrictType != null">
+        RESTRICT_TYPE = #{record.restrictType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.direction != null">
+        DIRECTION = #{record.direction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rulePrompt != null">
+        RULE_PROMPT = #{record.rulePrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.attrRstrTempId != null ">
+        ATTR_RSTR_TEMP_ID = #{condition.attrRstrTempId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleType != null and condition.ruleType != ''">
+        and RULE_TYPE = #{condition.ruleType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.relObjType != null and condition.relObjType != ''">
+        and REL_OBJ_TYPE = #{condition.relObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.aObjType != null and condition.aObjType != ''">
+        and A_OBJ_TYPE = #{condition.aObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.aAttrType != null and condition.aAttrType != ''">
+        and A_ATTR_TYPE = #{condition.aAttrType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.aServerOfferId != null and condition.aServerOfferId != ''">
+        and A_SERVER_OFFER_ID = #{condition.aServerOfferId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.zObjType != null and condition.zObjType != ''">
+        and Z_OBJ_TYPE = #{condition.zObjType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.zAttrType != null and condition.zAttrType != ''">
+        and Z_ATTR_TYPE = #{condition.zAttrType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.zServerOfferId != null and condition.zServerOfferId != ''">
+        and Z_SERVER_OFFER_ID = #{condition.zServerOfferId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.restrictType != null and condition.restrictType != ''">
+        and RESTRICT_TYPE = #{condition.restrictType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.direction != null and condition.direction != ''">
+        and DIRECTION = #{condition.direction, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.rulePrompt != null and condition.rulePrompt != ''">
+        and RULE_PROMPT = #{condition.rulePrompt, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

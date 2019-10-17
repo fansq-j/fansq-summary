@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SystemUserMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SystemUserDO">
+    <id column="SYS_USER_ID" jdbcType="BIGINT" property="sysUserId"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="SYS_USER_CODE" jdbcType="VARCHAR" property="sysUserCode"/>
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+    <result column="PWD_ERR_CNT" jdbcType="INTEGER" property="pwdErrCnt"/>
+    <result column="PWD_SMS_TEL" jdbcType="BIGINT" property="pwdSmsTel"/>
+    <result column="PWD_STATUS" jdbcType="VARCHAR" property="pwdStatus"/>
+    <result column="PWD_NEWTIME" jdbcType="TIMESTAMP" property="pwdNewtime"/>
+    <result column="PWD_EFFECT_DAYS" jdbcType="INTEGER" property="pwdEffectDays"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="SYSTEM_INFO_ID" jdbcType="BIGINT" property="systemInfoId"/>
+    <result column="LIMIT_COUNT" jdbcType="INTEGER" property="limitCount"/>
+    <result column="LOGINED_NUM" jdbcType="INTEGER" property="loginedNum"/>
+    <result column="SYS_USER_DESC" jdbcType="VARCHAR" property="sysUserDesc"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SYS_USER_ID, 
+          STAFF_ID, 
+          SYS_USER_CODE, 
+          PASSWORD, 
+          PWD_ERR_CNT, 
+          PWD_SMS_TEL, 
+          PWD_STATUS, 
+          PWD_NEWTIME, 
+          PWD_EFFECT_DAYS, 
+          REGION_ID, 
+          SYSTEM_INFO_ID, 
+          LIMIT_COUNT, 
+          LOGINED_NUM, 
+          SYS_USER_DESC, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          STAFF_ID, 
+          SYS_USER_CODE, 
+          PASSWORD, 
+          PWD_ERR_CNT, 
+          PWD_SMS_TEL, 
+          PWD_STATUS, 
+          PWD_NEWTIME, 
+          PWD_EFFECT_DAYS, 
+          REGION_ID, 
+          SYSTEM_INFO_ID, 
+          LIMIT_COUNT, 
+          LOGINED_NUM, 
+          SYS_USER_DESC, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="sysUserId != null ">
+        SYS_USER_ID = #{sysUserId, jdbcType=BIGINT }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="sysUserCode != null and sysUserCode != ''">
+        and SYS_USER_CODE = #{sysUserCode, jdbcType=VARCHAR }
+      </if>
+      <if test="password != null and password != ''">
+        and PASSWORD = #{password, jdbcType=VARCHAR }
+      </if>
+      <if test="pwdErrCnt != null ">
+        and PWD_ERR_CNT = #{pwdErrCnt, jdbcType=INTEGER }
+      </if>
+      <if test="pwdSmsTel != null ">
+        and PWD_SMS_TEL = #{pwdSmsTel, jdbcType=BIGINT }
+      </if>
+      <if test="pwdStatus != null and pwdStatus != ''">
+        and PWD_STATUS = #{pwdStatus, jdbcType=VARCHAR }
+      </if>
+      <if test="pwdNewtime != null ">
+        and PWD_NEWTIME = #{pwdNewtime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="pwdEffectDays != null ">
+        and PWD_EFFECT_DAYS = #{pwdEffectDays, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="limitCount != null ">
+        and LIMIT_COUNT = #{limitCount, jdbcType=INTEGER }
+      </if>
+      <if test="loginedNum != null ">
+        and LOGINED_NUM = #{loginedNum, jdbcType=INTEGER }
+      </if>
+      <if test="sysUserDesc != null and sysUserDesc != ''">
+        and SYS_USER_DESC = #{sysUserDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SystemUserDO" resultType="java.lang.Integer">
+      select count(*) from SYSTEM_USER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SYSTEM_USER
+        where 
+           SYS_USER_ID = #{sysUserId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SYSTEM_USER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="sysUserId">
+      insert into  SYSTEM_USER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{staffId,jdbcType=BIGINT}, 
+        #{sysUserCode,jdbcType=VARCHAR}, 
+        #{password,jdbcType=VARCHAR}, 
+        #{pwdErrCnt,jdbcType=INTEGER}, 
+        #{pwdSmsTel,jdbcType=BIGINT}, 
+        #{pwdStatus,jdbcType=VARCHAR}, 
+        #{pwdNewtime,jdbcType=TIMESTAMP}, 
+        #{pwdEffectDays,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{limitCount,jdbcType=INTEGER}, 
+        #{loginedNum,jdbcType=INTEGER}, 
+        #{sysUserDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SYSTEM_USER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{sysUserId,jdbcType=BIGINT}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{sysUserCode,jdbcType=VARCHAR}, 
+        #{password,jdbcType=VARCHAR}, 
+        #{pwdErrCnt,jdbcType=INTEGER}, 
+        #{pwdSmsTel,jdbcType=BIGINT}, 
+        #{pwdStatus,jdbcType=VARCHAR}, 
+        #{pwdNewtime,jdbcType=TIMESTAMP}, 
+        #{pwdEffectDays,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{systemInfoId,jdbcType=BIGINT}, 
+        #{limitCount,jdbcType=INTEGER}, 
+        #{loginedNum,jdbcType=INTEGER}, 
+        #{sysUserDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SYSTEM_USER  
+        where
+           SYS_USER_ID = #{sysUserId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SYSTEM_USER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SYSTEM_USER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="sysUserCode != null">
+         SYS_USER_CODE = #{sysUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+         PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdErrCnt != null">
+         PWD_ERR_CNT = #{pwdErrCnt,jdbcType=INTEGER},
+      </if>
+      <if test="pwdSmsTel != null">
+         PWD_SMS_TEL = #{pwdSmsTel,jdbcType=BIGINT},
+      </if>
+      <if test="pwdStatus != null">
+         PWD_STATUS = #{pwdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdNewtime != null">
+         PWD_NEWTIME = #{pwdNewtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pwdEffectDays != null">
+         PWD_EFFECT_DAYS = #{pwdEffectDays,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="systemInfoId != null">
+         SYSTEM_INFO_ID = #{systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="limitCount != null">
+         LIMIT_COUNT = #{limitCount,jdbcType=INTEGER},
+      </if>
+      <if test="loginedNum != null">
+         LOGINED_NUM = #{loginedNum,jdbcType=INTEGER},
+      </if>
+      <if test="sysUserDesc != null">
+         SYS_USER_DESC = #{sysUserDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           SYS_USER_ID = #{sysUserId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SYSTEM_USER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.sysUserId != null">
+        SYS_USER_ID = #{record.sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysUserCode != null">
+        SYS_USER_CODE = #{record.sysUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwdErrCnt != null">
+        PWD_ERR_CNT = #{record.pwdErrCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.pwdSmsTel != null">
+        PWD_SMS_TEL = #{record.pwdSmsTel,jdbcType=BIGINT},
+      </if>
+      <if test="record.pwdStatus != null">
+        PWD_STATUS = #{record.pwdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwdNewtime != null">
+        PWD_NEWTIME = #{record.pwdNewtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pwdEffectDays != null">
+        PWD_EFFECT_DAYS = #{record.pwdEffectDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.systemInfoId != null">
+        SYSTEM_INFO_ID = #{record.systemInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.limitCount != null">
+        LIMIT_COUNT = #{record.limitCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginedNum != null">
+        LOGINED_NUM = #{record.loginedNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysUserDesc != null">
+        SYS_USER_DESC = #{record.sysUserDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.sysUserId != null ">
+        SYS_USER_ID = #{condition.sysUserId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sysUserCode != null and condition.sysUserCode != ''">
+        and SYS_USER_CODE = #{condition.sysUserCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.password != null and condition.password != ''">
+        and PASSWORD = #{condition.password, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pwdErrCnt != null ">
+        and PWD_ERR_CNT = #{condition.pwdErrCnt, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pwdSmsTel != null ">
+        and PWD_SMS_TEL = #{condition.pwdSmsTel, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pwdStatus != null and condition.pwdStatus != ''">
+        and PWD_STATUS = #{condition.pwdStatus, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pwdNewtime != null ">
+        and PWD_NEWTIME = #{condition.pwdNewtime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.pwdEffectDays != null ">
+        and PWD_EFFECT_DAYS = #{condition.pwdEffectDays, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.systemInfoId != null ">
+        and SYSTEM_INFO_ID = #{condition.systemInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.limitCount != null ">
+        and LIMIT_COUNT = #{condition.limitCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.loginedNum != null ">
+        and LOGINED_NUM = #{condition.loginedNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.sysUserDesc != null and condition.sysUserDesc != ''">
+        and SYS_USER_DESC = #{condition.sysUserDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

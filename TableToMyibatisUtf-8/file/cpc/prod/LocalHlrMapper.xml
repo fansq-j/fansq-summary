@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.LocalHlrMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.LocalHlrDO">
+    <id column="HLR_ID" jdbcType="INTEGER" property="hlrId"/>
+    <result column="HLR_NAME" jdbcType="VARCHAR" property="hlrName"/>
+    <result column="HLR_TYPE" jdbcType="VARCHAR" property="hlrType"/>
+    <result column="HLR_NBR" jdbcType="VARCHAR" property="hlrNbr"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          HLR_ID, 
+          HLR_NAME, 
+          HLR_TYPE, 
+          HLR_NBR, 
+          REGION_ID, 
+          LAN_ID, 
+          REMARK, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          HLR_NAME, 
+          HLR_TYPE, 
+          HLR_NBR, 
+          REGION_ID, 
+          LAN_ID, 
+          REMARK, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="hlrId != null ">
+        HLR_ID = #{hlrId, jdbcType=INTEGER }
+      </if>
+      <if test="hlrName != null and hlrName != ''">
+        and HLR_NAME = #{hlrName, jdbcType=VARCHAR }
+      </if>
+      <if test="hlrType != null and hlrType != ''">
+        and HLR_TYPE = #{hlrType, jdbcType=VARCHAR }
+      </if>
+      <if test="hlrNbr != null and hlrNbr != ''">
+        and HLR_NBR = #{hlrNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.LocalHlrDO" resultType="java.lang.Integer">
+      select count(*) from LOCAL_HLR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from LOCAL_HLR
+        where 
+           HLR_ID = #{hlrId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  LOCAL_HLR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="hlrId">
+      insert into  LOCAL_HLR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{hlrName,jdbcType=VARCHAR}, 
+        #{hlrType,jdbcType=VARCHAR}, 
+        #{hlrNbr,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  LOCAL_HLR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{hlrId,jdbcType=INTEGER}, 
+        #{hlrName,jdbcType=VARCHAR}, 
+        #{hlrType,jdbcType=VARCHAR}, 
+        #{hlrNbr,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from LOCAL_HLR  
+        where
+           HLR_ID = #{hlrId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from LOCAL_HLR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  LOCAL_HLR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="hlrName != null">
+         HLR_NAME = #{hlrName,jdbcType=VARCHAR},
+      </if>
+      <if test="hlrType != null">
+         HLR_TYPE = #{hlrType,jdbcType=VARCHAR},
+      </if>
+      <if test="hlrNbr != null">
+         HLR_NBR = #{hlrNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           HLR_ID = #{hlrId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update LOCAL_HLR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.hlrId != null">
+        HLR_ID = #{record.hlrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.hlrName != null">
+        HLR_NAME = #{record.hlrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hlrType != null">
+        HLR_TYPE = #{record.hlrType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hlrNbr != null">
+        HLR_NBR = #{record.hlrNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.hlrId != null ">
+        HLR_ID = #{condition.hlrId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.hlrName != null and condition.hlrName != ''">
+        and HLR_NAME = #{condition.hlrName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.hlrType != null and condition.hlrType != ''">
+        and HLR_TYPE = #{condition.hlrType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.hlrNbr != null and condition.hlrNbr != ''">
+        and HLR_NBR = #{condition.hlrNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

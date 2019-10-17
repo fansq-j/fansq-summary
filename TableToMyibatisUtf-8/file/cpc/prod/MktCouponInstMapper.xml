@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.MktCouponInstMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.MktCouponInstDO">
+    <id column="COUPON_INST_ID" jdbcType="INTEGER" property="couponInstId"/>
+    <result column="COUPON_ID" jdbcType="INTEGER" property="couponId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          COUPON_INST_ID, 
+          COUPON_ID, 
+          ACCT_ID, 
+          CREATE_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          COUPON_ID, 
+          ACCT_ID, 
+          CREATE_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="couponInstId != null ">
+        COUPON_INST_ID = #{couponInstId, jdbcType=INTEGER }
+      </if>
+      <if test="couponId != null ">
+        and COUPON_ID = #{couponId, jdbcType=INTEGER }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.MktCouponInstDO" resultType="java.lang.Integer">
+      select count(*) from MKT_COUPON_INST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from MKT_COUPON_INST
+        where 
+           COUPON_INST_ID = #{couponInstId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  MKT_COUPON_INST 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="couponInstId">
+      insert into  MKT_COUPON_INST ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{couponId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  MKT_COUPON_INST ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{couponInstId,jdbcType=INTEGER}, 
+        #{couponId,jdbcType=INTEGER}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from MKT_COUPON_INST  
+        where
+           COUPON_INST_ID = #{couponInstId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from MKT_COUPON_INST
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  MKT_COUPON_INST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="couponId != null">
+         COUPON_ID = #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           COUPON_INST_ID = #{couponInstId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update MKT_COUPON_INST
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.couponInstId != null">
+        COUPON_INST_ID = #{record.couponInstId,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponId != null">
+        COUPON_ID = #{record.couponId,jdbcType=INTEGER},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.couponInstId != null ">
+        COUPON_INST_ID = #{condition.couponInstId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.couponId != null ">
+        and COUPON_ID = #{condition.couponId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BatchTaskMqMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BatchTaskMqDO">
+    <id column="BATCH_TASK_MQ_ID" jdbcType="BIGINT" property="batchTaskMqId"/>
+    <result column="BATCH_TASK_ID" jdbcType="BIGINT" property="batchTaskId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="MQ_TYPE" jdbcType="VARCHAR" property="mqType"/>
+    <result column="MQ_CONTENT_ID" jdbcType="BIGINT" property="mqContentId"/>
+    <result column="STATUS_NUM" jdbcType="INTEGER" property="statusNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BATCH_TASK_MQ_ID, 
+          BATCH_TASK_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          MQ_TYPE, 
+          MQ_CONTENT_ID, 
+          STATUS_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          BATCH_TASK_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          MQ_TYPE, 
+          MQ_CONTENT_ID, 
+          STATUS_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="batchTaskMqId != null ">
+        BATCH_TASK_MQ_ID = #{batchTaskMqId, jdbcType=BIGINT }
+      </if>
+      <if test="batchTaskId != null ">
+        and BATCH_TASK_ID = #{batchTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="mqType != null and mqType != ''">
+        and MQ_TYPE = #{mqType, jdbcType=VARCHAR }
+      </if>
+      <if test="mqContentId != null ">
+        and MQ_CONTENT_ID = #{mqContentId, jdbcType=BIGINT }
+      </if>
+      <if test="statusNum != null ">
+        and STATUS_NUM = #{statusNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BatchTaskMqDO" resultType="java.lang.Integer">
+      select count(*) from BATCH_TASK_MQ
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BATCH_TASK_MQ
+        where 
+           BATCH_TASK_MQ_ID = #{batchTaskMqId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BATCH_TASK_MQ 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="batchTaskMqId">
+      insert into  BATCH_TASK_MQ ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{batchTaskId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{mqType,jdbcType=VARCHAR}, 
+        #{mqContentId,jdbcType=BIGINT}, 
+        #{statusNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BATCH_TASK_MQ ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{batchTaskMqId,jdbcType=BIGINT}, 
+        #{batchTaskId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{mqType,jdbcType=VARCHAR}, 
+        #{mqContentId,jdbcType=BIGINT}, 
+        #{statusNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BATCH_TASK_MQ  
+        where
+           BATCH_TASK_MQ_ID = #{batchTaskMqId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BATCH_TASK_MQ
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BATCH_TASK_MQ
+    <trim prefix="set" suffixOverrides=",">
+      <if test="batchTaskId != null">
+         BATCH_TASK_ID = #{batchTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="mqType != null">
+         MQ_TYPE = #{mqType,jdbcType=VARCHAR},
+      </if>
+      <if test="mqContentId != null">
+         MQ_CONTENT_ID = #{mqContentId,jdbcType=BIGINT},
+      </if>
+      <if test="statusNum != null">
+         STATUS_NUM = #{statusNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           BATCH_TASK_MQ_ID = #{batchTaskMqId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BATCH_TASK_MQ
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.batchTaskMqId != null">
+        BATCH_TASK_MQ_ID = #{record.batchTaskMqId,jdbcType=BIGINT},
+      </if>
+      <if test="record.batchTaskId != null">
+        BATCH_TASK_ID = #{record.batchTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mqType != null">
+        MQ_TYPE = #{record.mqType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mqContentId != null">
+        MQ_CONTENT_ID = #{record.mqContentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusNum != null">
+        STATUS_NUM = #{record.statusNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.batchTaskMqId != null ">
+        BATCH_TASK_MQ_ID = #{condition.batchTaskMqId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.batchTaskId != null ">
+        and BATCH_TASK_ID = #{condition.batchTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.mqType != null and condition.mqType != ''">
+        and MQ_TYPE = #{condition.mqType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mqContentId != null ">
+        and MQ_CONTENT_ID = #{condition.mqContentId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusNum != null ">
+        and STATUS_NUM = #{condition.statusNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PlcaAccumTransformRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PlcaAccumTransformRuleDO">
+    <id column="RULE_ID" jdbcType="INTEGER" property="ruleId"/>
+    <result column="RULE_TYPE" jdbcType="INTEGER" property="ruleType"/>
+    <result column="SRC_OBJECT_TYPE" jdbcType="INTEGER" property="srcObjectType"/>
+    <result column="SRC_OBJECT_ID" jdbcType="INTEGER" property="srcObjectId"/>
+    <result column="SRC_ACCUM_TYPE_ID" jdbcType="INTEGER" property="srcAccumTypeId"/>
+    <result column="DEST_OBJECT_TYPE" jdbcType="INTEGER" property="destObjectType"/>
+    <result column="DEST_OBJECT_ID" jdbcType="INTEGER" property="destObjectId"/>
+    <result column="DEST_ACCUM_TYPE_ID" jdbcType="INTEGER" property="destAccumTypeId"/>
+    <result column="DEST_PRICING_PLAN_ID" jdbcType="INTEGER" property="destPricingPlanId"/>
+    <result column="ACCUM_EXPRESS_ID" jdbcType="INTEGER" property="accumExpressId"/>
+    <result column="ACTION_ID" jdbcType="INTEGER" property="actionId"/>
+    <result column="FIRST_EFF_DATE_TYPE" jdbcType="INTEGER" property="firstEffDateType"/>
+    <result column="RATABLE_CYCLE_ID" jdbcType="INTEGER" property="ratableCycleId"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName"/>
+    <result column="RULE_DESC" jdbcType="VARCHAR" property="ruleDesc"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RULE_ID, 
+          RULE_TYPE, 
+          SRC_OBJECT_TYPE, 
+          SRC_OBJECT_ID, 
+          SRC_ACCUM_TYPE_ID, 
+          DEST_OBJECT_TYPE, 
+          DEST_OBJECT_ID, 
+          DEST_ACCUM_TYPE_ID, 
+          DEST_PRICING_PLAN_ID, 
+          ACCUM_EXPRESS_ID, 
+          ACTION_ID, 
+          FIRST_EFF_DATE_TYPE, 
+          RATABLE_CYCLE_ID, 
+          PRIORITY, 
+          RULE_NAME, 
+          RULE_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RULE_TYPE, 
+          SRC_OBJECT_TYPE, 
+          SRC_OBJECT_ID, 
+          SRC_ACCUM_TYPE_ID, 
+          DEST_OBJECT_TYPE, 
+          DEST_OBJECT_ID, 
+          DEST_ACCUM_TYPE_ID, 
+          DEST_PRICING_PLAN_ID, 
+          ACCUM_EXPRESS_ID, 
+          ACTION_ID, 
+          FIRST_EFF_DATE_TYPE, 
+          RATABLE_CYCLE_ID, 
+          PRIORITY, 
+          RULE_NAME, 
+          RULE_DESC, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="ruleId != null ">
+        RULE_ID = #{ruleId, jdbcType=INTEGER }
+      </if>
+      <if test="ruleType != null ">
+        and RULE_TYPE = #{ruleType, jdbcType=INTEGER }
+      </if>
+      <if test="srcObjectType != null ">
+        and SRC_OBJECT_TYPE = #{srcObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="srcObjectId != null ">
+        and SRC_OBJECT_ID = #{srcObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="srcAccumTypeId != null ">
+        and SRC_ACCUM_TYPE_ID = #{srcAccumTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="destObjectType != null ">
+        and DEST_OBJECT_TYPE = #{destObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="destObjectId != null ">
+        and DEST_OBJECT_ID = #{destObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="destAccumTypeId != null ">
+        and DEST_ACCUM_TYPE_ID = #{destAccumTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="destPricingPlanId != null ">
+        and DEST_PRICING_PLAN_ID = #{destPricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="accumExpressId != null ">
+        and ACCUM_EXPRESS_ID = #{accumExpressId, jdbcType=INTEGER }
+      </if>
+      <if test="actionId != null ">
+        and ACTION_ID = #{actionId, jdbcType=INTEGER }
+      </if>
+      <if test="firstEffDateType != null ">
+        and FIRST_EFF_DATE_TYPE = #{firstEffDateType, jdbcType=INTEGER }
+      </if>
+      <if test="ratableCycleId != null ">
+        and RATABLE_CYCLE_ID = #{ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="ruleName != null and ruleName != ''">
+        and RULE_NAME = #{ruleName, jdbcType=VARCHAR }
+      </if>
+      <if test="ruleDesc != null and ruleDesc != ''">
+        and RULE_DESC = #{ruleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PlcaAccumTransformRuleDO" resultType="java.lang.Integer">
+      select count(*) from PLCA_ACCUM_TRANSFORM_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PLCA_ACCUM_TRANSFORM_RULE
+        where 
+           RULE_ID = #{ruleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PLCA_ACCUM_TRANSFORM_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="ruleId">
+      insert into  PLCA_ACCUM_TRANSFORM_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ruleType,jdbcType=INTEGER}, 
+        #{srcObjectType,jdbcType=INTEGER}, 
+        #{srcObjectId,jdbcType=INTEGER}, 
+        #{srcAccumTypeId,jdbcType=INTEGER}, 
+        #{destObjectType,jdbcType=INTEGER}, 
+        #{destObjectId,jdbcType=INTEGER}, 
+        #{destAccumTypeId,jdbcType=INTEGER}, 
+        #{destPricingPlanId,jdbcType=INTEGER}, 
+        #{accumExpressId,jdbcType=INTEGER}, 
+        #{actionId,jdbcType=INTEGER}, 
+        #{firstEffDateType,jdbcType=INTEGER}, 
+        #{ratableCycleId,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{ruleName,jdbcType=VARCHAR}, 
+        #{ruleDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PLCA_ACCUM_TRANSFORM_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{ruleId,jdbcType=INTEGER}, 
+        #{ruleType,jdbcType=INTEGER}, 
+        #{srcObjectType,jdbcType=INTEGER}, 
+        #{srcObjectId,jdbcType=INTEGER}, 
+        #{srcAccumTypeId,jdbcType=INTEGER}, 
+        #{destObjectType,jdbcType=INTEGER}, 
+        #{destObjectId,jdbcType=INTEGER}, 
+        #{destAccumTypeId,jdbcType=INTEGER}, 
+        #{destPricingPlanId,jdbcType=INTEGER}, 
+        #{accumExpressId,jdbcType=INTEGER}, 
+        #{actionId,jdbcType=INTEGER}, 
+        #{firstEffDateType,jdbcType=INTEGER}, 
+        #{ratableCycleId,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{ruleName,jdbcType=VARCHAR}, 
+        #{ruleDesc,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PLCA_ACCUM_TRANSFORM_RULE  
+        where
+           RULE_ID = #{ruleId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PLCA_ACCUM_TRANSFORM_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PLCA_ACCUM_TRANSFORM_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ruleType != null">
+         RULE_TYPE = #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="srcObjectType != null">
+         SRC_OBJECT_TYPE = #{srcObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="srcObjectId != null">
+         SRC_OBJECT_ID = #{srcObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="srcAccumTypeId != null">
+         SRC_ACCUM_TYPE_ID = #{srcAccumTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="destObjectType != null">
+         DEST_OBJECT_TYPE = #{destObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="destObjectId != null">
+         DEST_OBJECT_ID = #{destObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="destAccumTypeId != null">
+         DEST_ACCUM_TYPE_ID = #{destAccumTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="destPricingPlanId != null">
+         DEST_PRICING_PLAN_ID = #{destPricingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="accumExpressId != null">
+         ACCUM_EXPRESS_ID = #{accumExpressId,jdbcType=INTEGER},
+      </if>
+      <if test="actionId != null">
+         ACTION_ID = #{actionId,jdbcType=INTEGER},
+      </if>
+      <if test="firstEffDateType != null">
+         FIRST_EFF_DATE_TYPE = #{firstEffDateType,jdbcType=INTEGER},
+      </if>
+      <if test="ratableCycleId != null">
+         RATABLE_CYCLE_ID = #{ratableCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="ruleName != null">
+         RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc != null">
+         RULE_DESC = #{ruleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           RULE_ID = #{ruleId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PLCA_ACCUM_TRANSFORM_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.ruleId != null">
+        RULE_ID = #{record.ruleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleType != null">
+        RULE_TYPE = #{record.ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.srcObjectType != null">
+        SRC_OBJECT_TYPE = #{record.srcObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.srcObjectId != null">
+        SRC_OBJECT_ID = #{record.srcObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.srcAccumTypeId != null">
+        SRC_ACCUM_TYPE_ID = #{record.srcAccumTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.destObjectType != null">
+        DEST_OBJECT_TYPE = #{record.destObjectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.destObjectId != null">
+        DEST_OBJECT_ID = #{record.destObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.destAccumTypeId != null">
+        DEST_ACCUM_TYPE_ID = #{record.destAccumTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.destPricingPlanId != null">
+        DEST_PRICING_PLAN_ID = #{record.destPricingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.accumExpressId != null">
+        ACCUM_EXPRESS_ID = #{record.accumExpressId,jdbcType=INTEGER},
+      </if>
+      <if test="record.actionId != null">
+        ACTION_ID = #{record.actionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.firstEffDateType != null">
+        FIRST_EFF_DATE_TYPE = #{record.firstEffDateType,jdbcType=INTEGER},
+      </if>
+      <if test="record.ratableCycleId != null">
+        RATABLE_CYCLE_ID = #{record.ratableCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleName != null">
+        RULE_NAME = #{record.ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleDesc != null">
+        RULE_DESC = #{record.ruleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.ruleId != null ">
+        RULE_ID = #{condition.ruleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ruleType != null ">
+        and RULE_TYPE = #{condition.ruleType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.srcObjectType != null ">
+        and SRC_OBJECT_TYPE = #{condition.srcObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.srcObjectId != null ">
+        and SRC_OBJECT_ID = #{condition.srcObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.srcAccumTypeId != null ">
+        and SRC_ACCUM_TYPE_ID = #{condition.srcAccumTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.destObjectType != null ">
+        and DEST_OBJECT_TYPE = #{condition.destObjectType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.destObjectId != null ">
+        and DEST_OBJECT_ID = #{condition.destObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.destAccumTypeId != null ">
+        and DEST_ACCUM_TYPE_ID = #{condition.destAccumTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.destPricingPlanId != null ">
+        and DEST_PRICING_PLAN_ID = #{condition.destPricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.accumExpressId != null ">
+        and ACCUM_EXPRESS_ID = #{condition.accumExpressId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.actionId != null ">
+        and ACTION_ID = #{condition.actionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.firstEffDateType != null ">
+        and FIRST_EFF_DATE_TYPE = #{condition.firstEffDateType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ratableCycleId != null ">
+        and RATABLE_CYCLE_ID = #{condition.ratableCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ruleName != null and condition.ruleName != ''">
+        and RULE_NAME = #{condition.ruleName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ruleDesc != null and condition.ruleDesc != ''">
+        and RULE_DESC = #{condition.ruleDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

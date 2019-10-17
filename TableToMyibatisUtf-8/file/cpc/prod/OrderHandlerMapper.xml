@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrderHandlerMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrderHandlerDO">
+    <id column="ORDER_HANDLER_ID" jdbcType="BIGINT" property="orderHandlerId"/>
+    <result column="CUST_ORDER_ID" jdbcType="BIGINT" property="custOrderId"/>
+    <result column="HANDLER" jdbcType="VARCHAR" property="handler"/>
+    <result column="CERT_TYPE" jdbcType="VARCHAR" property="certType"/>
+    <result column="CERT_NUM" jdbcType="VARCHAR" property="certNum"/>
+    <result column="HANDLER_PHONE" jdbcType="VARCHAR" property="handlerPhone"/>
+    <result column="CERT_INFO" jdbcType="CLOB" property="certInfo"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ORDER_HANDLER_ID, 
+          CUST_ORDER_ID, 
+          HANDLER, 
+          CERT_TYPE, 
+          CERT_NUM, 
+          HANDLER_PHONE, 
+          CERT_INFO, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CUST_ORDER_ID, 
+          HANDLER, 
+          CERT_TYPE, 
+          CERT_NUM, 
+          HANDLER_PHONE, 
+          CERT_INFO, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="orderHandlerId != null ">
+        ORDER_HANDLER_ID = #{orderHandlerId, jdbcType=BIGINT }
+      </if>
+      <if test="custOrderId != null ">
+        and CUST_ORDER_ID = #{custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="handler != null and handler != ''">
+        and HANDLER = #{handler, jdbcType=VARCHAR }
+      </if>
+      <if test="certType != null and certType != ''">
+        and CERT_TYPE = #{certType, jdbcType=VARCHAR }
+      </if>
+      <if test="certNum != null and certNum != ''">
+        and CERT_NUM = #{certNum, jdbcType=VARCHAR }
+      </if>
+      <if test="handlerPhone != null and handlerPhone != ''">
+        and HANDLER_PHONE = #{handlerPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="certInfo != null and certInfo != ''">
+        and CERT_INFO = #{certInfo, jdbcType=CLOB }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrderHandlerDO" resultType="java.lang.Integer">
+      select count(*) from ORDER_HANDLER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORDER_HANDLER
+        where 
+           ORDER_HANDLER_ID = #{orderHandlerId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORDER_HANDLER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="orderHandlerId">
+      insert into  ORDER_HANDLER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{handler,jdbcType=VARCHAR}, 
+        #{certType,jdbcType=VARCHAR}, 
+        #{certNum,jdbcType=VARCHAR}, 
+        #{handlerPhone,jdbcType=VARCHAR}, 
+        #{certInfo,jdbcType=CLOB}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORDER_HANDLER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{orderHandlerId,jdbcType=BIGINT}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{handler,jdbcType=VARCHAR}, 
+        #{certType,jdbcType=VARCHAR}, 
+        #{certNum,jdbcType=VARCHAR}, 
+        #{handlerPhone,jdbcType=VARCHAR}, 
+        #{certInfo,jdbcType=CLOB}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORDER_HANDLER  
+        where
+           ORDER_HANDLER_ID = #{orderHandlerId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORDER_HANDLER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORDER_HANDLER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="custOrderId != null">
+         CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="handler != null">
+         HANDLER = #{handler,jdbcType=VARCHAR},
+      </if>
+      <if test="certType != null">
+         CERT_TYPE = #{certType,jdbcType=VARCHAR},
+      </if>
+      <if test="certNum != null">
+         CERT_NUM = #{certNum,jdbcType=VARCHAR},
+      </if>
+      <if test="handlerPhone != null">
+         HANDLER_PHONE = #{handlerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="certInfo != null">
+         CERT_INFO = #{certInfo,jdbcType=CLOB},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ORDER_HANDLER_ID = #{orderHandlerId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORDER_HANDLER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.orderHandlerId != null">
+        ORDER_HANDLER_ID = #{record.orderHandlerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custOrderId != null">
+        CUST_ORDER_ID = #{record.custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.handler != null">
+        HANDLER = #{record.handler,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certType != null">
+        CERT_TYPE = #{record.certType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certNum != null">
+        CERT_NUM = #{record.certNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handlerPhone != null">
+        HANDLER_PHONE = #{record.handlerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certInfo != null">
+        CERT_INFO = #{record.certInfo,jdbcType=CLOB},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.orderHandlerId != null ">
+        ORDER_HANDLER_ID = #{condition.orderHandlerId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custOrderId != null ">
+        and CUST_ORDER_ID = #{condition.custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.handler != null and condition.handler != ''">
+        and HANDLER = #{condition.handler, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.certType != null and condition.certType != ''">
+        and CERT_TYPE = #{condition.certType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.certNum != null and condition.certNum != ''">
+        and CERT_NUM = #{condition.certNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.handlerPhone != null and condition.handlerPhone != ''">
+        and HANDLER_PHONE = #{condition.handlerPhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.certInfo != null and condition.certInfo != ''">
+        and CERT_INFO = #{condition.certInfo, jdbcType=CLOB }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

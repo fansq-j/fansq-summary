@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PlcaSectionMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PlcaSectionDO">
+    <id column="SECTION_ID" jdbcType="INTEGER" property="sectionId"/>
+    <result column="SECTION_NAME" jdbcType="VARCHAR" property="sectionName"/>
+    <result column="PARENT_SECTION_ID" jdbcType="INTEGER" property="parentSectionId"/>
+    <result column="STRATEGY_ID" jdbcType="INTEGER" property="strategyId"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="JUDGE_RESULT" jdbcType="INTEGER" property="judgeResult"/>
+    <result column="SECTION_TYPE" jdbcType="INTEGER" property="sectionType"/>
+    <result column="SUB_SECTION_REL" jdbcType="INTEGER" property="subSectionRel"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SECTION_ID, 
+          SECTION_NAME, 
+          PARENT_SECTION_ID, 
+          STRATEGY_ID, 
+          PRIORITY, 
+          JUDGE_RESULT, 
+          SECTION_TYPE, 
+          SUB_SECTION_REL, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SECTION_NAME, 
+          PARENT_SECTION_ID, 
+          STRATEGY_ID, 
+          PRIORITY, 
+          JUDGE_RESULT, 
+          SECTION_TYPE, 
+          SUB_SECTION_REL, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="sectionId != null ">
+        SECTION_ID = #{sectionId, jdbcType=INTEGER }
+      </if>
+      <if test="sectionName != null and sectionName != ''">
+        and SECTION_NAME = #{sectionName, jdbcType=VARCHAR }
+      </if>
+      <if test="parentSectionId != null ">
+        and PARENT_SECTION_ID = #{parentSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="strategyId != null ">
+        and STRATEGY_ID = #{strategyId, jdbcType=INTEGER }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="judgeResult != null ">
+        and JUDGE_RESULT = #{judgeResult, jdbcType=INTEGER }
+      </if>
+      <if test="sectionType != null ">
+        and SECTION_TYPE = #{sectionType, jdbcType=INTEGER }
+      </if>
+      <if test="subSectionRel != null ">
+        and SUB_SECTION_REL = #{subSectionRel, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PlcaSectionDO" resultType="java.lang.Integer">
+      select count(*) from PLCA_SECTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PLCA_SECTION
+        where 
+           SECTION_ID = #{sectionId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PLCA_SECTION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="sectionId">
+      insert into  PLCA_SECTION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{sectionName,jdbcType=VARCHAR}, 
+        #{parentSectionId,jdbcType=INTEGER}, 
+        #{strategyId,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{judgeResult,jdbcType=INTEGER}, 
+        #{sectionType,jdbcType=INTEGER}, 
+        #{subSectionRel,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PLCA_SECTION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{sectionId,jdbcType=INTEGER}, 
+        #{sectionName,jdbcType=VARCHAR}, 
+        #{parentSectionId,jdbcType=INTEGER}, 
+        #{strategyId,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{judgeResult,jdbcType=INTEGER}, 
+        #{sectionType,jdbcType=INTEGER}, 
+        #{subSectionRel,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PLCA_SECTION  
+        where
+           SECTION_ID = #{sectionId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PLCA_SECTION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PLCA_SECTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="sectionName != null">
+         SECTION_NAME = #{sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentSectionId != null">
+         PARENT_SECTION_ID = #{parentSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="strategyId != null">
+         STRATEGY_ID = #{strategyId,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="judgeResult != null">
+         JUDGE_RESULT = #{judgeResult,jdbcType=INTEGER},
+      </if>
+      <if test="sectionType != null">
+         SECTION_TYPE = #{sectionType,jdbcType=INTEGER},
+      </if>
+      <if test="subSectionRel != null">
+         SUB_SECTION_REL = #{subSectionRel,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           SECTION_ID = #{sectionId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PLCA_SECTION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.sectionId != null">
+        SECTION_ID = #{record.sectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sectionName != null">
+        SECTION_NAME = #{record.sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentSectionId != null">
+        PARENT_SECTION_ID = #{record.parentSectionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.strategyId != null">
+        STRATEGY_ID = #{record.strategyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.judgeResult != null">
+        JUDGE_RESULT = #{record.judgeResult,jdbcType=INTEGER},
+      </if>
+      <if test="record.sectionType != null">
+        SECTION_TYPE = #{record.sectionType,jdbcType=INTEGER},
+      </if>
+      <if test="record.subSectionRel != null">
+        SUB_SECTION_REL = #{record.subSectionRel,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.sectionId != null ">
+        SECTION_ID = #{condition.sectionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.sectionName != null and condition.sectionName != ''">
+        and SECTION_NAME = #{condition.sectionName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parentSectionId != null ">
+        and PARENT_SECTION_ID = #{condition.parentSectionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.strategyId != null ">
+        and STRATEGY_ID = #{condition.strategyId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.judgeResult != null ">
+        and JUDGE_RESULT = #{condition.judgeResult, jdbcType=INTEGER }
+      </if>
+      <if test="condition.sectionType != null ">
+        and SECTION_TYPE = #{condition.sectionType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.subSectionRel != null ">
+        and SUB_SECTION_REL = #{condition.subSectionRel, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

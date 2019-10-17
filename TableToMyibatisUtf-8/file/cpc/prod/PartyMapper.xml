@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PartyMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PartyDO">
+    <id column="PARTY_ID" jdbcType="INTEGER" property="partyId"/>
+    <result column="PARTY_NAME" jdbcType="VARCHAR" property="partyName"/>
+    <result column="PARTY_ABBRNAME" jdbcType="VARCHAR" property="partyAbbrname"/>
+    <result column="ENGLISH_NAME" jdbcType="VARCHAR" property="englishName"/>
+    <result column="PARTY_TYPE" jdbcType="VARCHAR" property="partyType"/>
+    <result column="EXT_PARTY_ID" jdbcType="VARCHAR" property="extPartyId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="INTEGER" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="INTEGER" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PARTY_ID, 
+          PARTY_NAME, 
+          PARTY_ABBRNAME, 
+          ENGLISH_NAME, 
+          PARTY_TYPE, 
+          EXT_PARTY_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PARTY_NAME, 
+          PARTY_ABBRNAME, 
+          ENGLISH_NAME, 
+          PARTY_TYPE, 
+          EXT_PARTY_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="partyId != null ">
+        PARTY_ID = #{partyId, jdbcType=INTEGER }
+      </if>
+      <if test="partyName != null and partyName != ''">
+        and PARTY_NAME = #{partyName, jdbcType=VARCHAR }
+      </if>
+      <if test="partyAbbrname != null and partyAbbrname != ''">
+        and PARTY_ABBRNAME = #{partyAbbrname, jdbcType=VARCHAR }
+      </if>
+      <if test="englishName != null and englishName != ''">
+        and ENGLISH_NAME = #{englishName, jdbcType=VARCHAR }
+      </if>
+      <if test="partyType != null and partyType != ''">
+        and PARTY_TYPE = #{partyType, jdbcType=VARCHAR }
+      </if>
+      <if test="extPartyId != null and extPartyId != ''">
+        and EXT_PARTY_ID = #{extPartyId, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=INTEGER }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=INTEGER }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PartyDO" resultType="java.lang.Integer">
+      select count(*) from PARTY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PARTY
+        where 
+           PARTY_ID = #{partyId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PARTY 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="partyId">
+      insert into  PARTY ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{partyName,jdbcType=VARCHAR}, 
+        #{partyAbbrname,jdbcType=VARCHAR}, 
+        #{englishName,jdbcType=VARCHAR}, 
+        #{partyType,jdbcType=VARCHAR}, 
+        #{extPartyId,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=INTEGER}, 
+        #{updateStaff,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PARTY ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{partyId,jdbcType=INTEGER}, 
+        #{partyName,jdbcType=VARCHAR}, 
+        #{partyAbbrname,jdbcType=VARCHAR}, 
+        #{englishName,jdbcType=VARCHAR}, 
+        #{partyType,jdbcType=VARCHAR}, 
+        #{extPartyId,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=INTEGER}, 
+        #{updateStaff,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PARTY  
+        where
+           PARTY_ID = #{partyId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PARTY
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PARTY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="partyName != null">
+         PARTY_NAME = #{partyName,jdbcType=VARCHAR},
+      </if>
+      <if test="partyAbbrname != null">
+         PARTY_ABBRNAME = #{partyAbbrname,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null">
+         ENGLISH_NAME = #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="partyType != null">
+         PARTY_TYPE = #{partyType,jdbcType=VARCHAR},
+      </if>
+      <if test="extPartyId != null">
+         EXT_PARTY_ID = #{extPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=INTEGER},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           PARTY_ID = #{partyId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PARTY
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.partyName != null">
+        PARTY_NAME = #{record.partyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyAbbrname != null">
+        PARTY_ABBRNAME = #{record.partyAbbrname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishName != null">
+        ENGLISH_NAME = #{record.englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyType != null">
+        PARTY_TYPE = #{record.partyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extPartyId != null">
+        EXT_PARTY_ID = #{record.extPartyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.partyId != null ">
+        PARTY_ID = #{condition.partyId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.partyName != null and condition.partyName != ''">
+        and PARTY_NAME = #{condition.partyName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyAbbrname != null and condition.partyAbbrname != ''">
+        and PARTY_ABBRNAME = #{condition.partyAbbrname, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.englishName != null and condition.englishName != ''">
+        and ENGLISH_NAME = #{condition.englishName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyType != null and condition.partyType != ''">
+        and PARTY_TYPE = #{condition.partyType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.extPartyId != null and condition.extPartyId != ''">
+        and EXT_PARTY_ID = #{condition.extPartyId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=INTEGER }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=INTEGER }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

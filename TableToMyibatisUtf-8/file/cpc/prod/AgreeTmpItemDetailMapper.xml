@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AgreeTmpItemDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AgreeTmpItemDetailDO">
+    <id column="AGREE_TMP_ITEM_DETAIL_ID" jdbcType="BIGINT" property="agreeTmpItemDetailId"/>
+    <result column="AGREE_TMP_ITEM_REL_ID" jdbcType="BIGINT" property="agreeTmpItemRelId"/>
+    <result column="ITEM_ATTR_ID" jdbcType="INTEGER" property="itemAttrId"/>
+    <result column="DEFAULT_VALUE" jdbcType="VARCHAR" property="defaultValue"/>
+    <result column="VALUE_RANGE" jdbcType="VARCHAR" property="valueRange"/>
+    <result column="MIN_VALUE" jdbcType="VARCHAR" property="minValue"/>
+    <result column="MAX_VALUE" jdbcType="VARCHAR" property="maxValue"/>
+    <result column="OPTION_VALUE" jdbcType="VARCHAR" property="optionValue"/>
+    <result column="IF_OPTION" jdbcType="VARCHAR" property="ifOption"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          AGREE_TMP_ITEM_DETAIL_ID, 
+          AGREE_TMP_ITEM_REL_ID, 
+          ITEM_ATTR_ID, 
+          DEFAULT_VALUE, 
+          VALUE_RANGE, 
+          MIN_VALUE, 
+          MAX_VALUE, 
+          OPTION_VALUE, 
+          IF_OPTION, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          AGREE_TMP_ITEM_REL_ID, 
+          ITEM_ATTR_ID, 
+          DEFAULT_VALUE, 
+          VALUE_RANGE, 
+          MIN_VALUE, 
+          MAX_VALUE, 
+          OPTION_VALUE, 
+          IF_OPTION, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="agreeTmpItemDetailId != null ">
+        AGREE_TMP_ITEM_DETAIL_ID = #{agreeTmpItemDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="agreeTmpItemRelId != null ">
+        and AGREE_TMP_ITEM_REL_ID = #{agreeTmpItemRelId, jdbcType=BIGINT }
+      </if>
+      <if test="itemAttrId != null ">
+        and ITEM_ATTR_ID = #{itemAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="defaultValue != null and defaultValue != ''">
+        and DEFAULT_VALUE = #{defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="valueRange != null and valueRange != ''">
+        and VALUE_RANGE = #{valueRange, jdbcType=VARCHAR }
+      </if>
+      <if test="minValue != null and minValue != ''">
+        and MIN_VALUE = #{minValue, jdbcType=VARCHAR }
+      </if>
+      <if test="maxValue != null and maxValue != ''">
+        and MAX_VALUE = #{maxValue, jdbcType=VARCHAR }
+      </if>
+      <if test="optionValue != null and optionValue != ''">
+        and OPTION_VALUE = #{optionValue, jdbcType=VARCHAR }
+      </if>
+      <if test="ifOption != null and ifOption != ''">
+        and IF_OPTION = #{ifOption, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AgreeTmpItemDetailDO" resultType="java.lang.Integer">
+      select count(*) from AGREE_TMP_ITEM_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from AGREE_TMP_ITEM_DETAIL
+        where 
+           AGREE_TMP_ITEM_DETAIL_ID = #{agreeTmpItemDetailId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  AGREE_TMP_ITEM_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="agreeTmpItemDetailId">
+      insert into  AGREE_TMP_ITEM_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{agreeTmpItemRelId,jdbcType=BIGINT}, 
+        #{itemAttrId,jdbcType=INTEGER}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{valueRange,jdbcType=VARCHAR}, 
+        #{minValue,jdbcType=VARCHAR}, 
+        #{maxValue,jdbcType=VARCHAR}, 
+        #{optionValue,jdbcType=VARCHAR}, 
+        #{ifOption,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  AGREE_TMP_ITEM_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{agreeTmpItemDetailId,jdbcType=BIGINT}, 
+        #{agreeTmpItemRelId,jdbcType=BIGINT}, 
+        #{itemAttrId,jdbcType=INTEGER}, 
+        #{defaultValue,jdbcType=VARCHAR}, 
+        #{valueRange,jdbcType=VARCHAR}, 
+        #{minValue,jdbcType=VARCHAR}, 
+        #{maxValue,jdbcType=VARCHAR}, 
+        #{optionValue,jdbcType=VARCHAR}, 
+        #{ifOption,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from AGREE_TMP_ITEM_DETAIL  
+        where
+           AGREE_TMP_ITEM_DETAIL_ID = #{agreeTmpItemDetailId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from AGREE_TMP_ITEM_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  AGREE_TMP_ITEM_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="agreeTmpItemRelId != null">
+         AGREE_TMP_ITEM_REL_ID = #{agreeTmpItemRelId,jdbcType=BIGINT},
+      </if>
+      <if test="itemAttrId != null">
+         ITEM_ATTR_ID = #{itemAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="defaultValue != null">
+         DEFAULT_VALUE = #{defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="valueRange != null">
+         VALUE_RANGE = #{valueRange,jdbcType=VARCHAR},
+      </if>
+      <if test="minValue != null">
+         MIN_VALUE = #{minValue,jdbcType=VARCHAR},
+      </if>
+      <if test="maxValue != null">
+         MAX_VALUE = #{maxValue,jdbcType=VARCHAR},
+      </if>
+      <if test="optionValue != null">
+         OPTION_VALUE = #{optionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ifOption != null">
+         IF_OPTION = #{ifOption,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           AGREE_TMP_ITEM_DETAIL_ID = #{agreeTmpItemDetailId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update AGREE_TMP_ITEM_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.agreeTmpItemDetailId != null">
+        AGREE_TMP_ITEM_DETAIL_ID = #{record.agreeTmpItemDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeTmpItemRelId != null">
+        AGREE_TMP_ITEM_REL_ID = #{record.agreeTmpItemRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemAttrId != null">
+        ITEM_ATTR_ID = #{record.itemAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.defaultValue != null">
+        DEFAULT_VALUE = #{record.defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueRange != null">
+        VALUE_RANGE = #{record.valueRange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minValue != null">
+        MIN_VALUE = #{record.minValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxValue != null">
+        MAX_VALUE = #{record.maxValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionValue != null">
+        OPTION_VALUE = #{record.optionValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ifOption != null">
+        IF_OPTION = #{record.ifOption,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.agreeTmpItemDetailId != null ">
+        AGREE_TMP_ITEM_DETAIL_ID = #{condition.agreeTmpItemDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeTmpItemRelId != null ">
+        and AGREE_TMP_ITEM_REL_ID = #{condition.agreeTmpItemRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.itemAttrId != null ">
+        and ITEM_ATTR_ID = #{condition.itemAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.defaultValue != null and condition.defaultValue != ''">
+        and DEFAULT_VALUE = #{condition.defaultValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.valueRange != null and condition.valueRange != ''">
+        and VALUE_RANGE = #{condition.valueRange, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.minValue != null and condition.minValue != ''">
+        and MIN_VALUE = #{condition.minValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.maxValue != null and condition.maxValue != ''">
+        and MAX_VALUE = #{condition.maxValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.optionValue != null and condition.optionValue != ''">
+        and OPTION_VALUE = #{condition.optionValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ifOption != null and condition.ifOption != ''">
+        and IF_OPTION = #{condition.ifOption, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

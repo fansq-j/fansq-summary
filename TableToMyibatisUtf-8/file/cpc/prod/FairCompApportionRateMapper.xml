@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.FairCompApportionRateMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.FairCompApportionRateDO">
+    <id column="COMP_APPORTION_RATE_ID" jdbcType="INTEGER" property="compApportionRateId"/>
+    <result column="APPORTION_ID" jdbcType="INTEGER" property="apportionId"/>
+    <result column="PRODUCT_ID" jdbcType="INTEGER" property="productId"/>
+    <result column="ROLE_ID" jdbcType="BIGINT" property="roleId"/>
+    <result column="APPORTION_RATE" jdbcType="DOUBLE" property="apportionRate"/>
+    <result column="PRODUCT_APPORTION_ID" jdbcType="INTEGER" property="productApportionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          COMP_APPORTION_RATE_ID, 
+          APPORTION_ID, 
+          PRODUCT_ID, 
+          ROLE_ID, 
+          APPORTION_RATE, 
+          PRODUCT_APPORTION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          APPORTION_ID, 
+          PRODUCT_ID, 
+          ROLE_ID, 
+          APPORTION_RATE, 
+          PRODUCT_APPORTION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="compApportionRateId != null ">
+        COMP_APPORTION_RATE_ID = #{compApportionRateId, jdbcType=INTEGER }
+      </if>
+      <if test="apportionId != null ">
+        and APPORTION_ID = #{apportionId, jdbcType=INTEGER }
+      </if>
+      <if test="productId != null ">
+        and PRODUCT_ID = #{productId, jdbcType=INTEGER }
+      </if>
+      <if test="roleId != null ">
+        and ROLE_ID = #{roleId, jdbcType=BIGINT }
+      </if>
+      <if test="apportionRate != null ">
+        and APPORTION_RATE = #{apportionRate, jdbcType=DOUBLE }
+      </if>
+      <if test="productApportionId != null ">
+        and PRODUCT_APPORTION_ID = #{productApportionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.FairCompApportionRateDO" resultType="java.lang.Integer">
+      select count(*) from FAIR_COMP_APPORTION_RATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from FAIR_COMP_APPORTION_RATE
+        where 
+           COMP_APPORTION_RATE_ID = #{compApportionRateId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  FAIR_COMP_APPORTION_RATE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="compApportionRateId">
+      insert into  FAIR_COMP_APPORTION_RATE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{apportionId,jdbcType=INTEGER}, 
+        #{productId,jdbcType=INTEGER}, 
+        #{roleId,jdbcType=BIGINT}, 
+        #{apportionRate,jdbcType=DOUBLE}, 
+        #{productApportionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  FAIR_COMP_APPORTION_RATE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{compApportionRateId,jdbcType=INTEGER}, 
+        #{apportionId,jdbcType=INTEGER}, 
+        #{productId,jdbcType=INTEGER}, 
+        #{roleId,jdbcType=BIGINT}, 
+        #{apportionRate,jdbcType=DOUBLE}, 
+        #{productApportionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from FAIR_COMP_APPORTION_RATE  
+        where
+           COMP_APPORTION_RATE_ID = #{compApportionRateId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from FAIR_COMP_APPORTION_RATE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  FAIR_COMP_APPORTION_RATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="apportionId != null">
+         APPORTION_ID = #{apportionId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+         PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+         ROLE_ID = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="apportionRate != null">
+         APPORTION_RATE = #{apportionRate,jdbcType=DOUBLE},
+      </if>
+      <if test="productApportionId != null">
+         PRODUCT_APPORTION_ID = #{productApportionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           COMP_APPORTION_RATE_ID = #{compApportionRateId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update FAIR_COMP_APPORTION_RATE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.compApportionRateId != null">
+        COMP_APPORTION_RATE_ID = #{record.compApportionRateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.apportionId != null">
+        APPORTION_ID = #{record.apportionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleId != null">
+        ROLE_ID = #{record.roleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.apportionRate != null">
+        APPORTION_RATE = #{record.apportionRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.productApportionId != null">
+        PRODUCT_APPORTION_ID = #{record.productApportionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.compApportionRateId != null ">
+        COMP_APPORTION_RATE_ID = #{condition.compApportionRateId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.apportionId != null ">
+        and APPORTION_ID = #{condition.apportionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.productId != null ">
+        and PRODUCT_ID = #{condition.productId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.roleId != null ">
+        and ROLE_ID = #{condition.roleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.apportionRate != null ">
+        and APPORTION_RATE = #{condition.apportionRate, jdbcType=DOUBLE }
+      </if>
+      <if test="condition.productApportionId != null ">
+        and PRODUCT_APPORTION_ID = #{condition.productApportionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

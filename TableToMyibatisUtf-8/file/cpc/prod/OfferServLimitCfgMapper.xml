@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OfferServLimitCfgMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OfferServLimitCfgDO">
+    <id column="SERV_LIMIT_CFG_ID" jdbcType="BIGINT" property="servLimitCfgId"/>
+    <result column="OFFER_ID" jdbcType="INTEGER" property="offerId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="SERVICE_OFFER_ID" jdbcType="INTEGER" property="serviceOfferId"/>
+    <result column="LIMIT_TYPE" jdbcType="VARCHAR" property="limitType"/>
+    <result column="LIMIT_TIME" jdbcType="INTEGER" property="limitTime"/>
+    <result column="TIME_UNIT" jdbcType="VARCHAR" property="timeUnit"/>
+    <result column="LIMIT_DATE" jdbcType="TIMESTAMP" property="limitDate"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+    <result column="APPLY_REGION_ID" jdbcType="BIGINT" property="applyRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SERV_LIMIT_CFG_ID, 
+          OFFER_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          SERVICE_OFFER_ID, 
+          LIMIT_TYPE, 
+          LIMIT_TIME, 
+          TIME_UNIT, 
+          LIMIT_DATE, 
+          OPER_TYPE, 
+          DESCRIPTION, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OFFER_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          SERVICE_OFFER_ID, 
+          LIMIT_TYPE, 
+          LIMIT_TIME, 
+          TIME_UNIT, 
+          LIMIT_DATE, 
+          OPER_TYPE, 
+          DESCRIPTION, 
+          APPLY_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="servLimitCfgId != null ">
+        SERV_LIMIT_CFG_ID = #{servLimitCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="offerId != null ">
+        and OFFER_ID = #{offerId, jdbcType=INTEGER }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="limitType != null and limitType != ''">
+        and LIMIT_TYPE = #{limitType, jdbcType=VARCHAR }
+      </if>
+      <if test="limitTime != null ">
+        and LIMIT_TIME = #{limitTime, jdbcType=INTEGER }
+      </if>
+      <if test="timeUnit != null and timeUnit != ''">
+        and TIME_UNIT = #{timeUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="limitDate != null ">
+        and LIMIT_DATE = #{limitDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="description != null and description != ''">
+        and DESCRIPTION = #{description, jdbcType=VARCHAR }
+      </if>
+      <if test="applyRegionId != null ">
+        and APPLY_REGION_ID = #{applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OfferServLimitCfgDO" resultType="java.lang.Integer">
+      select count(*) from OFFER_SERV_LIMIT_CFG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from OFFER_SERV_LIMIT_CFG
+        where 
+           SERV_LIMIT_CFG_ID = #{servLimitCfgId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  OFFER_SERV_LIMIT_CFG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="servLimitCfgId">
+      insert into  OFFER_SERV_LIMIT_CFG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{offerId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{limitType,jdbcType=VARCHAR}, 
+        #{limitTime,jdbcType=INTEGER}, 
+        #{timeUnit,jdbcType=VARCHAR}, 
+        #{limitDate,jdbcType=TIMESTAMP}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{description,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  OFFER_SERV_LIMIT_CFG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{servLimitCfgId,jdbcType=BIGINT}, 
+        #{offerId,jdbcType=INTEGER}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{serviceOfferId,jdbcType=INTEGER}, 
+        #{limitType,jdbcType=VARCHAR}, 
+        #{limitTime,jdbcType=INTEGER}, 
+        #{timeUnit,jdbcType=VARCHAR}, 
+        #{limitDate,jdbcType=TIMESTAMP}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{description,jdbcType=VARCHAR}, 
+        #{applyRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from OFFER_SERV_LIMIT_CFG  
+        where
+           SERV_LIMIT_CFG_ID = #{servLimitCfgId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from OFFER_SERV_LIMIT_CFG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  OFFER_SERV_LIMIT_CFG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="offerId != null">
+         OFFER_ID = #{offerId,jdbcType=INTEGER},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceOfferId != null">
+         SERVICE_OFFER_ID = #{serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="limitType != null">
+         LIMIT_TYPE = #{limitType,jdbcType=VARCHAR},
+      </if>
+      <if test="limitTime != null">
+         LIMIT_TIME = #{limitTime,jdbcType=INTEGER},
+      </if>
+      <if test="timeUnit != null">
+         TIME_UNIT = #{timeUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="limitDate != null">
+         LIMIT_DATE = #{limitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+         DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="applyRegionId != null">
+         APPLY_REGION_ID = #{applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           SERV_LIMIT_CFG_ID = #{servLimitCfgId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update OFFER_SERV_LIMIT_CFG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.servLimitCfgId != null">
+        SERV_LIMIT_CFG_ID = #{record.servLimitCfgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerId != null">
+        OFFER_ID = #{record.offerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceOfferId != null">
+        SERVICE_OFFER_ID = #{record.serviceOfferId,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitType != null">
+        LIMIT_TYPE = #{record.limitType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitTime != null">
+        LIMIT_TIME = #{record.limitTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.timeUnit != null">
+        TIME_UNIT = #{record.timeUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitDate != null">
+        LIMIT_DATE = #{record.limitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyRegionId != null">
+        APPLY_REGION_ID = #{record.applyRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.servLimitCfgId != null ">
+        SERV_LIMIT_CFG_ID = #{condition.servLimitCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerId != null ">
+        and OFFER_ID = #{condition.offerId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.serviceOfferId != null ">
+        and SERVICE_OFFER_ID = #{condition.serviceOfferId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.limitType != null and condition.limitType != ''">
+        and LIMIT_TYPE = #{condition.limitType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.limitTime != null ">
+        and LIMIT_TIME = #{condition.limitTime, jdbcType=INTEGER }
+      </if>
+      <if test="condition.timeUnit != null and condition.timeUnit != ''">
+        and TIME_UNIT = #{condition.timeUnit, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.limitDate != null ">
+        and LIMIT_DATE = #{condition.limitDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.description != null and condition.description != ''">
+        and DESCRIPTION = #{condition.description, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.applyRegionId != null ">
+        and APPLY_REGION_ID = #{condition.applyRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

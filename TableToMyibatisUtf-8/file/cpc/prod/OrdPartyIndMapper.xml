@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdPartyIndMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdPartyIndDO">
+    <result column="INDIVIDUAL_ID" jdbcType="BIGINT" property="individualId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="BIRTHDAY" jdbcType="TIMESTAMP" property="birthday"/>
+    <result column="MARITAL_STATUS" jdbcType="VARCHAR" property="maritalStatus"/>
+    <result column="GENDER" jdbcType="VARCHAR" property="gender"/>
+    <result column="NATIONALITY" jdbcType="VARCHAR" property="nationality"/>
+    <result column="NATION" jdbcType="VARCHAR" property="nation"/>
+    <result column="RELIGION" jdbcType="VARCHAR" property="religion"/>
+    <result column="EDUCATION" jdbcType="VARCHAR" property="education"/>
+    <result column="OCCUPATION" jdbcType="VARCHAR" property="occupation"/>
+    <result column="EMPLOYER" jdbcType="VARCHAR" property="employer"/>
+    <result column="POSITION" jdbcType="VARCHAR" property="position"/>
+    <result column="WEBSITE" jdbcType="VARCHAR" property="website"/>
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          INDIVIDUAL_ID, 
+          PARTY_ID, 
+          BIRTHDAY, 
+          MARITAL_STATUS, 
+          GENDER, 
+          NATIONALITY, 
+          NATION, 
+          RELIGION, 
+          EDUCATION, 
+          OCCUPATION, 
+          EMPLOYER, 
+          POSITION, 
+          WEBSITE, 
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          INDIVIDUAL_ID, 
+          PARTY_ID, 
+          BIRTHDAY, 
+          MARITAL_STATUS, 
+          GENDER, 
+          NATIONALITY, 
+          NATION, 
+          RELIGION, 
+          EDUCATION, 
+          OCCUPATION, 
+          EMPLOYER, 
+          POSITION, 
+          WEBSITE, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="individualId != null ">
+        INDIVIDUAL_ID = #{individualId, jdbcType=BIGINT }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="birthday != null ">
+        and BIRTHDAY = #{birthday, jdbcType=TIMESTAMP }
+      </if>
+      <if test="maritalStatus != null and maritalStatus != ''">
+        and MARITAL_STATUS = #{maritalStatus, jdbcType=VARCHAR }
+      </if>
+      <if test="gender != null and gender != ''">
+        and GENDER = #{gender, jdbcType=VARCHAR }
+      </if>
+      <if test="nationality != null and nationality != ''">
+        and NATIONALITY = #{nationality, jdbcType=VARCHAR }
+      </if>
+      <if test="nation != null and nation != ''">
+        and NATION = #{nation, jdbcType=VARCHAR }
+      </if>
+      <if test="religion != null and religion != ''">
+        and RELIGION = #{religion, jdbcType=VARCHAR }
+      </if>
+      <if test="education != null and education != ''">
+        and EDUCATION = #{education, jdbcType=VARCHAR }
+      </if>
+      <if test="occupation != null and occupation != ''">
+        and OCCUPATION = #{occupation, jdbcType=VARCHAR }
+      </if>
+      <if test="employer != null and employer != ''">
+        and EMPLOYER = #{employer, jdbcType=VARCHAR }
+      </if>
+      <if test="position != null and position != ''">
+        and POSITION = #{position, jdbcType=VARCHAR }
+      </if>
+      <if test="website != null and website != ''">
+        and WEBSITE = #{website, jdbcType=VARCHAR }
+      </if>
+      <if test="rowId != null ">
+        and ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdPartyIndDO" resultType="java.lang.Integer">
+      select count(*) from ORD_PARTY_IND
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_PARTY_IND
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_PARTY_IND 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_PARTY_IND ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{individualId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{birthday,jdbcType=TIMESTAMP}, 
+        #{maritalStatus,jdbcType=VARCHAR}, 
+        #{gender,jdbcType=VARCHAR}, 
+        #{nationality,jdbcType=VARCHAR}, 
+        #{nation,jdbcType=VARCHAR}, 
+        #{religion,jdbcType=VARCHAR}, 
+        #{education,jdbcType=VARCHAR}, 
+        #{occupation,jdbcType=VARCHAR}, 
+        #{employer,jdbcType=VARCHAR}, 
+        #{position,jdbcType=VARCHAR}, 
+        #{website,jdbcType=VARCHAR}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_PARTY_IND ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{individualId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{birthday,jdbcType=TIMESTAMP}, 
+        #{maritalStatus,jdbcType=VARCHAR}, 
+        #{gender,jdbcType=VARCHAR}, 
+        #{nationality,jdbcType=VARCHAR}, 
+        #{nation,jdbcType=VARCHAR}, 
+        #{religion,jdbcType=VARCHAR}, 
+        #{education,jdbcType=VARCHAR}, 
+        #{occupation,jdbcType=VARCHAR}, 
+        #{employer,jdbcType=VARCHAR}, 
+        #{position,jdbcType=VARCHAR}, 
+        #{website,jdbcType=VARCHAR}, 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_PARTY_IND  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_PARTY_IND
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_PARTY_IND
+    <trim prefix="set" suffixOverrides=",">
+      <if test="individualId != null">
+         INDIVIDUAL_ID = #{individualId,jdbcType=BIGINT},
+      </if>
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="birthday != null">
+         BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maritalStatus != null">
+         MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+         GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null">
+         NATIONALITY = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+         NATION = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="religion != null">
+         RELIGION = #{religion,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+         EDUCATION = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null">
+         OCCUPATION = #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="employer != null">
+         EMPLOYER = #{employer,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+         POSITION = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+         WEBSITE = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_PARTY_IND
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.individualId != null">
+        INDIVIDUAL_ID = #{record.individualId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.birthday != null">
+        BIRTHDAY = #{record.birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.maritalStatus != null">
+        MARITAL_STATUS = #{record.maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        GENDER = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationality != null">
+        NATIONALITY = #{record.nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nation != null">
+        NATION = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.religion != null">
+        RELIGION = #{record.religion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null">
+        EDUCATION = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.occupation != null">
+        OCCUPATION = #{record.occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employer != null">
+        EMPLOYER = #{record.employer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        POSITION = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.website != null">
+        WEBSITE = #{record.website,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.individualId != null ">
+        INDIVIDUAL_ID = #{condition.individualId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.birthday != null ">
+        and BIRTHDAY = #{condition.birthday, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.maritalStatus != null and condition.maritalStatus != ''">
+        and MARITAL_STATUS = #{condition.maritalStatus, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.gender != null and condition.gender != ''">
+        and GENDER = #{condition.gender, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.nationality != null and condition.nationality != ''">
+        and NATIONALITY = #{condition.nationality, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.nation != null and condition.nation != ''">
+        and NATION = #{condition.nation, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.religion != null and condition.religion != ''">
+        and RELIGION = #{condition.religion, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.education != null and condition.education != ''">
+        and EDUCATION = #{condition.education, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.occupation != null and condition.occupation != ''">
+        and OCCUPATION = #{condition.occupation, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.employer != null and condition.employer != ''">
+        and EMPLOYER = #{condition.employer, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.position != null and condition.position != ''">
+        and POSITION = #{condition.position, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.website != null and condition.website != ''">
+        and WEBSITE = #{condition.website, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.rowId != null ">
+        and ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

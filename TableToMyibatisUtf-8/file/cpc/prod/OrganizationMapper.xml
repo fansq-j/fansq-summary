@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrganizationMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrganizationDO">
+    <id column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode"/>
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="ORG_TYPE" jdbcType="VARCHAR" property="orgType"/>
+    <result column="ORG_SUBTYPE" jdbcType="VARCHAR" property="orgSubtype"/>
+    <result column="VILLAGE_FLAG" jdbcType="VARCHAR" property="villageFlag"/>
+    <result column="PARENT_ORG_ID" jdbcType="INTEGER" property="parentOrgId"/>
+    <result column="ORG_LEVEL" jdbcType="INTEGER" property="orgLevel"/>
+    <result column="ORG_INDEX" jdbcType="INTEGER" property="orgIndex"/>
+    <result column="SALESORG_CODE" jdbcType="VARCHAR" property="salesorgCode"/>
+    <result column="DIVORG_FLAG" jdbcType="INTEGER" property="divorgFlag"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ORG_ID, 
+          PARTY_ID, 
+          ORG_CODE, 
+          ORG_NAME, 
+          REGION_ID, 
+          ORG_TYPE, 
+          ORG_SUBTYPE, 
+          VILLAGE_FLAG, 
+          PARENT_ORG_ID, 
+          ORG_LEVEL, 
+          ORG_INDEX, 
+          SALESORG_CODE, 
+          DIVORG_FLAG, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PARTY_ID, 
+          ORG_CODE, 
+          ORG_NAME, 
+          REGION_ID, 
+          ORG_TYPE, 
+          ORG_SUBTYPE, 
+          VILLAGE_FLAG, 
+          PARENT_ORG_ID, 
+          ORG_LEVEL, 
+          ORG_INDEX, 
+          SALESORG_CODE, 
+          DIVORG_FLAG, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="orgId != null ">
+        ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="orgCode != null and orgCode != ''">
+        and ORG_CODE = #{orgCode, jdbcType=VARCHAR }
+      </if>
+      <if test="orgName != null and orgName != ''">
+        and ORG_NAME = #{orgName, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="orgType != null and orgType != ''">
+        and ORG_TYPE = #{orgType, jdbcType=VARCHAR }
+      </if>
+      <if test="orgSubtype != null and orgSubtype != ''">
+        and ORG_SUBTYPE = #{orgSubtype, jdbcType=VARCHAR }
+      </if>
+      <if test="villageFlag != null and villageFlag != ''">
+        and VILLAGE_FLAG = #{villageFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="parentOrgId != null ">
+        and PARENT_ORG_ID = #{parentOrgId, jdbcType=INTEGER }
+      </if>
+      <if test="orgLevel != null ">
+        and ORG_LEVEL = #{orgLevel, jdbcType=INTEGER }
+      </if>
+      <if test="orgIndex != null ">
+        and ORG_INDEX = #{orgIndex, jdbcType=INTEGER }
+      </if>
+      <if test="salesorgCode != null and salesorgCode != ''">
+        and SALESORG_CODE = #{salesorgCode, jdbcType=VARCHAR }
+      </if>
+      <if test="divorgFlag != null ">
+        and DIVORG_FLAG = #{divorgFlag, jdbcType=INTEGER }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrganizationDO" resultType="java.lang.Integer">
+      select count(*) from ORGANIZATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORGANIZATION
+        where 
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORGANIZATION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="orgId">
+      insert into  ORGANIZATION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{partyId,jdbcType=BIGINT}, 
+        #{orgCode,jdbcType=VARCHAR}, 
+        #{orgName,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{orgType,jdbcType=VARCHAR}, 
+        #{orgSubtype,jdbcType=VARCHAR}, 
+        #{villageFlag,jdbcType=VARCHAR}, 
+        #{parentOrgId,jdbcType=INTEGER}, 
+        #{orgLevel,jdbcType=INTEGER}, 
+        #{orgIndex,jdbcType=INTEGER}, 
+        #{salesorgCode,jdbcType=VARCHAR}, 
+        #{divorgFlag,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORGANIZATION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{orgId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{orgCode,jdbcType=VARCHAR}, 
+        #{orgName,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{orgType,jdbcType=VARCHAR}, 
+        #{orgSubtype,jdbcType=VARCHAR}, 
+        #{villageFlag,jdbcType=VARCHAR}, 
+        #{parentOrgId,jdbcType=INTEGER}, 
+        #{orgLevel,jdbcType=INTEGER}, 
+        #{orgIndex,jdbcType=INTEGER}, 
+        #{salesorgCode,jdbcType=VARCHAR}, 
+        #{divorgFlag,jdbcType=INTEGER}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORGANIZATION  
+        where
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORGANIZATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORGANIZATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null">
+         ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+         ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="orgType != null">
+         ORG_TYPE = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgSubtype != null">
+         ORG_SUBTYPE = #{orgSubtype,jdbcType=VARCHAR},
+      </if>
+      <if test="villageFlag != null">
+         VILLAGE_FLAG = #{villageFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOrgId != null">
+         PARENT_ORG_ID = #{parentOrgId,jdbcType=INTEGER},
+      </if>
+      <if test="orgLevel != null">
+         ORG_LEVEL = #{orgLevel,jdbcType=INTEGER},
+      </if>
+      <if test="orgIndex != null">
+         ORG_INDEX = #{orgIndex,jdbcType=INTEGER},
+      </if>
+      <if test="salesorgCode != null">
+         SALESORG_CODE = #{salesorgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="divorgFlag != null">
+         DIVORG_FLAG = #{divorgFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORGANIZATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgCode != null">
+        ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null">
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgType != null">
+        ORG_TYPE = #{record.orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgSubtype != null">
+        ORG_SUBTYPE = #{record.orgSubtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.villageFlag != null">
+        VILLAGE_FLAG = #{record.villageFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentOrgId != null">
+        PARENT_ORG_ID = #{record.parentOrgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgLevel != null">
+        ORG_LEVEL = #{record.orgLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgIndex != null">
+        ORG_INDEX = #{record.orgIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesorgCode != null">
+        SALESORG_CODE = #{record.salesorgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.divorgFlag != null">
+        DIVORG_FLAG = #{record.divorgFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.orgId != null ">
+        ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgCode != null and condition.orgCode != ''">
+        and ORG_CODE = #{condition.orgCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgName != null and condition.orgName != ''">
+        and ORG_NAME = #{condition.orgName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgType != null and condition.orgType != ''">
+        and ORG_TYPE = #{condition.orgType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.orgSubtype != null and condition.orgSubtype != ''">
+        and ORG_SUBTYPE = #{condition.orgSubtype, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.villageFlag != null and condition.villageFlag != ''">
+        and VILLAGE_FLAG = #{condition.villageFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parentOrgId != null ">
+        and PARENT_ORG_ID = #{condition.parentOrgId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orgLevel != null ">
+        and ORG_LEVEL = #{condition.orgLevel, jdbcType=INTEGER }
+      </if>
+      <if test="condition.orgIndex != null ">
+        and ORG_INDEX = #{condition.orgIndex, jdbcType=INTEGER }
+      </if>
+      <if test="condition.salesorgCode != null and condition.salesorgCode != ''">
+        and SALESORG_CODE = #{condition.salesorgCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.divorgFlag != null ">
+        and DIVORG_FLAG = #{condition.divorgFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

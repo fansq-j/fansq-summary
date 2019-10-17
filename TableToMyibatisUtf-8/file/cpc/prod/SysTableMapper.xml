@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SysTableMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SysTableDO">
+    <id column="TAB_ID" jdbcType="BIGINT" property="tabId"/>
+    <result column="TAB_NAME" jdbcType="VARCHAR" property="tabName"/>
+    <result column="TAB_TYPE" jdbcType="VARCHAR" property="tabType"/>
+    <result column="TAB_KEY_COL_NAME" jdbcType="VARCHAR" property="tabKeyColName"/>
+    <result column="SLA_TAB_INST_COL_NAME" jdbcType="VARCHAR" property="slaTabInstColName"/>
+    <result column="SLA_TAB_ATTR_COL_NAME" jdbcType="VARCHAR" property="slaTabAttrColName"/>
+    <result column="SLA_TAB_ATTR_VAL_COL_NAME" jdbcType="VARCHAR" property="slaTabAttrValColName"/>
+    <result column="MSTR_TAB_ID" jdbcType="BIGINT" property="mstrTabId"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          TAB_ID, 
+          TAB_NAME, 
+          TAB_TYPE, 
+          TAB_KEY_COL_NAME, 
+          SLA_TAB_INST_COL_NAME, 
+          SLA_TAB_ATTR_COL_NAME, 
+          SLA_TAB_ATTR_VAL_COL_NAME, 
+          MSTR_TAB_ID, 
+          VER_NUM, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          TAB_NAME, 
+          TAB_TYPE, 
+          TAB_KEY_COL_NAME, 
+          SLA_TAB_INST_COL_NAME, 
+          SLA_TAB_ATTR_COL_NAME, 
+          SLA_TAB_ATTR_VAL_COL_NAME, 
+          MSTR_TAB_ID, 
+          VER_NUM, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="tabId != null ">
+        TAB_ID = #{tabId, jdbcType=BIGINT }
+      </if>
+      <if test="tabName != null and tabName != ''">
+        and TAB_NAME = #{tabName, jdbcType=VARCHAR }
+      </if>
+      <if test="tabType != null and tabType != ''">
+        and TAB_TYPE = #{tabType, jdbcType=VARCHAR }
+      </if>
+      <if test="tabKeyColName != null and tabKeyColName != ''">
+        and TAB_KEY_COL_NAME = #{tabKeyColName, jdbcType=VARCHAR }
+      </if>
+      <if test="slaTabInstColName != null and slaTabInstColName != ''">
+        and SLA_TAB_INST_COL_NAME = #{slaTabInstColName, jdbcType=VARCHAR }
+      </if>
+      <if test="slaTabAttrColName != null and slaTabAttrColName != ''">
+        and SLA_TAB_ATTR_COL_NAME = #{slaTabAttrColName, jdbcType=VARCHAR }
+      </if>
+      <if test="slaTabAttrValColName != null and slaTabAttrValColName != ''">
+        and SLA_TAB_ATTR_VAL_COL_NAME = #{slaTabAttrValColName, jdbcType=VARCHAR }
+      </if>
+      <if test="mstrTabId != null ">
+        and MSTR_TAB_ID = #{mstrTabId, jdbcType=BIGINT }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SysTableDO" resultType="java.lang.Integer">
+      select count(*) from SYS_TABLE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SYS_TABLE
+        where 
+           TAB_ID = #{tabId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SYS_TABLE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="tabId">
+      insert into  SYS_TABLE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{tabName,jdbcType=VARCHAR}, 
+        #{tabType,jdbcType=VARCHAR}, 
+        #{tabKeyColName,jdbcType=VARCHAR}, 
+        #{slaTabInstColName,jdbcType=VARCHAR}, 
+        #{slaTabAttrColName,jdbcType=VARCHAR}, 
+        #{slaTabAttrValColName,jdbcType=VARCHAR}, 
+        #{mstrTabId,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SYS_TABLE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{tabId,jdbcType=BIGINT}, 
+        #{tabName,jdbcType=VARCHAR}, 
+        #{tabType,jdbcType=VARCHAR}, 
+        #{tabKeyColName,jdbcType=VARCHAR}, 
+        #{slaTabInstColName,jdbcType=VARCHAR}, 
+        #{slaTabAttrColName,jdbcType=VARCHAR}, 
+        #{slaTabAttrValColName,jdbcType=VARCHAR}, 
+        #{mstrTabId,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SYS_TABLE  
+        where
+           TAB_ID = #{tabId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SYS_TABLE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SYS_TABLE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="tabName != null">
+         TAB_NAME = #{tabName,jdbcType=VARCHAR},
+      </if>
+      <if test="tabType != null">
+         TAB_TYPE = #{tabType,jdbcType=VARCHAR},
+      </if>
+      <if test="tabKeyColName != null">
+         TAB_KEY_COL_NAME = #{tabKeyColName,jdbcType=VARCHAR},
+      </if>
+      <if test="slaTabInstColName != null">
+         SLA_TAB_INST_COL_NAME = #{slaTabInstColName,jdbcType=VARCHAR},
+      </if>
+      <if test="slaTabAttrColName != null">
+         SLA_TAB_ATTR_COL_NAME = #{slaTabAttrColName,jdbcType=VARCHAR},
+      </if>
+      <if test="slaTabAttrValColName != null">
+         SLA_TAB_ATTR_VAL_COL_NAME = #{slaTabAttrValColName,jdbcType=VARCHAR},
+      </if>
+      <if test="mstrTabId != null">
+         MSTR_TAB_ID = #{mstrTabId,jdbcType=BIGINT},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           TAB_ID = #{tabId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SYS_TABLE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.tabId != null">
+        TAB_ID = #{record.tabId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tabName != null">
+        TAB_NAME = #{record.tabName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tabType != null">
+        TAB_TYPE = #{record.tabType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tabKeyColName != null">
+        TAB_KEY_COL_NAME = #{record.tabKeyColName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slaTabInstColName != null">
+        SLA_TAB_INST_COL_NAME = #{record.slaTabInstColName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slaTabAttrColName != null">
+        SLA_TAB_ATTR_COL_NAME = #{record.slaTabAttrColName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slaTabAttrValColName != null">
+        SLA_TAB_ATTR_VAL_COL_NAME = #{record.slaTabAttrValColName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mstrTabId != null">
+        MSTR_TAB_ID = #{record.mstrTabId,jdbcType=BIGINT},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.tabId != null ">
+        TAB_ID = #{condition.tabId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.tabName != null and condition.tabName != ''">
+        and TAB_NAME = #{condition.tabName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.tabType != null and condition.tabType != ''">
+        and TAB_TYPE = #{condition.tabType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.tabKeyColName != null and condition.tabKeyColName != ''">
+        and TAB_KEY_COL_NAME = #{condition.tabKeyColName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.slaTabInstColName != null and condition.slaTabInstColName != ''">
+        and SLA_TAB_INST_COL_NAME = #{condition.slaTabInstColName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.slaTabAttrColName != null and condition.slaTabAttrColName != ''">
+        and SLA_TAB_ATTR_COL_NAME = #{condition.slaTabAttrColName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.slaTabAttrValColName != null and condition.slaTabAttrValColName != ''">
+        and SLA_TAB_ATTR_VAL_COL_NAME = #{condition.slaTabAttrValColName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mstrTabId != null ">
+        and MSTR_TAB_ID = #{condition.mstrTabId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.SettOfferMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.SettOfferDO">
+    <id column="SETT_OFFER_ID" jdbcType="BIGINT" property="settOfferId"/>
+    <result column="SETT_OFFER_NAME" jdbcType="VARCHAR" property="settOfferName"/>
+    <result column="SETT_OFFER_COMMENTS" jdbcType="VARCHAR" property="settOfferComments"/>
+    <result column="PRICING_PLAN_ID" jdbcType="INTEGER" property="pricingPlanId"/>
+    <result column="PRIORITY_VALUE" jdbcType="INTEGER" property="priorityValue"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="POLICY_TEMPLATE_ID" jdbcType="BIGINT" property="policyTemplateId"/>
+    <result column="AUDIT_STATE" jdbcType="INTEGER" property="auditState"/>
+    <result column="AUDIT_STATE_DATE" jdbcType="TIMESTAMP" property="auditStateDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          SETT_OFFER_ID, 
+          SETT_OFFER_NAME, 
+          SETT_OFFER_COMMENTS, 
+          PRICING_PLAN_ID, 
+          PRIORITY_VALUE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          POLICY_TEMPLATE_ID, 
+          AUDIT_STATE, 
+          AUDIT_STATE_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SETT_OFFER_NAME, 
+          SETT_OFFER_COMMENTS, 
+          PRICING_PLAN_ID, 
+          PRIORITY_VALUE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          POLICY_TEMPLATE_ID, 
+          AUDIT_STATE, 
+          AUDIT_STATE_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="settOfferId != null ">
+        SETT_OFFER_ID = #{settOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="settOfferName != null and settOfferName != ''">
+        and SETT_OFFER_NAME = #{settOfferName, jdbcType=VARCHAR }
+      </if>
+      <if test="settOfferComments != null and settOfferComments != ''">
+        and SETT_OFFER_COMMENTS = #{settOfferComments, jdbcType=VARCHAR }
+      </if>
+      <if test="pricingPlanId != null ">
+        and PRICING_PLAN_ID = #{pricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="priorityValue != null ">
+        and PRIORITY_VALUE = #{priorityValue, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="policyTemplateId != null ">
+        and POLICY_TEMPLATE_ID = #{policyTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="auditState != null ">
+        and AUDIT_STATE = #{auditState, jdbcType=INTEGER }
+      </if>
+      <if test="auditStateDate != null ">
+        and AUDIT_STATE_DATE = #{auditStateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.SettOfferDO" resultType="java.lang.Integer">
+      select count(*) from SETT_OFFER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from SETT_OFFER
+        where 
+           SETT_OFFER_ID = #{settOfferId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  SETT_OFFER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="settOfferId">
+      insert into  SETT_OFFER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{settOfferName,jdbcType=VARCHAR}, 
+        #{settOfferComments,jdbcType=VARCHAR}, 
+        #{pricingPlanId,jdbcType=INTEGER}, 
+        #{priorityValue,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{policyTemplateId,jdbcType=BIGINT}, 
+        #{auditState,jdbcType=INTEGER}, 
+        #{auditStateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  SETT_OFFER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{settOfferId,jdbcType=BIGINT}, 
+        #{settOfferName,jdbcType=VARCHAR}, 
+        #{settOfferComments,jdbcType=VARCHAR}, 
+        #{pricingPlanId,jdbcType=INTEGER}, 
+        #{priorityValue,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{policyTemplateId,jdbcType=BIGINT}, 
+        #{auditState,jdbcType=INTEGER}, 
+        #{auditStateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from SETT_OFFER  
+        where
+           SETT_OFFER_ID = #{settOfferId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from SETT_OFFER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  SETT_OFFER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="settOfferName != null">
+         SETT_OFFER_NAME = #{settOfferName,jdbcType=VARCHAR},
+      </if>
+      <if test="settOfferComments != null">
+         SETT_OFFER_COMMENTS = #{settOfferComments,jdbcType=VARCHAR},
+      </if>
+      <if test="pricingPlanId != null">
+         PRICING_PLAN_ID = #{pricingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="priorityValue != null">
+         PRIORITY_VALUE = #{priorityValue,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="policyTemplateId != null">
+         POLICY_TEMPLATE_ID = #{policyTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="auditState != null">
+         AUDIT_STATE = #{auditState,jdbcType=INTEGER},
+      </if>
+      <if test="auditStateDate != null">
+         AUDIT_STATE_DATE = #{auditStateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           SETT_OFFER_ID = #{settOfferId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update SETT_OFFER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.settOfferId != null">
+        SETT_OFFER_ID = #{record.settOfferId,jdbcType=BIGINT},
+      </if>
+      <if test="record.settOfferName != null">
+        SETT_OFFER_NAME = #{record.settOfferName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settOfferComments != null">
+        SETT_OFFER_COMMENTS = #{record.settOfferComments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pricingPlanId != null">
+        PRICING_PLAN_ID = #{record.pricingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.priorityValue != null">
+        PRIORITY_VALUE = #{record.priorityValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.policyTemplateId != null">
+        POLICY_TEMPLATE_ID = #{record.policyTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.auditState != null">
+        AUDIT_STATE = #{record.auditState,jdbcType=INTEGER},
+      </if>
+      <if test="record.auditStateDate != null">
+        AUDIT_STATE_DATE = #{record.auditStateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.settOfferId != null ">
+        SETT_OFFER_ID = #{condition.settOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.settOfferName != null and condition.settOfferName != ''">
+        and SETT_OFFER_NAME = #{condition.settOfferName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.settOfferComments != null and condition.settOfferComments != ''">
+        and SETT_OFFER_COMMENTS = #{condition.settOfferComments, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.pricingPlanId != null ">
+        and PRICING_PLAN_ID = #{condition.pricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priorityValue != null ">
+        and PRIORITY_VALUE = #{condition.priorityValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.policyTemplateId != null ">
+        and POLICY_TEMPLATE_ID = #{condition.policyTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.auditState != null ">
+        and AUDIT_STATE = #{condition.auditState, jdbcType=INTEGER }
+      </if>
+      <if test="condition.auditStateDate != null ">
+        and AUDIT_STATE_DATE = #{condition.auditStateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

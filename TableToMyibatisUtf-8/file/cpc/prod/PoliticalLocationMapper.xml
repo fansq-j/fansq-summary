@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PoliticalLocationMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PoliticalLocationDO">
+    <id column="LOC_ID" jdbcType="BIGINT" property="locId"/>
+    <result column="PAR_LOC_ID" jdbcType="BIGINT" property="parLocId"/>
+    <result column="LOC_NBR" jdbcType="VARCHAR" property="locNbr"/>
+    <result column="LOC_NAME" jdbcType="VARCHAR" property="locName"/>
+    <result column="LOC_DESC" jdbcType="VARCHAR" property="locDesc"/>
+    <result column="LOC_TYPE" jdbcType="VARCHAR" property="locType"/>
+    <result column="LOC_ABBR" jdbcType="VARCHAR" property="locAbbr"/>
+    <result column="LOC_LEVEL" jdbcType="VARCHAR" property="locLevel"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          LOC_ID, 
+          PAR_LOC_ID, 
+          LOC_NBR, 
+          LOC_NAME, 
+          LOC_DESC, 
+          LOC_TYPE, 
+          LOC_ABBR, 
+          LOC_LEVEL, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PAR_LOC_ID, 
+          LOC_NBR, 
+          LOC_NAME, 
+          LOC_DESC, 
+          LOC_TYPE, 
+          LOC_ABBR, 
+          LOC_LEVEL, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="locId != null ">
+        LOC_ID = #{locId, jdbcType=BIGINT }
+      </if>
+      <if test="parLocId != null ">
+        and PAR_LOC_ID = #{parLocId, jdbcType=BIGINT }
+      </if>
+      <if test="locNbr != null and locNbr != ''">
+        and LOC_NBR = #{locNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="locName != null and locName != ''">
+        and LOC_NAME = #{locName, jdbcType=VARCHAR }
+      </if>
+      <if test="locDesc != null and locDesc != ''">
+        and LOC_DESC = #{locDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="locType != null and locType != ''">
+        and LOC_TYPE = #{locType, jdbcType=VARCHAR }
+      </if>
+      <if test="locAbbr != null and locAbbr != ''">
+        and LOC_ABBR = #{locAbbr, jdbcType=VARCHAR }
+      </if>
+      <if test="locLevel != null and locLevel != ''">
+        and LOC_LEVEL = #{locLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PoliticalLocationDO" resultType="java.lang.Integer">
+      select count(*) from POLITICAL_LOCATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POLITICAL_LOCATION
+        where 
+           LOC_ID = #{locId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POLITICAL_LOCATION 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="locId">
+      insert into  POLITICAL_LOCATION ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{parLocId,jdbcType=BIGINT}, 
+        #{locNbr,jdbcType=VARCHAR}, 
+        #{locName,jdbcType=VARCHAR}, 
+        #{locDesc,jdbcType=VARCHAR}, 
+        #{locType,jdbcType=VARCHAR}, 
+        #{locAbbr,jdbcType=VARCHAR}, 
+        #{locLevel,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POLITICAL_LOCATION ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{locId,jdbcType=BIGINT}, 
+        #{parLocId,jdbcType=BIGINT}, 
+        #{locNbr,jdbcType=VARCHAR}, 
+        #{locName,jdbcType=VARCHAR}, 
+        #{locDesc,jdbcType=VARCHAR}, 
+        #{locType,jdbcType=VARCHAR}, 
+        #{locAbbr,jdbcType=VARCHAR}, 
+        #{locLevel,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POLITICAL_LOCATION  
+        where
+           LOC_ID = #{locId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from POLITICAL_LOCATION
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POLITICAL_LOCATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="parLocId != null">
+         PAR_LOC_ID = #{parLocId,jdbcType=BIGINT},
+      </if>
+      <if test="locNbr != null">
+         LOC_NBR = #{locNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="locName != null">
+         LOC_NAME = #{locName,jdbcType=VARCHAR},
+      </if>
+      <if test="locDesc != null">
+         LOC_DESC = #{locDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="locType != null">
+         LOC_TYPE = #{locType,jdbcType=VARCHAR},
+      </if>
+      <if test="locAbbr != null">
+         LOC_ABBR = #{locAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="locLevel != null">
+         LOC_LEVEL = #{locLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           LOC_ID = #{locId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update POLITICAL_LOCATION
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.locId != null">
+        LOC_ID = #{record.locId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parLocId != null">
+        PAR_LOC_ID = #{record.parLocId,jdbcType=BIGINT},
+      </if>
+      <if test="record.locNbr != null">
+        LOC_NBR = #{record.locNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locName != null">
+        LOC_NAME = #{record.locName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locDesc != null">
+        LOC_DESC = #{record.locDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locType != null">
+        LOC_TYPE = #{record.locType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locAbbr != null">
+        LOC_ABBR = #{record.locAbbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locLevel != null">
+        LOC_LEVEL = #{record.locLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.locId != null ">
+        LOC_ID = #{condition.locId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.parLocId != null ">
+        and PAR_LOC_ID = #{condition.parLocId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.locNbr != null and condition.locNbr != ''">
+        and LOC_NBR = #{condition.locNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.locName != null and condition.locName != ''">
+        and LOC_NAME = #{condition.locName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.locDesc != null and condition.locDesc != ''">
+        and LOC_DESC = #{condition.locDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.locType != null and condition.locType != ''">
+        and LOC_TYPE = #{condition.locType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.locAbbr != null and condition.locAbbr != ''">
+        and LOC_ABBR = #{condition.locAbbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.locLevel != null and condition.locLevel != ''">
+        and LOC_LEVEL = #{condition.locLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

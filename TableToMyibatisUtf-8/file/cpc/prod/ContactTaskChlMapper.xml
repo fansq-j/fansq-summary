@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ContactTaskChlMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ContactTaskChlDO">
+    <id column="CONTACT_TASK_CHL_ID" jdbcType="BIGINT" property="contactTaskChlId"/>
+    <result column="CONTACT_TASK_ID" jdbcType="BIGINT" property="contactTaskId"/>
+    <result column="CONTACT_CHL_ID" jdbcType="BIGINT" property="contactChlId"/>
+    <result column="PUSH_TYPE" jdbcType="VARCHAR" property="pushType"/>
+    <result column="CONTACT_ACCOUNT" jdbcType="VARCHAR" property="contactAccount"/>
+    <result column="CONTACT_SCRIPT" jdbcType="VARCHAR" property="contactScript"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CONTACT_TASK_CHL_ID, 
+          CONTACT_TASK_ID, 
+          CONTACT_CHL_ID, 
+          PUSH_TYPE, 
+          CONTACT_ACCOUNT, 
+          CONTACT_SCRIPT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CONTACT_TASK_ID, 
+          CONTACT_CHL_ID, 
+          PUSH_TYPE, 
+          CONTACT_ACCOUNT, 
+          CONTACT_SCRIPT, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="contactTaskChlId != null ">
+        CONTACT_TASK_CHL_ID = #{contactTaskChlId, jdbcType=BIGINT }
+      </if>
+      <if test="contactTaskId != null ">
+        and CONTACT_TASK_ID = #{contactTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="contactChlId != null ">
+        and CONTACT_CHL_ID = #{contactChlId, jdbcType=BIGINT }
+      </if>
+      <if test="pushType != null and pushType != ''">
+        and PUSH_TYPE = #{pushType, jdbcType=VARCHAR }
+      </if>
+      <if test="contactAccount != null and contactAccount != ''">
+        and CONTACT_ACCOUNT = #{contactAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="contactScript != null and contactScript != ''">
+        and CONTACT_SCRIPT = #{contactScript, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ContactTaskChlDO" resultType="java.lang.Integer">
+      select count(*) from CONTACT_TASK_CHL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CONTACT_TASK_CHL
+        where 
+           CONTACT_TASK_CHL_ID = #{contactTaskChlId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CONTACT_TASK_CHL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="contactTaskChlId">
+      insert into  CONTACT_TASK_CHL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{contactTaskId,jdbcType=BIGINT}, 
+        #{contactChlId,jdbcType=BIGINT}, 
+        #{pushType,jdbcType=VARCHAR}, 
+        #{contactAccount,jdbcType=VARCHAR}, 
+        #{contactScript,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CONTACT_TASK_CHL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{contactTaskChlId,jdbcType=BIGINT}, 
+        #{contactTaskId,jdbcType=BIGINT}, 
+        #{contactChlId,jdbcType=BIGINT}, 
+        #{pushType,jdbcType=VARCHAR}, 
+        #{contactAccount,jdbcType=VARCHAR}, 
+        #{contactScript,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CONTACT_TASK_CHL  
+        where
+           CONTACT_TASK_CHL_ID = #{contactTaskChlId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CONTACT_TASK_CHL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CONTACT_TASK_CHL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="contactTaskId != null">
+         CONTACT_TASK_ID = #{contactTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="contactChlId != null">
+         CONTACT_CHL_ID = #{contactChlId,jdbcType=BIGINT},
+      </if>
+      <if test="pushType != null">
+         PUSH_TYPE = #{pushType,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAccount != null">
+         CONTACT_ACCOUNT = #{contactAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="contactScript != null">
+         CONTACT_SCRIPT = #{contactScript,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CONTACT_TASK_CHL_ID = #{contactTaskChlId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CONTACT_TASK_CHL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.contactTaskChlId != null">
+        CONTACT_TASK_CHL_ID = #{record.contactTaskChlId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactTaskId != null">
+        CONTACT_TASK_ID = #{record.contactTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactChlId != null">
+        CONTACT_CHL_ID = #{record.contactChlId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pushType != null">
+        PUSH_TYPE = #{record.pushType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactAccount != null">
+        CONTACT_ACCOUNT = #{record.contactAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactScript != null">
+        CONTACT_SCRIPT = #{record.contactScript,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.contactTaskChlId != null ">
+        CONTACT_TASK_CHL_ID = #{condition.contactTaskChlId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.contactTaskId != null ">
+        and CONTACT_TASK_ID = #{condition.contactTaskId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.contactChlId != null ">
+        and CONTACT_CHL_ID = #{condition.contactChlId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pushType != null and condition.pushType != ''">
+        and PUSH_TYPE = #{condition.pushType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactAccount != null and condition.contactAccount != ''">
+        and CONTACT_ACCOUNT = #{condition.contactAccount, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactScript != null and condition.contactScript != ''">
+        and CONTACT_SCRIPT = #{condition.contactScript, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

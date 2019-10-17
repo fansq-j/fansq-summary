@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.RuleEventRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.RuleEventRuleDO">
+    <id column="RULE_EVENT_RULE_ID" jdbcType="BIGINT" property="ruleEventRuleId"/>
+    <result column="RULE_EVENT_ID" jdbcType="BIGINT" property="ruleEventId"/>
+    <result column="RULE_ID" jdbcType="BIGINT" property="ruleId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RULE_EVENT_RULE_ID, 
+          RULE_EVENT_ID, 
+          RULE_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          RULE_EVENT_ID, 
+          RULE_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="ruleEventRuleId != null ">
+        RULE_EVENT_RULE_ID = #{ruleEventRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleEventId != null ">
+        and RULE_EVENT_ID = #{ruleEventId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleId != null ">
+        and RULE_ID = #{ruleId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.RuleEventRuleDO" resultType="java.lang.Integer">
+      select count(*) from RULE_EVENT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RULE_EVENT_RULE
+        where 
+           RULE_EVENT_RULE_ID = #{ruleEventRuleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RULE_EVENT_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="ruleEventRuleId">
+      insert into  RULE_EVENT_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{ruleEventId,jdbcType=BIGINT}, 
+        #{ruleId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RULE_EVENT_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{ruleEventRuleId,jdbcType=BIGINT}, 
+        #{ruleEventId,jdbcType=BIGINT}, 
+        #{ruleId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RULE_EVENT_RULE  
+        where
+           RULE_EVENT_RULE_ID = #{ruleEventRuleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RULE_EVENT_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RULE_EVENT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="ruleEventId != null">
+         RULE_EVENT_ID = #{ruleEventId,jdbcType=BIGINT},
+      </if>
+      <if test="ruleId != null">
+         RULE_ID = #{ruleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           RULE_EVENT_RULE_ID = #{ruleEventRuleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RULE_EVENT_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.ruleEventRuleId != null">
+        RULE_EVENT_RULE_ID = #{record.ruleEventRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleEventId != null">
+        RULE_EVENT_ID = #{record.ruleEventId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleId != null">
+        RULE_ID = #{record.ruleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.ruleEventRuleId != null ">
+        RULE_EVENT_RULE_ID = #{condition.ruleEventRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleEventId != null ">
+        and RULE_EVENT_ID = #{condition.ruleEventId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleId != null ">
+        and RULE_ID = #{condition.ruleId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

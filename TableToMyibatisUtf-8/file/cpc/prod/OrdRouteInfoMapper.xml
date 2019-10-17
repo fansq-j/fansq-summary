@@ -1,0 +1,815 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdRouteInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdRouteInfoDO">
+    <result column="ROUTE_INFO_ID" jdbcType="BIGINT" property="routeInfoId"/>
+    <result column="PROD_INST_ID" jdbcType="BIGINT" property="prodInstId"/>
+    <result column="ROUTE_CALL_AREA" jdbcType="INTEGER" property="routeCallArea"/>
+    <result column="ROUTE_RATE" jdbcType="INTEGER" property="routeRate"/>
+    <result column="ROUTE_DATE_TYPE" jdbcType="VARCHAR" property="routeDateType"/>
+    <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate"/>
+    <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate"/>
+    <result column="ROUTE_TIME_TYPE" jdbcType="VARCHAR" property="routeTimeType"/>
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime"/>
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime"/>
+    <result column="ROUTE_WEEK_TYPE" jdbcType="VARCHAR" property="routeWeekType"/>
+    <result column="START_WEEK" jdbcType="VARCHAR" property="startWeek"/>
+    <result column="END_WEEK" jdbcType="VARCHAR" property="endWeek"/>
+    <result column="ROUTE_DESC_TYPE" jdbcType="VARCHAR" property="routeDescType"/>
+    <result column="ROUTE_DESC_NUM_HEAD" jdbcType="INTEGER" property="routeDescNumHead"/>
+    <result column="ROUTE_DESC_NUM" jdbcType="VARCHAR" property="routeDescNum"/>
+    <result column="BUSY_FLAG" jdbcType="VARCHAR" property="busyFlag"/>
+    <result column="BUSY_NUM_HEAD_A" jdbcType="VARCHAR" property="busyNumHeadA"/>
+    <result column="BUSY_NUM_A" jdbcType="VARCHAR" property="busyNumA"/>
+    <result column="BUSY_NUM_HEAD_B" jdbcType="VARCHAR" property="busyNumHeadB"/>
+    <result column="BUSY_NUM_B" jdbcType="VARCHAR" property="busyNumB"/>
+    <result column="NO_FLAG" jdbcType="VARCHAR" property="noFlag"/>
+    <result column="NO_NUM_HEAD_A" jdbcType="VARCHAR" property="noNumHeadA"/>
+    <result column="NO_NUM_A" jdbcType="VARCHAR" property="noNumA"/>
+    <result column="NO_NUM_HEAD_B" jdbcType="VARCHAR" property="noNumHeadB"/>
+    <result column="NO_NUM_B" jdbcType="VARCHAR" property="noNumB"/>
+    <result column="OTHER_FLAG" jdbcType="VARCHAR" property="otherFlag"/>
+    <result column="OTHER_NUM_HEAD_A" jdbcType="VARCHAR" property="otherNumHeadA"/>
+    <result column="OTHER_NUM_A" jdbcType="VARCHAR" property="otherNumA"/>
+    <result column="OTHER_NUM_HEAD_B" jdbcType="VARCHAR" property="otherNumHeadB"/>
+    <result column="OTHER_NUM_B" jdbcType="VARCHAR" property="otherNumB"/>
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ROUTE_INFO_ID, 
+          PROD_INST_ID, 
+          ROUTE_CALL_AREA, 
+          ROUTE_RATE, 
+          ROUTE_DATE_TYPE, 
+          START_DATE, 
+          END_DATE, 
+          ROUTE_TIME_TYPE, 
+          START_TIME, 
+          END_TIME, 
+          ROUTE_WEEK_TYPE, 
+          START_WEEK, 
+          END_WEEK, 
+          ROUTE_DESC_TYPE, 
+          ROUTE_DESC_NUM_HEAD, 
+          ROUTE_DESC_NUM, 
+          BUSY_FLAG, 
+          BUSY_NUM_HEAD_A, 
+          BUSY_NUM_A, 
+          BUSY_NUM_HEAD_B, 
+          BUSY_NUM_B, 
+          NO_FLAG, 
+          NO_NUM_HEAD_A, 
+          NO_NUM_A, 
+          NO_NUM_HEAD_B, 
+          NO_NUM_B, 
+          OTHER_FLAG, 
+          OTHER_NUM_HEAD_A, 
+          OTHER_NUM_A, 
+          OTHER_NUM_HEAD_B, 
+          OTHER_NUM_B, 
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ROUTE_INFO_ID, 
+          PROD_INST_ID, 
+          ROUTE_CALL_AREA, 
+          ROUTE_RATE, 
+          ROUTE_DATE_TYPE, 
+          START_DATE, 
+          END_DATE, 
+          ROUTE_TIME_TYPE, 
+          START_TIME, 
+          END_TIME, 
+          ROUTE_WEEK_TYPE, 
+          START_WEEK, 
+          END_WEEK, 
+          ROUTE_DESC_TYPE, 
+          ROUTE_DESC_NUM_HEAD, 
+          ROUTE_DESC_NUM, 
+          BUSY_FLAG, 
+          BUSY_NUM_HEAD_A, 
+          BUSY_NUM_A, 
+          BUSY_NUM_HEAD_B, 
+          BUSY_NUM_B, 
+          NO_FLAG, 
+          NO_NUM_HEAD_A, 
+          NO_NUM_A, 
+          NO_NUM_HEAD_B, 
+          NO_NUM_B, 
+          OTHER_FLAG, 
+          OTHER_NUM_HEAD_A, 
+          OTHER_NUM_A, 
+          OTHER_NUM_HEAD_B, 
+          OTHER_NUM_B, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          VER_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="routeInfoId != null ">
+        ROUTE_INFO_ID = #{routeInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="prodInstId != null ">
+        and PROD_INST_ID = #{prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="routeCallArea != null ">
+        and ROUTE_CALL_AREA = #{routeCallArea, jdbcType=INTEGER }
+      </if>
+      <if test="routeRate != null ">
+        and ROUTE_RATE = #{routeRate, jdbcType=INTEGER }
+      </if>
+      <if test="routeDateType != null and routeDateType != ''">
+        and ROUTE_DATE_TYPE = #{routeDateType, jdbcType=VARCHAR }
+      </if>
+      <if test="startDate != null ">
+        and START_DATE = #{startDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="endDate != null ">
+        and END_DATE = #{endDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="routeTimeType != null and routeTimeType != ''">
+        and ROUTE_TIME_TYPE = #{routeTimeType, jdbcType=VARCHAR }
+      </if>
+      <if test="startTime != null ">
+        and START_TIME = #{startTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="endTime != null ">
+        and END_TIME = #{endTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="routeWeekType != null and routeWeekType != ''">
+        and ROUTE_WEEK_TYPE = #{routeWeekType, jdbcType=VARCHAR }
+      </if>
+      <if test="startWeek != null and startWeek != ''">
+        and START_WEEK = #{startWeek, jdbcType=VARCHAR }
+      </if>
+      <if test="endWeek != null and endWeek != ''">
+        and END_WEEK = #{endWeek, jdbcType=VARCHAR }
+      </if>
+      <if test="routeDescType != null and routeDescType != ''">
+        and ROUTE_DESC_TYPE = #{routeDescType, jdbcType=VARCHAR }
+      </if>
+      <if test="routeDescNumHead != null ">
+        and ROUTE_DESC_NUM_HEAD = #{routeDescNumHead, jdbcType=INTEGER }
+      </if>
+      <if test="routeDescNum != null and routeDescNum != ''">
+        and ROUTE_DESC_NUM = #{routeDescNum, jdbcType=VARCHAR }
+      </if>
+      <if test="busyFlag != null and busyFlag != ''">
+        and BUSY_FLAG = #{busyFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="busyNumHeadA != null and busyNumHeadA != ''">
+        and BUSY_NUM_HEAD_A = #{busyNumHeadA, jdbcType=VARCHAR }
+      </if>
+      <if test="busyNumA != null and busyNumA != ''">
+        and BUSY_NUM_A = #{busyNumA, jdbcType=VARCHAR }
+      </if>
+      <if test="busyNumHeadB != null and busyNumHeadB != ''">
+        and BUSY_NUM_HEAD_B = #{busyNumHeadB, jdbcType=VARCHAR }
+      </if>
+      <if test="busyNumB != null and busyNumB != ''">
+        and BUSY_NUM_B = #{busyNumB, jdbcType=VARCHAR }
+      </if>
+      <if test="noFlag != null and noFlag != ''">
+        and NO_FLAG = #{noFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="noNumHeadA != null and noNumHeadA != ''">
+        and NO_NUM_HEAD_A = #{noNumHeadA, jdbcType=VARCHAR }
+      </if>
+      <if test="noNumA != null and noNumA != ''">
+        and NO_NUM_A = #{noNumA, jdbcType=VARCHAR }
+      </if>
+      <if test="noNumHeadB != null and noNumHeadB != ''">
+        and NO_NUM_HEAD_B = #{noNumHeadB, jdbcType=VARCHAR }
+      </if>
+      <if test="noNumB != null and noNumB != ''">
+        and NO_NUM_B = #{noNumB, jdbcType=VARCHAR }
+      </if>
+      <if test="otherFlag != null and otherFlag != ''">
+        and OTHER_FLAG = #{otherFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="otherNumHeadA != null and otherNumHeadA != ''">
+        and OTHER_NUM_HEAD_A = #{otherNumHeadA, jdbcType=VARCHAR }
+      </if>
+      <if test="otherNumA != null and otherNumA != ''">
+        and OTHER_NUM_A = #{otherNumA, jdbcType=VARCHAR }
+      </if>
+      <if test="otherNumHeadB != null and otherNumHeadB != ''">
+        and OTHER_NUM_HEAD_B = #{otherNumHeadB, jdbcType=VARCHAR }
+      </if>
+      <if test="otherNumB != null and otherNumB != ''">
+        and OTHER_NUM_B = #{otherNumB, jdbcType=VARCHAR }
+      </if>
+      <if test="rowId != null ">
+        and ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdRouteInfoDO" resultType="java.lang.Integer">
+      select count(*) from ORD_ROUTE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_ROUTE_INFO
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_ROUTE_INFO 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_ROUTE_INFO ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{routeInfoId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{routeCallArea,jdbcType=INTEGER}, 
+        #{routeRate,jdbcType=INTEGER}, 
+        #{routeDateType,jdbcType=VARCHAR}, 
+        #{startDate,jdbcType=TIMESTAMP}, 
+        #{endDate,jdbcType=TIMESTAMP}, 
+        #{routeTimeType,jdbcType=VARCHAR}, 
+        #{startTime,jdbcType=TIMESTAMP}, 
+        #{endTime,jdbcType=TIMESTAMP}, 
+        #{routeWeekType,jdbcType=VARCHAR}, 
+        #{startWeek,jdbcType=VARCHAR}, 
+        #{endWeek,jdbcType=VARCHAR}, 
+        #{routeDescType,jdbcType=VARCHAR}, 
+        #{routeDescNumHead,jdbcType=INTEGER}, 
+        #{routeDescNum,jdbcType=VARCHAR}, 
+        #{busyFlag,jdbcType=VARCHAR}, 
+        #{busyNumHeadA,jdbcType=VARCHAR}, 
+        #{busyNumA,jdbcType=VARCHAR}, 
+        #{busyNumHeadB,jdbcType=VARCHAR}, 
+        #{busyNumB,jdbcType=VARCHAR}, 
+        #{noFlag,jdbcType=VARCHAR}, 
+        #{noNumHeadA,jdbcType=VARCHAR}, 
+        #{noNumA,jdbcType=VARCHAR}, 
+        #{noNumHeadB,jdbcType=VARCHAR}, 
+        #{noNumB,jdbcType=VARCHAR}, 
+        #{otherFlag,jdbcType=VARCHAR}, 
+        #{otherNumHeadA,jdbcType=VARCHAR}, 
+        #{otherNumA,jdbcType=VARCHAR}, 
+        #{otherNumHeadB,jdbcType=VARCHAR}, 
+        #{otherNumB,jdbcType=VARCHAR}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_ROUTE_INFO ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{routeInfoId,jdbcType=BIGINT}, 
+        #{prodInstId,jdbcType=BIGINT}, 
+        #{routeCallArea,jdbcType=INTEGER}, 
+        #{routeRate,jdbcType=INTEGER}, 
+        #{routeDateType,jdbcType=VARCHAR}, 
+        #{startDate,jdbcType=TIMESTAMP}, 
+        #{endDate,jdbcType=TIMESTAMP}, 
+        #{routeTimeType,jdbcType=VARCHAR}, 
+        #{startTime,jdbcType=TIMESTAMP}, 
+        #{endTime,jdbcType=TIMESTAMP}, 
+        #{routeWeekType,jdbcType=VARCHAR}, 
+        #{startWeek,jdbcType=VARCHAR}, 
+        #{endWeek,jdbcType=VARCHAR}, 
+        #{routeDescType,jdbcType=VARCHAR}, 
+        #{routeDescNumHead,jdbcType=INTEGER}, 
+        #{routeDescNum,jdbcType=VARCHAR}, 
+        #{busyFlag,jdbcType=VARCHAR}, 
+        #{busyNumHeadA,jdbcType=VARCHAR}, 
+        #{busyNumA,jdbcType=VARCHAR}, 
+        #{busyNumHeadB,jdbcType=VARCHAR}, 
+        #{busyNumB,jdbcType=VARCHAR}, 
+        #{noFlag,jdbcType=VARCHAR}, 
+        #{noNumHeadA,jdbcType=VARCHAR}, 
+        #{noNumA,jdbcType=VARCHAR}, 
+        #{noNumHeadB,jdbcType=VARCHAR}, 
+        #{noNumB,jdbcType=VARCHAR}, 
+        #{otherFlag,jdbcType=VARCHAR}, 
+        #{otherNumHeadA,jdbcType=VARCHAR}, 
+        #{otherNumA,jdbcType=VARCHAR}, 
+        #{otherNumHeadB,jdbcType=VARCHAR}, 
+        #{otherNumB,jdbcType=VARCHAR}, 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{verNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_ROUTE_INFO  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_ROUTE_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_ROUTE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="routeInfoId != null">
+         ROUTE_INFO_ID = #{routeInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="prodInstId != null">
+         PROD_INST_ID = #{prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="routeCallArea != null">
+         ROUTE_CALL_AREA = #{routeCallArea,jdbcType=INTEGER},
+      </if>
+      <if test="routeRate != null">
+         ROUTE_RATE = #{routeRate,jdbcType=INTEGER},
+      </if>
+      <if test="routeDateType != null">
+         ROUTE_DATE_TYPE = #{routeDateType,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+         START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+         END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="routeTimeType != null">
+         ROUTE_TIME_TYPE = #{routeTimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+         START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+         END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="routeWeekType != null">
+         ROUTE_WEEK_TYPE = #{routeWeekType,jdbcType=VARCHAR},
+      </if>
+      <if test="startWeek != null">
+         START_WEEK = #{startWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="endWeek != null">
+         END_WEEK = #{endWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="routeDescType != null">
+         ROUTE_DESC_TYPE = #{routeDescType,jdbcType=VARCHAR},
+      </if>
+      <if test="routeDescNumHead != null">
+         ROUTE_DESC_NUM_HEAD = #{routeDescNumHead,jdbcType=INTEGER},
+      </if>
+      <if test="routeDescNum != null">
+         ROUTE_DESC_NUM = #{routeDescNum,jdbcType=VARCHAR},
+      </if>
+      <if test="busyFlag != null">
+         BUSY_FLAG = #{busyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="busyNumHeadA != null">
+         BUSY_NUM_HEAD_A = #{busyNumHeadA,jdbcType=VARCHAR},
+      </if>
+      <if test="busyNumA != null">
+         BUSY_NUM_A = #{busyNumA,jdbcType=VARCHAR},
+      </if>
+      <if test="busyNumHeadB != null">
+         BUSY_NUM_HEAD_B = #{busyNumHeadB,jdbcType=VARCHAR},
+      </if>
+      <if test="busyNumB != null">
+         BUSY_NUM_B = #{busyNumB,jdbcType=VARCHAR},
+      </if>
+      <if test="noFlag != null">
+         NO_FLAG = #{noFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="noNumHeadA != null">
+         NO_NUM_HEAD_A = #{noNumHeadA,jdbcType=VARCHAR},
+      </if>
+      <if test="noNumA != null">
+         NO_NUM_A = #{noNumA,jdbcType=VARCHAR},
+      </if>
+      <if test="noNumHeadB != null">
+         NO_NUM_HEAD_B = #{noNumHeadB,jdbcType=VARCHAR},
+      </if>
+      <if test="noNumB != null">
+         NO_NUM_B = #{noNumB,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFlag != null">
+         OTHER_FLAG = #{otherFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="otherNumHeadA != null">
+         OTHER_NUM_HEAD_A = #{otherNumHeadA,jdbcType=VARCHAR},
+      </if>
+      <if test="otherNumA != null">
+         OTHER_NUM_A = #{otherNumA,jdbcType=VARCHAR},
+      </if>
+      <if test="otherNumHeadB != null">
+         OTHER_NUM_HEAD_B = #{otherNumHeadB,jdbcType=VARCHAR},
+      </if>
+      <if test="otherNumB != null">
+         OTHER_NUM_B = #{otherNumB,jdbcType=VARCHAR},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_ROUTE_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.routeInfoId != null">
+        ROUTE_INFO_ID = #{record.routeInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodInstId != null">
+        PROD_INST_ID = #{record.prodInstId,jdbcType=BIGINT},
+      </if>
+      <if test="record.routeCallArea != null">
+        ROUTE_CALL_AREA = #{record.routeCallArea,jdbcType=INTEGER},
+      </if>
+      <if test="record.routeRate != null">
+        ROUTE_RATE = #{record.routeRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.routeDateType != null">
+        ROUTE_DATE_TYPE = #{record.routeDateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDate != null">
+        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null">
+        END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.routeTimeType != null">
+        ROUTE_TIME_TYPE = #{record.routeTimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.routeWeekType != null">
+        ROUTE_WEEK_TYPE = #{record.routeWeekType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startWeek != null">
+        START_WEEK = #{record.startWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endWeek != null">
+        END_WEEK = #{record.endWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="record.routeDescType != null">
+        ROUTE_DESC_TYPE = #{record.routeDescType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.routeDescNumHead != null">
+        ROUTE_DESC_NUM_HEAD = #{record.routeDescNumHead,jdbcType=INTEGER},
+      </if>
+      <if test="record.routeDescNum != null">
+        ROUTE_DESC_NUM = #{record.routeDescNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busyFlag != null">
+        BUSY_FLAG = #{record.busyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busyNumHeadA != null">
+        BUSY_NUM_HEAD_A = #{record.busyNumHeadA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busyNumA != null">
+        BUSY_NUM_A = #{record.busyNumA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busyNumHeadB != null">
+        BUSY_NUM_HEAD_B = #{record.busyNumHeadB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busyNumB != null">
+        BUSY_NUM_B = #{record.busyNumB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noFlag != null">
+        NO_FLAG = #{record.noFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noNumHeadA != null">
+        NO_NUM_HEAD_A = #{record.noNumHeadA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noNumA != null">
+        NO_NUM_A = #{record.noNumA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noNumHeadB != null">
+        NO_NUM_HEAD_B = #{record.noNumHeadB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noNumB != null">
+        NO_NUM_B = #{record.noNumB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherFlag != null">
+        OTHER_FLAG = #{record.otherFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherNumHeadA != null">
+        OTHER_NUM_HEAD_A = #{record.otherNumHeadA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherNumA != null">
+        OTHER_NUM_A = #{record.otherNumA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherNumHeadB != null">
+        OTHER_NUM_HEAD_B = #{record.otherNumHeadB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherNumB != null">
+        OTHER_NUM_B = #{record.otherNumB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.routeInfoId != null ">
+        ROUTE_INFO_ID = #{condition.routeInfoId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.prodInstId != null ">
+        and PROD_INST_ID = #{condition.prodInstId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.routeCallArea != null ">
+        and ROUTE_CALL_AREA = #{condition.routeCallArea, jdbcType=INTEGER }
+      </if>
+      <if test="condition.routeRate != null ">
+        and ROUTE_RATE = #{condition.routeRate, jdbcType=INTEGER }
+      </if>
+      <if test="condition.routeDateType != null and condition.routeDateType != ''">
+        and ROUTE_DATE_TYPE = #{condition.routeDateType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.startDate != null ">
+        and START_DATE = #{condition.startDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.endDate != null ">
+        and END_DATE = #{condition.endDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.routeTimeType != null and condition.routeTimeType != ''">
+        and ROUTE_TIME_TYPE = #{condition.routeTimeType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.startTime != null ">
+        and START_TIME = #{condition.startTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.endTime != null ">
+        and END_TIME = #{condition.endTime, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.routeWeekType != null and condition.routeWeekType != ''">
+        and ROUTE_WEEK_TYPE = #{condition.routeWeekType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.startWeek != null and condition.startWeek != ''">
+        and START_WEEK = #{condition.startWeek, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.endWeek != null and condition.endWeek != ''">
+        and END_WEEK = #{condition.endWeek, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.routeDescType != null and condition.routeDescType != ''">
+        and ROUTE_DESC_TYPE = #{condition.routeDescType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.routeDescNumHead != null ">
+        and ROUTE_DESC_NUM_HEAD = #{condition.routeDescNumHead, jdbcType=INTEGER }
+      </if>
+      <if test="condition.routeDescNum != null and condition.routeDescNum != ''">
+        and ROUTE_DESC_NUM = #{condition.routeDescNum, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.busyFlag != null and condition.busyFlag != ''">
+        and BUSY_FLAG = #{condition.busyFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.busyNumHeadA != null and condition.busyNumHeadA != ''">
+        and BUSY_NUM_HEAD_A = #{condition.busyNumHeadA, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.busyNumA != null and condition.busyNumA != ''">
+        and BUSY_NUM_A = #{condition.busyNumA, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.busyNumHeadB != null and condition.busyNumHeadB != ''">
+        and BUSY_NUM_HEAD_B = #{condition.busyNumHeadB, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.busyNumB != null and condition.busyNumB != ''">
+        and BUSY_NUM_B = #{condition.busyNumB, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.noFlag != null and condition.noFlag != ''">
+        and NO_FLAG = #{condition.noFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.noNumHeadA != null and condition.noNumHeadA != ''">
+        and NO_NUM_HEAD_A = #{condition.noNumHeadA, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.noNumA != null and condition.noNumA != ''">
+        and NO_NUM_A = #{condition.noNumA, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.noNumHeadB != null and condition.noNumHeadB != ''">
+        and NO_NUM_HEAD_B = #{condition.noNumHeadB, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.noNumB != null and condition.noNumB != ''">
+        and NO_NUM_B = #{condition.noNumB, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.otherFlag != null and condition.otherFlag != ''">
+        and OTHER_FLAG = #{condition.otherFlag, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.otherNumHeadA != null and condition.otherNumHeadA != ''">
+        and OTHER_NUM_HEAD_A = #{condition.otherNumHeadA, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.otherNumA != null and condition.otherNumA != ''">
+        and OTHER_NUM_A = #{condition.otherNumA, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.otherNumHeadB != null and condition.otherNumHeadB != ''">
+        and OTHER_NUM_HEAD_B = #{condition.otherNumHeadB, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.otherNumB != null and condition.otherNumB != ''">
+        and OTHER_NUM_B = #{condition.otherNumB, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.rowId != null ">
+        and ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

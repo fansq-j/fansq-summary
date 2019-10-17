@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AcctBalanceMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AcctBalanceDO">
+    <id column="ACCT_BALANCE_ID" jdbcType="BIGINT" property="acctBalanceId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="BALANCE_TYPE_ID" jdbcType="INTEGER" property="balanceTypeId"/>
+    <result column="BALANCE" jdbcType="BIGINT" property="balance"/>
+    <result column="RESERVE_BALANCE" jdbcType="BIGINT" property="reserveBalance"/>
+    <result column="CYCLE_TYPE" jdbcType="INTEGER" property="cycleType"/>
+    <result column="CYCLE_UPPER" jdbcType="BIGINT" property="cycleUpper"/>
+    <result column="CYCLE_LOWER" jdbcType="BIGINT" property="cycleLower"/>
+    <result column="SHARE_RULE_FLAG" jdbcType="INTEGER" property="shareRuleFlag"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="STATUS_CD" jdbcType="INTEGER" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ACCT_BALANCE_ID, 
+          ACCT_ID, 
+          BALANCE_TYPE_ID, 
+          BALANCE, 
+          RESERVE_BALANCE, 
+          CYCLE_TYPE, 
+          CYCLE_UPPER, 
+          CYCLE_LOWER, 
+          SHARE_RULE_FLAG, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ACCT_ID, 
+          BALANCE_TYPE_ID, 
+          BALANCE, 
+          RESERVE_BALANCE, 
+          CYCLE_TYPE, 
+          CYCLE_UPPER, 
+          CYCLE_LOWER, 
+          SHARE_RULE_FLAG, 
+          EFF_DATE, 
+          EXP_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="acctBalanceId != null ">
+        ACCT_BALANCE_ID = #{acctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="balanceTypeId != null ">
+        and BALANCE_TYPE_ID = #{balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="balance != null ">
+        and BALANCE = #{balance, jdbcType=BIGINT }
+      </if>
+      <if test="reserveBalance != null ">
+        and RESERVE_BALANCE = #{reserveBalance, jdbcType=BIGINT }
+      </if>
+      <if test="cycleType != null ">
+        and CYCLE_TYPE = #{cycleType, jdbcType=INTEGER }
+      </if>
+      <if test="cycleUpper != null ">
+        and CYCLE_UPPER = #{cycleUpper, jdbcType=BIGINT }
+      </if>
+      <if test="cycleLower != null ">
+        and CYCLE_LOWER = #{cycleLower, jdbcType=BIGINT }
+      </if>
+      <if test="shareRuleFlag != null ">
+        and SHARE_RULE_FLAG = #{shareRuleFlag, jdbcType=INTEGER }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null ">
+        and STATUS_CD = #{statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AcctBalanceDO" resultType="java.lang.Integer">
+      select count(*) from ACCT_BALANCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ACCT_BALANCE
+        where 
+           ACCT_BALANCE_ID = #{acctBalanceId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ACCT_BALANCE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="acctBalanceId">
+      insert into  ACCT_BALANCE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{acctId,jdbcType=BIGINT}, 
+        #{balanceTypeId,jdbcType=INTEGER}, 
+        #{balance,jdbcType=BIGINT}, 
+        #{reserveBalance,jdbcType=BIGINT}, 
+        #{cycleType,jdbcType=INTEGER}, 
+        #{cycleUpper,jdbcType=BIGINT}, 
+        #{cycleLower,jdbcType=BIGINT}, 
+        #{shareRuleFlag,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ACCT_BALANCE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{acctBalanceId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{balanceTypeId,jdbcType=INTEGER}, 
+        #{balance,jdbcType=BIGINT}, 
+        #{reserveBalance,jdbcType=BIGINT}, 
+        #{cycleType,jdbcType=INTEGER}, 
+        #{cycleUpper,jdbcType=BIGINT}, 
+        #{cycleLower,jdbcType=BIGINT}, 
+        #{shareRuleFlag,jdbcType=INTEGER}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=INTEGER}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ACCT_BALANCE  
+        where
+           ACCT_BALANCE_ID = #{acctBalanceId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ACCT_BALANCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ACCT_BALANCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="balanceTypeId != null">
+         BALANCE_TYPE_ID = #{balanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+         BALANCE = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="reserveBalance != null">
+         RESERVE_BALANCE = #{reserveBalance,jdbcType=BIGINT},
+      </if>
+      <if test="cycleType != null">
+         CYCLE_TYPE = #{cycleType,jdbcType=INTEGER},
+      </if>
+      <if test="cycleUpper != null">
+         CYCLE_UPPER = #{cycleUpper,jdbcType=BIGINT},
+      </if>
+      <if test="cycleLower != null">
+         CYCLE_LOWER = #{cycleLower,jdbcType=BIGINT},
+      </if>
+      <if test="shareRuleFlag != null">
+         SHARE_RULE_FLAG = #{shareRuleFlag,jdbcType=INTEGER},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ACCT_BALANCE_ID = #{acctBalanceId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ACCT_BALANCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.acctBalanceId != null">
+        ACCT_BALANCE_ID = #{record.acctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.balanceTypeId != null">
+        BALANCE_TYPE_ID = #{record.balanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null">
+        BALANCE = #{record.balance,jdbcType=BIGINT},
+      </if>
+      <if test="record.reserveBalance != null">
+        RESERVE_BALANCE = #{record.reserveBalance,jdbcType=BIGINT},
+      </if>
+      <if test="record.cycleType != null">
+        CYCLE_TYPE = #{record.cycleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleUpper != null">
+        CYCLE_UPPER = #{record.cycleUpper,jdbcType=BIGINT},
+      </if>
+      <if test="record.cycleLower != null">
+        CYCLE_LOWER = #{record.cycleLower,jdbcType=BIGINT},
+      </if>
+      <if test="record.shareRuleFlag != null">
+        SHARE_RULE_FLAG = #{record.shareRuleFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.acctBalanceId != null ">
+        ACCT_BALANCE_ID = #{condition.acctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.balanceTypeId != null ">
+        and BALANCE_TYPE_ID = #{condition.balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.balance != null ">
+        and BALANCE = #{condition.balance, jdbcType=BIGINT }
+      </if>
+      <if test="condition.reserveBalance != null ">
+        and RESERVE_BALANCE = #{condition.reserveBalance, jdbcType=BIGINT }
+      </if>
+      <if test="condition.cycleType != null ">
+        and CYCLE_TYPE = #{condition.cycleType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.cycleUpper != null ">
+        and CYCLE_UPPER = #{condition.cycleUpper, jdbcType=BIGINT }
+      </if>
+      <if test="condition.cycleLower != null ">
+        and CYCLE_LOWER = #{condition.cycleLower, jdbcType=BIGINT }
+      </if>
+      <if test="condition.shareRuleFlag != null ">
+        and SHARE_RULE_FLAG = #{condition.shareRuleFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null ">
+        and STATUS_CD = #{condition.statusCd, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.DepositTradeDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.DepositTradeDetailDO">
+    <id column="DEPOSIT_SO_DETAIL_ID" jdbcType="BIGINT" property="depositSoDetailId"/>
+    <result column="DEPOSIT_TYPE_ID" jdbcType="INTEGER" property="depositTypeId"/>
+    <result column="DEPOSIT_BALANCE_ID" jdbcType="BIGINT" property="depositBalanceId"/>
+    <result column="ACCT_ID" jdbcType="BIGINT" property="acctId"/>
+    <result column="DEPOSIT_OPER_TYPE" jdbcType="INTEGER" property="depositOperType"/>
+    <result column="BILLING_CYCLE_ID" jdbcType="INTEGER" property="billingCycleId"/>
+    <result column="AMOUNT" jdbcType="BIGINT" property="amount"/>
+    <result column="CUST_ORDER_NBR" jdbcType="VARCHAR" property="custOrderNbr"/>
+    <result column="STAFF_ID" jdbcType="BIGINT" property="staffId"/>
+    <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="REL_OPER_INCOME_ID" jdbcType="BIGINT" property="relOperIncomeId"/>
+    <result column="LAN_ID" jdbcType="BIGINT" property="lanId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          DEPOSIT_SO_DETAIL_ID, 
+          DEPOSIT_TYPE_ID, 
+          DEPOSIT_BALANCE_ID, 
+          ACCT_ID, 
+          DEPOSIT_OPER_TYPE, 
+          BILLING_CYCLE_ID, 
+          AMOUNT, 
+          CUST_ORDER_NBR, 
+          STAFF_ID, 
+          ORG_ID, 
+          CREATE_DATE, 
+          REL_OPER_INCOME_ID, 
+          LAN_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          DEPOSIT_TYPE_ID, 
+          DEPOSIT_BALANCE_ID, 
+          ACCT_ID, 
+          DEPOSIT_OPER_TYPE, 
+          BILLING_CYCLE_ID, 
+          AMOUNT, 
+          CUST_ORDER_NBR, 
+          STAFF_ID, 
+          ORG_ID, 
+          CREATE_DATE, 
+          REL_OPER_INCOME_ID, 
+          LAN_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="depositSoDetailId != null ">
+        DEPOSIT_SO_DETAIL_ID = #{depositSoDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="depositTypeId != null ">
+        and DEPOSIT_TYPE_ID = #{depositTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="depositBalanceId != null ">
+        and DEPOSIT_BALANCE_ID = #{depositBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="acctId != null ">
+        and ACCT_ID = #{acctId, jdbcType=BIGINT }
+      </if>
+      <if test="depositOperType != null ">
+        and DEPOSIT_OPER_TYPE = #{depositOperType, jdbcType=INTEGER }
+      </if>
+      <if test="billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="amount != null ">
+        and AMOUNT = #{amount, jdbcType=BIGINT }
+      </if>
+      <if test="custOrderNbr != null and custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="staffId != null ">
+        and STAFF_ID = #{staffId, jdbcType=BIGINT }
+      </if>
+      <if test="orgId != null ">
+        and ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="relOperIncomeId != null ">
+        and REL_OPER_INCOME_ID = #{relOperIncomeId, jdbcType=BIGINT }
+      </if>
+      <if test="lanId != null ">
+        and LAN_ID = #{lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.DepositTradeDetailDO" resultType="java.lang.Integer">
+      select count(*) from DEPOSIT_TRADE_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from DEPOSIT_TRADE_DETAIL
+        where 
+           DEPOSIT_SO_DETAIL_ID = #{depositSoDetailId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DEPOSIT_TRADE_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="depositSoDetailId">
+      insert into  DEPOSIT_TRADE_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{depositTypeId,jdbcType=INTEGER}, 
+        #{depositBalanceId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{depositOperType,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{relOperIncomeId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  DEPOSIT_TRADE_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{depositSoDetailId,jdbcType=BIGINT}, 
+        #{depositTypeId,jdbcType=INTEGER}, 
+        #{depositBalanceId,jdbcType=BIGINT}, 
+        #{acctId,jdbcType=BIGINT}, 
+        #{depositOperType,jdbcType=INTEGER}, 
+        #{billingCycleId,jdbcType=INTEGER}, 
+        #{amount,jdbcType=BIGINT}, 
+        #{custOrderNbr,jdbcType=VARCHAR}, 
+        #{staffId,jdbcType=BIGINT}, 
+        #{orgId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{relOperIncomeId,jdbcType=BIGINT}, 
+        #{lanId,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from DEPOSIT_TRADE_DETAIL  
+        where
+           DEPOSIT_SO_DETAIL_ID = #{depositSoDetailId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from DEPOSIT_TRADE_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  DEPOSIT_TRADE_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="depositTypeId != null">
+         DEPOSIT_TYPE_ID = #{depositTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="depositBalanceId != null">
+         DEPOSIT_BALANCE_ID = #{depositBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="acctId != null">
+         ACCT_ID = #{acctId,jdbcType=BIGINT},
+      </if>
+      <if test="depositOperType != null">
+         DEPOSIT_OPER_TYPE = #{depositOperType,jdbcType=INTEGER},
+      </if>
+      <if test="billingCycleId != null">
+         BILLING_CYCLE_ID = #{billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+         AMOUNT = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="custOrderNbr != null">
+         CUST_ORDER_NBR = #{custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null">
+         STAFF_ID = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+         ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relOperIncomeId != null">
+         REL_OPER_INCOME_ID = #{relOperIncomeId,jdbcType=BIGINT},
+      </if>
+      <if test="lanId != null">
+         LAN_ID = #{lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           DEPOSIT_SO_DETAIL_ID = #{depositSoDetailId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update DEPOSIT_TRADE_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.depositSoDetailId != null">
+        DEPOSIT_SO_DETAIL_ID = #{record.depositSoDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.depositTypeId != null">
+        DEPOSIT_TYPE_ID = #{record.depositTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.depositBalanceId != null">
+        DEPOSIT_BALANCE_ID = #{record.depositBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.acctId != null">
+        ACCT_ID = #{record.acctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.depositOperType != null">
+        DEPOSIT_OPER_TYPE = #{record.depositOperType,jdbcType=INTEGER},
+      </if>
+      <if test="record.billingCycleId != null">
+        BILLING_CYCLE_ID = #{record.billingCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.custOrderNbr != null">
+        CUST_ORDER_NBR = #{record.custOrderNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffId != null">
+        STAFF_ID = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.relOperIncomeId != null">
+        REL_OPER_INCOME_ID = #{record.relOperIncomeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lanId != null">
+        LAN_ID = #{record.lanId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.depositSoDetailId != null ">
+        DEPOSIT_SO_DETAIL_ID = #{condition.depositSoDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.depositTypeId != null ">
+        and DEPOSIT_TYPE_ID = #{condition.depositTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.depositBalanceId != null ">
+        and DEPOSIT_BALANCE_ID = #{condition.depositBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.acctId != null ">
+        and ACCT_ID = #{condition.acctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.depositOperType != null ">
+        and DEPOSIT_OPER_TYPE = #{condition.depositOperType, jdbcType=INTEGER }
+      </if>
+      <if test="condition.billingCycleId != null ">
+        and BILLING_CYCLE_ID = #{condition.billingCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.amount != null ">
+        and AMOUNT = #{condition.amount, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custOrderNbr != null and condition.custOrderNbr != ''">
+        and CUST_ORDER_NBR = #{condition.custOrderNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.staffId != null ">
+        and STAFF_ID = #{condition.staffId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orgId != null ">
+        and ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.relOperIncomeId != null ">
+        and REL_OPER_INCOME_ID = #{condition.relOperIncomeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.lanId != null ">
+        and LAN_ID = #{condition.lanId, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

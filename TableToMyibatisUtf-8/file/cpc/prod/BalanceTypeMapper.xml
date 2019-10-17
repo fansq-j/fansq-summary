@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BalanceTypeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BalanceTypeDO">
+    <id column="BALANCE_TYPE_ID" jdbcType="INTEGER" property="balanceTypeId"/>
+    <result column="PRIORITY" jdbcType="INTEGER" property="priority"/>
+    <result column="SPE_PAYMENT_ID" jdbcType="INTEGER" property="spePaymentId"/>
+    <result column="MEASURE_METHOD_ID" jdbcType="INTEGER" property="measureMethodId"/>
+    <result column="BALANCE_TYPE_NAME" jdbcType="VARCHAR" property="balanceTypeName"/>
+    <result column="ALLOW_DRAW" jdbcType="INTEGER" property="allowDraw"/>
+    <result column="INV_OFFER" jdbcType="INTEGER" property="invOffer"/>
+    <result column="IF_EARNING" jdbcType="INTEGER" property="ifEarning"/>
+    <result column="IF_PAYOLD" jdbcType="INTEGER" property="ifPayold"/>
+    <result column="IF_SAVEBACK" jdbcType="INTEGER" property="ifSaveback"/>
+    <result column="IF_PRINCIPAL" jdbcType="INTEGER" property="ifPrincipal"/>
+    <result column="OPER_FLAG" jdbcType="INTEGER" property="operFlag"/>
+    <result column="TRANS_FLAG" jdbcType="INTEGER" property="transFlag"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BALANCE_TYPE_ID, 
+          PRIORITY, 
+          SPE_PAYMENT_ID, 
+          MEASURE_METHOD_ID, 
+          BALANCE_TYPE_NAME, 
+          ALLOW_DRAW, 
+          INV_OFFER, 
+          IF_EARNING, 
+          IF_PAYOLD, 
+          IF_SAVEBACK, 
+          IF_PRINCIPAL, 
+          OPER_FLAG, 
+          TRANS_FLAG, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PRIORITY, 
+          SPE_PAYMENT_ID, 
+          MEASURE_METHOD_ID, 
+          BALANCE_TYPE_NAME, 
+          ALLOW_DRAW, 
+          INV_OFFER, 
+          IF_EARNING, 
+          IF_PAYOLD, 
+          IF_SAVEBACK, 
+          IF_PRINCIPAL, 
+          OPER_FLAG, 
+          TRANS_FLAG, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="balanceTypeId != null ">
+        BALANCE_TYPE_ID = #{balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="priority != null ">
+        and PRIORITY = #{priority, jdbcType=INTEGER }
+      </if>
+      <if test="spePaymentId != null ">
+        and SPE_PAYMENT_ID = #{spePaymentId, jdbcType=INTEGER }
+      </if>
+      <if test="measureMethodId != null ">
+        and MEASURE_METHOD_ID = #{measureMethodId, jdbcType=INTEGER }
+      </if>
+      <if test="balanceTypeName != null and balanceTypeName != ''">
+        and BALANCE_TYPE_NAME = #{balanceTypeName, jdbcType=VARCHAR }
+      </if>
+      <if test="allowDraw != null ">
+        and ALLOW_DRAW = #{allowDraw, jdbcType=INTEGER }
+      </if>
+      <if test="invOffer != null ">
+        and INV_OFFER = #{invOffer, jdbcType=INTEGER }
+      </if>
+      <if test="ifEarning != null ">
+        and IF_EARNING = #{ifEarning, jdbcType=INTEGER }
+      </if>
+      <if test="ifPayold != null ">
+        and IF_PAYOLD = #{ifPayold, jdbcType=INTEGER }
+      </if>
+      <if test="ifSaveback != null ">
+        and IF_SAVEBACK = #{ifSaveback, jdbcType=INTEGER }
+      </if>
+      <if test="ifPrincipal != null ">
+        and IF_PRINCIPAL = #{ifPrincipal, jdbcType=INTEGER }
+      </if>
+      <if test="operFlag != null ">
+        and OPER_FLAG = #{operFlag, jdbcType=INTEGER }
+      </if>
+      <if test="transFlag != null ">
+        and TRANS_FLAG = #{transFlag, jdbcType=INTEGER }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BalanceTypeDO" resultType="java.lang.Integer">
+      select count(*) from BALANCE_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BALANCE_TYPE
+        where 
+           BALANCE_TYPE_ID = #{balanceTypeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BALANCE_TYPE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="balanceTypeId">
+      insert into  BALANCE_TYPE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{priority,jdbcType=INTEGER}, 
+        #{spePaymentId,jdbcType=INTEGER}, 
+        #{measureMethodId,jdbcType=INTEGER}, 
+        #{balanceTypeName,jdbcType=VARCHAR}, 
+        #{allowDraw,jdbcType=INTEGER}, 
+        #{invOffer,jdbcType=INTEGER}, 
+        #{ifEarning,jdbcType=INTEGER}, 
+        #{ifPayold,jdbcType=INTEGER}, 
+        #{ifSaveback,jdbcType=INTEGER}, 
+        #{ifPrincipal,jdbcType=INTEGER}, 
+        #{operFlag,jdbcType=INTEGER}, 
+        #{transFlag,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BALANCE_TYPE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{balanceTypeId,jdbcType=INTEGER}, 
+        #{priority,jdbcType=INTEGER}, 
+        #{spePaymentId,jdbcType=INTEGER}, 
+        #{measureMethodId,jdbcType=INTEGER}, 
+        #{balanceTypeName,jdbcType=VARCHAR}, 
+        #{allowDraw,jdbcType=INTEGER}, 
+        #{invOffer,jdbcType=INTEGER}, 
+        #{ifEarning,jdbcType=INTEGER}, 
+        #{ifPayold,jdbcType=INTEGER}, 
+        #{ifSaveback,jdbcType=INTEGER}, 
+        #{ifPrincipal,jdbcType=INTEGER}, 
+        #{operFlag,jdbcType=INTEGER}, 
+        #{transFlag,jdbcType=INTEGER}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BALANCE_TYPE  
+        where
+           BALANCE_TYPE_ID = #{balanceTypeId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from BALANCE_TYPE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BALANCE_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="priority != null">
+         PRIORITY = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="spePaymentId != null">
+         SPE_PAYMENT_ID = #{spePaymentId,jdbcType=INTEGER},
+      </if>
+      <if test="measureMethodId != null">
+         MEASURE_METHOD_ID = #{measureMethodId,jdbcType=INTEGER},
+      </if>
+      <if test="balanceTypeName != null">
+         BALANCE_TYPE_NAME = #{balanceTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="allowDraw != null">
+         ALLOW_DRAW = #{allowDraw,jdbcType=INTEGER},
+      </if>
+      <if test="invOffer != null">
+         INV_OFFER = #{invOffer,jdbcType=INTEGER},
+      </if>
+      <if test="ifEarning != null">
+         IF_EARNING = #{ifEarning,jdbcType=INTEGER},
+      </if>
+      <if test="ifPayold != null">
+         IF_PAYOLD = #{ifPayold,jdbcType=INTEGER},
+      </if>
+      <if test="ifSaveback != null">
+         IF_SAVEBACK = #{ifSaveback,jdbcType=INTEGER},
+      </if>
+      <if test="ifPrincipal != null">
+         IF_PRINCIPAL = #{ifPrincipal,jdbcType=INTEGER},
+      </if>
+      <if test="operFlag != null">
+         OPER_FLAG = #{operFlag,jdbcType=INTEGER},
+      </if>
+      <if test="transFlag != null">
+         TRANS_FLAG = #{transFlag,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           BALANCE_TYPE_ID = #{balanceTypeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update BALANCE_TYPE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.balanceTypeId != null">
+        BALANCE_TYPE_ID = #{record.balanceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.priority != null">
+        PRIORITY = #{record.priority,jdbcType=INTEGER},
+      </if>
+      <if test="record.spePaymentId != null">
+        SPE_PAYMENT_ID = #{record.spePaymentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.measureMethodId != null">
+        MEASURE_METHOD_ID = #{record.measureMethodId,jdbcType=INTEGER},
+      </if>
+      <if test="record.balanceTypeName != null">
+        BALANCE_TYPE_NAME = #{record.balanceTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allowDraw != null">
+        ALLOW_DRAW = #{record.allowDraw,jdbcType=INTEGER},
+      </if>
+      <if test="record.invOffer != null">
+        INV_OFFER = #{record.invOffer,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifEarning != null">
+        IF_EARNING = #{record.ifEarning,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifPayold != null">
+        IF_PAYOLD = #{record.ifPayold,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifSaveback != null">
+        IF_SAVEBACK = #{record.ifSaveback,jdbcType=INTEGER},
+      </if>
+      <if test="record.ifPrincipal != null">
+        IF_PRINCIPAL = #{record.ifPrincipal,jdbcType=INTEGER},
+      </if>
+      <if test="record.operFlag != null">
+        OPER_FLAG = #{record.operFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.transFlag != null">
+        TRANS_FLAG = #{record.transFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.balanceTypeId != null ">
+        BALANCE_TYPE_ID = #{condition.balanceTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.priority != null ">
+        and PRIORITY = #{condition.priority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.spePaymentId != null ">
+        and SPE_PAYMENT_ID = #{condition.spePaymentId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.measureMethodId != null ">
+        and MEASURE_METHOD_ID = #{condition.measureMethodId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.balanceTypeName != null and condition.balanceTypeName != ''">
+        and BALANCE_TYPE_NAME = #{condition.balanceTypeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.allowDraw != null ">
+        and ALLOW_DRAW = #{condition.allowDraw, jdbcType=INTEGER }
+      </if>
+      <if test="condition.invOffer != null ">
+        and INV_OFFER = #{condition.invOffer, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifEarning != null ">
+        and IF_EARNING = #{condition.ifEarning, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifPayold != null ">
+        and IF_PAYOLD = #{condition.ifPayold, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifSaveback != null ">
+        and IF_SAVEBACK = #{condition.ifSaveback, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ifPrincipal != null ">
+        and IF_PRINCIPAL = #{condition.ifPrincipal, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operFlag != null ">
+        and OPER_FLAG = #{condition.operFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.transFlag != null ">
+        and TRANS_FLAG = #{condition.transFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

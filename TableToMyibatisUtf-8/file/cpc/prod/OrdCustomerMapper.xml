@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OrdCustomerMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OrdCustomerDO">
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+    <result column="TAX_PAYER_ID" jdbcType="BIGINT" property="taxPayerId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="CUST_NAME" jdbcType="VARCHAR" property="custName"/>
+    <result column="CUST_NUMBER" jdbcType="VARCHAR" property="custNumber"/>
+    <result column="CUST_ADDR" jdbcType="VARCHAR" property="custAddr"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="CUST_TYPE" jdbcType="VARCHAR" property="custType"/>
+    <result column="CUST_SUB_TYPE" jdbcType="VARCHAR" property="custSubType"/>
+    <result column="CUST_SOURCE_ID" jdbcType="BIGINT" property="custSourceId"/>
+    <result column="CUST_AREA_GRADE" jdbcType="VARCHAR" property="custAreaGrade"/>
+    <result column="ENTER_DATE" jdbcType="TIMESTAMP" property="enterDate"/>
+    <result column="EXT_CUST_ID" jdbcType="VARCHAR" property="extCustId"/>
+    <result column="DISTRIBUTOR_ID" jdbcType="BIGINT" property="distributorId"/>
+    <result column="SECRECY_LEVEL" jdbcType="VARCHAR" property="secrecyLevel"/>
+    <result column="CUST_ORDER_ID" jdbcType="BIGINT" property="custOrderId"/>
+    <result column="CUST_CONTROL_LEVEL" jdbcType="VARCHAR" property="custControlLevel"/>
+    <result column="IS_INSTEAD" jdbcType="INTEGER" property="isInstead"/>
+    <result column="IS_REALNAME" jdbcType="INTEGER" property="isRealname"/>
+    <id column="ROW_ID" jdbcType="BIGINT" property="rowId"/>
+    <result column="ORDER_ITEM_ID" jdbcType="BIGINT" property="orderItemId"/>
+    <result column="OLD_ROW_ID" jdbcType="BIGINT" property="oldRowId"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="INDUSTRY_TYPE_ID" jdbcType="BIGINT" property="industryTypeId"/>
+    <result column="VER_NUM" jdbcType="INTEGER" property="verNum"/>
+    <result column="EXT1_CUST_ID" jdbcType="VARCHAR" property="ext1CustId"/>
+    <result column="EXT2_CUST_ID" jdbcType="VARCHAR" property="ext2CustId"/>
+    <result column="EXT3_CUST_ID" jdbcType="VARCHAR" property="ext3CustId"/>
+    <result column="GROUP_CUST_ID" jdbcType="VARCHAR" property="groupCustId"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CUST_ID, 
+          TAX_PAYER_ID, 
+          PARTY_ID, 
+          CUST_NAME, 
+          CUST_NUMBER, 
+          CUST_ADDR, 
+          REGION_ID, 
+          CUST_TYPE, 
+          CUST_SUB_TYPE, 
+          CUST_SOURCE_ID, 
+          CUST_AREA_GRADE, 
+          ENTER_DATE, 
+          EXT_CUST_ID, 
+          DISTRIBUTOR_ID, 
+          SECRECY_LEVEL, 
+          CUST_ORDER_ID, 
+          CUST_CONTROL_LEVEL, 
+          IS_INSTEAD, 
+          IS_REALNAME, 
+          ROW_ID, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          INDUSTRY_TYPE_ID, 
+          VER_NUM, 
+          EXT1_CUST_ID, 
+          EXT2_CUST_ID, 
+          EXT3_CUST_ID, 
+          GROUP_CUST_ID
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CUST_ID, 
+          TAX_PAYER_ID, 
+          PARTY_ID, 
+          CUST_NAME, 
+          CUST_NUMBER, 
+          CUST_ADDR, 
+          REGION_ID, 
+          CUST_TYPE, 
+          CUST_SUB_TYPE, 
+          CUST_SOURCE_ID, 
+          CUST_AREA_GRADE, 
+          ENTER_DATE, 
+          EXT_CUST_ID, 
+          DISTRIBUTOR_ID, 
+          SECRECY_LEVEL, 
+          CUST_ORDER_ID, 
+          CUST_CONTROL_LEVEL, 
+          IS_INSTEAD, 
+          IS_REALNAME, 
+          ORDER_ITEM_ID, 
+          OLD_ROW_ID, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          INDUSTRY_TYPE_ID, 
+          VER_NUM, 
+          EXT1_CUST_ID, 
+          EXT2_CUST_ID, 
+          EXT3_CUST_ID, 
+          GROUP_CUST_ID
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="custId != null ">
+        CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+      <if test="taxPayerId != null ">
+        and TAX_PAYER_ID = #{taxPayerId, jdbcType=BIGINT }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="custName != null and custName != ''">
+        and CUST_NAME = #{custName, jdbcType=VARCHAR }
+      </if>
+      <if test="custNumber != null and custNumber != ''">
+        and CUST_NUMBER = #{custNumber, jdbcType=VARCHAR }
+      </if>
+      <if test="custAddr != null and custAddr != ''">
+        and CUST_ADDR = #{custAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="custType != null and custType != ''">
+        and CUST_TYPE = #{custType, jdbcType=VARCHAR }
+      </if>
+      <if test="custSubType != null and custSubType != ''">
+        and CUST_SUB_TYPE = #{custSubType, jdbcType=VARCHAR }
+      </if>
+      <if test="custSourceId != null ">
+        and CUST_SOURCE_ID = #{custSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="custAreaGrade != null and custAreaGrade != ''">
+        and CUST_AREA_GRADE = #{custAreaGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="enterDate != null ">
+        and ENTER_DATE = #{enterDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="extCustId != null and extCustId != ''">
+        and EXT_CUST_ID = #{extCustId, jdbcType=VARCHAR }
+      </if>
+      <if test="distributorId != null ">
+        and DISTRIBUTOR_ID = #{distributorId, jdbcType=BIGINT }
+      </if>
+      <if test="secrecyLevel != null and secrecyLevel != ''">
+        and SECRECY_LEVEL = #{secrecyLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="custOrderId != null ">
+        and CUST_ORDER_ID = #{custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="custControlLevel != null and custControlLevel != ''">
+        and CUST_CONTROL_LEVEL = #{custControlLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="isInstead != null ">
+        and IS_INSTEAD = #{isInstead, jdbcType=INTEGER }
+      </if>
+      <if test="isRealname != null ">
+        and IS_REALNAME = #{isRealname, jdbcType=INTEGER }
+      </if>
+      <if test="rowId != null ">
+        and ROW_ID = #{rowId, jdbcType=BIGINT }
+      </if>
+      <if test="orderItemId != null ">
+        and ORDER_ITEM_ID = #{orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="oldRowId != null ">
+        and OLD_ROW_ID = #{oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="industryTypeId != null ">
+        and INDUSTRY_TYPE_ID = #{industryTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="verNum != null ">
+        and VER_NUM = #{verNum, jdbcType=INTEGER }
+      </if>
+      <if test="ext1CustId != null and ext1CustId != ''">
+        and EXT1_CUST_ID = #{ext1CustId, jdbcType=VARCHAR }
+      </if>
+      <if test="ext2CustId != null and ext2CustId != ''">
+        and EXT2_CUST_ID = #{ext2CustId, jdbcType=VARCHAR }
+      </if>
+      <if test="ext3CustId != null and ext3CustId != ''">
+        and EXT3_CUST_ID = #{ext3CustId, jdbcType=VARCHAR }
+      </if>
+      <if test="groupCustId != null and groupCustId != ''">
+        and GROUP_CUST_ID = #{groupCustId, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OrdCustomerDO" resultType="java.lang.Integer">
+      select count(*) from ORD_CUSTOMER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from ORD_CUSTOMER
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  ORD_CUSTOMER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="rowId">
+      insert into  ORD_CUSTOMER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{custId,jdbcType=BIGINT}, 
+        #{taxPayerId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{custName,jdbcType=VARCHAR}, 
+        #{custNumber,jdbcType=VARCHAR}, 
+        #{custAddr,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{custType,jdbcType=VARCHAR}, 
+        #{custSubType,jdbcType=VARCHAR}, 
+        #{custSourceId,jdbcType=BIGINT}, 
+        #{custAreaGrade,jdbcType=VARCHAR}, 
+        #{enterDate,jdbcType=TIMESTAMP}, 
+        #{extCustId,jdbcType=VARCHAR}, 
+        #{distributorId,jdbcType=BIGINT}, 
+        #{secrecyLevel,jdbcType=VARCHAR}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{custControlLevel,jdbcType=VARCHAR}, 
+        #{isInstead,jdbcType=INTEGER}, 
+        #{isRealname,jdbcType=INTEGER}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{industryTypeId,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{ext1CustId,jdbcType=VARCHAR}, 
+        #{ext2CustId,jdbcType=VARCHAR}, 
+        #{ext3CustId,jdbcType=VARCHAR}, 
+        #{groupCustId,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  ORD_CUSTOMER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{custId,jdbcType=BIGINT}, 
+        #{taxPayerId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{custName,jdbcType=VARCHAR}, 
+        #{custNumber,jdbcType=VARCHAR}, 
+        #{custAddr,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{custType,jdbcType=VARCHAR}, 
+        #{custSubType,jdbcType=VARCHAR}, 
+        #{custSourceId,jdbcType=BIGINT}, 
+        #{custAreaGrade,jdbcType=VARCHAR}, 
+        #{enterDate,jdbcType=TIMESTAMP}, 
+        #{extCustId,jdbcType=VARCHAR}, 
+        #{distributorId,jdbcType=BIGINT}, 
+        #{secrecyLevel,jdbcType=VARCHAR}, 
+        #{custOrderId,jdbcType=BIGINT}, 
+        #{custControlLevel,jdbcType=VARCHAR}, 
+        #{isInstead,jdbcType=INTEGER}, 
+        #{isRealname,jdbcType=INTEGER}, 
+        #{rowId,jdbcType=BIGINT}, 
+        #{orderItemId,jdbcType=BIGINT}, 
+        #{oldRowId,jdbcType=BIGINT}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{industryTypeId,jdbcType=BIGINT}, 
+        #{verNum,jdbcType=INTEGER}, 
+        #{ext1CustId,jdbcType=VARCHAR}, 
+        #{ext2CustId,jdbcType=VARCHAR}, 
+        #{ext3CustId,jdbcType=VARCHAR}, 
+        #{groupCustId,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from ORD_CUSTOMER  
+        where
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from ORD_CUSTOMER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  ORD_CUSTOMER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="taxPayerId != null">
+         TAX_PAYER_ID = #{taxPayerId,jdbcType=BIGINT},
+      </if>
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null">
+         CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custNumber != null">
+         CUST_NUMBER = #{custNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="custAddr != null">
+         CUST_ADDR = #{custAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="custType != null">
+         CUST_TYPE = #{custType,jdbcType=VARCHAR},
+      </if>
+      <if test="custSubType != null">
+         CUST_SUB_TYPE = #{custSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="custSourceId != null">
+         CUST_SOURCE_ID = #{custSourceId,jdbcType=BIGINT},
+      </if>
+      <if test="custAreaGrade != null">
+         CUST_AREA_GRADE = #{custAreaGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="enterDate != null">
+         ENTER_DATE = #{enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extCustId != null">
+         EXT_CUST_ID = #{extCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="distributorId != null">
+         DISTRIBUTOR_ID = #{distributorId,jdbcType=BIGINT},
+      </if>
+      <if test="secrecyLevel != null">
+         SECRECY_LEVEL = #{secrecyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="custOrderId != null">
+         CUST_ORDER_ID = #{custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="custControlLevel != null">
+         CUST_CONTROL_LEVEL = #{custControlLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="isInstead != null">
+         IS_INSTEAD = #{isInstead,jdbcType=INTEGER},
+      </if>
+      <if test="isRealname != null">
+         IS_REALNAME = #{isRealname,jdbcType=INTEGER},
+      </if>
+      <if test="orderItemId != null">
+         ORDER_ITEM_ID = #{orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="oldRowId != null">
+         OLD_ROW_ID = #{oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="industryTypeId != null">
+         INDUSTRY_TYPE_ID = #{industryTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="verNum != null">
+         VER_NUM = #{verNum,jdbcType=INTEGER},
+      </if>
+      <if test="ext1CustId != null">
+         EXT1_CUST_ID = #{ext1CustId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2CustId != null">
+         EXT2_CUST_ID = #{ext2CustId,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3CustId != null">
+         EXT3_CUST_ID = #{ext3CustId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupCustId != null">
+         GROUP_CUST_ID = #{groupCustId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ROW_ID = #{rowId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update ORD_CUSTOMER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taxPayerId != null">
+        TAX_PAYER_ID = #{record.taxPayerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custName != null">
+        CUST_NAME = #{record.custName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custNumber != null">
+        CUST_NUMBER = #{record.custNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custAddr != null">
+        CUST_ADDR = #{record.custAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custType != null">
+        CUST_TYPE = #{record.custType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custSubType != null">
+        CUST_SUB_TYPE = #{record.custSubType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custSourceId != null">
+        CUST_SOURCE_ID = #{record.custSourceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custAreaGrade != null">
+        CUST_AREA_GRADE = #{record.custAreaGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterDate != null">
+        ENTER_DATE = #{record.enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.extCustId != null">
+        EXT_CUST_ID = #{record.extCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distributorId != null">
+        DISTRIBUTOR_ID = #{record.distributorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.secrecyLevel != null">
+        SECRECY_LEVEL = #{record.secrecyLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custOrderId != null">
+        CUST_ORDER_ID = #{record.custOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custControlLevel != null">
+        CUST_CONTROL_LEVEL = #{record.custControlLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isInstead != null">
+        IS_INSTEAD = #{record.isInstead,jdbcType=INTEGER},
+      </if>
+      <if test="record.isRealname != null">
+        IS_REALNAME = #{record.isRealname,jdbcType=INTEGER},
+      </if>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderItemId != null">
+        ORDER_ITEM_ID = #{record.orderItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldRowId != null">
+        OLD_ROW_ID = #{record.oldRowId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryTypeId != null">
+        INDUSTRY_TYPE_ID = #{record.industryTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.verNum != null">
+        VER_NUM = #{record.verNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.ext1CustId != null">
+        EXT1_CUST_ID = #{record.ext1CustId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2CustId != null">
+        EXT2_CUST_ID = #{record.ext2CustId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext3CustId != null">
+        EXT3_CUST_ID = #{record.ext3CustId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupCustId != null">
+        GROUP_CUST_ID = #{record.groupCustId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.custId != null ">
+        CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.taxPayerId != null ">
+        and TAX_PAYER_ID = #{condition.taxPayerId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custName != null and condition.custName != ''">
+        and CUST_NAME = #{condition.custName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custNumber != null and condition.custNumber != ''">
+        and CUST_NUMBER = #{condition.custNumber, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custAddr != null and condition.custAddr != ''">
+        and CUST_ADDR = #{condition.custAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custType != null and condition.custType != ''">
+        and CUST_TYPE = #{condition.custType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custSubType != null and condition.custSubType != ''">
+        and CUST_SUB_TYPE = #{condition.custSubType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custSourceId != null ">
+        and CUST_SOURCE_ID = #{condition.custSourceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custAreaGrade != null and condition.custAreaGrade != ''">
+        and CUST_AREA_GRADE = #{condition.custAreaGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.enterDate != null ">
+        and ENTER_DATE = #{condition.enterDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.extCustId != null and condition.extCustId != ''">
+        and EXT_CUST_ID = #{condition.extCustId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.distributorId != null ">
+        and DISTRIBUTOR_ID = #{condition.distributorId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.secrecyLevel != null and condition.secrecyLevel != ''">
+        and SECRECY_LEVEL = #{condition.secrecyLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.custOrderId != null ">
+        and CUST_ORDER_ID = #{condition.custOrderId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custControlLevel != null and condition.custControlLevel != ''">
+        and CUST_CONTROL_LEVEL = #{condition.custControlLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isInstead != null ">
+        and IS_INSTEAD = #{condition.isInstead, jdbcType=INTEGER }
+      </if>
+      <if test="condition.isRealname != null ">
+        and IS_REALNAME = #{condition.isRealname, jdbcType=INTEGER }
+      </if>
+      <if test="condition.rowId != null ">
+        and ROW_ID = #{condition.rowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.orderItemId != null ">
+        and ORDER_ITEM_ID = #{condition.orderItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.oldRowId != null ">
+        and OLD_ROW_ID = #{condition.oldRowId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.industryTypeId != null ">
+        and INDUSTRY_TYPE_ID = #{condition.industryTypeId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.verNum != null ">
+        and VER_NUM = #{condition.verNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ext1CustId != null and condition.ext1CustId != ''">
+        and EXT1_CUST_ID = #{condition.ext1CustId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ext2CustId != null and condition.ext2CustId != ''">
+        and EXT2_CUST_ID = #{condition.ext2CustId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.ext3CustId != null and condition.ext3CustId != ''">
+        and EXT3_CUST_ID = #{condition.ext3CustId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.groupCustId != null and condition.groupCustId != ''">
+        and GROUP_CUST_ID = #{condition.groupCustId, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

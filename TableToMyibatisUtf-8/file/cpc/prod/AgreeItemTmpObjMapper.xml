@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.AgreeItemTmpObjMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.AgreeItemTmpObjDO">
+    <id column="AGREE_ITEM_TMP_OBJ_ID" jdbcType="BIGINT" property="agreeItemTmpObjId"/>
+    <result column="AGREE_ITEM_TMP_ID" jdbcType="BIGINT" property="agreeItemTmpId"/>
+    <result column="OBJ_TYPE" jdbcType="VARCHAR" property="objType"/>
+    <result column="OBJ_ID" jdbcType="BIGINT" property="objId"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="DEFAULT_COUNT" jdbcType="INTEGER" property="defaultCount"/>
+    <result column="MIN_NUM" jdbcType="INTEGER" property="minNum"/>
+    <result column="MAX_NUM" jdbcType="INTEGER" property="maxNum"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          AGREE_ITEM_TMP_OBJ_ID, 
+          AGREE_ITEM_TMP_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          DEFAULT_COUNT, 
+          MIN_NUM, 
+          MAX_NUM
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          AGREE_ITEM_TMP_ID, 
+          OBJ_TYPE, 
+          OBJ_ID, 
+          STATUS_DATE, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          DEFAULT_COUNT, 
+          MIN_NUM, 
+          MAX_NUM
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="agreeItemTmpObjId != null ">
+        AGREE_ITEM_TMP_OBJ_ID = #{agreeItemTmpObjId, jdbcType=BIGINT }
+      </if>
+      <if test="agreeItemTmpId != null ">
+        and AGREE_ITEM_TMP_ID = #{agreeItemTmpId, jdbcType=BIGINT }
+      </if>
+      <if test="objType != null and objType != ''">
+        and OBJ_TYPE = #{objType, jdbcType=VARCHAR }
+      </if>
+      <if test="objId != null ">
+        and OBJ_ID = #{objId, jdbcType=BIGINT }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="defaultCount != null ">
+        and DEFAULT_COUNT = #{defaultCount, jdbcType=INTEGER }
+      </if>
+      <if test="minNum != null ">
+        and MIN_NUM = #{minNum, jdbcType=INTEGER }
+      </if>
+      <if test="maxNum != null ">
+        and MAX_NUM = #{maxNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.AgreeItemTmpObjDO" resultType="java.lang.Integer">
+      select count(*) from AGREE_ITEM_TMP_OBJ
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from AGREE_ITEM_TMP_OBJ
+        where 
+           AGREE_ITEM_TMP_OBJ_ID = #{agreeItemTmpObjId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  AGREE_ITEM_TMP_OBJ 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="agreeItemTmpObjId">
+      insert into  AGREE_ITEM_TMP_OBJ ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{agreeItemTmpId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{defaultCount,jdbcType=INTEGER}, 
+        #{minNum,jdbcType=INTEGER}, 
+        #{maxNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  AGREE_ITEM_TMP_OBJ ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{agreeItemTmpObjId,jdbcType=BIGINT}, 
+        #{agreeItemTmpId,jdbcType=BIGINT}, 
+        #{objType,jdbcType=VARCHAR}, 
+        #{objId,jdbcType=BIGINT}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{defaultCount,jdbcType=INTEGER}, 
+        #{minNum,jdbcType=INTEGER}, 
+        #{maxNum,jdbcType=INTEGER}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from AGREE_ITEM_TMP_OBJ  
+        where
+           AGREE_ITEM_TMP_OBJ_ID = #{agreeItemTmpObjId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from AGREE_ITEM_TMP_OBJ
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  AGREE_ITEM_TMP_OBJ
+    <trim prefix="set" suffixOverrides=",">
+      <if test="agreeItemTmpId != null">
+         AGREE_ITEM_TMP_ID = #{agreeItemTmpId,jdbcType=BIGINT},
+      </if>
+      <if test="objType != null">
+         OBJ_TYPE = #{objType,jdbcType=VARCHAR},
+      </if>
+      <if test="objId != null">
+         OBJ_ID = #{objId,jdbcType=BIGINT},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defaultCount != null">
+         DEFAULT_COUNT = #{defaultCount,jdbcType=INTEGER},
+      </if>
+      <if test="minNum != null">
+         MIN_NUM = #{minNum,jdbcType=INTEGER},
+      </if>
+      <if test="maxNum != null">
+         MAX_NUM = #{maxNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+        where 
+           AGREE_ITEM_TMP_OBJ_ID = #{agreeItemTmpObjId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update AGREE_ITEM_TMP_OBJ
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.agreeItemTmpObjId != null">
+        AGREE_ITEM_TMP_OBJ_ID = #{record.agreeItemTmpObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.agreeItemTmpId != null">
+        AGREE_ITEM_TMP_ID = #{record.agreeItemTmpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.objType != null">
+        OBJ_TYPE = #{record.objType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.objId != null">
+        OBJ_ID = #{record.objId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.defaultCount != null">
+        DEFAULT_COUNT = #{record.defaultCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.minNum != null">
+        MIN_NUM = #{record.minNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxNum != null">
+        MAX_NUM = #{record.maxNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.agreeItemTmpObjId != null ">
+        AGREE_ITEM_TMP_OBJ_ID = #{condition.agreeItemTmpObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.agreeItemTmpId != null ">
+        and AGREE_ITEM_TMP_ID = #{condition.agreeItemTmpId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.objType != null and condition.objType != ''">
+        and OBJ_TYPE = #{condition.objType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.objId != null ">
+        and OBJ_ID = #{condition.objId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.defaultCount != null ">
+        and DEFAULT_COUNT = #{condition.defaultCount, jdbcType=INTEGER }
+      </if>
+      <if test="condition.minNum != null ">
+        and MIN_NUM = #{condition.minNum, jdbcType=INTEGER }
+      </if>
+      <if test="condition.maxNum != null ">
+        and MAX_NUM = #{condition.maxNum, jdbcType=INTEGER }
+      </if>
+    </where>
+  </update>
+</mapper>

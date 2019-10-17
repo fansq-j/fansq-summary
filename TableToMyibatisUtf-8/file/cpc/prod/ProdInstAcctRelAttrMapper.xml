@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ProdInstAcctRelAttrMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ProdInstAcctRelAttrDO">
+    <id column="PROD_INST_ACCT_REL_ATTR_ID" jdbcType="INTEGER" property="prodInstAcctRelAttrId"/>
+    <result column="PROD_INST_ACCT_REL_ID" jdbcType="BIGINT" property="prodInstAcctRelId"/>
+    <result column="ATTR_ID" jdbcType="BIGINT" property="attrId"/>
+    <result column="ATTR_VALUE_ID" jdbcType="BIGINT" property="attrValueId"/>
+    <result column="ATTR_VALUE" jdbcType="VARCHAR" property="attrValue"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="ATTR_NAME" jdbcType="VARCHAR" property="attrName"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PROD_INST_ACCT_REL_ATTR_ID, 
+          PROD_INST_ACCT_REL_ID, 
+          ATTR_ID, 
+          ATTR_VALUE_ID, 
+          ATTR_VALUE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ATTR_NAME, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PROD_INST_ACCT_REL_ID, 
+          ATTR_ID, 
+          ATTR_VALUE_ID, 
+          ATTR_VALUE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ATTR_NAME, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="prodInstAcctRelAttrId != null ">
+        PROD_INST_ACCT_REL_ATTR_ID = #{prodInstAcctRelAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="prodInstAcctRelId != null ">
+        and PROD_INST_ACCT_REL_ID = #{prodInstAcctRelId, jdbcType=BIGINT }
+      </if>
+      <if test="attrId != null ">
+        and ATTR_ID = #{attrId, jdbcType=BIGINT }
+      </if>
+      <if test="attrValueId != null ">
+        and ATTR_VALUE_ID = #{attrValueId, jdbcType=BIGINT }
+      </if>
+      <if test="attrValue != null and attrValue != ''">
+        and ATTR_VALUE = #{attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="attrName != null and attrName != ''">
+        and ATTR_NAME = #{attrName, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ProdInstAcctRelAttrDO" resultType="java.lang.Integer">
+      select count(*) from PROD_INST_ACCT_REL_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PROD_INST_ACCT_REL_ATTR
+        where 
+           PROD_INST_ACCT_REL_ATTR_ID = #{prodInstAcctRelAttrId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PROD_INST_ACCT_REL_ATTR 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="prodInstAcctRelAttrId">
+      insert into  PROD_INST_ACCT_REL_ATTR ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{prodInstAcctRelId,jdbcType=BIGINT}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{attrValueId,jdbcType=BIGINT}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{attrName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PROD_INST_ACCT_REL_ATTR ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{prodInstAcctRelAttrId,jdbcType=INTEGER}, 
+        #{prodInstAcctRelId,jdbcType=BIGINT}, 
+        #{attrId,jdbcType=BIGINT}, 
+        #{attrValueId,jdbcType=BIGINT}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{attrName,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PROD_INST_ACCT_REL_ATTR  
+        where
+           PROD_INST_ACCT_REL_ATTR_ID = #{prodInstAcctRelAttrId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PROD_INST_ACCT_REL_ATTR
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PROD_INST_ACCT_REL_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="prodInstAcctRelId != null">
+         PROD_INST_ACCT_REL_ID = #{prodInstAcctRelId,jdbcType=BIGINT},
+      </if>
+      <if test="attrId != null">
+         ATTR_ID = #{attrId,jdbcType=BIGINT},
+      </if>
+      <if test="attrValueId != null">
+         ATTR_VALUE_ID = #{attrValueId,jdbcType=BIGINT},
+      </if>
+      <if test="attrValue != null">
+         ATTR_VALUE = #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attrName != null">
+         ATTR_NAME = #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PROD_INST_ACCT_REL_ATTR_ID = #{prodInstAcctRelAttrId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PROD_INST_ACCT_REL_ATTR
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.prodInstAcctRelAttrId != null">
+        PROD_INST_ACCT_REL_ATTR_ID = #{record.prodInstAcctRelAttrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prodInstAcctRelId != null">
+        PROD_INST_ACCT_REL_ID = #{record.prodInstAcctRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrId != null">
+        ATTR_ID = #{record.attrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrValueId != null">
+        ATTR_VALUE_ID = #{record.attrValueId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrValue != null">
+        ATTR_VALUE = #{record.attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.attrName != null">
+        ATTR_NAME = #{record.attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.prodInstAcctRelAttrId != null ">
+        PROD_INST_ACCT_REL_ATTR_ID = #{condition.prodInstAcctRelAttrId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.prodInstAcctRelId != null ">
+        and PROD_INST_ACCT_REL_ID = #{condition.prodInstAcctRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrId != null ">
+        and ATTR_ID = #{condition.attrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrValueId != null ">
+        and ATTR_VALUE_ID = #{condition.attrValueId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrValue != null and condition.attrValue != ''">
+        and ATTR_VALUE = #{condition.attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.attrName != null and condition.attrName != ''">
+        and ATTR_NAME = #{condition.attrName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

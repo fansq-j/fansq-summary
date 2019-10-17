@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc1.prod.mapper.FormalParamMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc1.prod.data.FormalParamDO">
+    <id column="FORMAL_PARAM_ID" jdbcType="BIGINT" property="formalParamId"/>
+    <result column="EXPRESS_TEMPLATE_ID" jdbcType="BIGINT" property="expressTemplateId"/>
+    <result column="FORMAL_PARAM_NAME" jdbcType="VARCHAR" property="formalParamName"/>
+    <result column="FORMAL_PARAM_CODE" jdbcType="VARCHAR" property="formalParamCode"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          FORMAL_PARAM_ID, 
+          EXPRESS_TEMPLATE_ID, 
+          FORMAL_PARAM_NAME, 
+          FORMAL_PARAM_CODE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          EXPRESS_TEMPLATE_ID, 
+          FORMAL_PARAM_NAME, 
+          FORMAL_PARAM_CODE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="formalParamId != null ">
+        FORMAL_PARAM_ID = #{formalParamId, jdbcType=BIGINT }
+      </if>
+      <if test="expressTemplateId != null ">
+        and EXPRESS_TEMPLATE_ID = #{expressTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="formalParamName != null and formalParamName != ''">
+        and FORMAL_PARAM_NAME = #{formalParamName, jdbcType=VARCHAR }
+      </if>
+      <if test="formalParamCode != null and formalParamCode != ''">
+        and FORMAL_PARAM_CODE = #{formalParamCode, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc1.prod.data.FormalParamDO" resultType="java.lang.Integer">
+      select count(*) from FORMAL_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from FORMAL_PARAM
+        where 
+           FORMAL_PARAM_ID = #{formalParamId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  FORMAL_PARAM 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="formalParamId">
+      insert into  FORMAL_PARAM ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{expressTemplateId,jdbcType=BIGINT}, 
+        #{formalParamName,jdbcType=VARCHAR}, 
+        #{formalParamCode,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  FORMAL_PARAM ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{formalParamId,jdbcType=BIGINT}, 
+        #{expressTemplateId,jdbcType=BIGINT}, 
+        #{formalParamName,jdbcType=VARCHAR}, 
+        #{formalParamCode,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from FORMAL_PARAM  
+        where
+           FORMAL_PARAM_ID = #{formalParamId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from FORMAL_PARAM
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  FORMAL_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="expressTemplateId != null">
+         EXPRESS_TEMPLATE_ID = #{expressTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="formalParamName != null">
+         FORMAL_PARAM_NAME = #{formalParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="formalParamCode != null">
+         FORMAL_PARAM_CODE = #{formalParamCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           FORMAL_PARAM_ID = #{formalParamId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update FORMAL_PARAM
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.formalParamId != null">
+        FORMAL_PARAM_ID = #{record.formalParamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.expressTemplateId != null">
+        EXPRESS_TEMPLATE_ID = #{record.expressTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.formalParamName != null">
+        FORMAL_PARAM_NAME = #{record.formalParamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formalParamCode != null">
+        FORMAL_PARAM_CODE = #{record.formalParamCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.formalParamId != null ">
+        FORMAL_PARAM_ID = #{condition.formalParamId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.expressTemplateId != null ">
+        and EXPRESS_TEMPLATE_ID = #{condition.expressTemplateId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.formalParamName != null and condition.formalParamName != ''">
+        and FORMAL_PARAM_NAME = #{condition.formalParamName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.formalParamCode != null and condition.formalParamCode != ''">
+        and FORMAL_PARAM_CODE = #{condition.formalParamCode, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

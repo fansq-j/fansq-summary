@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PointAcctBalanceMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PointAcctBalanceDO">
+    <id column="POINT_ACCT_BALANCE_ID" jdbcType="BIGINT" property="pointAcctBalanceId"/>
+    <result column="POINT_ACCT_ID" jdbcType="BIGINT" property="pointAcctId"/>
+    <result column="POINT_TYPE_ID" jdbcType="INTEGER" property="pointTypeId"/>
+    <result column="PRESENT_FLAG" jdbcType="INTEGER" property="presentFlag"/>
+    <result column="POINT_INIT_VALUE" jdbcType="INTEGER" property="pointInitValue"/>
+    <result column="POINT_BALANCE" jdbcType="INTEGER" property="pointBalance"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="POINT_CYCLE_END_TYPE" jdbcType="VARCHAR" property="pointCycleEndType"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          POINT_ACCT_BALANCE_ID, 
+          POINT_ACCT_ID, 
+          POINT_TYPE_ID, 
+          PRESENT_FLAG, 
+          POINT_INIT_VALUE, 
+          POINT_BALANCE, 
+          EXP_DATE, 
+          POINT_CYCLE_END_TYPE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          POINT_ACCT_ID, 
+          POINT_TYPE_ID, 
+          PRESENT_FLAG, 
+          POINT_INIT_VALUE, 
+          POINT_BALANCE, 
+          EXP_DATE, 
+          POINT_CYCLE_END_TYPE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          STATUS_CD, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pointAcctBalanceId != null ">
+        POINT_ACCT_BALANCE_ID = #{pointAcctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="pointAcctId != null ">
+        and POINT_ACCT_ID = #{pointAcctId, jdbcType=BIGINT }
+      </if>
+      <if test="pointTypeId != null ">
+        and POINT_TYPE_ID = #{pointTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="presentFlag != null ">
+        and PRESENT_FLAG = #{presentFlag, jdbcType=INTEGER }
+      </if>
+      <if test="pointInitValue != null ">
+        and POINT_INIT_VALUE = #{pointInitValue, jdbcType=INTEGER }
+      </if>
+      <if test="pointBalance != null ">
+        and POINT_BALANCE = #{pointBalance, jdbcType=INTEGER }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="pointCycleEndType != null and pointCycleEndType != ''">
+        and POINT_CYCLE_END_TYPE = #{pointCycleEndType, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PointAcctBalanceDO" resultType="java.lang.Integer">
+      select count(*) from POINT_ACCT_BALANCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from POINT_ACCT_BALANCE
+        where 
+           POINT_ACCT_BALANCE_ID = #{pointAcctBalanceId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  POINT_ACCT_BALANCE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pointAcctBalanceId">
+      insert into  POINT_ACCT_BALANCE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{pointAcctId,jdbcType=BIGINT}, 
+        #{pointTypeId,jdbcType=INTEGER}, 
+        #{presentFlag,jdbcType=INTEGER}, 
+        #{pointInitValue,jdbcType=INTEGER}, 
+        #{pointBalance,jdbcType=INTEGER}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{pointCycleEndType,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  POINT_ACCT_BALANCE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pointAcctBalanceId,jdbcType=BIGINT}, 
+        #{pointAcctId,jdbcType=BIGINT}, 
+        #{pointTypeId,jdbcType=INTEGER}, 
+        #{presentFlag,jdbcType=INTEGER}, 
+        #{pointInitValue,jdbcType=INTEGER}, 
+        #{pointBalance,jdbcType=INTEGER}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{pointCycleEndType,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from POINT_ACCT_BALANCE  
+        where
+           POINT_ACCT_BALANCE_ID = #{pointAcctBalanceId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from POINT_ACCT_BALANCE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  POINT_ACCT_BALANCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="pointAcctId != null">
+         POINT_ACCT_ID = #{pointAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="pointTypeId != null">
+         POINT_TYPE_ID = #{pointTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="presentFlag != null">
+         PRESENT_FLAG = #{presentFlag,jdbcType=INTEGER},
+      </if>
+      <if test="pointInitValue != null">
+         POINT_INIT_VALUE = #{pointInitValue,jdbcType=INTEGER},
+      </if>
+      <if test="pointBalance != null">
+         POINT_BALANCE = #{pointBalance,jdbcType=INTEGER},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pointCycleEndType != null">
+         POINT_CYCLE_END_TYPE = #{pointCycleEndType,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           POINT_ACCT_BALANCE_ID = #{pointAcctBalanceId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update POINT_ACCT_BALANCE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pointAcctBalanceId != null">
+        POINT_ACCT_BALANCE_ID = #{record.pointAcctBalanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pointAcctId != null">
+        POINT_ACCT_ID = #{record.pointAcctId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pointTypeId != null">
+        POINT_TYPE_ID = #{record.pointTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.presentFlag != null">
+        PRESENT_FLAG = #{record.presentFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointInitValue != null">
+        POINT_INIT_VALUE = #{record.pointInitValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.pointBalance != null">
+        POINT_BALANCE = #{record.pointBalance,jdbcType=INTEGER},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pointCycleEndType != null">
+        POINT_CYCLE_END_TYPE = #{record.pointCycleEndType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pointAcctBalanceId != null ">
+        POINT_ACCT_BALANCE_ID = #{condition.pointAcctBalanceId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pointAcctId != null ">
+        and POINT_ACCT_ID = #{condition.pointAcctId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.pointTypeId != null ">
+        and POINT_TYPE_ID = #{condition.pointTypeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.presentFlag != null ">
+        and PRESENT_FLAG = #{condition.presentFlag, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pointInitValue != null ">
+        and POINT_INIT_VALUE = #{condition.pointInitValue, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pointBalance != null ">
+        and POINT_BALANCE = #{condition.pointBalance, jdbcType=INTEGER }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.pointCycleEndType != null and condition.pointCycleEndType != ''">
+        and POINT_CYCLE_END_TYPE = #{condition.pointCycleEndType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

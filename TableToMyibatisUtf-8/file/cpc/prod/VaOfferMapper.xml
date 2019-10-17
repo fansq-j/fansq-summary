@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.VaOfferMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.VaOfferDO">
+    <id column="VA_OFFER_ID" jdbcType="BIGINT" property="vaOfferId"/>
+    <result column="OFFER_TYPE" jdbcType="VARCHAR" property="offerType"/>
+    <result column="OFFER_SYS_TYPE" jdbcType="VARCHAR" property="offerSysType"/>
+    <result column="OFFER_NAME" jdbcType="VARCHAR" property="offerName"/>
+    <result column="OFFER_SYS_NAME" jdbcType="VARCHAR" property="offerSysName"/>
+    <result column="OFFER_SYS_PY_NAME" jdbcType="VARCHAR" property="offerSysPyName"/>
+    <result column="OFFER_EN_NAME" jdbcType="VARCHAR" property="offerEnName"/>
+    <result column="OFFER_EN_DESC" jdbcType="VARCHAR" property="offerEnDesc"/>
+    <result column="OFFER_NBR" jdbcType="VARCHAR" property="offerNbr"/>
+    <result column="OFFER_SYS_NBR" jdbcType="VARCHAR" property="offerSysNbr"/>
+    <result column="OFFER_DESC" jdbcType="VARCHAR" property="offerDesc"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="MANAGE_GRADE" jdbcType="VARCHAR" property="manageGrade"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="OFFER_PROVIDER_ID" jdbcType="VARCHAR" property="offerProviderId"/>
+    <result column="BRAND_ID" jdbcType="BIGINT" property="brandId"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="MANAGE_REGION_ID" jdbcType="BIGINT" property="manageRegionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          VA_OFFER_ID, 
+          OFFER_TYPE, 
+          OFFER_SYS_TYPE, 
+          OFFER_NAME, 
+          OFFER_SYS_NAME, 
+          OFFER_SYS_PY_NAME, 
+          OFFER_EN_NAME, 
+          OFFER_EN_DESC, 
+          OFFER_NBR, 
+          OFFER_SYS_NBR, 
+          OFFER_DESC, 
+          EFF_DATE, 
+          MANAGE_GRADE, 
+          EXP_DATE, 
+          OFFER_PROVIDER_ID, 
+          BRAND_ID, 
+          REMARK, 
+          MANAGE_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OFFER_TYPE, 
+          OFFER_SYS_TYPE, 
+          OFFER_NAME, 
+          OFFER_SYS_NAME, 
+          OFFER_SYS_PY_NAME, 
+          OFFER_EN_NAME, 
+          OFFER_EN_DESC, 
+          OFFER_NBR, 
+          OFFER_SYS_NBR, 
+          OFFER_DESC, 
+          EFF_DATE, 
+          MANAGE_GRADE, 
+          EXP_DATE, 
+          OFFER_PROVIDER_ID, 
+          BRAND_ID, 
+          REMARK, 
+          MANAGE_REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="vaOfferId != null ">
+        VA_OFFER_ID = #{vaOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="offerType != null and offerType != ''">
+        and OFFER_TYPE = #{offerType, jdbcType=VARCHAR }
+      </if>
+      <if test="offerSysType != null and offerSysType != ''">
+        and OFFER_SYS_TYPE = #{offerSysType, jdbcType=VARCHAR }
+      </if>
+      <if test="offerName != null and offerName != ''">
+        and OFFER_NAME = #{offerName, jdbcType=VARCHAR }
+      </if>
+      <if test="offerSysName != null and offerSysName != ''">
+        and OFFER_SYS_NAME = #{offerSysName, jdbcType=VARCHAR }
+      </if>
+      <if test="offerSysPyName != null and offerSysPyName != ''">
+        and OFFER_SYS_PY_NAME = #{offerSysPyName, jdbcType=VARCHAR }
+      </if>
+      <if test="offerEnName != null and offerEnName != ''">
+        and OFFER_EN_NAME = #{offerEnName, jdbcType=VARCHAR }
+      </if>
+      <if test="offerEnDesc != null and offerEnDesc != ''">
+        and OFFER_EN_DESC = #{offerEnDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="offerNbr != null and offerNbr != ''">
+        and OFFER_NBR = #{offerNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="offerSysNbr != null and offerSysNbr != ''">
+        and OFFER_SYS_NBR = #{offerSysNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="offerDesc != null and offerDesc != ''">
+        and OFFER_DESC = #{offerDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="manageGrade != null and manageGrade != ''">
+        and MANAGE_GRADE = #{manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="offerProviderId != null and offerProviderId != ''">
+        and OFFER_PROVIDER_ID = #{offerProviderId, jdbcType=VARCHAR }
+      </if>
+      <if test="brandId != null ">
+        and BRAND_ID = #{brandId, jdbcType=BIGINT }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="manageRegionId != null ">
+        and MANAGE_REGION_ID = #{manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.VaOfferDO" resultType="java.lang.Integer">
+      select count(*) from VA_OFFER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from VA_OFFER
+        where 
+           VA_OFFER_ID = #{vaOfferId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  VA_OFFER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="vaOfferId">
+      insert into  VA_OFFER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{offerType,jdbcType=VARCHAR}, 
+        #{offerSysType,jdbcType=VARCHAR}, 
+        #{offerName,jdbcType=VARCHAR}, 
+        #{offerSysName,jdbcType=VARCHAR}, 
+        #{offerSysPyName,jdbcType=VARCHAR}, 
+        #{offerEnName,jdbcType=VARCHAR}, 
+        #{offerEnDesc,jdbcType=VARCHAR}, 
+        #{offerNbr,jdbcType=VARCHAR}, 
+        #{offerSysNbr,jdbcType=VARCHAR}, 
+        #{offerDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{offerProviderId,jdbcType=VARCHAR}, 
+        #{brandId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  VA_OFFER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{vaOfferId,jdbcType=BIGINT}, 
+        #{offerType,jdbcType=VARCHAR}, 
+        #{offerSysType,jdbcType=VARCHAR}, 
+        #{offerName,jdbcType=VARCHAR}, 
+        #{offerSysName,jdbcType=VARCHAR}, 
+        #{offerSysPyName,jdbcType=VARCHAR}, 
+        #{offerEnName,jdbcType=VARCHAR}, 
+        #{offerEnDesc,jdbcType=VARCHAR}, 
+        #{offerNbr,jdbcType=VARCHAR}, 
+        #{offerSysNbr,jdbcType=VARCHAR}, 
+        #{offerDesc,jdbcType=VARCHAR}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{manageGrade,jdbcType=VARCHAR}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{offerProviderId,jdbcType=VARCHAR}, 
+        #{brandId,jdbcType=BIGINT}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{manageRegionId,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from VA_OFFER  
+        where
+           VA_OFFER_ID = #{vaOfferId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from VA_OFFER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  VA_OFFER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="offerType != null">
+         OFFER_TYPE = #{offerType,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSysType != null">
+         OFFER_SYS_TYPE = #{offerSysType,jdbcType=VARCHAR},
+      </if>
+      <if test="offerName != null">
+         OFFER_NAME = #{offerName,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSysName != null">
+         OFFER_SYS_NAME = #{offerSysName,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSysPyName != null">
+         OFFER_SYS_PY_NAME = #{offerSysPyName,jdbcType=VARCHAR},
+      </if>
+      <if test="offerEnName != null">
+         OFFER_EN_NAME = #{offerEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="offerEnDesc != null">
+         OFFER_EN_DESC = #{offerEnDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="offerNbr != null">
+         OFFER_NBR = #{offerNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSysNbr != null">
+         OFFER_SYS_NBR = #{offerSysNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="offerDesc != null">
+         OFFER_DESC = #{offerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manageGrade != null">
+         MANAGE_GRADE = #{manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offerProviderId != null">
+         OFFER_PROVIDER_ID = #{offerProviderId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+         BRAND_ID = #{brandId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="manageRegionId != null">
+         MANAGE_REGION_ID = #{manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           VA_OFFER_ID = #{vaOfferId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update VA_OFFER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.vaOfferId != null">
+        VA_OFFER_ID = #{record.vaOfferId,jdbcType=BIGINT},
+      </if>
+      <if test="record.offerType != null">
+        OFFER_TYPE = #{record.offerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSysType != null">
+        OFFER_SYS_TYPE = #{record.offerSysType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerName != null">
+        OFFER_NAME = #{record.offerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSysName != null">
+        OFFER_SYS_NAME = #{record.offerSysName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSysPyName != null">
+        OFFER_SYS_PY_NAME = #{record.offerSysPyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerEnName != null">
+        OFFER_EN_NAME = #{record.offerEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerEnDesc != null">
+        OFFER_EN_DESC = #{record.offerEnDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerNbr != null">
+        OFFER_NBR = #{record.offerNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSysNbr != null">
+        OFFER_SYS_NBR = #{record.offerSysNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerDesc != null">
+        OFFER_DESC = #{record.offerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.manageGrade != null">
+        MANAGE_GRADE = #{record.manageGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.offerProviderId != null">
+        OFFER_PROVIDER_ID = #{record.offerProviderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandId != null">
+        BRAND_ID = #{record.brandId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageRegionId != null">
+        MANAGE_REGION_ID = #{record.manageRegionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.vaOfferId != null ">
+        VA_OFFER_ID = #{condition.vaOfferId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.offerType != null and condition.offerType != ''">
+        and OFFER_TYPE = #{condition.offerType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerSysType != null and condition.offerSysType != ''">
+        and OFFER_SYS_TYPE = #{condition.offerSysType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerName != null and condition.offerName != ''">
+        and OFFER_NAME = #{condition.offerName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerSysName != null and condition.offerSysName != ''">
+        and OFFER_SYS_NAME = #{condition.offerSysName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerSysPyName != null and condition.offerSysPyName != ''">
+        and OFFER_SYS_PY_NAME = #{condition.offerSysPyName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerEnName != null and condition.offerEnName != ''">
+        and OFFER_EN_NAME = #{condition.offerEnName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerEnDesc != null and condition.offerEnDesc != ''">
+        and OFFER_EN_DESC = #{condition.offerEnDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerNbr != null and condition.offerNbr != ''">
+        and OFFER_NBR = #{condition.offerNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerSysNbr != null and condition.offerSysNbr != ''">
+        and OFFER_SYS_NBR = #{condition.offerSysNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.offerDesc != null and condition.offerDesc != ''">
+        and OFFER_DESC = #{condition.offerDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.manageGrade != null and condition.manageGrade != ''">
+        and MANAGE_GRADE = #{condition.manageGrade, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.offerProviderId != null and condition.offerProviderId != ''">
+        and OFFER_PROVIDER_ID = #{condition.offerProviderId, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.brandId != null ">
+        and BRAND_ID = #{condition.brandId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.manageRegionId != null ">
+        and MANAGE_REGION_ID = #{condition.manageRegionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

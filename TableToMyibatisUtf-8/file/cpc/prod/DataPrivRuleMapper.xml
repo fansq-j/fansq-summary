@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.DataPrivRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.DataPrivRuleDO">
+    <id column="PRIV_RULE_ID" jdbcType="BIGINT" property="privRuleId"/>
+    <result column="PRIV_DATA_REL_ID" jdbcType="BIGINT" property="privDataRelId"/>
+    <result column="BUSI_OBJ_ID" jdbcType="BIGINT" property="busiObjId"/>
+    <result column="BUSI_OBJ_ATTR_ID" jdbcType="BIGINT" property="busiObjAttrId"/>
+    <result column="RULE_GROUP" jdbcType="INTEGER" property="ruleGroup"/>
+    <result column="RULE_OPERATOR" jdbcType="VARCHAR" property="ruleOperator"/>
+    <result column="ATTR_VALUE" jdbcType="VARCHAR" property="attrValue"/>
+    <result column="OPER_TYPE" jdbcType="VARCHAR" property="operType"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRIV_RULE_ID, 
+          PRIV_DATA_REL_ID, 
+          BUSI_OBJ_ID, 
+          BUSI_OBJ_ATTR_ID, 
+          RULE_GROUP, 
+          RULE_OPERATOR, 
+          ATTR_VALUE, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PRIV_DATA_REL_ID, 
+          BUSI_OBJ_ID, 
+          BUSI_OBJ_ATTR_ID, 
+          RULE_GROUP, 
+          RULE_OPERATOR, 
+          ATTR_VALUE, 
+          OPER_TYPE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          UPDATE_DATE, 
+          UPDATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="privRuleId != null ">
+        PRIV_RULE_ID = #{privRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="privDataRelId != null ">
+        and PRIV_DATA_REL_ID = #{privDataRelId, jdbcType=BIGINT }
+      </if>
+      <if test="busiObjId != null ">
+        and BUSI_OBJ_ID = #{busiObjId, jdbcType=BIGINT }
+      </if>
+      <if test="busiObjAttrId != null ">
+        and BUSI_OBJ_ATTR_ID = #{busiObjAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="ruleGroup != null ">
+        and RULE_GROUP = #{ruleGroup, jdbcType=INTEGER }
+      </if>
+      <if test="ruleOperator != null and ruleOperator != ''">
+        and RULE_OPERATOR = #{ruleOperator, jdbcType=VARCHAR }
+      </if>
+      <if test="attrValue != null and attrValue != ''">
+        and ATTR_VALUE = #{attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="operType != null and operType != ''">
+        and OPER_TYPE = #{operType, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.DataPrivRuleDO" resultType="java.lang.Integer">
+      select count(*) from DATA_PRIV_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from DATA_PRIV_RULE
+        where 
+           PRIV_RULE_ID = #{privRuleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  DATA_PRIV_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="privRuleId">
+      insert into  DATA_PRIV_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{privDataRelId,jdbcType=BIGINT}, 
+        #{busiObjId,jdbcType=BIGINT}, 
+        #{busiObjAttrId,jdbcType=BIGINT}, 
+        #{ruleGroup,jdbcType=INTEGER}, 
+        #{ruleOperator,jdbcType=VARCHAR}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  DATA_PRIV_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{privRuleId,jdbcType=BIGINT}, 
+        #{privDataRelId,jdbcType=BIGINT}, 
+        #{busiObjId,jdbcType=BIGINT}, 
+        #{busiObjAttrId,jdbcType=BIGINT}, 
+        #{ruleGroup,jdbcType=INTEGER}, 
+        #{ruleOperator,jdbcType=VARCHAR}, 
+        #{attrValue,jdbcType=VARCHAR}, 
+        #{operType,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from DATA_PRIV_RULE  
+        where
+           PRIV_RULE_ID = #{privRuleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from DATA_PRIV_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  DATA_PRIV_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="privDataRelId != null">
+         PRIV_DATA_REL_ID = #{privDataRelId,jdbcType=BIGINT},
+      </if>
+      <if test="busiObjId != null">
+         BUSI_OBJ_ID = #{busiObjId,jdbcType=BIGINT},
+      </if>
+      <if test="busiObjAttrId != null">
+         BUSI_OBJ_ATTR_ID = #{busiObjAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="ruleGroup != null">
+         RULE_GROUP = #{ruleGroup,jdbcType=INTEGER},
+      </if>
+      <if test="ruleOperator != null">
+         RULE_OPERATOR = #{ruleOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="attrValue != null">
+         ATTR_VALUE = #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null">
+         OPER_TYPE = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           PRIV_RULE_ID = #{privRuleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update DATA_PRIV_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.privRuleId != null">
+        PRIV_RULE_ID = #{record.privRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.privDataRelId != null">
+        PRIV_DATA_REL_ID = #{record.privDataRelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.busiObjId != null">
+        BUSI_OBJ_ID = #{record.busiObjId,jdbcType=BIGINT},
+      </if>
+      <if test="record.busiObjAttrId != null">
+        BUSI_OBJ_ATTR_ID = #{record.busiObjAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ruleGroup != null">
+        RULE_GROUP = #{record.ruleGroup,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleOperator != null">
+        RULE_OPERATOR = #{record.ruleOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrValue != null">
+        ATTR_VALUE = #{record.attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operType != null">
+        OPER_TYPE = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.privRuleId != null ">
+        PRIV_RULE_ID = #{condition.privRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.privDataRelId != null ">
+        and PRIV_DATA_REL_ID = #{condition.privDataRelId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.busiObjId != null ">
+        and BUSI_OBJ_ID = #{condition.busiObjId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.busiObjAttrId != null ">
+        and BUSI_OBJ_ATTR_ID = #{condition.busiObjAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.ruleGroup != null ">
+        and RULE_GROUP = #{condition.ruleGroup, jdbcType=INTEGER }
+      </if>
+      <if test="condition.ruleOperator != null and condition.ruleOperator != ''">
+        and RULE_OPERATOR = #{condition.ruleOperator, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrValue != null and condition.attrValue != ''">
+        and ATTR_VALUE = #{condition.attrValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operType != null and condition.operType != ''">
+        and OPER_TYPE = #{condition.operType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PricingCombineMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PricingCombineDO">
+    <id column="PRICING_COMBINE_ID" jdbcType="INTEGER" property="pricingCombineId"/>
+    <result column="PRICING_PLAN_ID" jdbcType="INTEGER" property="pricingPlanId"/>
+    <result column="LIFE_CYCLE_ID" jdbcType="INTEGER" property="lifeCycleId"/>
+    <result column="EVENT_PRICING_STRATEGY_ID" jdbcType="INTEGER" property="eventPricingStrategyId"/>
+    <result column="OFFER_OBJECT_ID" jdbcType="INTEGER" property="offerObjectId"/>
+    <result column="CALC_PRIORITY" jdbcType="INTEGER" property="calcPriority"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PRICING_COMBINE_ID, 
+          PRICING_PLAN_ID, 
+          LIFE_CYCLE_ID, 
+          EVENT_PRICING_STRATEGY_ID, 
+          OFFER_OBJECT_ID, 
+          CALC_PRIORITY, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PRICING_PLAN_ID, 
+          LIFE_CYCLE_ID, 
+          EVENT_PRICING_STRATEGY_ID, 
+          OFFER_OBJECT_ID, 
+          CALC_PRIORITY, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_DATE, 
+          STATUS_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="pricingCombineId != null ">
+        PRICING_COMBINE_ID = #{pricingCombineId, jdbcType=INTEGER }
+      </if>
+      <if test="pricingPlanId != null ">
+        and PRICING_PLAN_ID = #{pricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="lifeCycleId != null ">
+        and LIFE_CYCLE_ID = #{lifeCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="eventPricingStrategyId != null ">
+        and EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId, jdbcType=INTEGER }
+      </if>
+      <if test="offerObjectId != null ">
+        and OFFER_OBJECT_ID = #{offerObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="calcPriority != null ">
+        and CALC_PRIORITY = #{calcPriority, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PricingCombineDO" resultType="java.lang.Integer">
+      select count(*) from PRICING_COMBINE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PRICING_COMBINE
+        where 
+           PRICING_COMBINE_ID = #{pricingCombineId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PRICING_COMBINE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="pricingCombineId">
+      insert into  PRICING_COMBINE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{pricingPlanId,jdbcType=INTEGER}, 
+        #{lifeCycleId,jdbcType=INTEGER}, 
+        #{eventPricingStrategyId,jdbcType=INTEGER}, 
+        #{offerObjectId,jdbcType=INTEGER}, 
+        #{calcPriority,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PRICING_COMBINE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{pricingCombineId,jdbcType=INTEGER}, 
+        #{pricingPlanId,jdbcType=INTEGER}, 
+        #{lifeCycleId,jdbcType=INTEGER}, 
+        #{eventPricingStrategyId,jdbcType=INTEGER}, 
+        #{offerObjectId,jdbcType=INTEGER}, 
+        #{calcPriority,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PRICING_COMBINE  
+        where
+           PRICING_COMBINE_ID = #{pricingCombineId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PRICING_COMBINE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PRICING_COMBINE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="pricingPlanId != null">
+         PRICING_PLAN_ID = #{pricingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="lifeCycleId != null">
+         LIFE_CYCLE_ID = #{lifeCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="eventPricingStrategyId != null">
+         EVENT_PRICING_STRATEGY_ID = #{eventPricingStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="offerObjectId != null">
+         OFFER_OBJECT_ID = #{offerObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="calcPriority != null">
+         CALC_PRIORITY = #{calcPriority,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PRICING_COMBINE_ID = #{pricingCombineId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PRICING_COMBINE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.pricingCombineId != null">
+        PRICING_COMBINE_ID = #{record.pricingCombineId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricingPlanId != null">
+        PRICING_PLAN_ID = #{record.pricingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lifeCycleId != null">
+        LIFE_CYCLE_ID = #{record.lifeCycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eventPricingStrategyId != null">
+        EVENT_PRICING_STRATEGY_ID = #{record.eventPricingStrategyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.offerObjectId != null">
+        OFFER_OBJECT_ID = #{record.offerObjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.calcPriority != null">
+        CALC_PRIORITY = #{record.calcPriority,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.pricingCombineId != null ">
+        PRICING_COMBINE_ID = #{condition.pricingCombineId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.pricingPlanId != null ">
+        and PRICING_PLAN_ID = #{condition.pricingPlanId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.lifeCycleId != null ">
+        and LIFE_CYCLE_ID = #{condition.lifeCycleId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.eventPricingStrategyId != null ">
+        and EVENT_PRICING_STRATEGY_ID = #{condition.eventPricingStrategyId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.offerObjectId != null ">
+        and OFFER_OBJECT_ID = #{condition.offerObjectId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.calcPriority != null ">
+        and CALC_PRIORITY = #{condition.calcPriority, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.OperatorsMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.OperatorsDO">
+    <id column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+    <result column="OPERATORS_NBR" jdbcType="VARCHAR" property="operatorsNbr"/>
+    <result column="OPERATORS_NAME" jdbcType="VARCHAR" property="operatorsName"/>
+    <result column="OPERATORS_SNAME" jdbcType="VARCHAR" property="operatorsSname"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="OPERATORS_LEVEL" jdbcType="VARCHAR" property="operatorsLevel"/>
+    <result column="LEGAL_REPR" jdbcType="VARCHAR" property="legalRepr"/>
+    <result column="PARENT_OPER_ID" jdbcType="BIGINT" property="parentOperId"/>
+    <result column="OPERATORS_DESC" jdbcType="VARCHAR" property="operatorsDesc"/>
+    <result column="IS_CHAIN" jdbcType="INTEGER" property="isChain"/>
+    <result column="CHAIN_TYPE" jdbcType="VARCHAR" property="chainType"/>
+    <result column="REGION_ID" jdbcType="BIGINT" property="regionId"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="IS_AGENT" jdbcType="INTEGER" property="isAgent"/>
+    <result column="OPERATORS_TYPE_CD" jdbcType="VARCHAR" property="operatorsTypeCd"/>
+    <result column="TOP_TYPE" jdbcType="VARCHAR" property="topType"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          ORG_ID, 
+          OPERATORS_NBR, 
+          OPERATORS_NAME, 
+          OPERATORS_SNAME, 
+          PARTY_ID, 
+          OPERATORS_LEVEL, 
+          LEGAL_REPR, 
+          PARENT_OPER_ID, 
+          OPERATORS_DESC, 
+          IS_CHAIN, 
+          CHAIN_TYPE, 
+          REGION_ID, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          IS_AGENT, 
+          OPERATORS_TYPE_CD, 
+          TOP_TYPE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          OPERATORS_NBR, 
+          OPERATORS_NAME, 
+          OPERATORS_SNAME, 
+          PARTY_ID, 
+          OPERATORS_LEVEL, 
+          LEGAL_REPR, 
+          PARENT_OPER_ID, 
+          OPERATORS_DESC, 
+          IS_CHAIN, 
+          CHAIN_TYPE, 
+          REGION_ID, 
+          CREATE_DATE, 
+          CREATE_STAFF, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          UPDATE_STAFF, 
+          IS_AGENT, 
+          OPERATORS_TYPE_CD, 
+          TOP_TYPE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="orgId != null ">
+        ORG_ID = #{orgId, jdbcType=BIGINT }
+      </if>
+      <if test="operatorsNbr != null and operatorsNbr != ''">
+        and OPERATORS_NBR = #{operatorsNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="operatorsName != null and operatorsName != ''">
+        and OPERATORS_NAME = #{operatorsName, jdbcType=VARCHAR }
+      </if>
+      <if test="operatorsSname != null and operatorsSname != ''">
+        and OPERATORS_SNAME = #{operatorsSname, jdbcType=VARCHAR }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="operatorsLevel != null and operatorsLevel != ''">
+        and OPERATORS_LEVEL = #{operatorsLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="legalRepr != null and legalRepr != ''">
+        and LEGAL_REPR = #{legalRepr, jdbcType=VARCHAR }
+      </if>
+      <if test="parentOperId != null ">
+        and PARENT_OPER_ID = #{parentOperId, jdbcType=BIGINT }
+      </if>
+      <if test="operatorsDesc != null and operatorsDesc != ''">
+        and OPERATORS_DESC = #{operatorsDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="isChain != null ">
+        and IS_CHAIN = #{isChain, jdbcType=INTEGER }
+      </if>
+      <if test="chainType != null and chainType != ''">
+        and CHAIN_TYPE = #{chainType, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="isAgent != null ">
+        and IS_AGENT = #{isAgent, jdbcType=INTEGER }
+      </if>
+      <if test="operatorsTypeCd != null and operatorsTypeCd != ''">
+        and OPERATORS_TYPE_CD = #{operatorsTypeCd, jdbcType=VARCHAR }
+      </if>
+      <if test="topType != null and topType != ''">
+        and TOP_TYPE = #{topType, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.OperatorsDO" resultType="java.lang.Integer">
+      select count(*) from OPERATORS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from OPERATORS
+        where 
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  OPERATORS 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="orgId">
+      insert into  OPERATORS ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{operatorsNbr,jdbcType=VARCHAR}, 
+        #{operatorsName,jdbcType=VARCHAR}, 
+        #{operatorsSname,jdbcType=VARCHAR}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{operatorsLevel,jdbcType=VARCHAR}, 
+        #{legalRepr,jdbcType=VARCHAR}, 
+        #{parentOperId,jdbcType=BIGINT}, 
+        #{operatorsDesc,jdbcType=VARCHAR}, 
+        #{isChain,jdbcType=INTEGER}, 
+        #{chainType,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{isAgent,jdbcType=INTEGER}, 
+        #{operatorsTypeCd,jdbcType=VARCHAR}, 
+        #{topType,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  OPERATORS ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{orgId,jdbcType=BIGINT}, 
+        #{operatorsNbr,jdbcType=VARCHAR}, 
+        #{operatorsName,jdbcType=VARCHAR}, 
+        #{operatorsSname,jdbcType=VARCHAR}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{operatorsLevel,jdbcType=VARCHAR}, 
+        #{legalRepr,jdbcType=VARCHAR}, 
+        #{parentOperId,jdbcType=BIGINT}, 
+        #{operatorsDesc,jdbcType=VARCHAR}, 
+        #{isChain,jdbcType=INTEGER}, 
+        #{chainType,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{isAgent,jdbcType=INTEGER}, 
+        #{operatorsTypeCd,jdbcType=VARCHAR}, 
+        #{topType,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from OPERATORS  
+        where
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from OPERATORS
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  OPERATORS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="operatorsNbr != null">
+         OPERATORS_NBR = #{operatorsNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorsName != null">
+         OPERATORS_NAME = #{operatorsName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorsSname != null">
+         OPERATORS_SNAME = #{operatorsSname,jdbcType=VARCHAR},
+      </if>
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorsLevel != null">
+         OPERATORS_LEVEL = #{operatorsLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepr != null">
+         LEGAL_REPR = #{legalRepr,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOperId != null">
+         PARENT_OPER_ID = #{parentOperId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorsDesc != null">
+         OPERATORS_DESC = #{operatorsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isChain != null">
+         IS_CHAIN = #{isChain,jdbcType=INTEGER},
+      </if>
+      <if test="chainType != null">
+         CHAIN_TYPE = #{chainType,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="isAgent != null">
+         IS_AGENT = #{isAgent,jdbcType=INTEGER},
+      </if>
+      <if test="operatorsTypeCd != null">
+         OPERATORS_TYPE_CD = #{operatorsTypeCd,jdbcType=VARCHAR},
+      </if>
+      <if test="topType != null">
+         TOP_TYPE = #{topType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           ORG_ID = #{orgId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update OPERATORS
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operatorsNbr != null">
+        OPERATORS_NBR = #{record.operatorsNbr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorsName != null">
+        OPERATORS_NAME = #{record.operatorsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorsSname != null">
+        OPERATORS_SNAME = #{record.operatorsSname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operatorsLevel != null">
+        OPERATORS_LEVEL = #{record.operatorsLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalRepr != null">
+        LEGAL_REPR = #{record.legalRepr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentOperId != null">
+        PARENT_OPER_ID = #{record.parentOperId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operatorsDesc != null">
+        OPERATORS_DESC = #{record.operatorsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isChain != null">
+        IS_CHAIN = #{record.isChain,jdbcType=INTEGER},
+      </if>
+      <if test="record.chainType != null">
+        CHAIN_TYPE = #{record.chainType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.isAgent != null">
+        IS_AGENT = #{record.isAgent,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorsTypeCd != null">
+        OPERATORS_TYPE_CD = #{record.operatorsTypeCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.topType != null">
+        TOP_TYPE = #{record.topType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.orgId != null ">
+        ORG_ID = #{condition.orgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operatorsNbr != null and condition.operatorsNbr != ''">
+        and OPERATORS_NBR = #{condition.operatorsNbr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operatorsName != null and condition.operatorsName != ''">
+        and OPERATORS_NAME = #{condition.operatorsName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.operatorsSname != null and condition.operatorsSname != ''">
+        and OPERATORS_SNAME = #{condition.operatorsSname, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operatorsLevel != null and condition.operatorsLevel != ''">
+        and OPERATORS_LEVEL = #{condition.operatorsLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.legalRepr != null and condition.legalRepr != ''">
+        and LEGAL_REPR = #{condition.legalRepr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.parentOperId != null ">
+        and PARENT_OPER_ID = #{condition.parentOperId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.operatorsDesc != null and condition.operatorsDesc != ''">
+        and OPERATORS_DESC = #{condition.operatorsDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.isChain != null ">
+        and IS_CHAIN = #{condition.isChain, jdbcType=INTEGER }
+      </if>
+      <if test="condition.chainType != null and condition.chainType != ''">
+        and CHAIN_TYPE = #{condition.chainType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.isAgent != null ">
+        and IS_AGENT = #{condition.isAgent, jdbcType=INTEGER }
+      </if>
+      <if test="condition.operatorsTypeCd != null and condition.operatorsTypeCd != ''">
+        and OPERATORS_TYPE_CD = #{condition.operatorsTypeCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.topType != null and condition.topType != ''">
+        and TOP_TYPE = #{condition.topType, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

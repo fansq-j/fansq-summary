@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.PayNodeMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.PayNodeDO">
+    <id column="PAY_NODE_ID" jdbcType="INTEGER" property="payNodeId"/>
+    <result column="PAY_USER_ID" jdbcType="INTEGER" property="payUserId"/>
+    <result column="PAY_CHANNEL_ID" jdbcType="INTEGER" property="payChannelId"/>
+    <result column="TENANT_ACCOUNT_ID" jdbcType="INTEGER" property="tenantAccountId"/>
+    <result column="PAY_NODE_NAME" jdbcType="VARCHAR" property="payNodeName"/>
+    <result column="REGION_ID" jdbcType="INTEGER" property="regionId"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          PAY_NODE_ID, 
+          PAY_USER_ID, 
+          PAY_CHANNEL_ID, 
+          TENANT_ACCOUNT_ID, 
+          PAY_NODE_NAME, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PAY_USER_ID, 
+          PAY_CHANNEL_ID, 
+          TENANT_ACCOUNT_ID, 
+          PAY_NODE_NAME, 
+          REGION_ID, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="payNodeId != null ">
+        PAY_NODE_ID = #{payNodeId, jdbcType=INTEGER }
+      </if>
+      <if test="payUserId != null ">
+        and PAY_USER_ID = #{payUserId, jdbcType=INTEGER }
+      </if>
+      <if test="payChannelId != null ">
+        and PAY_CHANNEL_ID = #{payChannelId, jdbcType=INTEGER }
+      </if>
+      <if test="tenantAccountId != null ">
+        and TENANT_ACCOUNT_ID = #{tenantAccountId, jdbcType=INTEGER }
+      </if>
+      <if test="payNodeName != null and payNodeName != ''">
+        and PAY_NODE_NAME = #{payNodeName, jdbcType=VARCHAR }
+      </if>
+      <if test="regionId != null ">
+        and REGION_ID = #{regionId, jdbcType=INTEGER }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.PayNodeDO" resultType="java.lang.Integer">
+      select count(*) from PAY_NODE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from PAY_NODE
+        where 
+           PAY_NODE_ID = #{payNodeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  PAY_NODE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="payNodeId">
+      insert into  PAY_NODE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{payUserId,jdbcType=INTEGER}, 
+        #{payChannelId,jdbcType=INTEGER}, 
+        #{tenantAccountId,jdbcType=INTEGER}, 
+        #{payNodeName,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  PAY_NODE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{payNodeId,jdbcType=INTEGER}, 
+        #{payUserId,jdbcType=INTEGER}, 
+        #{payChannelId,jdbcType=INTEGER}, 
+        #{tenantAccountId,jdbcType=INTEGER}, 
+        #{payNodeName,jdbcType=VARCHAR}, 
+        #{regionId,jdbcType=INTEGER}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from PAY_NODE  
+        where
+           PAY_NODE_ID = #{payNodeId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="delete">
+      delete from PAY_NODE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  PAY_NODE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="payUserId != null">
+         PAY_USER_ID = #{payUserId,jdbcType=INTEGER},
+      </if>
+      <if test="payChannelId != null">
+         PAY_CHANNEL_ID = #{payChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="tenantAccountId != null">
+         TENANT_ACCOUNT_ID = #{tenantAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="payNodeName != null">
+         PAY_NODE_NAME = #{payNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+         REGION_ID = #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+        where 
+           PAY_NODE_ID = #{payNodeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBySelective">
+      update PAY_NODE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.payNodeId != null">
+        PAY_NODE_ID = #{record.payNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payUserId != null">
+        PAY_USER_ID = #{record.payUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payChannelId != null">
+        PAY_CHANNEL_ID = #{record.payChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tenantAccountId != null">
+        TENANT_ACCOUNT_ID = #{record.tenantAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payNodeName != null">
+        PAY_NODE_NAME = #{record.payNodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionId != null">
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.payNodeId != null ">
+        PAY_NODE_ID = #{condition.payNodeId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payUserId != null ">
+        and PAY_USER_ID = #{condition.payUserId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payChannelId != null ">
+        and PAY_CHANNEL_ID = #{condition.payChannelId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.tenantAccountId != null ">
+        and TENANT_ACCOUNT_ID = #{condition.tenantAccountId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.payNodeName != null and condition.payNodeName != ''">
+        and PAY_NODE_NAME = #{condition.payNodeName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.regionId != null ">
+        and REGION_ID = #{condition.regionId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+    </where>
+  </update>
+</mapper>

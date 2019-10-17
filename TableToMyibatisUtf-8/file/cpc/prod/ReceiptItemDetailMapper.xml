@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ReceiptItemDetailMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ReceiptItemDetailDO">
+    <id column="RECEIPT_ITEM_DETAIL_ID" jdbcType="BIGINT" property="receiptItemDetailId"/>
+    <result column="ITEM_DETAIL_TYPE" jdbcType="VARCHAR" property="itemDetailType"/>
+    <result column="RECEIPT_ITEM_ID" jdbcType="BIGINT" property="receiptItemId"/>
+    <result column="IS_FORCE_NEWLINE" jdbcType="VARCHAR" property="isForceNewline"/>
+    <result column="LABEL" jdbcType="VARCHAR" property="label"/>
+    <result column="SPACE_CHAR" jdbcType="VARCHAR" property="spaceChar"/>
+    <result column="OBTAIN_VALUE_TYPE" jdbcType="VARCHAR" property="obtainValueType"/>
+    <result column="EXPRESSION" jdbcType="VARCHAR" property="expression"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          RECEIPT_ITEM_DETAIL_ID, 
+          ITEM_DETAIL_TYPE, 
+          RECEIPT_ITEM_ID, 
+          IS_FORCE_NEWLINE, 
+          LABEL, 
+          SPACE_CHAR, 
+          OBTAIN_VALUE_TYPE, 
+          EXPRESSION, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          ITEM_DETAIL_TYPE, 
+          RECEIPT_ITEM_ID, 
+          IS_FORCE_NEWLINE, 
+          LABEL, 
+          SPACE_CHAR, 
+          OBTAIN_VALUE_TYPE, 
+          EXPRESSION, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="receiptItemDetailId != null ">
+        RECEIPT_ITEM_DETAIL_ID = #{receiptItemDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="itemDetailType != null and itemDetailType != ''">
+        and ITEM_DETAIL_TYPE = #{itemDetailType, jdbcType=VARCHAR }
+      </if>
+      <if test="receiptItemId != null ">
+        and RECEIPT_ITEM_ID = #{receiptItemId, jdbcType=BIGINT }
+      </if>
+      <if test="isForceNewline != null and isForceNewline != ''">
+        and IS_FORCE_NEWLINE = #{isForceNewline, jdbcType=VARCHAR }
+      </if>
+      <if test="label != null and label != ''">
+        and LABEL = #{label, jdbcType=VARCHAR }
+      </if>
+      <if test="spaceChar != null and spaceChar != ''">
+        and SPACE_CHAR = #{spaceChar, jdbcType=VARCHAR }
+      </if>
+      <if test="obtainValueType != null and obtainValueType != ''">
+        and OBTAIN_VALUE_TYPE = #{obtainValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="expression != null and expression != ''">
+        and EXPRESSION = #{expression, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ReceiptItemDetailDO" resultType="java.lang.Integer">
+      select count(*) from RECEIPT_ITEM_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from RECEIPT_ITEM_DETAIL
+        where 
+           RECEIPT_ITEM_DETAIL_ID = #{receiptItemDetailId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  RECEIPT_ITEM_DETAIL 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="receiptItemDetailId">
+      insert into  RECEIPT_ITEM_DETAIL ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{itemDetailType,jdbcType=VARCHAR}, 
+        #{receiptItemId,jdbcType=BIGINT}, 
+        #{isForceNewline,jdbcType=VARCHAR}, 
+        #{label,jdbcType=VARCHAR}, 
+        #{spaceChar,jdbcType=VARCHAR}, 
+        #{obtainValueType,jdbcType=VARCHAR}, 
+        #{expression,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  RECEIPT_ITEM_DETAIL ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{receiptItemDetailId,jdbcType=BIGINT}, 
+        #{itemDetailType,jdbcType=VARCHAR}, 
+        #{receiptItemId,jdbcType=BIGINT}, 
+        #{isForceNewline,jdbcType=VARCHAR}, 
+        #{label,jdbcType=VARCHAR}, 
+        #{spaceChar,jdbcType=VARCHAR}, 
+        #{obtainValueType,jdbcType=VARCHAR}, 
+        #{expression,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from RECEIPT_ITEM_DETAIL  
+        where
+           RECEIPT_ITEM_DETAIL_ID = #{receiptItemDetailId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from RECEIPT_ITEM_DETAIL
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  RECEIPT_ITEM_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="itemDetailType != null">
+         ITEM_DETAIL_TYPE = #{itemDetailType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptItemId != null">
+         RECEIPT_ITEM_ID = #{receiptItemId,jdbcType=BIGINT},
+      </if>
+      <if test="isForceNewline != null">
+         IS_FORCE_NEWLINE = #{isForceNewline,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null">
+         LABEL = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceChar != null">
+         SPACE_CHAR = #{spaceChar,jdbcType=VARCHAR},
+      </if>
+      <if test="obtainValueType != null">
+         OBTAIN_VALUE_TYPE = #{obtainValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="expression != null">
+         EXPRESSION = #{expression,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           RECEIPT_ITEM_DETAIL_ID = #{receiptItemDetailId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update RECEIPT_ITEM_DETAIL
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.receiptItemDetailId != null">
+        RECEIPT_ITEM_DETAIL_ID = #{record.receiptItemDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemDetailType != null">
+        ITEM_DETAIL_TYPE = #{record.itemDetailType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiptItemId != null">
+        RECEIPT_ITEM_ID = #{record.receiptItemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isForceNewline != null">
+        IS_FORCE_NEWLINE = #{record.isForceNewline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.label != null">
+        LABEL = #{record.label,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spaceChar != null">
+        SPACE_CHAR = #{record.spaceChar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.obtainValueType != null">
+        OBTAIN_VALUE_TYPE = #{record.obtainValueType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expression != null">
+        EXPRESSION = #{record.expression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.receiptItemDetailId != null ">
+        RECEIPT_ITEM_DETAIL_ID = #{condition.receiptItemDetailId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.itemDetailType != null and condition.itemDetailType != ''">
+        and ITEM_DETAIL_TYPE = #{condition.itemDetailType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.receiptItemId != null ">
+        and RECEIPT_ITEM_ID = #{condition.receiptItemId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.isForceNewline != null and condition.isForceNewline != ''">
+        and IS_FORCE_NEWLINE = #{condition.isForceNewline, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.label != null and condition.label != ''">
+        and LABEL = #{condition.label, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.spaceChar != null and condition.spaceChar != ''">
+        and SPACE_CHAR = #{condition.spaceChar, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.obtainValueType != null and condition.obtainValueType != ''">
+        and OBTAIN_VALUE_TYPE = #{condition.obtainValueType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.expression != null and condition.expression != ''">
+        and EXPRESSION = #{condition.expression, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

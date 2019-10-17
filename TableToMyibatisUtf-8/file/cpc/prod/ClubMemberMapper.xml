@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ClubMemberMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ClubMemberDO">
+    <id column="CLUB_MEMBER_ID" jdbcType="BIGINT" property="clubMemberId"/>
+    <result column="CLUB_ID" jdbcType="INTEGER" property="clubId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="CUST_ID" jdbcType="BIGINT" property="custId"/>
+    <result column="MEMBER_CODE" jdbcType="VARCHAR" property="memberCode"/>
+    <result column="MEMBER_NAME" jdbcType="VARCHAR" property="memberName"/>
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+    <result column="MEMBERSHIP_LEVEL" jdbcType="VARCHAR" property="membershipLevel"/>
+    <result column="ASSESS_DATE" jdbcType="TIMESTAMP" property="assessDate"/>
+    <result column="EFF_DATE" jdbcType="TIMESTAMP" property="effDate"/>
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate"/>
+    <result column="ENTER_DATE" jdbcType="TIMESTAMP" property="enterDate"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CLUB_MEMBER_ID, 
+          CLUB_ID, 
+          PARTY_ID, 
+          CUST_ID, 
+          MEMBER_CODE, 
+          MEMBER_NAME, 
+          PASSWORD, 
+          MEMBERSHIP_LEVEL, 
+          ASSESS_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ENTER_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          CLUB_ID, 
+          PARTY_ID, 
+          CUST_ID, 
+          MEMBER_CODE, 
+          MEMBER_NAME, 
+          PASSWORD, 
+          MEMBERSHIP_LEVEL, 
+          ASSESS_DATE, 
+          EFF_DATE, 
+          EXP_DATE, 
+          ENTER_DATE, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_DATE, 
+          CREATE_STAFF
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="clubMemberId != null ">
+        CLUB_MEMBER_ID = #{clubMemberId, jdbcType=BIGINT }
+      </if>
+      <if test="clubId != null ">
+        and CLUB_ID = #{clubId, jdbcType=INTEGER }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="custId != null ">
+        and CUST_ID = #{custId, jdbcType=BIGINT }
+      </if>
+      <if test="memberCode != null and memberCode != ''">
+        and MEMBER_CODE = #{memberCode, jdbcType=VARCHAR }
+      </if>
+      <if test="memberName != null and memberName != ''">
+        and MEMBER_NAME = #{memberName, jdbcType=VARCHAR }
+      </if>
+      <if test="password != null and password != ''">
+        and PASSWORD = #{password, jdbcType=VARCHAR }
+      </if>
+      <if test="membershipLevel != null and membershipLevel != ''">
+        and MEMBERSHIP_LEVEL = #{membershipLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="assessDate != null ">
+        and ASSESS_DATE = #{assessDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="effDate != null ">
+        and EFF_DATE = #{effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="expDate != null ">
+        and EXP_DATE = #{expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="enterDate != null ">
+        and ENTER_DATE = #{enterDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ClubMemberDO" resultType="java.lang.Integer">
+      select count(*) from CLUB_MEMBER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CLUB_MEMBER
+        where 
+           CLUB_MEMBER_ID = #{clubMemberId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CLUB_MEMBER 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="clubMemberId">
+      insert into  CLUB_MEMBER ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{clubId,jdbcType=INTEGER}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{memberCode,jdbcType=VARCHAR}, 
+        #{memberName,jdbcType=VARCHAR}, 
+        #{password,jdbcType=VARCHAR}, 
+        #{membershipLevel,jdbcType=VARCHAR}, 
+        #{assessDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{enterDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CLUB_MEMBER ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{clubMemberId,jdbcType=BIGINT}, 
+        #{clubId,jdbcType=INTEGER}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{custId,jdbcType=BIGINT}, 
+        #{memberCode,jdbcType=VARCHAR}, 
+        #{memberName,jdbcType=VARCHAR}, 
+        #{password,jdbcType=VARCHAR}, 
+        #{membershipLevel,jdbcType=VARCHAR}, 
+        #{assessDate,jdbcType=TIMESTAMP}, 
+        #{effDate,jdbcType=TIMESTAMP}, 
+        #{expDate,jdbcType=TIMESTAMP}, 
+        #{enterDate,jdbcType=TIMESTAMP}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CLUB_MEMBER  
+        where
+           CLUB_MEMBER_ID = #{clubMemberId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CLUB_MEMBER
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CLUB_MEMBER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="clubId != null">
+         CLUB_ID = #{clubId,jdbcType=INTEGER},
+      </if>
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null">
+         CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="memberCode != null">
+         MEMBER_CODE = #{memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null">
+         MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+         PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="membershipLevel != null">
+         MEMBERSHIP_LEVEL = #{membershipLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="assessDate != null">
+         ASSESS_DATE = #{assessDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effDate != null">
+         EFF_DATE = #{effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expDate != null">
+         EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterDate != null">
+         ENTER_DATE = #{enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+        where 
+           CLUB_MEMBER_ID = #{clubMemberId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CLUB_MEMBER
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.clubMemberId != null">
+        CLUB_MEMBER_ID = #{record.clubMemberId,jdbcType=BIGINT},
+      </if>
+      <if test="record.clubId != null">
+        CLUB_ID = #{record.clubId,jdbcType=INTEGER},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custId != null">
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberCode != null">
+        MEMBER_CODE = #{record.memberCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberName != null">
+        MEMBER_NAME = #{record.memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.membershipLevel != null">
+        MEMBERSHIP_LEVEL = #{record.membershipLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assessDate != null">
+        ASSESS_DATE = #{record.assessDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effDate != null">
+        EFF_DATE = #{record.effDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expDate != null">
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enterDate != null">
+        ENTER_DATE = #{record.enterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.clubMemberId != null ">
+        CLUB_MEMBER_ID = #{condition.clubMemberId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.clubId != null ">
+        and CLUB_ID = #{condition.clubId, jdbcType=INTEGER }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.custId != null ">
+        and CUST_ID = #{condition.custId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.memberCode != null and condition.memberCode != ''">
+        and MEMBER_CODE = #{condition.memberCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.memberName != null and condition.memberName != ''">
+        and MEMBER_NAME = #{condition.memberName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.password != null and condition.password != ''">
+        and PASSWORD = #{condition.password, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.membershipLevel != null and condition.membershipLevel != ''">
+        and MEMBERSHIP_LEVEL = #{condition.membershipLevel, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.assessDate != null ">
+        and ASSESS_DATE = #{condition.assessDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.effDate != null ">
+        and EFF_DATE = #{condition.effDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.expDate != null ">
+        and EXP_DATE = #{condition.expDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.enterDate != null ">
+        and ENTER_DATE = #{condition.enterDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+    </where>
+  </update>
+</mapper>

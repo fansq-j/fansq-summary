@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ContactChlConvertCfgMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ContactChlConvertCfgDO">
+    <id column="CONTACT_CHL_CONVERT_CFG_ID" jdbcType="BIGINT" property="contactChlConvertCfgId"/>
+    <result column="S_TRANSPORT_PROTOCOLS" jdbcType="VARCHAR" property="sTransportProtocols"/>
+    <result column="T_TRANSPORT_PROTOCOLS" jdbcType="VARCHAR" property="tTransportProtocols"/>
+    <result column="TRANSFORM_CLASS" jdbcType="VARCHAR" property="transformClass"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CONTACT_CHL_CONVERT_CFG_ID, 
+          S_TRANSPORT_PROTOCOLS, 
+          T_TRANSPORT_PROTOCOLS, 
+          TRANSFORM_CLASS, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          S_TRANSPORT_PROTOCOLS, 
+          T_TRANSPORT_PROTOCOLS, 
+          TRANSFORM_CLASS, 
+          STATUS_CD, 
+          CREATE_STAFF, 
+          UPDATE_STAFF, 
+          CREATE_DATE, 
+          STATUS_DATE, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="contactChlConvertCfgId != null ">
+        CONTACT_CHL_CONVERT_CFG_ID = #{contactChlConvertCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="sTransportProtocols != null and sTransportProtocols != ''">
+        and S_TRANSPORT_PROTOCOLS = #{sTransportProtocols, jdbcType=VARCHAR }
+      </if>
+      <if test="tTransportProtocols != null and tTransportProtocols != ''">
+        and T_TRANSPORT_PROTOCOLS = #{tTransportProtocols, jdbcType=VARCHAR }
+      </if>
+      <if test="transformClass != null and transformClass != ''">
+        and TRANSFORM_CLASS = #{transformClass, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ContactChlConvertCfgDO" resultType="java.lang.Integer">
+      select count(*) from CONTACT_CHL_CONVERT_CFG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CONTACT_CHL_CONVERT_CFG
+        where 
+           CONTACT_CHL_CONVERT_CFG_ID = #{contactChlConvertCfgId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CONTACT_CHL_CONVERT_CFG 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="contactChlConvertCfgId">
+      insert into  CONTACT_CHL_CONVERT_CFG ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{sTransportProtocols,jdbcType=VARCHAR}, 
+        #{tTransportProtocols,jdbcType=VARCHAR}, 
+        #{transformClass,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CONTACT_CHL_CONVERT_CFG ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{contactChlConvertCfgId,jdbcType=BIGINT}, 
+        #{sTransportProtocols,jdbcType=VARCHAR}, 
+        #{tTransportProtocols,jdbcType=VARCHAR}, 
+        #{transformClass,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CONTACT_CHL_CONVERT_CFG  
+        where
+           CONTACT_CHL_CONVERT_CFG_ID = #{contactChlConvertCfgId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CONTACT_CHL_CONVERT_CFG
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CONTACT_CHL_CONVERT_CFG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="sTransportProtocols != null">
+         S_TRANSPORT_PROTOCOLS = #{sTransportProtocols,jdbcType=VARCHAR},
+      </if>
+      <if test="tTransportProtocols != null">
+         T_TRANSPORT_PROTOCOLS = #{tTransportProtocols,jdbcType=VARCHAR},
+      </if>
+      <if test="transformClass != null">
+         TRANSFORM_CLASS = #{transformClass,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CONTACT_CHL_CONVERT_CFG_ID = #{contactChlConvertCfgId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CONTACT_CHL_CONVERT_CFG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.contactChlConvertCfgId != null">
+        CONTACT_CHL_CONVERT_CFG_ID = #{record.contactChlConvertCfgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sTransportProtocols != null">
+        S_TRANSPORT_PROTOCOLS = #{record.sTransportProtocols,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tTransportProtocols != null">
+        T_TRANSPORT_PROTOCOLS = #{record.tTransportProtocols,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transformClass != null">
+        TRANSFORM_CLASS = #{record.transformClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.contactChlConvertCfgId != null ">
+        CONTACT_CHL_CONVERT_CFG_ID = #{condition.contactChlConvertCfgId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.sTransportProtocols != null and condition.sTransportProtocols != ''">
+        and S_TRANSPORT_PROTOCOLS = #{condition.sTransportProtocols, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.tTransportProtocols != null and condition.tTransportProtocols != ''">
+        and T_TRANSPORT_PROTOCOLS = #{condition.tTransportProtocols, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.transformClass != null and condition.transformClass != ''">
+        and TRANSFORM_CLASS = #{condition.transformClass, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

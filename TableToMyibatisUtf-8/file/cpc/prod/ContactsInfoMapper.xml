@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.ContactsInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.ContactsInfoDO">
+    <id column="CONTACT_ID" jdbcType="BIGINT" property="contactId"/>
+    <result column="PARTY_ID" jdbcType="BIGINT" property="partyId"/>
+    <result column="CONTACT_TYPE" jdbcType="VARCHAR" property="contactType"/>
+    <result column="CONTACT_NAME" jdbcType="VARCHAR" property="contactName"/>
+    <result column="CONTACT_GENDER" jdbcType="VARCHAR" property="contactGender"/>
+    <result column="CONTACT_ADDR" jdbcType="VARCHAR" property="contactAddr"/>
+    <result column="CONTACT_EMPLOYER" jdbcType="VARCHAR" property="contactEmployer"/>
+    <result column="HOME_PHONE" jdbcType="VARCHAR" property="homePhone"/>
+    <result column="OFFICE_PHONE" jdbcType="VARCHAR" property="officePhone"/>
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone"/>
+    <result column="CONTACT_DESC" jdbcType="VARCHAR" property="contactDesc"/>
+    <result column="E_MAIL" jdbcType="VARCHAR" property="eMail"/>
+    <result column="POSTCODE" jdbcType="VARCHAR" property="postcode"/>
+    <result column="POST_ADDR" jdbcType="VARCHAR" property="postAddr"/>
+    <result column="FAX" jdbcType="VARCHAR" property="fax"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+    <result column="QQ_CODE" jdbcType="VARCHAR" property="qqCode"/>
+    <result column="WX_CODE" jdbcType="VARCHAR" property="wxCode"/>
+    <result column="YX_CODE" jdbcType="VARCHAR" property="yxCode"/>
+    <result column="UNSUITABLE_CONTACT_TIME" jdbcType="VARCHAR" property="unsuitableContactTime"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          CONTACT_ID, 
+          PARTY_ID, 
+          CONTACT_TYPE, 
+          CONTACT_NAME, 
+          CONTACT_GENDER, 
+          CONTACT_ADDR, 
+          CONTACT_EMPLOYER, 
+          HOME_PHONE, 
+          OFFICE_PHONE, 
+          MOBILE_PHONE, 
+          CONTACT_DESC, 
+          E_MAIL, 
+          POSTCODE, 
+          POST_ADDR, 
+          FAX, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          QQ_CODE, 
+          WX_CODE, 
+          YX_CODE, 
+          UNSUITABLE_CONTACT_TIME
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          PARTY_ID, 
+          CONTACT_TYPE, 
+          CONTACT_NAME, 
+          CONTACT_GENDER, 
+          CONTACT_ADDR, 
+          CONTACT_EMPLOYER, 
+          HOME_PHONE, 
+          OFFICE_PHONE, 
+          MOBILE_PHONE, 
+          CONTACT_DESC, 
+          E_MAIL, 
+          POSTCODE, 
+          POST_ADDR, 
+          FAX, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK, 
+          QQ_CODE, 
+          WX_CODE, 
+          YX_CODE, 
+          UNSUITABLE_CONTACT_TIME
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="contactId != null ">
+        CONTACT_ID = #{contactId, jdbcType=BIGINT }
+      </if>
+      <if test="partyId != null ">
+        and PARTY_ID = #{partyId, jdbcType=BIGINT }
+      </if>
+      <if test="contactType != null and contactType != ''">
+        and CONTACT_TYPE = #{contactType, jdbcType=VARCHAR }
+      </if>
+      <if test="contactName != null and contactName != ''">
+        and CONTACT_NAME = #{contactName, jdbcType=VARCHAR }
+      </if>
+      <if test="contactGender != null and contactGender != ''">
+        and CONTACT_GENDER = #{contactGender, jdbcType=VARCHAR }
+      </if>
+      <if test="contactAddr != null and contactAddr != ''">
+        and CONTACT_ADDR = #{contactAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="contactEmployer != null and contactEmployer != ''">
+        and CONTACT_EMPLOYER = #{contactEmployer, jdbcType=VARCHAR }
+      </if>
+      <if test="homePhone != null and homePhone != ''">
+        and HOME_PHONE = #{homePhone, jdbcType=VARCHAR }
+      </if>
+      <if test="officePhone != null and officePhone != ''">
+        and OFFICE_PHONE = #{officePhone, jdbcType=VARCHAR }
+      </if>
+      <if test="mobilePhone != null and mobilePhone != ''">
+        and MOBILE_PHONE = #{mobilePhone, jdbcType=VARCHAR }
+      </if>
+      <if test="contactDesc != null and contactDesc != ''">
+        and CONTACT_DESC = #{contactDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="eMail != null and eMail != ''">
+        and E_MAIL = #{eMail, jdbcType=VARCHAR }
+      </if>
+      <if test="postcode != null and postcode != ''">
+        and POSTCODE = #{postcode, jdbcType=VARCHAR }
+      </if>
+      <if test="postAddr != null and postAddr != ''">
+        and POST_ADDR = #{postAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="fax != null and fax != ''">
+        and FAX = #{fax, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+      <if test="qqCode != null and qqCode != ''">
+        and QQ_CODE = #{qqCode, jdbcType=VARCHAR }
+      </if>
+      <if test="wxCode != null and wxCode != ''">
+        and WX_CODE = #{wxCode, jdbcType=VARCHAR }
+      </if>
+      <if test="yxCode != null and yxCode != ''">
+        and YX_CODE = #{yxCode, jdbcType=VARCHAR }
+      </if>
+      <if test="unsuitableContactTime != null and unsuitableContactTime != ''">
+        and UNSUITABLE_CONTACT_TIME = #{unsuitableContactTime, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.ContactsInfoDO" resultType="java.lang.Integer">
+      select count(*) from CONTACTS_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from CONTACTS_INFO
+        where 
+           CONTACT_ID = #{contactId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  CONTACTS_INFO 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="contactId">
+      insert into  CONTACTS_INFO ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{partyId,jdbcType=BIGINT}, 
+        #{contactType,jdbcType=VARCHAR}, 
+        #{contactName,jdbcType=VARCHAR}, 
+        #{contactGender,jdbcType=VARCHAR}, 
+        #{contactAddr,jdbcType=VARCHAR}, 
+        #{contactEmployer,jdbcType=VARCHAR}, 
+        #{homePhone,jdbcType=VARCHAR}, 
+        #{officePhone,jdbcType=VARCHAR}, 
+        #{mobilePhone,jdbcType=VARCHAR}, 
+        #{contactDesc,jdbcType=VARCHAR}, 
+        #{eMail,jdbcType=VARCHAR}, 
+        #{postcode,jdbcType=VARCHAR}, 
+        #{postAddr,jdbcType=VARCHAR}, 
+        #{fax,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{qqCode,jdbcType=VARCHAR}, 
+        #{wxCode,jdbcType=VARCHAR}, 
+        #{yxCode,jdbcType=VARCHAR}, 
+        #{unsuitableContactTime,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  CONTACTS_INFO ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{contactId,jdbcType=BIGINT}, 
+        #{partyId,jdbcType=BIGINT}, 
+        #{contactType,jdbcType=VARCHAR}, 
+        #{contactName,jdbcType=VARCHAR}, 
+        #{contactGender,jdbcType=VARCHAR}, 
+        #{contactAddr,jdbcType=VARCHAR}, 
+        #{contactEmployer,jdbcType=VARCHAR}, 
+        #{homePhone,jdbcType=VARCHAR}, 
+        #{officePhone,jdbcType=VARCHAR}, 
+        #{mobilePhone,jdbcType=VARCHAR}, 
+        #{contactDesc,jdbcType=VARCHAR}, 
+        #{eMail,jdbcType=VARCHAR}, 
+        #{postcode,jdbcType=VARCHAR}, 
+        #{postAddr,jdbcType=VARCHAR}, 
+        #{fax,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}, 
+        #{qqCode,jdbcType=VARCHAR}, 
+        #{wxCode,jdbcType=VARCHAR}, 
+        #{yxCode,jdbcType=VARCHAR}, 
+        #{unsuitableContactTime,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from CONTACTS_INFO  
+        where
+           CONTACT_ID = #{contactId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from CONTACTS_INFO
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  CONTACTS_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="partyId != null">
+         PARTY_ID = #{partyId,jdbcType=BIGINT},
+      </if>
+      <if test="contactType != null">
+         CONTACT_TYPE = #{contactType,jdbcType=VARCHAR},
+      </if>
+      <if test="contactName != null">
+         CONTACT_NAME = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactGender != null">
+         CONTACT_GENDER = #{contactGender,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddr != null">
+         CONTACT_ADDR = #{contactAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmployer != null">
+         CONTACT_EMPLOYER = #{contactEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="homePhone != null">
+         HOME_PHONE = #{homePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="officePhone != null">
+         OFFICE_PHONE = #{officePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null">
+         MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactDesc != null">
+         CONTACT_DESC = #{contactDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+         E_MAIL = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+         POSTCODE = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="postAddr != null">
+         POST_ADDR = #{postAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+         FAX = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="qqCode != null">
+         QQ_CODE = #{qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wxCode != null">
+         WX_CODE = #{wxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="yxCode != null">
+         YX_CODE = #{yxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="unsuitableContactTime != null">
+         UNSUITABLE_CONTACT_TIME = #{unsuitableContactTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           CONTACT_ID = #{contactId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update CONTACTS_INFO
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.contactId != null">
+        CONTACT_ID = #{record.contactId,jdbcType=BIGINT},
+      </if>
+      <if test="record.partyId != null">
+        PARTY_ID = #{record.partyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactType != null">
+        CONTACT_TYPE = #{record.contactType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactName != null">
+        CONTACT_NAME = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactGender != null">
+        CONTACT_GENDER = #{record.contactGender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactAddr != null">
+        CONTACT_ADDR = #{record.contactAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactEmployer != null">
+        CONTACT_EMPLOYER = #{record.contactEmployer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homePhone != null">
+        HOME_PHONE = #{record.homePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officePhone != null">
+        OFFICE_PHONE = #{record.officePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null">
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactDesc != null">
+        CONTACT_DESC = #{record.contactDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eMail != null">
+        E_MAIL = #{record.eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null">
+        POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postAddr != null">
+        POST_ADDR = #{record.postAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null">
+        FAX = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqCode != null">
+        QQ_CODE = #{record.qqCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxCode != null">
+        WX_CODE = #{record.wxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yxCode != null">
+        YX_CODE = #{record.yxCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unsuitableContactTime != null">
+        UNSUITABLE_CONTACT_TIME = #{record.unsuitableContactTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.contactId != null ">
+        CONTACT_ID = #{condition.contactId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.partyId != null ">
+        and PARTY_ID = #{condition.partyId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.contactType != null and condition.contactType != ''">
+        and CONTACT_TYPE = #{condition.contactType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactName != null and condition.contactName != ''">
+        and CONTACT_NAME = #{condition.contactName, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactGender != null and condition.contactGender != ''">
+        and CONTACT_GENDER = #{condition.contactGender, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactAddr != null and condition.contactAddr != ''">
+        and CONTACT_ADDR = #{condition.contactAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactEmployer != null and condition.contactEmployer != ''">
+        and CONTACT_EMPLOYER = #{condition.contactEmployer, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.homePhone != null and condition.homePhone != ''">
+        and HOME_PHONE = #{condition.homePhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.officePhone != null and condition.officePhone != ''">
+        and OFFICE_PHONE = #{condition.officePhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.mobilePhone != null and condition.mobilePhone != ''">
+        and MOBILE_PHONE = #{condition.mobilePhone, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.contactDesc != null and condition.contactDesc != ''">
+        and CONTACT_DESC = #{condition.contactDesc, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.eMail != null and condition.eMail != ''">
+        and E_MAIL = #{condition.eMail, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.postcode != null and condition.postcode != ''">
+        and POSTCODE = #{condition.postcode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.postAddr != null and condition.postAddr != ''">
+        and POST_ADDR = #{condition.postAddr, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.fax != null and condition.fax != ''">
+        and FAX = #{condition.fax, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.qqCode != null and condition.qqCode != ''">
+        and QQ_CODE = #{condition.qqCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.wxCode != null and condition.wxCode != ''">
+        and WX_CODE = #{condition.wxCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.yxCode != null and condition.yxCode != ''">
+        and YX_CODE = #{condition.yxCode, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.unsuitableContactTime != null and condition.unsuitableContactTime != ''">
+        and UNSUITABLE_CONTACT_TIME = #{condition.unsuitableContactTime, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>

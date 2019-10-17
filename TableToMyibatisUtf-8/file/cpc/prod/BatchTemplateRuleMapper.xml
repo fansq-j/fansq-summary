@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="com.neusoft.crm.cpc.prod.mapper.BatchTemplateRuleMapper">
+
+  <resultMap id="BaseResultMap" type="com.neusoft.crm.api.cpc.prod.data.BatchTemplateRuleDO">
+    <id column="BATCH_TEMPLATE_RULE_ID" jdbcType="BIGINT" property="batchTemplateRuleId"/>
+    <result column="SEED_ORDER_ATTR_ID" jdbcType="BIGINT" property="seedOrderAttrId"/>
+    <result column="ATTR_OLD_VALUE" jdbcType="VARCHAR" property="attrOldValue"/>
+    <result column="ATTR_REPLACE_TYPE" jdbcType="VARCHAR" property="attrReplaceType"/>
+    <result column="ATTR_NEW_VALUE" jdbcType="VARCHAR" property="attrNewValue"/>
+    <result column="ATTR_FUNC_PARAMS" jdbcType="VARCHAR" property="attrFuncParams"/>
+    <result column="STATUS_CD" jdbcType="VARCHAR" property="statusCd"/>
+    <result column="STATUS_DATE" jdbcType="TIMESTAMP" property="statusDate"/>
+    <result column="CREATE_STAFF" jdbcType="BIGINT" property="createStaff"/>
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="UPDATE_STAFF" jdbcType="BIGINT" property="updateStaff"/>
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+
+  <sql id="CommonColumns">
+          BATCH_TEMPLATE_RULE_ID, 
+          SEED_ORDER_ATTR_ID, 
+          ATTR_OLD_VALUE, 
+          ATTR_REPLACE_TYPE, 
+          ATTR_NEW_VALUE, 
+          ATTR_FUNC_PARAMS, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="CommonColumnsKey">
+          SEED_ORDER_ATTR_ID, 
+          ATTR_OLD_VALUE, 
+          ATTR_REPLACE_TYPE, 
+          ATTR_NEW_VALUE, 
+          ATTR_FUNC_PARAMS, 
+          STATUS_CD, 
+          STATUS_DATE, 
+          CREATE_STAFF, 
+          CREATE_DATE, 
+          UPDATE_STAFF, 
+          UPDATE_DATE, 
+          REMARK
+  </sql>
+
+  <sql id="dynamicAndCondition">
+    <where>
+      <if test="batchTemplateRuleId != null ">
+        BATCH_TEMPLATE_RULE_ID = #{batchTemplateRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="seedOrderAttrId != null ">
+        and SEED_ORDER_ATTR_ID = #{seedOrderAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="attrOldValue != null and attrOldValue != ''">
+        and ATTR_OLD_VALUE = #{attrOldValue, jdbcType=VARCHAR }
+      </if>
+      <if test="attrReplaceType != null and attrReplaceType != ''">
+        and ATTR_REPLACE_TYPE = #{attrReplaceType, jdbcType=VARCHAR }
+      </if>
+      <if test="attrNewValue != null and attrNewValue != ''">
+        and ATTR_NEW_VALUE = #{attrNewValue, jdbcType=VARCHAR }
+      </if>
+      <if test="attrFuncParams != null and attrFuncParams != ''">
+        and ATTR_FUNC_PARAMS = #{attrFuncParams, jdbcType=VARCHAR }
+      </if>
+      <if test="statusCd != null and statusCd != ''">
+        and STATUS_CD = #{statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="statusDate != null ">
+        and STATUS_DATE = #{statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="createStaff != null ">
+        and CREATE_STAFF = #{createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="createDate != null ">
+        and CREATE_DATE = #{createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="updateStaff != null ">
+        and UPDATE_STAFF = #{updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="updateDate != null ">
+        and UPDATE_DATE = #{updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="remark != null and remark != ''">
+        and REMARK = #{remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </sql>
+
+  <select id="count" parameterType="com.neusoft.crm.api.cpc.prod.data.BatchTemplateRuleDO" resultType="java.lang.Integer">
+      select count(*) from BATCH_TEMPLATE_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+      select
+    <include refid="CommonColumns"/>
+        from BATCH_TEMPLATE_RULE
+        where 
+           BATCH_TEMPLATE_RULE_ID = #{batchTemplateRuleId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+      select 
+    <include refid="CommonColumns"/>
+        from  BATCH_TEMPLATE_RULE 
+    <include refid="dynamicAndCondition"/>
+    <choose>
+      <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+          ORDER BY ${pageInfo.orderBy} 
+      </when>
+    </choose>
+  </select>
+
+  <insert id="insertKey" useGeneratedKeys="true" keyProperty="batchTemplateRuleId">
+      insert into  BATCH_TEMPLATE_RULE ( 
+    <include refid="CommonColumnsKey"/>
+       ) values ( 
+        #{seedOrderAttrId,jdbcType=BIGINT}, 
+        #{attrOldValue,jdbcType=VARCHAR}, 
+        #{attrReplaceType,jdbcType=VARCHAR}, 
+        #{attrNewValue,jdbcType=VARCHAR}, 
+        #{attrFuncParams,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <insert id="insert">
+      insert into  BATCH_TEMPLATE_RULE ( 
+    <include refid="CommonColumns"/>
+       ) values ( 
+        #{batchTemplateRuleId,jdbcType=BIGINT}, 
+        #{seedOrderAttrId,jdbcType=BIGINT}, 
+        #{attrOldValue,jdbcType=VARCHAR}, 
+        #{attrReplaceType,jdbcType=VARCHAR}, 
+        #{attrNewValue,jdbcType=VARCHAR}, 
+        #{attrFuncParams,jdbcType=VARCHAR}, 
+        #{statusCd,jdbcType=VARCHAR}, 
+        #{statusDate,jdbcType=TIMESTAMP}, 
+        #{createStaff,jdbcType=BIGINT}, 
+        #{createDate,jdbcType=TIMESTAMP}, 
+        #{updateStaff,jdbcType=BIGINT}, 
+        #{updateDate,jdbcType=TIMESTAMP}, 
+        #{remark,jdbcType=VARCHAR}
+         )
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+      delete from BATCH_TEMPLATE_RULE  
+        where
+           BATCH_TEMPLATE_RULE_ID = #{batchTemplateRuleId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delete">
+      delete from BATCH_TEMPLATE_RULE
+    <if test="_parameter != null">
+      <include refid="dynamicAndCondition"/>
+    </if>
+  </delete>
+
+  <update id="updateById">
+      update  BATCH_TEMPLATE_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="seedOrderAttrId != null">
+         SEED_ORDER_ATTR_ID = #{seedOrderAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="attrOldValue != null">
+         ATTR_OLD_VALUE = #{attrOldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="attrReplaceType != null">
+         ATTR_REPLACE_TYPE = #{attrReplaceType,jdbcType=VARCHAR},
+      </if>
+      <if test="attrNewValue != null">
+         ATTR_NEW_VALUE = #{attrNewValue,jdbcType=VARCHAR},
+      </if>
+      <if test="attrFuncParams != null">
+         ATTR_FUNC_PARAMS = #{attrFuncParams,jdbcType=VARCHAR},
+      </if>
+      <if test="statusCd != null">
+         STATUS_CD = #{statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="statusDate != null">
+         STATUS_DATE = #{statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaff != null">
+         CREATE_STAFF = #{createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+         CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null">
+         UPDATE_STAFF = #{updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+         UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+         REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+        where 
+           BATCH_TEMPLATE_RULE_ID = #{batchTemplateRuleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBySelective">
+      update BATCH_TEMPLATE_RULE
+    <trim prefix="set" suffixOverrides=",">
+      <if test="record.batchTemplateRuleId != null">
+        BATCH_TEMPLATE_RULE_ID = #{record.batchTemplateRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.seedOrderAttrId != null">
+        SEED_ORDER_ATTR_ID = #{record.seedOrderAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrOldValue != null">
+        ATTR_OLD_VALUE = #{record.attrOldValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrReplaceType != null">
+        ATTR_REPLACE_TYPE = #{record.attrReplaceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrNewValue != null">
+        ATTR_NEW_VALUE = #{record.attrNewValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrFuncParams != null">
+        ATTR_FUNC_PARAMS = #{record.attrFuncParams,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusCd != null">
+        STATUS_CD = #{record.statusCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statusDate != null">
+        STATUS_DATE = #{record.statusDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaff != null">
+        CREATE_STAFF = #{record.createStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null">
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <where>
+      <if test="condition.batchTemplateRuleId != null ">
+        BATCH_TEMPLATE_RULE_ID = #{condition.batchTemplateRuleId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.seedOrderAttrId != null ">
+        and SEED_ORDER_ATTR_ID = #{condition.seedOrderAttrId, jdbcType=BIGINT }
+      </if>
+      <if test="condition.attrOldValue != null and condition.attrOldValue != ''">
+        and ATTR_OLD_VALUE = #{condition.attrOldValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrReplaceType != null and condition.attrReplaceType != ''">
+        and ATTR_REPLACE_TYPE = #{condition.attrReplaceType, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrNewValue != null and condition.attrNewValue != ''">
+        and ATTR_NEW_VALUE = #{condition.attrNewValue, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.attrFuncParams != null and condition.attrFuncParams != ''">
+        and ATTR_FUNC_PARAMS = #{condition.attrFuncParams, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusCd != null and condition.statusCd != ''">
+        and STATUS_CD = #{condition.statusCd, jdbcType=VARCHAR }
+      </if>
+      <if test="condition.statusDate != null ">
+        and STATUS_DATE = #{condition.statusDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.createStaff != null ">
+        and CREATE_STAFF = #{condition.createStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.createDate != null ">
+        and CREATE_DATE = #{condition.createDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.updateStaff != null ">
+        and UPDATE_STAFF = #{condition.updateStaff, jdbcType=BIGINT }
+      </if>
+      <if test="condition.updateDate != null ">
+        and UPDATE_DATE = #{condition.updateDate, jdbcType=TIMESTAMP }
+      </if>
+      <if test="condition.remark != null and condition.remark != ''">
+        and REMARK = #{condition.remark, jdbcType=VARCHAR }
+      </if>
+    </where>
+  </update>
+</mapper>
