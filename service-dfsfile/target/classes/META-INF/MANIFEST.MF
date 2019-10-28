@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: service-dfsfile
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: 13552
+Implementation-Vendor-Id: com.github.hollykunge
+Build-Jdk: 1.8.0_191
+Implementation-URL: https://github.com/hollykunge/ace-security/service
+ -dfsfile
+Created-By: Maven Integration for Eclipse
+
