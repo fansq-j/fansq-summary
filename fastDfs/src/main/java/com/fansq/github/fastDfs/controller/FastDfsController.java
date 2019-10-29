@@ -44,13 +44,16 @@ public class FastDfsController {
     /**
      * 文件下载
      * @param fileUrl  url 开头从组名开始
+     *  storage/M00/00/00/rBQKAl234EmAek9HAABlgUNPY3U857.PNG
+     *  这个可以存储在数据库中，路径是服务器返回的路径，存储方便下载使用
      * @param response
      * @throws Exception
      */
     @RequestMapping("/download")
     public void  download(String fileUrl, HttpServletResponse response) throws Exception{
-        
+        System.out.println(fileUrl);
         byte[] data = fdfsClient.download(fileUrl);
+        //byte[] data = fdfsClient.downFile(fileUrl);
         
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode("test.jpg", "UTF-8"));
