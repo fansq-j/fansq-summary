@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 
 import org.apache.commons.io.FilenameUtils;
@@ -19,6 +20,7 @@ import com.github.tobato.fastdfs.conn.FdfsWebServer;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.exception.FdfsUnsupportStorePathException;
 import com.github.tobato.fastdfs.proto.storage.DownloadByteArray;
+import com.github.tobato.fastdfs.proto.storage.DownloadCallback;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 
 /**
@@ -87,10 +89,21 @@ public class FastDfsServiceImpl implements FastDfsService{
 	    public byte[]  download(String fileUrl) {
 	         String group = fileUrl.substring(0, fileUrl.indexOf("/"));
 	         String path = fileUrl.substring(fileUrl.indexOf("/") + 1);
+	         System.out.println(group);
+	         System.out.println(path);
 	         byte[] bytes = storageClient.downloadFile(group, path, new DownloadByteArray());
 	         return bytes;
 	    }
-
+	    public byte[] downFile(String filePath) throws IOException {
+			StorePath storePath = StorePath.praseFromUrl(filePath);
+			return storageClient.downloadFile(storePath.getGroup(), storePath.getPath(), new DownloadCallback<byte[]>() {
+				@Override
+				public byte[] recv(InputStream ins) throws IOException {
+					return org.apache.commons.io.IOUtils.toByteArray(ins);
+				}
+			});
+	    }
+	    
 	    /**
 	     * 删除文件
 	     * @param fileUrl 文件访问地址
