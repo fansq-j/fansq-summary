@@ -12,4 +12,6 @@ public interface FastDfsService {
 	public String uploadFile(MultipartFile file) throws IOException;
 	
 	public byte[]  download(String fileUrl);
+
+	public byte[] downFile(String fileUrl) throws IOException;
 }
