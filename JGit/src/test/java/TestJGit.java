@@ -1,9 +1,20 @@
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Set;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.errors.StopWalkException;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,7 +84,7 @@ public class TestJGit {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void push() {
 		try {
 			Git git = Git.open(new File("D:\\source-git\\.git"));
@@ -82,19 +93,52 @@ public class TestJGit {
 			e.printStackTrace();
 		}
 	}
+	
 	//@Test
 	public void status() {
 		try {
 			Git git = Git.open(new File("D:\\source-git\\.git"));
-			Set<String> miss = git.status().call().getMissing();
-			System.out.println(miss.size());
-			for (String string : miss) {
-				System.out.println("===================================="+string);
-			}
+			Status status = git.status().call();
+			System.out.println("Git Change: " + status.getChanged());
+			System.out.println("Git Modified: " + status.getModified());
+			System.out.println("Git UncommittedChanges: " + status.getUncommittedChanges());
+			System.out.println("Git Untracked: " + status.getUntracked());
+//			for (String string : miss) {
+//				System.out.println("===================================="+string);
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@Test
+	public void gitlog() {
+		//提取某个作者的提交，并打印相关信息
+		try {
+			Git git = Git.open(new File("D:\\\\source-git\\\\.git"));
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Iterable<RevCommit> results = git.log().setRevFilter(new RevFilter() {
+				@Override
+				public boolean include(RevWalk walker, RevCommit cmit)
+						throws StopWalkException, MissingObjectException, IncorrectObjectTypeException, IOException {
+					return true;
+				}
+				@Override
+				public RevFilter clone() {
+					return this;
+				}
+			}).call();
+			results.forEach(commit -> {
+				PersonIdent authoIdent = commit.getAuthorIdent();
+				System.out.println("提交人：  " + authoIdent.getName() + "     <" + authoIdent.getEmailAddress() + ">");
+				System.out.println("提交SHA1：  " + commit.getId().name());
+				System.out.println("提交信息：  " + commit.getShortMessage());
+				System.out.println("提交时间：  " + format.format(authoIdent.getWhen()));
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//@Test
