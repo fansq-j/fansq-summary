@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v5-代码自动化合并</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<div id="content" style="margin: 10px 0 0 20px;">
+</div>
+<div id="end"></div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    var div = document.getElementById('end');
+    $(function () {
+        var reconnectCount = 0;
+        connectWs();
+        function connectWs() {
+            reconnectCount++;
+            var $content = $("#content");
+            var ws = new WebSocket("ws://192.168.1.220:11111/git/ws-git");
+            ws.onopen = function () {
+                $content.append("<p>服务连接成功</p>");
+            };
+            ws.onmessage = function (evt) {
+                $content.append("<p>" + evt.data + "</p>");
+                div.scrollIntoView();
+            };
+            ws.onclose = function (evt) {
+                $content.append("<p>服务连接已断开</p>");
+                $content.append("<p>尝试重新连接服务器：" + reconnectCount + "</p>");
+                if (reconnectCount < 10) {
+                    connectWs();
+                }
+            };
+            ws.onerror = function (evt) {
+                $content.append("<p>服务连接异常</p>");
+                $content.append("<p>尝试重新连接服务器：" + reconnectCount + "</p>");
+                if (reconnectCount < 10) {
+                    connectWs();
+                }
+            };
+        }
+    });
+</script>
+</html>

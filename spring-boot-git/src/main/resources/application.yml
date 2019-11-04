@@ -1,0 +1,49 @@
+server:
+  port: 11111
+  servlet:
+    context-path: /git
+
+# thymeleaf
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    url: jdbc:postgresql://192.168.1.220:5432/git
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        temp:
+          use_jdbc_metadata_defaults: false
+
+
+# appCode 简称映射
+app.code:
+  maps: {bbs: app-bbs, bdr: app-bdr, bol: app-bol, btm: app-btm, cal: app-cal, cerm: app-cerm, cl: app-cl,
+  cm: app-cm, cmsinner: app-cmsinner, cmsouter: app-cmsouter, cos: app-cos, cr: app-cr, crm: app-crm,
+  cs: app-cs, csm: app-csm, dc: app-dc, dsc: app-dsc, ehr: app-ehr, els: app-els, ems: app-ems, erm: app-erm,
+  fb: app-fb, jw: app-jw, km: app-km, lcms: app-lcms, mobile: app-mobile, ms: app-ms, oa: app-oa, oem: app-oem,
+  pandora: app-pandora, ps: app-ps, qa: app-qa, qsm: app-qsm, race: app-race, rep: app-rep, rfs: app-rfs, xfs: app-rfs,
+  robot: app-robot, rtr: app-rtr, rys: app-rys, skm: app-skm, tms: app-tms, trs: app-trs, twm: app-twm,
+  ucm: app-ucm, up: app-up, vm: app-vm, wb: app-wb, wgt: app-wgt, wp: app-wp, wx: app-wx, xuemall: app-xuemall,
+  xuemall-mobile: app-xuema, af: paas-af, common: paas-common, component: paas-component, css: paas-css,
+  ds: paas-ds, eagleeye: paas-eagleeye, elos: paas-elos, fz: paas-fz, gw: paas-gw, htmlprocess: paas-htmlpro,
+  i18n: paas-i18n, im: paas-im, is: paas-is, jm: paas-jm, login: paas-login, oim: paas-oim, oms: paas-oms,
+  open: paas-open, os: paas-os, paas-webutils: paas-webutils, sl: paas-sl, tag: paas-tag, tbcs: paas-tbcs,
+  ts: paas-ts, uc: paas-uc, webcommon: paas-webcommon, autogen: framework-autoge, framework-util: framework,
+  fts: framework-fts, md: framework-md, mdl: framework-md, sf: framework-sf, sfm: framework-sfm, soa: framework-soa,
+  web-static: web-static, webos: webos, webdesk: webdesk, tam: tam, mto: mto}
+  excludeCodes: res,biz-oim,hss,svm,es,sc,face,imall,link,mc,live
+
+git:
+  dir-win: G:\jgitAutoMerge\eln4-root-v5\
+  dir-linux: /web/eln4data/automerge/code/eln4-root-v5/
+  url: https://gitlab.21tb.com/eln/
+  bat-path-win: H:\selfwork\spring-boot-git\package.bat
+  bat-path-linux: /web/eln4data/automerge/server/package.sh

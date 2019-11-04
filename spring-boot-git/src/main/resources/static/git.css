@@ -1,0 +1,30 @@
+.tip {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.float-left {
+    float: left;
+}
+
+.middle {
+    margin-top: 25%;
+}
+
+.invalid-code {
+    color: red;
+    margin-left: 15px;
+}
+
+.history {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.history a {
+    color: #bbbbfb;
+}
+
+a {
+    text-decoration: none;
+}

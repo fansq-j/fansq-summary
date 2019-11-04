@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>v5-代码自动化合并</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="git.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h3 class="text-center text-info tip">
+        v5环境，代码合并工具（v4分支名: <span th:text="${merge.v4Branch}">master</span>，v5分支名: <span th:text="${merge.v5Branch}">v5-master</span>）
+    </h3>
+    <div class="row clearfix">
+
+        <div class="col-md-12 column">
+            <a class="btn" href="history"><< 返回</a>
+            <button type="button" class="merge-all btn btn-primary btn-default tip">一键合并</button>
+            <button type="button" class="package-all btn btn-primary btn-default tip">一键打包</button>
+            <!--<button type="button" class="btn btn-primary btn-default tip">一键部署</button>-->
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        序号
+                    </th>
+                    <th>
+                        应用编号
+                    </th>
+                    <th>
+                        合并状态
+                    </th>
+                    <th>
+                        打包状态
+                    </th>
+                    <th>
+                        部署状态
+                    </th>
+                    <th>
+                        修改时间
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="info" th:each="detail:${mergeDetails}">
+                    <td th:text="${detailStat.count}">
+                        4
+                    </td>
+                    <td th:text="${detail.appCode}">
+                        els
+                    </td>
+                    <td th:switch="${detail.mergeStatus}">
+                        <span th:case="WAITING">待合并</span>
+                        <span th:case="MERGING">合并中</span>
+                        <span th:case="FAILED">合并失败</span>
+                        <span th:case="FINISHED">合并完成</span>
+                        <span th:case="*">--</span>
+                    </td>
+                    <td th:switch="${detail.packageStatus}">
+                        <span th:case="WAITING">待打包</span>
+                        <span th:case="PACKAGING">打包中</span>
+                        <span th:case="FAILED">打包失败</span>
+                        <span th:case="FINISHED">打包完成</span>
+                        <span th:case="*">--</span>
+                    </td>
+                    <td th:switch="${detail.deployStatus}">
+                        <span th:case="WAITING">待部署</span>
+                        <span th:case="DEPLOYING">部署中</span>
+                        <span th:case="FAILED">部署失败</span>
+                        <span th:case="FINISHED">部署完成</span>
+                        <span th:case="*">--</span>
+                    </td>
+                    <td th:text="${#dates.format(detail.lastModifyTime, 'yyyy-MM-dd HH:mm:ss')}">
+                        Call in to confirm
+                    </td>
+                    <td>
+                        <a href="#" th:if="${detail.mergeStatus != 'PACKAGING' && detail.mergeStatus != 'FINISHED'}"
+                           th:data-id="${detail.id}" title="合并" class="merge glyphicon glyphicon-random">&nbsp;</a>
+                        <a href="#" th:if="${detail.mergeStatus == 'FAILED'}" class="glyphicon glyphicon-scissors"
+                           th:href="@{conflict(detailId=${detail.id})}" title="冲突">&nbsp;</a>
+                        <a href="#" th:data-id="${detail.id}" title="打包" class="package glyphicon glyphicon-folder-open"
+                           th:if="${detail.mergeStatus == 'FINISHED' && detail.packageStatus != 'PACKAGING' && detail.packageStatus != 'FINISHED'}">
+                            &nbsp;</a>
+                        <a href="#" th:data-id="${detail.id}" title="部署" class="glyphicon glyphicon-cloud-upload"
+                           th:if="${detail.packageStatus == 'FINISHED' && detail.deployStatus != 'DEPLOYING' && detail.deployStatus != 'FINISHED'}">
+                            &nbsp;</a>
+                        <a href="#" th:data-id="${detail.id}" title="删除" class="glyphicon glyphicon-trash del"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/layer/2.3/layer.js"></script>
+<script>
+    $(function () {
+        $(".config").on('click', function (e) {
+            e.stopPropagation();
+            $(".branch").removeClass('hide');
+        });
+        $(".del").on('click', function (e) {
+            e.stopPropagation();
+            var id = $(this).attr("data-id");
+            layer.confirm('确认要删除该记录吗？', function () {
+                $.get("delDetail?detailId=" + id, function (data) {
+                    if (data.success) {
+                        layer.open({content: '删除成功！'});
+                    } else {
+                        layer.open({content: '删除失败！'});
+                    }
+                    location.reload()
+                });
+            });
+        });
+
+        $(".merge").on('click', function (e) {
+            e.stopPropagation();
+            var id = $(this).attr("data-id");
+            layer.confirm('确认要合并该应用吗？', function () {
+                layer.closeAll();
+                $.get("merge?detailId=" + id, function (data) {
+                    if (data.success) {
+                        layer.open({
+                            type: 2,
+                            area: ['900px', '650px'],
+                            content: 'mergeLog',
+                            end: function () {
+                                location.reload();
+                            }
+                        });
+                        return;
+                    }
+
+                    if (data.message == "DETAIL_NOT_EXIST") {
+                        layer.open({content: '数据异常！'});
+                    } else if (data.message == "APP_MERGING") {
+                        layer.open({content: '应用代码正在合并中，请稍候重试！'});
+                    } else if (data.message == "APP_CODE_NOT_EXIST") {
+                        layer.open({content: '无效的appCode！'});
+                    } else if (data.message == "INIT_GIT_REPERTORY_FAILED") {
+                        layer.open({content: '本地代码仓库初始化失败！'});
+                    } else if (data.message == "MERGE_HAS_CONFLICT") {
+                        layer.open({content: '文件有冲突，合并失败！'});
+                    } else if (data.message == "MERGE_CODE_FAILED") {
+                        layer.open({content: '合并失败！'});
+                    } else if (data.message == "APP_MERGE_FINISHED") {
+                        layer.open({content: '本次代码已合并完成！'});
+                    } else {
+                        layer.open({content: '系统异常！'});
+                    }
+                });
+            });
+        });
+
+        $(".merge-all").on('click', function (e) {
+            e.stopPropagation();
+            var id = "[[${merge.id}]]";
+            layer.confirm('确认要合并所有应用吗？', function () {
+                layer.closeAll();
+                $.get("mergeAll?id=" + id, function (data) {
+                    if (data.success) {
+                        layer.open({
+                            type: 2,
+                            area: ['900px', '650px'],
+                            content: 'mergeLog',
+                            end: function () {
+                                location.reload();
+                            }
+                        });
+                        return;
+                    }
+
+                    if (data.message == "DETAIL_NOT_EXIST") {
+                        layer.open({content: '数据异常！'});
+                    } else if (data.message == "MERGING_OR_FINISHED") {
+                        layer.open({content: '应用代码正在合并中或者没有待合并的应用，请确认后重试！'});
+                    } else {
+                        layer.open({content: '系统异常！'});
+                    }
+                });
+            });
+        });
+
+        $(".package").on('click', function (e) {
+            e.stopPropagation();
+            var id = $(this).attr("data-id");
+            layer.confirm('确认要打包该应用吗？', function () {
+                layer.closeAll();
+                $.get("packageApp?detailId=" + id, function (data) {
+                    if (data.success) {
+                        layer.open({
+                            type: 2,
+                            area: ['900px', '650px'],
+                            content: 'mergeLog',
+                            end: function () {
+                                location.reload();
+                            }
+                        });
+                        return;
+                    }
+
+                    if (data.message == "DETAIL_NOT_EXIST") {
+                        layer.open({content: '数据异常！'});
+                    } else if (data.message == "PACKAGING_OR_FINISHED") {
+                        layer.open({content: '应用代码正在打包中或者已打包完成，请确认后重试！'});
+                    } else {
+                        layer.open({content: '系统异常！'});
+                    }
+                });
+            });
+        });
+
+        $(".package-all").on('click', function (e) {
+            e.stopPropagation();
+            var id = "[[${merge.id}]]";
+            layer.confirm('确认要打包所有应用吗？', function () {
+                layer.closeAll();
+                $.get("packageAll?id=" + id, function (data) {
+                    if (data.success) {
+                        layer.open({
+                            type: 2,
+                            area: ['900px', '650px'],
+                            content: 'mergeLog',
+                            end: function () {
+                                location.reload();
+                            }
+                        });
+                        return;
+                    }
+
+                    if (data.message == "DETAIL_NOT_EXIST") {
+                        layer.open({content: '数据异常！'});
+                    } else if (data.message == "PACKAGING_OR_FINISHED") {
+                        layer.open({content: '应用代码正在打包中或者没有待打包的应用，请确认后重试！'});
+                    } else {
+                        layer.open({content: '系统异常！'});
+                    }
+                });
+            });
+        });
+    });
+</script>
+</html>

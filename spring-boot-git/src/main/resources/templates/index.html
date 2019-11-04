@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>v5-代码自动化合并</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="git.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" th:switch="${model}">
+    <h3 class="text-center text-info tip">
+        v5环境，代码合并工具（v4分支名: master，v5分支名: v5-master<a th:if="${model}!='list'" class="btn config" href="#">配置 >></a>）
+    </h3>
+    <div class="row clearfix" th:case="list">
+        <div class="col-md-12 column">
+            <button type="button" class="btn btn-primary btn-default tip">一键合并</button>
+            <!--<button type="button" class="btn btn-primary btn-default tip">一键打包</button>-->
+            <!--<button type="button" class="btn btn-primary btn-default tip">一键部署</button>-->
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        序号
+                    </th>
+                    <th>
+                        应用编号
+                    </th>
+                    <th>
+                        提交时间
+                    </th>
+                    <th>
+                        合并状态
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="info" th:each="appCode:${appCodeList}">
+                    <td th:text="${appCodeStat.count}">
+                        4
+                    </td>
+                    <td th:text="${appCode}">
+                        TB - Monthly
+                    </td>
+                    <td>
+                        04/04/2012
+                    </td>
+                    <td>
+                        Call in to confirm
+                    </td>
+                    <td>
+                        Call in to confirm
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row clearfix middle" th:case="*">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h5 th:if="${message} == 'INVALID_CODES'" class="invalid-code">无效的应用编号</h5>
+            <form class="form-horizontal" role="form" th:action="@{addMerge}" th:object="${merge}" method="post">
+                <div class="form-group branch hide">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="master">v4代码分支，默认：master</span>
+                        <input type="text" th:field="*{v4Branch}" value="master" class="form-control"
+                               aria-describedby="master">
+                    </div>
+                    <div class="input-group tip">
+                        <span class="input-group-addon" id="v5-master">v5代码分支，默认：v5_master</span>
+                        <input type="text" th:field="*{v5Branch}" value="v5-master" class="form-control"
+                               aria-describedby="v5_master">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-11 col-md-11  col-sm-11 float-left" style="padding: 0;">
+                        <input type="text" th:field="*{appCodes}" class="form-control codes"
+                               placeholder="输入待合并的应用编号，多个应用以逗号分隔，如：els,tms,ems"/>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 float-left" style="padding: 0;text-align: right;">
+                        <button type="submit" class="btn btn-default">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 history">
+            <p>
+                <a class="btn" href="history">历史提交 >></a>
+            </p>
+            <p>
+                <a class="btn checkApp" href="javascript:void(0);">AppCode检查</a>
+            </p>
+        </div>
+    </div>
+    <div class="row clearfix appTest" style="display:none;">
+        <div class="col-md-12 column">
+            <blockquote>
+                <small>有效的appCodes</small>
+                <p class="validApps">
+                </p>
+            </blockquote>
+            <blockquote>
+                <small>已过滤的appCodes</small>
+                <p class="invalidApps">
+                </p>
+            </blockquote>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $(".config").on('click', function (e) {
+            e.stopPropagation();
+            $(".branch").removeClass('hide');
+        });
+
+        $(".checkApp").on('click', function (e) {
+            e.stopPropagation();
+            var codes = $(".codes").val();
+            if (!codes) {
+                alert("请输入待合并的应用名称");
+            }
+
+            $.get("testApp?appCodes=" + encodeURI(codes), function (data) {
+                $(".appTest").show();
+                $(".validApps").html(data.appCode.join(","));
+                $(".invalidApps").html(data.exclude.join(","));
+            });
+        });
+    });
+</script>
+</html>
