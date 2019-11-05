@@ -79,11 +79,12 @@ public class TestJGit {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void commit() {
 		try {
 			Git git = Git.open(new File("D:\\source-git\\.git"));
-			RevCommit s = git.commit().setMessage("范少卿测试提交").call();
+			RevCommit s = git.commit().setMessage("范少卿测试提交1").call();
+		    System.out.println(s);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,7 +100,7 @@ public class TestJGit {
 		}
 	}
 	
-	//@Test
+	//@Test 
 	public void status() {
 		try {
 			Git git = Git.open(new File("D:\\source-git\\.git"));
@@ -183,7 +184,7 @@ public class TestJGit {
 //		git.push().setRefSpecs(refSpec).setRemote('origin').call();
     }
 	
-	@Test
+	//@Test
     public void checkoutBranch(){
 		String branchName = "TestJGit";
         Git git = null;
@@ -211,7 +212,8 @@ public class TestJGit {
 			e.printStackTrace();
 		}
 	}
-	 @Test
+	
+	 //@Test
 	 public void checkoutAndPull(String repoDir, String branchName) {
 	       try {
 	           Repository existingRepo = new FileRepositoryBuilder().setGitDir(new File(repoDir)).build();
