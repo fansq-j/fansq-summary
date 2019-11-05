@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jgit.api.Git;
@@ -11,10 +12,14 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.errors.StopWalkException;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,7 +83,7 @@ public class TestJGit {
 	public void commit() {
 		try {
 			Git git = Git.open(new File("D:\\source-git\\.git"));
-			git.commit().setMessage("范少卿测试提交").call();
+			RevCommit s = git.commit().setMessage("范少卿测试提交").call();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,7 +117,7 @@ public class TestJGit {
 		
 	}
 	
-	@Test
+	//@Test
 	public void gitlog() {
 		//提取某个作者的提交，并打印相关信息
 		try {
@@ -141,6 +146,62 @@ public class TestJGit {
 		}
 	}
 	
+	
+	 //@Test
+	 public void newBranch(){
+		String branchName = "TestJGit";
+        String newBranchIndex = "refs/heads/"+branchName;
+        String gitPathURI = "";
+        try {
+            
+            //检查新建的分支是否已经存在，如果存在则将已存在的分支强制删除并新建一个分支
+        	Git git = Git.open(new File("D:\\\\source-git\\\\.git"));
+            List<Ref> refs = git.branchList().call();
+            for (Ref ref : refs) {
+            	System.out.println(ref.getName());
+                if (ref.getName().equals(newBranchIndex)) {
+                    System.out.println("Removing branch before");
+                    git.branchDelete().setBranchNames(branchName).setForce(true)
+                            .call();
+                    break;
+                }
+            }            
+            //新建分支
+            Ref ref = git.branchCreate().setName(branchName).call();
+            //推送到远程
+            git.push().add(ref).call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//		//delete branch 'branchToDelete' locally
+//		git.branchDelete().setBranchNames('refs/heads/branchToDelete').call();
+//		 
+//		//delete branch 'branchToDelete' on remote 'origin'
+//		RefSpec refSpec = new RefSpec()
+//		        .setSource(null)
+//		        .setDestination("refs/heads/branchToDelete");
+//		git.push().setRefSpecs(refSpec).setRemote('origin').call();
+    }
+	
+	@Test
+    public void checkoutBranch(){
+		String branchName = "TestJGit";
+        Git git = null;
+        try {
+            git =Git.open(new File("D:\\\\source-git\\\\.git"));
+            //setCreateBranch(true) 如果为true是创建分支并切换  为false是直接切换
+            git.checkout().setCreateBranch(false).setName(branchName).call();
+            git.pull().call();
+            System.out.println("切换分支成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("切换分支失败");
+        } finally{
+            if (git != null) {
+                git.close();
+            }
+        }   
+    }
 	//@Test
 	public void pull() {
 		try {
@@ -150,4 +211,35 @@ public class TestJGit {
 			e.printStackTrace();
 		}
 	}
+	 @Test
+	 public void checkoutAndPull(String repoDir, String branchName) {
+	       try {
+	           Repository existingRepo = new FileRepositoryBuilder().setGitDir(new File(repoDir)).build();
+	           Git git = new Git(existingRepo);
+	           try {
+	               if (this.branchNameExist(git, branchName)) {//如果分支在本地已存在，直接checkout即可。
+	                   git.checkout().setCreateBranch(false).setName(branchName).call();
+	               } else {//如果分支在本地不存在，需要创建这个分支，并追踪到远程分支上面。
+	                   git.checkout().setCreateBranch(true).setName(branchName).setStartPoint("origin/" + branchName).call();
+	               }
+	               git.pull().call();//拉取最新的提交
+	           } finally {
+	               git.close();
+	           }
+	       } catch (IOException | GitAPIException e) {
+	           e.printStackTrace();
+	       }
+	   }
+	
+	 public boolean branchNameExist(Git git, String branchName) throws GitAPIException {
+	       List<Ref> refs = git.branchList().call();
+	       for (Ref ref : refs) {
+	           if (ref.getName().contains(branchName)) {
+	               return true;
+	           }
+	       }
+	       return false;
+	  }
+	 
+	
 }
