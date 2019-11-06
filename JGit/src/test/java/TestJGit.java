@@ -1,29 +1,46 @@
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
+import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.MergeCommand;
+import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.errors.StopWalkException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
+//import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.github.fansq.JGit.until.JGitUntil;
+  import com.github.fansq.JGit.until.JGitUntil;
 
 public class TestJGit {
 
@@ -79,7 +96,7 @@ public class TestJGit {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void commit() {
 		try {
 			Git git = Git.open(new File("D:\\source-git\\.git"));
@@ -100,6 +117,10 @@ public class TestJGit {
 		}
 	}
 	
+	/**
+	 * git status 
+	 *  查看状态
+	 */
 	//@Test 
 	public void status() {
 		try {
@@ -117,7 +138,9 @@ public class TestJGit {
 		}
 		
 	}
-	
+	/**
+	 * 打印输出log
+	 */
 	//@Test
 	public void gitlog() {
 		//提取某个作者的提交，并打印相关信息
@@ -148,6 +171,9 @@ public class TestJGit {
 	}
 	
 	
+	/**
+	 * 新建分支
+	 */
 	 //@Test
 	 public void newBranch(){
 		String branchName = "TestJGit";
@@ -171,7 +197,7 @@ public class TestJGit {
             Ref ref = git.branchCreate().setName(branchName).call();
             //推送到远程
             git.push().add(ref).call();
-        } catch (Exception e) {
+        } catch (Exception e) { 
             e.printStackTrace();
         }
 //		//delete branch 'branchToDelete' locally
@@ -184,6 +210,10 @@ public class TestJGit {
 //		git.push().setRefSpecs(refSpec).setRemote('origin').call();
     }
 	
+	 /**
+	  * 
+	  * 切换分支
+	  */
 	//@Test
     public void checkoutBranch(){
 		String branchName = "TestJGit";
@@ -203,6 +233,9 @@ public class TestJGit {
             }
         }   
     }
+    /**
+             * 拉取最新内容
+     */
 	//@Test
 	public void pull() {
 		try {
@@ -213,6 +246,11 @@ public class TestJGit {
 		}
 	}
 	
+	/**
+	 * 切换分支并更新代码
+	 * @param repoDir
+	 * @param branchName
+	 */
 	 //@Test
 	 public void checkoutAndPull(String repoDir, String branchName) {
 	       try {
@@ -242,6 +280,134 @@ public class TestJGit {
 	       }
 	       return false;
 	  }
-	 
 	
+	/**
+	 * 合并分支
+	 */
+	@Test
+	public void mergeBranch() {
+		  Git git;
+		try {
+			 git = Git.open(new File("D:\\\\source-git\\\\.git"));
+			 CheckoutCommand coCmd = git.checkout(); 
+			  //命令是api模块的一部分，其中包括类似git的调用
+			  coCmd.setName("master"); 
+			  coCmd.setCreateBranch(false); //可能不需要，只是为了确保
+			  coCmd.call(); //切换到主”分支
+			  
+			  MergeCommand mgCmd = git.merge(); 
+			  Repository repository = git.getRepository();
+		      Ref ref = repository.findRef("TestJGit");
+			  mgCmd.include(ref.getObjectId()); //foo”被认为是对分支的引用
+			   MergeResult res = mgCmd.call(); //实际上做合并
+			  
+			  if(res.getMergeStatus().equals(MergeResult.MergeStatus.CONFLICTING)){
+			  System.out.println(res.getConflicts().toString()); 
+			  //告知用户他必须处理冲突
+					 } 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}  
+	
+	/**
+	 * 返回指定分支 指定文件的内容 ，可以做成循环 然后比较同一个文件在
+	 * 不同分支的差异
+	 */
+	@Test
+    public void  getContentWithFile(){
+    	String gitRoot ="D:\\\\source-git\\\\.git";
+    	String branchName="TestJGit";
+    	String fileName="测试.txt";
+        Git git;
+		try {
+			git = Git.open(new File(gitRoot));
+			Repository repository = git.getRepository();
+	        repository = git.getRepository();
+	        RevWalk walk = new RevWalk(repository);
+	        Ref ref = repository.getRefDatabase().getRef(branchName);
+//	        if (ref == null) {
+//	            //获取远程分支
+//	            ref = repository.getRef(REF_REMOTES + branchName);
+//	        }
+	        //异步pull
+	        ExecutorService executor = Executors.newCachedThreadPool();
+	        FutureTask<Boolean> task = new FutureTask<Boolean>(new Callable<Boolean>() {
+	            @Override
+	            public Boolean call() throws Exception {
+	                /*//创建分支
+	                CreateBranchCommand createBranchCmd = git.branchCreate();
+	                createBranchCmd.setStartPoint(REF_REMOTES + branchName).setName(branchName).call();*/
+	                return git.pull().call().isSuccessful();
+	            }
+	        });
+	        executor.execute(task);
+
+	        ObjectId objId = ref.getObjectId();
+	        RevCommit revCommit = walk.parseCommit(objId);
+	        RevTree revTree = revCommit.getTree();
+
+	        TreeWalk treeWalk = TreeWalk.forPath(repository, fileName, revTree);
+	        //文件名错误
+	        if (treeWalk == null)
+	            System.out.println("文件名错误");
+
+	        ObjectId blobId = treeWalk.getObjectId(0);
+	        ObjectLoader loader = repository.open(blobId);
+	        byte[] bytes = loader.getBytes();
+	        if (bytes != null)
+	        	System.out.println(new String(bytes));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+    }
+	
+	/**
+	 * 比较两个版本差异
+	 * @param Child
+	 * @param Parent
+	 */
+	@Test
+	public void diffMethod(String Child, String Parent){
+		Git git;
+		try {
+			git=Git.open(new File("D:\\\\source-git\\\\.git"));
+			Repository repository = git.getRepository();
+			ObjectReader reader = repository.newObjectReader();
+			CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+		
+			try {
+				ObjectId old = repository.resolve(Child + "^{tree}");
+				ObjectId head = repository.resolve(Parent+"^{tree}");
+						oldTreeIter.reset(reader, old);
+				CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+				newTreeIter.reset(reader, head);
+				List<DiffEntry> diffs= git.diff()
+	                    .setNewTree(newTreeIter)
+	                    .setOldTree(oldTreeIter)
+	                    .call();
+				 ByteArrayOutputStream out = new ByteArrayOutputStream();
+				    DiffFormatter df = new DiffFormatter(out);
+				    df.setRepository(git.getRepository());
+				
+				for (DiffEntry diffEntry : diffs) {
+			         df.format(diffEntry);
+			         String diffText = out.toString("UTF-8");
+			         System.out.println(diffText);
+			       //  out.reset();
+				}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		} catch (IncorrectObjectTypeException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
