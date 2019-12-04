@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body class="bg-light">
+
+<head>
+    <div th:replace="/fragments/header :: header-css"/>
+</head>
+<nav class="navbar navbar-expand-lg shadow-sm rounded mb-5">
+    <div class="container">
+<!--        <img th:src="@{/erbu_logo.png}" style="width: 300px;height: 38px"/>-->
+        <div class="navbar-brand text-dark font-weight-bolder text-muted">投票系统</div>
+    </div>
+</nav>
+<div class="container">
+    <div class="jumbotron jumbotron-fluid mb-3">
+        <div class="container">
+            <h1 class="display-5">
+                <div class="d-inline" th:text="${item.getVote().title}">
+                </div>
+                <span class="badge badge-primary d-inline" th:text="'第'+${item.turnNum}+'轮'"></span>
+            </h1>
+            <p class="lead text-muted" th:text="${item.getVote().body}">无描述</p>
+        </div>
+    </div>
+    <div class="modal warning">
+        <div class=" position_alert alert alert-warning alert-dismissible fade show " role="alert">
+            <strong>还有未打分的项，确定提交吗？</strong>
+            <div>
+                <button type="button" class="btn btn-primary btn-sm submit-fraction">确定</button>
+                <button type="button" class="btn btn-danger btn-sm close-btn">取消</button>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger" th:if="${showAlertMessage}" th:utext="${showAlertMessage}">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="card-deck mb-3 text-center">
+        <div class="card border-dark mb-3 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal ">投票规则</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title text-primary">
+                    <div th:switch="*{item.rules}">
+                        <div th:case="1">
+                            <span th:text="${item.agreeRule == '1' ? '同意' : '否决'}"></span>
+                            <small class="text-muted">/ 否同</small>
+                        </div>
+                        <div th:case="2">
+                            <span>排序</span>
+                        </div>
+                        <div th:case="3">
+                            <span>评分</span>
+                        </div>
+                    </div>
+                </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <div th:switch="*{item.rules}">
+                        <div th:case="1">
+                            <li th:text="${'通过系数：'+ item.agreePassPersent}"></li>
+                            <li th:text="${'大于'+ item.agreeMin}"></li>
+                            <li th:text="${'小于'+ item.agreeMax}"></li>
+                        </div>
+                        <div th:case="3">
+                            分数范围 (<span th:text="${item.minScore}"></span> -- <span th:text="${item.maxScore}"></span>)
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="card border-dark mb-3 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">投票说明</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-text text-primary" th:text="${item.body}">
+                    暂无说明
+                </div>
+            </div>
+        </div>
+        <div class="card border-dark mb-3 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">投票情况</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title text-primary">
+                    <span th:text="${item.memberNum}">0/</span>
+                    <small class="text-muted" th:text="'/'+${item.memberSize}+'人'">--</small>
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <span>投票项</span>
+        </div>
+        <div class="card-body text-primary card-nopadding">
+            <table id="voteTable" class="table-striped table-sm"></table>
+        </div>
+    </div>
+<!--    <div style="text-align: end">-->
+<!--        <div class="alert alert-secondary" role="alert" th:if="${item.rules} == '1'">-->
+<!--            <span id="votedStatus"></span>-->
+<!--        </div>-->
+<!--    </div>-->
+    <hr class="mb-4"/>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <button id="voteDone" type="submit" class="btn btn-primary btn-block">
+                <span class="spinner-border spinner-border-sm hide" role="status" aria-hidden="true"></span>
+                <span>提交</span>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <button id="nextVote" class="btn btn-outline-primary btn-block hide">
+                <span>进入下一轮投票</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div th:replace="/fragments/footer :: footer"/>
+<!-- loading -->
+<div class="modal" id="loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop='static'>
+    <div class="modal-dialog loading" role="document">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary spin-large" role="status">
+                <span class="sr-only">加载中...</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    'use strict';
+    var voteOption = {
+        rules: [[${ item.rules }]], // 规则范围 1否同 2排序 3打分
+        agreeRule: [[${ item.agreeRule }]], // 1为同意 0为否决
+        agreeMax: [[${ item.agreeMax }]], // 否同最大范围
+        agreeMin: [[${ item.agreeMin }]], // 否同最小范围
+        description: [[${ item.description }]], // 说明
+        maxScore: [[${ item.maxScore }]], // 最大分数
+        minScore: [[${ item.minScore }]], // 最小分数
+    }
+    var hasVotes = JSON.parse([[${ userVoteItems }]] || '[]')
+    var data = JSON.parse([[${ voteItems }]] || '[]') // voteItem
+    var $table = $('#voteTable') // 当前页面表格
+    // 表头 column title
+    var titleConfig = [[${ item.vote.excelHeader }]] // excelHeader
+    var rules = [[${parentItemRules}]];// 规则范围 1否同 2排序 3打分
+    // add 地址
+    var urlOption = [
+        [[${ item.id }]],
+        [[${ item.code }]]
+    ].join('/')
+    $(function () {
+        var resultName = '';
+        if (rules == '1') {
+            resultName = "parentStatisticsNum";
+        } else if (rules == '2') {
+            resultName = "parentStatisticsOrderScore";
+        } else {
+            resultName = "parentStatisticsToalScore";
+        }
+        if (titleConfig) {
+            titleConfig = initTitleConfig(titleConfig)
+            // 当投票已提交时，隐藏上一轮投票结果，且相同投票结果行不显示同一颜色
+            /*<![CDATA[*/
+            if ([[${ item.turnNum }]] != '1' && hasVotes.length == 0) {
+                titleConfig.splice(5, 0, {'title': '上一轮结果（分数）', 'field': resultName})
+            }
+
+            /*]]>*/
+        } else {
+            // null.map不存在的错误
+            titleConfig = []
+        }
+        var allOrder = data
+                .map(function (item, index) {
+                    return index * 1 + 1
+                }),
+            delOrder = [];
+        var currentVal = '';
+        var currentValue = ''
+        // 键盘切换 input
+        document.onkeyup = function (event) {
+            event = event || window.event;
+            if (event.keyCode === 13) {
+                // 存在警告回弹
+                if ($('.focus_input').hasClass('warning_input')) {
+                    return
+                }
+                $('.focus_input')
+                    .blur()
+                    .removeClass('focus_input')
+                    .parents('tr')
+                    .next()
+                    .find('input')
+                    .addClass('focus_input')
+                    .focus()
+            }
+
+        }
+        window.operateEvents = {
+            //
+            'click .voteInput': function (e, value, row, index) {
+                $(e.target).addClass('focus_input')
+            },
+            // 打分
+            'change .voteInput': function (e, value, row, index) {
+                var isRepeat = {
+                    repeat: false,
+                    index: index
+                };
+                // 未通过
+                if (!isPass($(e.target).val(), row.item.minScore, row.item.maxScore)) {
+                    $('.focus_input').removeClass('focus_input')
+                    $(e.target).focus().addClass('warning_input focus_input')
+                    // 不符合规则也需要修改数据内容
+                    $.each($._fraction, function (index, item) {
+                        if(item.voteItem.index === isRepeat.index) {
+                            $._fraction[index].score = $(e.target).val()
+                            $._fraction[index].ispass = false // 添加一个未通过的tag
+                        }
+                    })
+                    return
+                }
+                row.score = $(e.target).val()
+                $(e.target).removeClass('warning_input')
+                // 判断是否已存在该项内容，存在则修改，不存在push
+                $.each($._fraction, function (index, item) {
+                    // 当前分数行已经有值
+                    if (item.voteItem.index === row.index) {
+                        isRepeat = {
+                            repeat: true,
+                            index: item.voteItem.index
+                        }
+                    }
+                })
+                if (isRepeat.repeat) {
+                    $.each($._fraction, function (index, item) {
+                        if(item.voteItem.index === isRepeat.index) {
+                            $._fraction[index].score = $(e.target).val()
+                        }
+                    })
+                    return
+                }
+
+                $._fraction.push(initDataItem(row))
+            },
+            // 投票
+            'click .castVote': function (e, value, row, index) {
+                // 最大投票数是否超出
+                var maxPass = PassRules({
+                    currentVotes: $._voteArr.length,
+                    max: row.item.agreeMax,
+                    min: row.item.agreeMin
+                }, 'max')
+
+                if ($(e.target).data('action') === 'vote') { // 投票动作
+                    if (!maxPass) {
+                        // 票数用尽
+                        if ($(e.target).text() === '已投') {
+                            return
+                        }
+                        $('body').message({
+                            message: [
+                                '票数已用尽'
+                            ].join(''),
+                            type: 'danger'
+                        })
+                        return
+                    }
+                    if ($(e.target).attr('class') === 'btn btn-link btn-sm') {
+                        return
+                    }
+                    $(e.target).html(templateOption.haveVoted).removeClass('castVote')
+                    // 通过验证 添加到数组
+                    $._voteArr.push(initDataItem(row, 'castVote', '1'))
+                    // message 提示
+                    $('body').message({
+                        message: [
+                            '最少能投',
+                            row.item.agreeMin,
+                            '票，',
+                            '最多能投',
+                            row.item.agreeMax,
+                            '票，',
+                            '还剩',
+                            row.item.agreeMax * 1 - ($._voteArr.length * 1),
+                            '票可投',
+
+                        ].join('')
+                    })
+                } else if ($(e.target).data('action') === 'cancel') {
+                    // 取消操作 删除已选值
+                    $._voteArr = $._voteArr.filter(function (el, index) {
+                        if (el.voteItem.voteItemId !== row.voteItemId) {
+                            return el
+                        }
+                        return false
+
+                    })
+                    $(e.target).parents('a').addClass('castVote').html('投票')
+                }
+
+                // $('#votedStatus').text("已投票数：" + $._voteArr.length + "/" + data.length)
+                $('body').message({
+                    message: [
+                        "已投票数：" + $._voteArr.length + "/" + data.length
+                    ].join(''),
+                    type: 'primary'
+                })
+
+            },
+            // 排序点击事件回调
+            'focus .selectVote': function (e, value, row, index) {
+
+                // 点击排序时, 绘制option
+                var html = ''
+                allOrder = unique(allOrder)
+
+                // 自定义 data-select 属性,区分是否存在序列
+                if ($(e.target).data('select')) {
+                    allOrder = removal(data, String($(e.target).data('select'))) // unique(String($(e.target).data('select')).split(','))
+                }
+                if (value) {
+                    currentVal = value;
+                    currentValue = '<option selected="true" value="' + value + '">' + value + '</option>'
+                } else {
+                    // # 146 排序下拉问题
+                    // 未清空html模板值
+                    currentVal = '';
+                    currentValue = ''
+                }
+
+                html = [
+                    '<option value="">请选择</option>',
+                    currentValue
+                ].concat(
+                    sorts(allOrder)
+                        .filter(
+                            function (item) {
+                                if (value === item) {
+                                    return false
+                                }
+                                return item
+                            }
+                        )
+                        .map(
+                            function (item) {
+                                return '<option value="' + item + '">' + item + '</option>'
+                            }
+                        )
+
+                )
+                    .join('')
+                $(e.target).html(html)
+            },
+            // 排序选择事件回调
+            'change .selectVote': function (e, value, row, index) {
+                //  #205 部分浏览器 change 后, select未失去焦点，导致 select 无法触发focus事件
+                $(e.target)[0].blur()
+                currentValue = ''
+                row.SerialNumber = $(e.target).val()
+                data[row.index] = row
+                columnOperation(data, $(e.target).val(), delOrder, allOrder, currentVal)
+                currentVal = ''
+            }
+        }
+
+        // 已提交
+        if (hasVotes.length > 0) {
+            $('#voteDone').attr('disabled', 'disabled')
+            $('#voteDone').text("已提交")
+            $('#nextVote').show()
+        }
+        initTable({
+            rules: voteOption.rules,
+            titleConfig: titleConfig,
+            data: data,
+            hasData: hasVotes,
+            clickToSelect: false,
+            resultName: resultName
+        })
+
+        $('#voteDone').on('click', function (e) {
+            var e = window.event || e
+            var requestBody = []
+            if (voteOption.rules === '2') {
+                if (data.filter(function (item) {
+                    if (!item.SerialNumber) {
+                        return item
+                    }
+                }).length > 0) {
+                    $('body').message({
+                        message: '排序填写不完整',
+                        type: 'danger'
+                    })
+                    return;
+                }
+            }
+            //
+            if ($._voteArr) { // 投票
+                if ($._voteArr.length > 0) {
+                    // passMin
+                    var passMin = PassRules({
+                        currentVotes: $._voteArr.length,
+                        max: $._voteArr[0].item.agreeMax,
+                        min: $._voteArr[0].item.agreeMin
+                    }, 'min')
+                    if (!passMin) {
+                        return
+                    }
+                    requestBody = $._voteArr.concat(
+                        delHasItem(
+                            data,
+                            $._voteArr.map(function (item) {
+                                return item.voteItem.voteItemId
+                            }),
+                            'agreeFlag'
+                        )
+                    )
+                }
+            } else if ($._fraction) { // 打分
+                if ($._fraction.length > 0) {
+                    if ($._fraction.length !== data.length) {
+                        requestBody = $._fraction.concat(
+                            delHasItem(
+                                data,
+                                $._fraction.map(function (item) {
+                                    return item.voteItem.voteItemId
+                                }),
+                                'score'
+                            )
+                        )
+                    } else {
+                        requestBody = $._fraction
+                    }
+                    tips($('.warning'), 'strong', requestBody, urlOption)
+                }
+
+                return
+            } else { // 排序
+                requestBody = data.map(function (item, index) {
+                    return initDataItem(item)
+                })
+            }
+
+            tips($('.warning'), 'strong', requestBody, urlOption)
+
+        })
+        // 点击进入下一轮投票
+        $('#nextVote').on('click', function (e) {
+            var url = window.location.href;
+            window.location.href = '/userVote/nextTurn/' + [[${ item.id }]] + '/' + [[${ item.code }]];
+        })
+    })
+
+</script>
+<script type="text/javascript" th:src="@{/js/voteItem.js}"></script>
+
+</html>

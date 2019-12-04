@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <div th:fragment="header-css">
+
+        <title>投票系统</title>
+
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen"/>
+
+        <link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css"
+              th:href="@{/webjars/bootstrap-table/1.15.4/dist/bootstrap-table.min.css}"
+              rel="stylesheet" media="screen"/>
+
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+                th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/css/all.css}"
+              href="../../css/all.css"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"
+              href="../../css/main.css"/>
+
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin-bottom: 16px">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" th:href="@{/home}">投票系统</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav do-right">
+                    <div sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-primary mr-1" th:href="@{/registration}">注册</a>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-primary mr-1" th:href="@{/login}">登录</a>
+                    </div>
+                    <div sec:authorize="hasRole('USER')">
+                        <a class="btn btn-warning mr-1" th:href="@{/newVote}">新建投票</a>
+                    </div>
+                    <div sec:authorize="hasRole('USER')">
+                        <a class="btn btn-primary mr-1" th:href="@{'/votes/' + ${#authentication.getName()}}">我的投票</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="btn btn-primary mr-1" th:href="@{/logout}">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>

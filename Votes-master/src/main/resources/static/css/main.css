@@ -1,0 +1,253 @@
+
+footer {
+    margin-top: 60px;
+}
+
+.validation-message {
+    font-style: normal;
+    font-size: 10px;
+    color: #FF1C19;
+}
+
+a {
+    transition: all .2s;
+}
+
+a:hover, a:focus, a:active {
+    color: purple;
+    text-decoration: none;
+}
+
+.pagination {
+    display: block;
+    text-align: center;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.d-inline {
+    display: inline;
+}
+
+.do-right {
+    margin-left: auto;
+}
+
+/*.do-table tr:first-child {*/
+/*    background: #0066CC !important;*/
+/*    color: #fff !important;*/
+/*    font-weight: bold !important;*/
+/*}*/
+
+.do-table {
+    border: 0pt solid #d7d7d7 !important;
+    margin: 0 auto !important;
+}
+
+.do-td {
+    padding: 5px 10px !important;
+    text-align: center !important;
+    border-right: 0pt solid #d7d7d7 !important;
+    border-bottom: 0pt solid #d7d7d7 !important;
+}
+
+/*.do-tr:nth-of-type(odd) {*/
+/*    background: #d7d7d7 !important;*/
+/*}*/
+
+/* odd 标识奇数行，even标识偶数行 */
+.do-tr:hover {
+    background: #f0f0f0 !important;
+}
+
+.do-tr {
+    border-radius: 4px;
+    border-top: 1pt solid #d7d7d7 !important;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 420px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-label-group > input, .form-label-group > label {
+    height: 3.125rem;
+    padding: .75rem;
+}
+
+.card-nopadding {
+    padding: 0rem !important;
+}
+
+.do-content {
+    height: 56px;
+}
+
+.do-head {
+    background: #f0f0f0 !important;
+}
+
+.bg-customer {
+    background: linear-gradient(to right, rgb(133, 133, 133), white);
+    margin-top: 24px;
+}
+
+.bg-customer-primary {
+    background: linear-gradient(to right, rgb(76, 153, 255), white);
+    margin-top: 24px;
+}
+
+.tips-hide {
+    display: none;
+}
+
+.position_alert {
+    min-width: 380px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ebeef5;
+    position: fixed;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    background-color: #edf2fc;
+    transition: opacity .3s, transform .4s, top .4s;
+    overflow: hidden;
+    padding: 15px 15px 15px 20px;
+    display: flex;
+    align-items: center;
+    z-index: 10000;
+}
+
+.position_alert strong {
+    display: inline-block;
+    margin-right: 60px;
+}
+
+.alert_message_fade_enter, .alert_message_fade_leave_active {
+    opacity: 0;
+    transform: translate(-50%, -100%)
+}
+
+.fade-in-linear-enter, .fade-in-linear-leave, .fade-in-linear-leave-active {
+    opacity: 0
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.normal {
+    color: #000000;
+}
+
+.modal {
+    opacity: 1;
+    background: rgba(255, 255, 255, .6);
+}
+
+.spin-large {
+    width: 50px;
+    height: 50px;
+}
+
+.loading {
+    transform: translateY(-40%);
+    top: 40%;
+}
+
+.have-voted {
+    width: 120px;
+    display: inline-block;
+}
+
+.hide {
+    display: none;
+}
+
+.warning_input {
+    border: 1px solid rgba(165, 0, 0, 0.4);
+}
+
+.warning_input:focus {
+    border: 1px solid rgba(165, 0, 0, 0.4);
+    box-shadow: 0 0 0 0.2rem rgba(65, 0, 0, 0.4);
+}
+
+.mr15 {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.mr30 {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: .75rem 1.25rem;
+    color: inherit;
+}
+
+/*bootstrap-table-group-by.css*/
+
+.bootstrap-table .table > tbody > tr.groupBy {
+    cursor: pointer;
+}
+
+.bootstrap-table .table > tbody > tr.hidden + tr.detail-view {
+    display: none;
+}
+
+.cell > td {
+    display: none;
+}
+
+.cell > td:first-child {
+    display: block;
+
+}

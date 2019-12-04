@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>投票系统</title>
+
+    <div th:replace="/fragments/header :: header-css"/>
+
+</head>
+<body class="bg-light">
+
+<div th:replace="/fragments/header :: header"/>
+
+<div class="container">
+    <div class="alert alert-info" th:if="${successMessage}" th:utext="${successMessage}">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-signin" autocomplete="off" action="#" th:action="@{/saveVote}"
+                  th:object="${vote}" method="post"
+                  role="form">
+                <h3 class="text-center">编辑投票信息</h3>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-label-group">
+                    <input type="text" th:field="*{title}" placeholder="输入投票标题" autofocus="autofocus"
+                           th:value="${vote.title}"
+                           class="form-control input-lg" required="true"/>
+                </div>
+                <div class="form-label-group">
+                    <input type="number" th:field="*{memberSize}" placeholder="预计投票人数" autofocus="autofocus"
+                           th:value="${vote.memberSize}" min="1" step="1"
+                           class="form-control input-lg" required="true"/>
+                </div>
+                <div class="form-label-group">
+                    <label th:if="${#fields.hasErrors('body')}" th:errors="*{body}"
+                           class="alert alert-danger"></label>
+                    <textarea th:field="*{body}" placeholder="输入投票描述"
+                              class="form-control input-lg" th:value="${vote.body}" rows="4"></textarea>
+                </div>
+
+                <input type="hidden" th:field="*{user}"/>
+                <input type="hidden" th:field="*{id}"/>
+
+                <input type="submit" class="btn btn-primary btn-block" value="保存"/>
+            </form>
+            <div class="col-md-5" th:if="${vote.id}" style="marginTop: 8px;width: 100%;max-width: 420px;margin: auto;">
+                <form action="#" th:action="@{'/vote/{id}'(id=${vote.id})}" th:method="delete"
+                      class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit" class="btn btn-danger btn-block" th:text="删除">删除</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div th:replace="/fragments/footer :: footer"/>
+
+<script>
+
+</script>
+</body>
+</html>
