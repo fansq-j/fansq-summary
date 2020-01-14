@@ -1,0 +1,26 @@
+server:
+    port: 8281
+
+spring:
+    banner:
+    charset: utf-8
+    application:
+             name: springboot2-elasticsearch
+    http:
+      encoding:
+        charset: utf-8
+        enabled: true
+        force: true
+    messages:
+      encoding: UTF-8
+
+    data:
+      elasticsearch:
+        repositories:
+          enabled: true
+        cluster-nodes: 10.11.24.42:9300
+        cluster-name: es-yunque
+
+
+
+

@@ -1,4 +1,4 @@
-package com.study.git.repository;
+ package com.study.git.repository;
 
 import com.study.git.domain.Conflict;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="${re.contextPath}/ftl/client_ftl/js/swiper.min.js"></script>
+    <script type="text/javascript" src="${re.contextPath}/ftl/client_ftl/js/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+    <p><span style="color: red">*</span>公司名称:<input type="text" id="companyName"></p>
+    <p><span style="color: red">*</span>  关键字:<input type="text" id="keyWord" name="keyWord"></p>
+    <p><span style="color: red">*</span>公司地址:<input type="text" id="companyAddress"></p>
+    <p><span style="color: red">*</span>公司电话:<input type="text" id="companyTel"></p>
+    <p><span style="color: red">*</span>公司简介:<input type="text" id="intro"></p>
+    <p><span style="color: red">*</span>公司介绍:<input type="text" id="introduce"></p>
+    <p><button onclick="add()">提交</button></p>
+</body>
+</html>
+<script>
+    add = function() {
+        var companyName = $('#companyName').val();
+        var companyAddress = $('#companyAddress').val();
+        var companyTel = $('#companyTel').val();
+        var intro = $('#intro').val();
+        var introduce = $('#introduce').val();
+        var r=document.getElementsByName("keyWord");
+        var keywords=[];
+        for(var i=0;i<r.length;i++){
+            console.info(r[i].value);
+            keywords.push(r[i].value);
+        }
+        $.ajax({
+            type:"POST",
+            url:"${re.contextPath}/addEnterprise?companyName="+companyName+"&companyAddress="+companyAddress+"&companyTel="+companyTel+"&intro="+intro+"&introduce="+introduce+"&keywords="+keywords,
+            success:function(data){
+                alert(data)
+            },
+        });
+    }
+</script>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.len.ts114.mapper.KeyWordMapper">
+  <resultMap id="BaseResultMap" type="com.len.ts114.entity.KeyWord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <select id="findKeywordByEnterprise" resultMap="BaseResultMap">
+    select id,name,company_id companyId from t_keyword where company_id=#{enterpriseId}
+  </select>
+</mapper>

@@ -105,7 +105,7 @@ public class JGitUntil {
 	     * @throws Exception
 	     */
 	    public void pull(Git git,String branchName) throws Exception {
-	        git.pull().setRemoteBranchName(branchName).call();
+	         git.pull().setRemoteBranchName(branchName).call();
 	        log.info("pull success");
 	    }
 

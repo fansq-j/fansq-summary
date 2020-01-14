@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+  <!--本机数据库驱动jar包存放目录-->
+  <classPathEntry location="F:\apache-maven-3.6.2-bin\maven-repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
+  <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+    <!-- RowBounds pagination -->
+    <!--  <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+      <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+      <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+    <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+      <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+      <property name="caseSensitive" value="true"/>
+    </plugin>
+
+    <commentGenerator>
+      <property name="suppressDate" value="true" />
+      <property name="suppressAllComments" value="true" />
+    </commentGenerator>
+
+    <!-- jdbc连接 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://192.168.0.20:3306/114" userId="root"
+                    password="ft_root" />
+    <!--mode-->
+    <javaModelGenerator targetPackage="com.len.ts114.entity"
+                        targetProject="src/main/java">
+      <property name="enableSubPackages" value="true"/>
+
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    <!--生成映射文件存放位置-->
+    <sqlMapGenerator targetPackage="com.len.ts114.mapper" targetProject="src/main/java" >
+      <property name="enableSubPackages" value="true"/>
+    </sqlMapGenerator>
+    <!--生成Dao类存放位置-->
+    <javaClientGenerator targetPackage="com.len.ts114.mapper"
+                         targetProject="src/main/java" type="XMLMAPPER" >
+      <property name="enableSubPackages" value="true"/>
+    </javaClientGenerator>
+    <table  tableName="t_enterprise_information"  domainObjectName="EnterpriseInformation"
+            enableCountByExample="false"   enableUpdateByExample="false"
+            enableDeleteByExample="false"  enableSelectByExample="false"
+            selectByExampleQueryId="false">
+      <generatedKey  column="id"  sqlStatement="JDBC"
+                     identity="false"/>
+    </table>
+    <table  tableName="t_fserve"  domainObjectName="Fserve"
+            enableCountByExample="false"   enableUpdateByExample="false"
+            enableDeleteByExample="false"  enableSelectByExample="false"
+            selectByExampleQueryId="false">
+      <generatedKey  column="id"  sqlStatement="JDBC"
+                     identity="false"/>
+    </table>
+    <table  tableName="t_keyword"  domainObjectName="KeyWord"
+            enableCountByExample="false"   enableUpdateByExample="false"
+            enableDeleteByExample="false"  enableSelectByExample="false"
+            selectByExampleQueryId="false">
+      <generatedKey  column="id"  sqlStatement="JDBC"
+                     identity="false"/>
+    </table>
+    <table  tableName="t_zserver"  domainObjectName="Zserver"
+            enableCountByExample="false"   enableUpdateByExample="false"
+            enableDeleteByExample="false"  enableSelectByExample="false"
+            selectByExampleQueryId="false">
+      <generatedKey  column="id"  sqlStatement="JDBC"
+                     identity="false"/>
+    </table>
+    <!--生成table 先建表 后生成 勿随意覆盖本身table 避免功能缺失  测试 自己找其他表测试 by zxm-->
+    <table tableName="blog_article_tag" domainObjectName="ArticleTag">
+      <generatedKey column="id" sqlStatement="JDBC"/>
+    </table>
+    <!-- enableCountByExample="false"
+     enableUpdateByExample="false"
+     enableDeleteByExample="false"
+     enableSelectByExample="false"
+      selectByExampleQueryId="false"-->
+    <!-- />-->
+
+
+
+  </context>
+</generatorConfiguration>

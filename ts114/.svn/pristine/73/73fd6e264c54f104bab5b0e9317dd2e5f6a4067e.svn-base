@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<#list serverClientRes as itemRes>
+        <a href="javascript:;">
+            <dl>
+                <dt><h2>${itemRes.gsxx_name!}</h2><p>通城<em>3</em>年</p></dt>
+                <dd>${itemRes.gsxx_intro!}</dd>
+                <span>${itemRes.gsxx_create_time!}</span>
+            </dl>
+        </a>
+</#list>
+</body>
+</html>

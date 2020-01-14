@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.len.ts114_client.dao.ClientQueryDao">
+
+
+  <select id="findFatherServerClient" resultType="java.util.Map">
+    select * from t_fserver ORDER BY priority DESC
+  </select>
+
+  <select id="findSunServerClient" resultType="java.util.Map">
+     select * from t_zserver ORDER BY priority DESC
+  </select>
+
+  <select id="findServerClientRes" resultType="java.util.Map">
+      SELECT
+	gjz.id AS gjz_id,
+	gjz.`name` AS gjz_name,
+	gsxx.id AS gsxx_id,
+	gsxx.company_name AS gsxx_name,
+	gsxx.company_address AS gsxx_address,
+	gsxx.company_tel AS gsxx_tel,
+	gsxx.intro AS gsxx_intro,
+	gsxx.introduce AS gsxx_introduce,
+	gsxx.create_time AS gsxx_create_time,
+	gsxx.state AS gsxx_state
+FROM
+	t_keyword gjz
+	INNER JOIN t_enterprise_information gsxx
+WHERE
+	gjz.company_id = gsxx.id
+	<if test="keyword != '' and keyword != null">
+		AND ( gjz.`name` LIKE '%${keyword}%' OR gsxx.company_name LIKE '%${keyword}%' )
+	</if>
+	<if test="gsxx_id!=null and gsxx_id !=''">
+		AND gsxx.id = ${gsxx_id}
+	</if>
+	  ORDER BY gjz_id DESC
+	  LIMIT ${num},1
+  </select>
+
+	<select id="findKeyWordRes" resultType="java.util.Map">
+		SELECT * FROM t_keyword ORDER BY heat DESC
+	</select>
+	<update id="updateKeyWordHeat" parameterType="com.len.ts114.entity.KeyWord">
+		UPDATE t_keyword SET heat=${heat} WHERE name='${name}'
+	</update>
+</mapper>

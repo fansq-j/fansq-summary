@@ -1,0 +1,97 @@
+package com.len.ts114.controller;
+
+import com.alibaba.fastjson.JSONArray;
+import com.len.core.annotation.Log;
+import com.len.service.MenuService;
+import com.len.ts114.entity.EnterpriseInformation;
+import com.len.ts114.entity.KeyWord;
+import com.len.ts114.service.EnterpriseInformationService;
+import com.len.ts114.service.KeywordService;
+import com.len.util.JsonUtil;
+import com.len.util.ReType;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.xml.soap.Detail;
+import java.util.List;
+
+@Controller
+@RequestMapping("enterprise")
+@Api(value = "公司信息管理",description="公司信息管理")
+public class EnterpriseInformationController {
+    @Autowired
+    private EnterpriseInformationService enterpriseInformationService;
+    @Autowired
+    private MenuService menuService;
+    @Autowired
+    private KeywordService keywordService;
+
+    @GetMapping("/showAddEnterprise")
+    public String showAddEnterprise(Model model){
+        return "system/enterprise/add-enterprise";
+    }
+
+    @GetMapping("showEnterprise")
+    @RequiresPermissions(value = "enterprise:show")
+    public String showEnterprise(){
+        return "/system/enterprise/enterpriseList";
+    }
+
+    @GetMapping("/showUpdateEnterprise")
+    public String showUpdateEnterprise(long id, Model model, boolean detail){
+
+        EnterpriseInformation enterpriseInformation = enterpriseInformationService.selectByPrimaryKey(id);
+        model.addAttribute("enterpriseInformation",enterpriseInformation);
+        List<KeyWord> keyWordList = keywordService.findKeywordByEnterprise(id);
+        model.addAttribute("keyword",keyWordList);
+        model.addAttribute("detail",detail);
+        return "system/enterprise/update-enterprise";
+    }
+    @GetMapping("/showEnterpriseInformation")
+    public String showEnterpriseInformation(long id, Model model, boolean detail){
+        EnterpriseInformation enterpriseInformation = enterpriseInformationService.selectByPrimaryKey(id);
+        model.addAttribute("enterpriseInformation",enterpriseInformation);
+        List<KeyWord> keyWordList = keywordService.findKeywordByEnterprise(id);
+        model.addAttribute("keyword",keyWordList);
+        model.addAttribute("detail", detail);
+        return "system/enterprise/update-enterprise";
+    }
+    @ApiOperation(value = "/showEnterpriseList", httpMethod = "GET", notes = "展示公司信息")
+    @GetMapping(value = "showEnterpriseList")
+    @ResponseBody
+    @RequiresPermissions("enterprise:show")
+    public ReType showEnterpriseList(EnterpriseInformation enterpriseInformation, Model model, String page, String limit) {
+        return enterpriseInformationService.show(enterpriseInformation, Integer.valueOf(page), Integer.valueOf(limit));
+    }
+
+    @ApiOperation(value = "/addEnterprise", httpMethod = "POST", notes = "添加公司")
+    @Log(desc = "添加公司")
+    @PostMapping("/addEnterprise")
+    @ResponseBody
+    public JsonUtil addEnterprise(EnterpriseInformation enterpriseInformation, String[] keywords){
+        return enterpriseInformationService.addEnterprise(enterpriseInformation, keywords);
+    }
+
+    @ApiOperation(value = "/updateEnterprise", httpMethod = "POST", notes="修改公司信息")
+    @Log(desc = "修改公司信息")
+    @RequestMapping("/updateEnterprise")
+    @ResponseBody
+    @RequiresPermissions("enterprise:update")
+    public JsonUtil updateEnterprise(EnterpriseInformation enterpriseInformation, String[] keywords){
+        return enterpriseInformationService.updateEnterpriseInformation(enterpriseInformation,keywords);
+    }
+
+    @ApiOperation(value = "/auditEnterprise", httpMethod = "POST", notes="审核公司信息")
+    @Log(desc = "审核公司信息")
+    @RequestMapping("/auditEnterprise")
+    @ResponseBody
+    @RequiresPermissions("enterprise:audit")
+    public JsonUtil auditEnterprise(EnterpriseInformation enterpriseInformation){
+        return enterpriseInformationService.auditEnterprise(enterpriseInformation);
+    }
+}

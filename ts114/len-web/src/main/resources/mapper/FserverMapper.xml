@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.len.ts114.mapper.FserverMapper">
+
+  <resultMap id="BaseResultMap" type="com.len.ts114.entity.Fserver">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="server_name" jdbcType="VARCHAR" property="serverName" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+  </resultMap>
+
+  <select id="checkFserver" resultMap="BaseResultMap" parameterType="com.len.ts114.entity.Fserver">
+    select id,
+           server_name serverName
+    from t_fserver
+    where server_name =#{serverName}
+    <if test="id!=null">
+      AND id!=#{id}
+    </if>
+  </select>
+
+  <select id="selectListByPage" parameterType="com.len.ts114.entity.EnterpriseInformation" resultMap="BaseResultMap">
+    SELECT id,
+           server_name serverName,
+    priority
+    from t_fserver
+    <where>
+      <if test="serverName!=null and serverName!=''"> server_name like '%${serverName}%'</if>
+    </where>
+    order by priority
+  </select>
+</mapper>

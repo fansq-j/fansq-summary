@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="31d47af9-b529-44ba-8901-217a0b733222" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts" afterDir="true" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/len_core_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/len_core_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/len_sys_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/len_sys_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/len_web_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/len_web_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/lenosp_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/lenosp_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xpp3_xpp3_min_1_1_4c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xpp3_xpp3_min_1_1_4c.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-core/len-core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/len-core/len-core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-sys/len-sys.iml" beforeDir="false" afterPath="$PROJECT_DIR$/len-sys/len-sys.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-sys/target/classes/ftl/system/enterprise/update-enterprise.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/len-sys/target/classes/ftl/system/enterprise/update-enterprise.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-sys/target/classes/ftl/system/fserver/fserverList.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/len-sys/target/classes/ftl/system/fserver/fserverList.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-sys/target/classes/ftl/system/zserver/zserverList.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/len-sys/target/classes/ftl/system/zserver/zserverList.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-web/len-web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/len-web/len-web.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-web/src/main/java/com/len/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/len-web/src/main/java/com/len/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-web/src/main/resources/application-mysql-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/len-web/src/main/resources/application-mysql-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-web/target/classes/application-mysql-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/len-web/target/classes/application-mysql-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-web/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/len-web/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-web/target/classes/com/len/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/len-web/target/classes/com/len/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/len-web/target/classes/mapper/EnterpriseInformationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/len-web/target/classes/mapper/EnterpriseInformationMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lenosp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lenosp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/lenosp-log.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/lenosp-log.log" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/len-web/src/main/java/com/len/ts114_client/util/shangchuan.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$PROJECT_DIR$/../apache-maven-3.6.2" />
+        <option name="userSettingsFile" value="E:\SzhWork\apache-maven-3.6.2\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1S06L52zcfV2UXKyKOhImSaE0La" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Remove" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/len-sys/src/main/resources/ftl/client_ftl/interface" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\SzhWork\ts114\len-sys\src\main\resources\ftl\client_ftl\interface" />
+      <recent name="E:\SzhWork\ts114\len-web\src\main\java\com\len\ts114_client\controller" />
+      <recent name="E:\SzhWork\ts114\len-sys\src\main\resources\ftl\client_ftl\js" />
+      <recent name="E:\SzhWork\ts114\len-sys\src\main\resources\ftl\client_ftl\images" />
+      <recent name="E:\SzhWork\svn\ts114\len-sys\src\main\resources\ftl\client_ftl\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\SzhWork\svn\ts114\len-sys\src\main\resources\ftl\client_ftl\interface" />
+      <recent name="E:\SzhWork\svn\ts114\len-sys\src\main\resources\ftl" />
+      <recent name="E:\SzhWork\svn\ts114\len-sys\src\main\resources\client_ftl" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="len-web" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.len.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.len.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\我\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\SzhWork\ts114" />
+          <option name="myCopyRoot" value="E:\SzhWork\ts114" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\SzhWork\ts114" />
+          <option name="myCopyRoot" value="E:\SzhWork\ts114" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="31d47af9-b529-44ba-8901-217a0b733222" name="Default Changelist" comment="" />
+      <created>1570688106681</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1570688106681</updated>
+      <workItem from="1570688109300" duration="9776000" />
+      <workItem from="1570698714423" duration="3841000" />
+      <workItem from="1570754972108" duration="19791000" />
+      <workItem from="1570841390293" duration="19054000" />
+      <workItem from="1571015128071" duration="18955000" />
+      <workItem from="1571046002836" duration="2896000" />
+      <workItem from="1571100723529" duration="15501000" />
+      <workItem from="1571186527121" duration="17687000" />
+      <workItem from="1571273470273" duration="20939000" />
+      <workItem from="1571360068117" duration="4586000" />
+      <workItem from="1571379942332" duration="3658000" />
+      <workItem from="1571386752554" duration="1322000" />
+      <workItem from="1571620234203" duration="10906000" />
+      <workItem from="1571641853818" duration="5859000" />
+      <workItem from="1571707554723" duration="10539000" />
+      <workItem from="1571791594893" duration="28072000" />
+      <workItem from="1571832899896" duration="3644000" />
+      <workItem from="1571880427887" duration="11673000" />
+    </task>
+    <task id="LOCAL-00001">
+      <created>1570849906746</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1570849906746</updated>
+    </task>
+    <task id="LOCAL-00002">
+      <created>1571134329900</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1571134329900</updated>
+    </task>
+    <task id="LOCAL-00003">
+      <created>1571134369175</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1571134369175</updated>
+    </task>
+    <task id="LOCAL-00004">
+      <created>1571134486467</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1571134486467</updated>
+    </task>
+    <task id="LOCAL-00005">
+      <created>1571281625837</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1571281625837</updated>
+    </task>
+    <task id="LOCAL-00006">
+      <created>1571281636061</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1571281636061</updated>
+    </task>
+    <task id="LOCAL-00007">
+      <created>1571281646949</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1571281646949</updated>
+    </task>
+    <task id="LOCAL-00008">
+      <created>1571281664103</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1571281664103</updated>
+    </task>
+    <task id="LOCAL-00009">
+      <created>1571281687369</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1571281687369</updated>
+    </task>
+    <task id="LOCAL-00010">
+      <created>1571896506469</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1571896506469</updated>
+    </task>
+    <task id="LOCAL-00011">
+      <created>1571896652182</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1571896652182</updated>
+    </task>
+    <task id="LOCAL-00012">
+      <created>1571896665914</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1571896665914</updated>
+    </task>
+    <task id="LOCAL-00013">
+      <created>1571896917842</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1571896917842</updated>
+    </task>
+    <task id="LOCAL-00014">
+      <created>1571897057339</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1571897057339</updated>
+    </task>
+    <task id="LOCAL-00015">
+      <created>1571897410422</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1571897410422</updated>
+    </task>
+    <task id="LOCAL-00016">
+      <created>1571897579409</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1571897579409</updated>
+    </task>
+    <task id="LOCAL-00017">
+      <created>1571898302486</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1571898302486</updated>
+    </task>
+    <task id="LOCAL-00018">
+      <created>1571898636767</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1571898636767</updated>
+    </task>
+    <task id="LOCAL-00019">
+      <created>1571898673135</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1571898673135</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+</project>

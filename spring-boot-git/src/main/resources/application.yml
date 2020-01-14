@@ -8,9 +8,9 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    url: jdbc:postgresql://192.168.1.220:5432/git
-    username: postgres
-    password: postgres
+    url: jdbc:mysql://127.0.0.1:3306/git?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

@@ -1,0 +1,25 @@
+
+#len-blog:
+#  roles: blogAdmin
+#    可切换sqlserver
+#    active: sqlserver-dev
+servlet:
+  multipart:
+    max-file-size: 10MB
+    maxRequestSize: 100MB
+# 自定义文件上传路径
+
+web:
+  upload-path: E:/images/upload
+  front-path: E:/images/front
+
+spring:
+  profiles:
+    active: mysql-dev
+  servlet:
+    multipart:
+      enabled: true
+  resources:
+    static-locations: file:${web.upload-path},file:${web.front-path}
+
+#web.localhost: http://localhost:8080/photo/
